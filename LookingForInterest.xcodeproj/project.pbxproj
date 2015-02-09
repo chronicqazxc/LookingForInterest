@@ -32,6 +32,7 @@
 		B0BF730D1A8916A400213C00 /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = B0BF73021A8916A400213C00 /* Icon-Small.png */; };
 		B0BF730E1A8916A400213C00 /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0BF73031A8916A400213C00 /* Icon-Small@2x.png */; };
 		B0BF730F1A8916A400213C00 /* Icon-Small@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0BF73041A8916A400213C00 /* Icon-Small@3x.png */; };
+		B0BF73121A891E9F00213C00 /* ExpandContractController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0BF73111A891E9F00213C00 /* ExpandContractController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,6 +85,8 @@
 		B0BF73021A8916A400213C00 /* Icon-Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small.png"; sourceTree = "<group>"; };
 		B0BF73031A8916A400213C00 /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small@2x.png"; sourceTree = "<group>"; };
 		B0BF73041A8916A400213C00 /* Icon-Small@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small@3x.png"; sourceTree = "<group>"; };
+		B0BF73101A891E9F00213C00 /* ExpandContractController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExpandContractController.h; path = Src/ExpandContractController.h; sourceTree = "<group>"; };
+		B0BF73111A891E9F00213C00 /* ExpandContractController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ExpandContractController.m; path = Src/ExpandContractController.m; sourceTree = "<group>"; };
 		C1D1C794A2B62ED9A85DC3D8 /* libPods-LookingForInterest.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LookingForInterest.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -151,6 +154,8 @@
 				B0BF72ED1A8915ED00213C00 /* AppDelegate.m */,
 				B0BF72EE1A8915ED00213C00 /* FilterTableViewController.h */,
 				B0BF72EF1A8915ED00213C00 /* FilterTableViewController.m */,
+				B0BF73101A891E9F00213C00 /* ExpandContractController.h */,
+				B0BF73111A891E9F00213C00 /* ExpandContractController.m */,
 				B0BF72F01A8915ED00213C00 /* LookingForInterest.h */,
 				B0BF72F11A8915ED00213C00 /* RequestSender.h */,
 				B0BF72F21A8915ED00213C00 /* RequestSender.m */,
@@ -377,6 +382,7 @@
 				B0BF72F51A8915ED00213C00 /* AppDelegate.m in Sources */,
 				B0BF72F71A8915ED00213C00 /* RequestSender.m in Sources */,
 				B0BF72E81A8915DD00213C00 /* MajorType.m in Sources */,
+				B0BF73121A891E9F00213C00 /* ExpandContractController.m in Sources */,
 				B0BF72EB1A8915DD00213C00 /* Store.m in Sources */,
 				B0BF72E91A8915DD00213C00 /* Menu.m in Sources */,
 			);

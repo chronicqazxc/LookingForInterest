@@ -34,7 +34,7 @@
 - (void)storeBeTapIn:(NSIndexPath *)indexPath;
 - (CLLocationCoordinate2D)sendLocationBack;
 - (void)reloadMapByStores:(NSArray *)stores;
-
+- (UIView *)getContentView;
 @end
 
 @interface FilterTableView : UITableView

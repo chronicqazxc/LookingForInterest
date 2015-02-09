@@ -9,6 +9,7 @@
 #import "FilterTableViewController.h"
 #import "LookingForInterest.h"
 #import "RequestSender.h"
+#import "ExpandContractController.h"
 
 #define kCellIdentifier @"FilterTableViewCell"
 #define kStoryboardIdentifier @"FilterTableViewController"
@@ -18,6 +19,8 @@
 #define kRangeSelected @"RangeSelected"
 
 @interface FilterTableViewController () <RequestSenderDelegate>
+@property (strong, nonatomic) NSMutableArray *dataArr;
+@property (strong, nonatomic) NSMutableArray *controlArr;
 @property (nonatomic) NSUInteger numberOfRow;
 @property (strong, nonatomic) Menu *menu;
 @property (strong, nonatomic) NSArray *majorTypes;
@@ -121,14 +124,23 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    NSInteger numberOfSections = 0;
+    switch (self.filterType) {
+        case FilterTypeMenu:
+            numberOfSections = 2;
+            break;
+        default:
+            numberOfSections = 1;
+            break;
+    }
+    return numberOfSections;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSUInteger numberOfRows = 0;
     switch (self.filterType) {
         case FilterTypeMenu:
-            numberOfRows = [self.menu.numberOfRows integerValue];
+            numberOfRows = [self.controlArr[section] count];
             break;
         case FilterTypeMajorType:
             numberOfRows = [self.majorTypes count];
@@ -155,6 +167,34 @@
     return numberOfRows;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    CGFloat heightForRow = 44.4;
+    if (self.filterType == FilterTypeMenu) {
+        if (indexPath.section == 0 && indexPath.row == 1) {
+            heightForRow = 100;
+        } else {
+            heightForRow = 44.4;
+        }
+    } else {
+        heightForRow = 44.4;
+    }
+    return heightForRow;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    CGFloat heightForHeader = 0.0;
+    if (self.filterType == FilterTypeMenu) {
+        if (section == 1) {
+            heightForHeader = 50.0;
+        } else {
+            heightForHeader = 0.0;
+        }
+    } else {
+        heightForHeader = 0.0;
+    }
+    return heightForHeader;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier forIndexPath:indexPath];
     if (!cell) {
@@ -167,8 +207,12 @@
     cell.textLabel.text = title;
     cell.detailTextLabel.text = detail;
     
-    // Configure the cell...
-    
+    if (indexPath.section == 0 && indexPath.row == 1) {
+        if (self.delegate && [self.delegate respondsToSelector:@selector(getContentView)]) {
+            [cell addSubview:[self.delegate getContentView]];
+        }
+        
+    }
     return cell;
 }
 
@@ -176,10 +220,20 @@
     NSString *title = @"";
     switch (type) {
         case FilterTypeMenu:
-            for (int i=0; i<[self.menu.titles count]; i++) {
-                if (i == indexPath.row) {
-                    title = [self.menu.titles objectAtIndex:indexPath.row];
-                    break;
+    
+            if (indexPath.section == 0 && indexPath.row == 0) {
+                BOOL isExpand = [[self.controlArr[indexPath.section][indexPath.row] objectForKey:@"IsExpand"] intValue]?YES:NO;
+                if (isExpand) {
+                    title = @"收起地圖";
+                } else {
+                    title = @"打開地圖";
+                }
+            } else if (indexPath.section == 1) {
+                for (int i=0; i<[self.menu.titles count]; i++) {
+                    if (i == indexPath.row) {
+                        title = [self.menu.titles objectAtIndex:indexPath.row];
+                        break;
+                    }
                 }
             }
             break;
@@ -237,18 +291,20 @@
     NSString *detail = @"";
     switch (type) {
         case FilterTypeMenu:
-            switch (indexPath.row) {
-                case 0:
-                    detail = self.menu.majorType.typeDescription;
-                    break;
-                case 1:
-                    detail = self.menu.minorType.typeDescription;
-                    break;
-                case 2:
-                    detail = self.menu.range;
-                    break;
-                default:
-                    break;
+            if (indexPath.section == 1) {
+                switch (indexPath.row) {
+                    case 0:
+                        detail = self.menu.majorType.typeDescription;
+                        break;
+                    case 1:
+                        detail = self.menu.minorType.typeDescription;
+                        break;
+                    case 2:
+                        detail = self.menu.range;
+                        break;
+                    default:
+                        break;
+                }
             }
             break;
         case FilterTypeMajorType:
@@ -301,7 +357,21 @@
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     if (self.delegate && [self.delegate respondsToSelector:@selector(tableBeTapIn:)]) {
         if (self.filterType == FilterTypeMenu) {
-            [self.delegate tableBeTapIn:indexPath];
+            
+            ExpandContractController *expandController = [[ExpandContractController alloc] init];
+            [expandController expandOrContractCellByIndexPaht:indexPath dataArray:self.dataArr controlArray:self.controlArr tableView:tableView];
+            
+            if (indexPath.section == 1) {
+                [self.delegate tableBeTapIn:indexPath];
+            } else if (indexPath.section == 0) {
+                BOOL isExpand = [[self.controlArr[indexPath.section][indexPath.row] objectForKey:@"IsExpand"] intValue]?YES:NO;
+                UITableViewCell *cell = [self.filterTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+                if (isExpand) {
+                    cell.textLabel.text = @"收起地圖";
+                } else {
+                    cell.textLabel.text = @"打開地圖";
+                }
+            }
         } else {
             if ([self.delegate respondsToSelector:@selector(storeBeTapIn:)]) {
                 [self.delegate storeBeTapIn:indexPath];
@@ -338,7 +408,22 @@
 #pragma mark - RequestSenderDelegate
 - (void)initMenuBack:(NSArray *)menuData {
     self.menu = [menuData firstObject];
+    [self generateDataStructureWithMenu:self.menu];
     [self.filterTableView reloadData];
+}
+
+- (void)generateDataStructureWithMenu:(Menu *)menu {
+    self.dataArr = [NSMutableArray array];
+    self.controlArr = [NSMutableArray array];
+    
+    ExpandContractController *expandController = [[ExpandContractController alloc] initWithDelegate:self tableView:self.tableView];
+    
+    [expandController setNumberOfSection:2 dataArray:self.dataArr controlArray:self.controlArr];
+    
+    [expandController setNumberOfParent:1 andHeigh:@"44" section:0 dataArray:self.dataArr controlArray:self.controlArr];
+    [expandController setNumberOfChild:@"1" andHeigh:@"100" section:0 withParentIndex:0 dataArray:self.dataArr controlArray:self.controlArr];
+    
+    [expandController setNumberOfParent:[menu.numberOfRows integerValue] andHeigh:@"44" section:1 dataArray:self.dataArr controlArray:self.controlArr];
 }
 
 - (void)majorsBack:(NSArray *)majorTypes {

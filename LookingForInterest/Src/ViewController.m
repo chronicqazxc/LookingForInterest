@@ -218,6 +218,9 @@
     }
 }
 
+- (UIView *)getContentView {
+    return self.mapView;
+}
 #pragma mark -
 - (IBAction)buttonClicked:(UIButton *)sender {
     if ([self.button.titleLabel.text isEqualToString:kSearch]) {
