@@ -14,4 +14,5 @@
 + (AppDelegate *)getAppDelegate;
 + (void)startLoading;
 + (void)stopLoading;
++ (CGSize)getScreenPixel;
 @end

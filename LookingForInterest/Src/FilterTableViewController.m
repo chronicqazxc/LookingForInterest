@@ -20,6 +20,9 @@
 #define kRangeSelected @"RangeSelected"
 #define kMapViewHeight @"200"
 #define kMapViewSize(mapSize) CGSizeMake(mapSize.width, mapSize.height)
+#define kMajorTypeNavTitle @"選擇大類"
+#define kMinorTypeNavTitle @"選擇小類"
+#define kRangeNavTitle @"選擇範圍"
 
 @interface FilterTableViewController () <RequestSenderDelegate>
 @property (strong, nonatomic) NSMutableArray *dataArr;
@@ -87,6 +90,27 @@
         default:
             break;
     }
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    switch (self.filterType) {
+        case FilterTypeMajorType:
+            [self setNavigationTitle:kMajorTypeNavTitle];
+            break;
+        case FilterTypeMinorType:
+            [self setNavigationTitle:kMinorTypeNavTitle];
+            break;
+        case FilterTypeRange:
+            [self setNavigationTitle:kRangeNavTitle];
+            break;
+        default:
+            break;
+    }
+}
+
+- (void)setNavigationTitle:(NSString *)title {
+    self.navigationItem.title = title;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -482,11 +506,30 @@
     self.stores = stores;
     [self.filterTableView reloadData];
     if (self.delegate) {
-        if ([self.delegate respondsToSelector:@selector(reloadMapByStores:)]) {
-            [self.delegate reloadMapByStores:stores];
+        if ([self.delegate respondsToSelector:@selector(reloadMapByStores:withZoomLevel:)]) {
+//            CGSize screenSize = [Utilities getScreenPixel];
+//            NSUInteger zoom = [self calculateZoomLevelwithScreenWidth:screenSize.width];
+            // km:2 zoom:13
+            [self.delegate reloadMapByStores:stores withZoomLevel:13.9];
         }
     }
     [Utilities stopLoading];
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(changeTitle:)]) {
+        [self.delegate changeTitle:self.menu.minorType.typeDescription];
+    }
+}
+
+- (NSUInteger)calculateZoomLevelwithScreenWidth:(NSUInteger)screenWidth {
+    CGFloat equatorLength = [self.menu.range doubleValue];
+    CGFloat widthInPixels = screenWidth;
+    CGFloat metersPerPixel = equatorLength / 256;
+    NSUInteger zoomLevel = 1;
+    while ((metersPerPixel * widthInPixels) > 2000) {
+        metersPerPixel /= 2;
+        ++zoomLevel;
+    }
+    return zoomLevel;
 }
 
 - (void)rangesBack:(NSArray *)ranges {

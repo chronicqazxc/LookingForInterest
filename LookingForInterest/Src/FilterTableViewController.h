@@ -33,9 +33,10 @@
 - (void)tableBeTapIn:(NSIndexPath *)indexPath;
 - (void)storeBeTapIn:(NSIndexPath *)indexPath;
 - (CLLocationCoordinate2D)sendLocationBack;
-- (void)reloadMapByStores:(NSArray *)stores;
+- (void)reloadMapByStores:(NSArray *)stores withZoomLevel:(NSUInteger)zoom;
 - (UIView *)getContentView;
 - (CGSize)getContentSize;
+- (void)changeTitle:(NSString *)title;
 @end
 
 @interface FilterTableView : UITableView

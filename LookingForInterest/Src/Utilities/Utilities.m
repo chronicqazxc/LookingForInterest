@@ -22,4 +22,11 @@
 + (void)stopLoading {
     [[Utilities getAppDelegate] stopLoading];
 }
+
++ (CGSize)getScreenPixel {
+    CGRect screenBounds = [[UIScreen mainScreen] bounds];
+    CGFloat screenScale = [[UIScreen mainScreen] scale];
+    CGSize screenSize = CGSizeMake(screenBounds.size.width * screenScale, screenBounds.size.height * screenScale);
+    return screenSize;
+}
 @end

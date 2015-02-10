@@ -11,6 +11,8 @@
 
 #define kSearch @"開始找"
 #define kBack @"上一頁"
+#define kTitle @"找你有興趣的東西"
+#define kFormattedTitle(title) [NSString stringWithFormat:@"找%@",title]
 
 @interface ViewController () <CLLocationManagerDelegate, GMSMapViewDelegate, FilterTableViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIView *mapView;
@@ -80,11 +82,20 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-//    self.navigationController.title = @"找你有興趣的東西";
-    self.navigationItem.title = @"找你有興趣的東西";
+    [super viewWillAppear:animated];
+    [self setOriginalTitle];
+}
+
+- (void)setOriginalTitle {
+    self.navigationItem.title = kTitle;
+}
+
+- (void)setFormattedTitle:(NSString *)title {
+    self.navigationItem.title = kFormattedTitle(title);
 }
 
 - (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
     if (!self.isSendForMenu) {
         self.filterTableViewController = [[FilterTableViewController alloc] init];
         self.filterTableViewController.delegate = self;
@@ -104,6 +115,7 @@
 }
 
 - (void)viewDidLayoutSubviews NS_AVAILABLE_IOS(5_0) {
+    [super viewDidLayoutSubviews];
     if (self.mapViewSize.width == CGSizeZero.width && self.mapViewSize.height == CGSizeZero.height) {
         self.mapViewSize = CGSizeMake(self.mapView.frame.size.width, self.mapView.frame.size.height);
     }
@@ -208,7 +220,10 @@
     return self.currentLocation;
 }
 
-- (void)reloadMapByStores:(NSArray *)stores {
+- (void)reloadMapByStores:(NSArray *)stores withZoomLevel:(NSUInteger)zoom{
+    GMSCameraPosition *fancy = [GMSCameraPosition cameraWithLatitude:self.currentLocation.latitude longitude:self.currentLocation.longitude zoom:zoom bearing:0 viewingAngle:0];
+    [self.googleMap setCamera:fancy];
+    
     self.storesOnMap = stores;
     for (Store *store in stores) {
         GMSMarker *storeMark = [[GMSMarker alloc] init];
@@ -227,6 +242,10 @@
 - (CGSize)getContentSize {
     return self.mapViewSize;
 }
+
+- (void)changeTitle:(NSString *)title {
+    [self setFormattedTitle:title];
+}
 #pragma mark -
 - (IBAction)buttonClicked:(UIButton *)sender {
     if ([self.button.titleLabel.text isEqualToString:kSearch]) {
@@ -236,6 +255,7 @@
     } else {
         [self.button setTitle:kSearch forState:UIControlStateNormal];
         [self.filterTableViewController back];
+        [self setOriginalTitle];
     }
 }
 @end
