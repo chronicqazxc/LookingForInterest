@@ -510,7 +510,7 @@
 //            CGSize screenSize = [Utilities getScreenPixel];
 //            NSUInteger zoom = [self calculateZoomLevelwithScreenWidth:screenSize.width];
             // km:2 zoom:13
-            [self.delegate reloadMapByStores:stores withZoomLevel:13.9];
+            [self.delegate reloadMapByStores:stores withZoomLevel:14.0];
         }
     }
     [Utilities stopLoading];
