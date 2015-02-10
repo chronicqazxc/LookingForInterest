@@ -145,7 +145,7 @@
                             <constraint firstItem="AA4-lk-hYI" firstAttribute="leading" secondItem="oUF-6G-vyj" secondAttribute="leading" constant="-77" id="UZ8-V4-YTh">
                                 <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                             </constraint>
-                            <constraint firstItem="rGu-yR-n5I" firstAttribute="height" secondItem="kh9-bI-dsS" secondAttribute="height" multiplier="0.5" constant="1" id="fMY-eZ-dxf"/>
+                            <constraint firstItem="rGu-yR-n5I" firstAttribute="height" secondItem="kh9-bI-dsS" secondAttribute="height" multiplier="2/3" constant="1" id="fMY-eZ-dxf"/>
                             <constraint firstItem="oUF-6G-vyj" firstAttribute="top" secondItem="AA4-lk-hYI" secondAttribute="bottom" constant="21" id="fcp-dy-25C">
                                 <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                             </constraint>

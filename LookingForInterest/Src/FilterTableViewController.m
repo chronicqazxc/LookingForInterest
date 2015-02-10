@@ -67,18 +67,22 @@
         case FilterTypeMajorType:
             requestSender.delegate = self;
             [requestSender sendMajorRequest];
+            [Utilities startLoading];
             break;
         case FilterTypeMinorType:
             requestSender.delegate = self;
             [requestSender sendMinorRequestByMajorType:((FilterTableViewController *)self.notifyReceiver).menu.majorType];
+            [Utilities startLoading];
             break;
         case FilterTypeStore:
             requestSender.delegate = self;
             [requestSender sendStoreRequestByMajorType:((FilterTableViewController *)self.notifyReceiver).menu.majorType minorType:((FilterTableViewController *)self.notifyReceiver).menu.minorType];
+            [Utilities startLoading];
             break;
         case FilterTypeRange:
             requestSender.delegate = self;
             [requestSender sendRangeRequest];
+            [Utilities startLoading];            
             break;
         default:
             break;
@@ -94,6 +98,7 @@
     RequestSender *requestSender = [[RequestSender alloc] init];
     requestSender.delegate = self;
     [requestSender sendMenuRequest];
+    [Utilities startLoading];
 }
 
 - (NSString *)getStoryboardID {
@@ -118,6 +123,7 @@
         }
     }
     [requestSender sendStoreRequestByMenuObj:self.menu andLocationCoordinate:currentLocation];
+    [Utilities startLoading];
 }
 
 - (void)back {
@@ -436,6 +442,7 @@
     self.menu = [menuData firstObject];
     [self generateDataStructureWithMenu:self.menu];
     [self.filterTableView reloadData];
+    [Utilities stopLoading];
 }
 
 - (void)generateDataStructureWithMenu:(Menu *)menu {
@@ -455,6 +462,7 @@
 - (void)majorsBack:(NSArray *)majorTypes {
     self.majorTypes = majorTypes;
     [self.filterTableViewStoryboard reloadData];
+    [Utilities stopLoading];
 }
 
 - (void)minorsBack:(NSArray *)minorTypes {
@@ -467,6 +475,7 @@
     } else if (self.filterTableViewStoryboard) {
         [self.filterTableViewStoryboard reloadData];
     }
+    [Utilities stopLoading];
 }
 
 - (void)storesBack:(NSArray *)stores {
@@ -477,11 +486,13 @@
             [self.delegate reloadMapByStores:stores];
         }
     }
+    [Utilities stopLoading];
 }
 
 - (void)rangesBack:(NSArray *)ranges {
     self.ranges = [ranges firstObject];
     [self.filterTableViewStoryboard reloadData];
+    [Utilities stopLoading];
 }
 
 #pragma mark - Notify
@@ -494,20 +505,24 @@
         [requestSender sendMinorRequestByMajorType:backMajorType];
     }
     [self.filterTableView reloadData];
+    [Utilities stopLoading];
 }
 
 - (void)receiveSelectedMinorType:(NSNotification *)notification {
     self.menu.minorType = [notification.userInfo objectForKey:@"MinorType"];
     [self.filterTableView reloadData];
+    [Utilities stopLoading];
 }
 
 - (void)receiveSelectedStore:(NSNotification *)notification {
     self.menu.store = [notification.userInfo objectForKey:@"Store"];
     [self.filterTableView reloadData];
+    [Utilities stopLoading];
 }
 
 - (void)receiveSelectedRange:(NSNotification *)notification {
     self.menu.range = [notification.userInfo objectForKey:@"Range"];
     [self.filterTableView reloadData];
+    [Utilities stopLoading];
 }
 @end

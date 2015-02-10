@@ -35,7 +35,10 @@
 		B0BF73121A891E9F00213C00 /* ExpandContractController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0BF73111A891E9F00213C00 /* ExpandContractController.m */; };
 		B0F06B361A89B80500FBC90C /* MapViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B0F06B341A89B80500FBC90C /* MapViewCell.m */; };
 		B0F06B371A89B80500FBC90C /* MapViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0F06B351A89B80500FBC90C /* MapViewCell.xib */; };
-		B0F06B3A1A89E5B800FBC90C /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = B0F06B391A89E5B800FBC90C /* Utilities.m */; };
+		B0F06B401A89F37500FBC90C /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = B0F06B3F1A89F37500FBC90C /* Utilities.m */; };
+		B0F06B4B1A89FEB400FBC90C /* LoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = B0F06B4A1A89FEB400FBC90C /* LoadingView.m */; };
+		B0F06B4D1A89FEC400FBC90C /* LoadingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0F06B4C1A89FEC400FBC90C /* LoadingView.xib */; };
+		B0F06B521A8A10E500FBC90C /* magnifier-4.png in Resources */ = {isa = PBXBuildFile; fileRef = B0F06B511A8A10E500FBC90C /* magnifier-4.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,7 +54,7 @@
 /* Begin PBXFileReference section */
 		246B5FE3AC76C49E3CBBC7EB /* Pods-LookingForInterest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LookingForInterest.release.xcconfig"; path = "Pods/Target Support Files/Pods-LookingForInterest/Pods-LookingForInterest.release.xcconfig"; sourceTree = "<group>"; };
 		2F0C5FF2BC540D0F473CDAE6 /* Pods-LookingForInterest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LookingForInterest.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LookingForInterest/Pods-LookingForInterest.debug.xcconfig"; sourceTree = "<group>"; };
-		B034D95B1A8903A900360A6C /* LookingForInterest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LookingForInterest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B034D95B1A8903A900360A6C /* 找東西.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "找東西.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B034D95F1A8903A900360A6C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B034D9691A8903AA00360A6C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B034D96B1A8903AA00360A6C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -93,8 +96,12 @@
 		B0F06B331A89B80500FBC90C /* MapViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapViewCell.h; path = Src/MapViewCell.h; sourceTree = "<group>"; };
 		B0F06B341A89B80500FBC90C /* MapViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MapViewCell.m; path = Src/MapViewCell.m; sourceTree = "<group>"; };
 		B0F06B351A89B80500FBC90C /* MapViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MapViewCell.xib; path = Src/MapViewCell.xib; sourceTree = "<group>"; };
-		B0F06B381A89E5B800FBC90C /* Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Utilities.h; path = Src/Utilities.h; sourceTree = "<group>"; };
-		B0F06B391A89E5B800FBC90C /* Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Utilities.m; path = Src/Utilities.m; sourceTree = "<group>"; };
+		B0F06B3E1A89F37500FBC90C /* Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Utilities.h; path = Src/Utilities/Utilities.h; sourceTree = "<group>"; };
+		B0F06B3F1A89F37500FBC90C /* Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Utilities.m; path = Src/Utilities/Utilities.m; sourceTree = "<group>"; };
+		B0F06B491A89FEB400FBC90C /* LoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoadingView.h; path = Src/Utilities/LoadingView.h; sourceTree = "<group>"; };
+		B0F06B4A1A89FEB400FBC90C /* LoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoadingView.m; path = Src/Utilities/LoadingView.m; sourceTree = "<group>"; };
+		B0F06B4C1A89FEC400FBC90C /* LoadingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LoadingView.xib; path = Src/Utilities/LoadingView.xib; sourceTree = "<group>"; };
+		B0F06B511A8A10E500FBC90C /* magnifier-4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "magnifier-4.png"; path = "Img/magnifier-4.png"; sourceTree = "<group>"; };
 		C1D1C794A2B62ED9A85DC3D8 /* libPods-LookingForInterest.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LookingForInterest.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -148,7 +155,7 @@
 		B034D95C1A8903A900360A6C /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				B034D95B1A8903A900360A6C /* LookingForInterest.app */,
+				B034D95B1A8903A900360A6C /* 找東西.app */,
 				B034D9741A8903AA00360A6C /* LookingForInterestTests.xctest */,
 			);
 			name = Products;
@@ -157,8 +164,7 @@
 		B034D95D1A8903A900360A6C /* LookingForInterest */ = {
 			isa = PBXGroup;
 			children = (
-				B0F06B381A89E5B800FBC90C /* Utilities.h */,
-				B0F06B391A89E5B800FBC90C /* Utilities.m */,
+				B0F06B3B1A89F30500FBC90C /* Utilities */,
 				B0BF72DF1A8915CC00213C00 /* Objs */,
 				B0BF72EC1A8915ED00213C00 /* AppDelegate.h */,
 				B0BF72ED1A8915ED00213C00 /* AppDelegate.m */,
@@ -185,6 +191,7 @@
 		B034D95E1A8903A900360A6C /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				B0F06B4E1A8A0E8800FBC90C /* Img */,
 				B0BF72F91A8916A400213C00 /* AppIcon.appiconset */,
 				B0BF72DD1A8915C500213C00 /* main.m */,
 				B034D95F1A8903A900360A6C /* Info.plist */,
@@ -242,6 +249,26 @@
 			path = AppIcon.appiconset;
 			sourceTree = "<group>";
 		};
+		B0F06B3B1A89F30500FBC90C /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				B0F06B3E1A89F37500FBC90C /* Utilities.h */,
+				B0F06B3F1A89F37500FBC90C /* Utilities.m */,
+				B0F06B491A89FEB400FBC90C /* LoadingView.h */,
+				B0F06B4A1A89FEB400FBC90C /* LoadingView.m */,
+				B0F06B4C1A89FEC400FBC90C /* LoadingView.xib */,
+			);
+			name = Utilities;
+			sourceTree = "<group>";
+		};
+		B0F06B4E1A8A0E8800FBC90C /* Img */ = {
+			isa = PBXGroup;
+			children = (
+				B0F06B511A8A10E500FBC90C /* magnifier-4.png */,
+			);
+			name = Img;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -261,7 +288,7 @@
 			);
 			name = LookingForInterest;
 			productName = LookingForInterest;
-			productReference = B034D95B1A8903A900360A6C /* LookingForInterest.app */;
+			productReference = B034D95B1A8903A900360A6C /* 找東西.app */;
 			productType = "com.apple.product-type.application";
 		};
 		B034D9731A8903AA00360A6C /* LookingForInterestTests */ = {
@@ -327,12 +354,14 @@
 				B034D96A1A8903AA00360A6C /* Main.storyboard in Resources */,
 				B034D96F1A8903AA00360A6C /* LaunchScreen.xib in Resources */,
 				B034D96C1A8903AA00360A6C /* Images.xcassets in Resources */,
+				B0F06B521A8A10E500FBC90C /* magnifier-4.png in Resources */,
 				B0BF73071A8916A400213C00 /* Icon-40@2x.png in Resources */,
 				B0BF73051A8916A400213C00 /* Contents.json in Resources */,
 				B0BF730E1A8916A400213C00 /* Icon-Small@2x.png in Resources */,
 				B0BF730C1A8916A400213C00 /* Icon-76@2x.png in Resources */,
 				B0BF73081A8916A400213C00 /* Icon-40@3x.png in Resources */,
 				B0BF730A1A8916A400213C00 /* Icon-60@3x.png in Resources */,
+				B0F06B4D1A89FEC400FBC90C /* LoadingView.xib in Resources */,
 				B0BF730D1A8916A400213C00 /* Icon-Small.png in Resources */,
 				B0BF730B1A8916A400213C00 /* Icon-76.png in Resources */,
 				B0BF73061A8916A400213C00 /* Icon-40.png in Resources */,
@@ -395,10 +424,11 @@
 				B0BF72F61A8915ED00213C00 /* FilterTableViewController.m in Sources */,
 				B0BF72F51A8915ED00213C00 /* AppDelegate.m in Sources */,
 				B0F06B361A89B80500FBC90C /* MapViewCell.m in Sources */,
-				B0F06B3A1A89E5B800FBC90C /* Utilities.m in Sources */,
+				B0F06B401A89F37500FBC90C /* Utilities.m in Sources */,
 				B0BF72F71A8915ED00213C00 /* RequestSender.m in Sources */,
 				B0BF72E81A8915DD00213C00 /* MajorType.m in Sources */,
 				B0BF73121A891E9F00213C00 /* ExpandContractController.m in Sources */,
+				B0F06B4B1A89FEB400FBC90C /* LoadingView.m in Sources */,
 				B0BF72EB1A8915DD00213C00 /* Store.m in Sources */,
 				B0BF72E91A8915DD00213C00 /* Menu.m in Sources */,
 			);
@@ -525,7 +555,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = LookingForInterest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "找東西";
 			};
 			name = Debug;
 		};
@@ -536,7 +566,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = LookingForInterest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "找東西";
 			};
 			name = Release;
 		};

@@ -66,13 +66,22 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     self.locationManager = [[CLLocationManager alloc] init];
     self.locationManager.delegate = self;
+    [self.locationManager requestWhenInUseAuthorization];
+    [self.locationManager requestAlwaysAuthorization];
     self.locationManager.distanceFilter = kCLDistanceFilterNone;
     self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     [self.locationManager startUpdatingLocation];
     
+    if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied || [CLLocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined ) {
+        NSLog(@"%@",@"請開啟定位服務");
+    }
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+//    self.navigationController.title = @"找你有興趣的東西";
+    self.navigationItem.title = @"找你有興趣的東西";
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -107,13 +116,7 @@
     self.googleMap.settings.myLocationButton = YES;
     self.googleMap.myLocationEnabled = YES;
     self.googleMap.settings.compassButton = YES;
-    //    self.googleMap.accessibilityElementsHidden = NO;
-    
-    self.marker = [[GMSMarker alloc] init];
-    self.marker.position = self.currentLocation;
-    self.marker.snippet = @"You clicked me!";
-    self.marker.appearAnimation = kGMSMarkerAnimationPop;
-    self.marker.map = self.googleMap;
+        self.googleMap.accessibilityElementsHidden = NO;
     
 //    [self.mapView addSubview:self.googleMap];
 }
@@ -212,7 +215,7 @@
         storeMark.position = CLLocationCoordinate2DMake([store.latitude doubleValue],[store.longitude doubleValue]);
         storeMark.appearAnimation = kGMSMarkerAnimationPop;
         storeMark.snippet = store.name;
-        storeMark.icon = [UIImage imageNamed:@"Icon-Small@3x.png"];
+//        storeMark.icon = [UIImage imageNamed:@"Icon-Small@3x.png"];
         storeMark.map = self.googleMap;
     }
 }

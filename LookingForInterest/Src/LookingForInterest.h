@@ -10,6 +10,7 @@
 #import "Menu.h"
 #import <GoogleMaps/GoogleMaps.h>
 #import <CoreLocation/CoreLocation.h>
+#import "Utilities.h"
 
 #ifndef LookingForInteresting_LookingForInterest_h
 #define LookingForInteresting_LookingForInterest_h

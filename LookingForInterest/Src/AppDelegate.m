@@ -8,8 +8,12 @@
 
 #import "AppDelegate.h"
 #import <GoogleMaps/GoogleMaps.h>
+#import "Utilities.h"
+#import "ViewController.h"
 
 #define kGoogleAPIKey @"AIzaSyB0XF79VtFRkTn8N2CQqXMxeVSP82MiIh8"
+#define kLoadingViewTag 12345
+#define kNavigationBarHeight 64
 
 @interface AppDelegate ()
 
@@ -20,6 +24,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [GMSServices provideAPIKey:kGoogleAPIKey];
+    
     return YES;
 }
 
@@ -43,6 +48,26 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (void)startLoading {
+    NSArray *nibViews = [[NSBundle mainBundle] loadNibNamed:@"LoadingView" owner:self options:nil];
+    LoadingView *loadingView = [nibViews firstObject];
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    loadingView.frame = CGRectMake(0,0,CGRectGetWidth(screenRect), CGRectGetHeight(screenRect));
+    loadingView.indicatorView.layer.masksToBounds = YES;
+    loadingView.indicatorView.layer.cornerRadius = 5.0;
+    loadingView.tag = kLoadingViewTag;
+    [self.window addSubview:loadingView];
+}
+
+- (void)stopLoading {
+    for (UIView *view in [self.window subviews]) {
+        if (view.tag == kLoadingViewTag) {
+            [view removeFromSuperview];
+            break;
+        }
+    }
 }
 
 @end

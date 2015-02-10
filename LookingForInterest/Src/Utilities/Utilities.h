@@ -7,7 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "AppDelegate.h"
+#import "LoadingView.h"
 
 @interface Utilities : NSObject
-
++ (AppDelegate *)getAppDelegate;
++ (void)startLoading;
++ (void)stopLoading;
 @end
