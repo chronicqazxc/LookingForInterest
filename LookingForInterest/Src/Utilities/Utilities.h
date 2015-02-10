@@ -15,4 +15,5 @@
 + (void)startLoading;
 + (void)stopLoading;
 + (CGSize)getScreenPixel;
++ (UIView *)getNibWithName:(NSString *)name;
 @end

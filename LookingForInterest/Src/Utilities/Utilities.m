@@ -29,4 +29,9 @@
     CGSize screenSize = CGSizeMake(screenBounds.size.width * screenScale, screenBounds.size.height * screenScale);
     return screenSize;
 }
+
++ (UIView *)getNibWithName:(NSString *)name {
+    NSArray *nibViews = [[NSBundle mainBundle] loadNibNamed:name owner:self options:nil];
+    return [nibViews lastObject];
+}
 @end

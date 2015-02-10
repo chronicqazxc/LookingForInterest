@@ -45,14 +45,27 @@
                     </subviews>
                     <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                     <constraints>
-                        <constraint firstItem="Ih5-vh-Q0f" firstAttribute="leading" secondItem="xF9-Ww-Sp5" secondAttribute="leading" constant="36" id="3YJ-Cp-1v3"/>
-                        <constraint firstAttribute="width" constant="150" id="7oq-Xn-IPS"/>
-                        <constraint firstAttribute="trailing" secondItem="Exw-xv-quL" secondAttribute="trailing" constant="57" id="BxB-MK-BYI"/>
-                        <constraint firstAttribute="trailing" secondItem="Ih5-vh-Q0f" secondAttribute="trailing" constant="36" id="PKn-sU-IJf"/>
-                        <constraint firstItem="Exw-xv-quL" firstAttribute="leading" secondItem="xF9-Ww-Sp5" secondAttribute="leading" constant="56" id="VO4-b9-jY4"/>
-                        <constraint firstAttribute="height" constant="150" id="b5f-UX-ILP"/>
-                        <constraint firstItem="Exw-xv-quL" firstAttribute="top" secondItem="xF9-Ww-Sp5" secondAttribute="top" constant="57" id="qe2-Rm-l9r"/>
-                        <constraint firstAttribute="bottom" secondItem="Ih5-vh-Q0f" secondAttribute="bottom" constant="18" id="vqe-tw-oaT"/>
+                        <constraint firstItem="Ih5-vh-Q0f" firstAttribute="leading" secondItem="xF9-Ww-Sp5" secondAttribute="leading" constant="36" id="3YJ-Cp-1v3">
+                            <variation key="heightClass=regular-widthClass=compact" constant="25"/>
+                        </constraint>
+                        <constraint firstAttribute="width" constant="150" id="7oq-Xn-IPS">
+                            <variation key="heightClass=regular-widthClass=compact" constant="120"/>
+                        </constraint>
+                        <constraint firstItem="Exw-xv-quL" firstAttribute="leading" secondItem="xF9-Ww-Sp5" secondAttribute="leading" constant="42" id="ILz-TV-dVi"/>
+                        <constraint firstItem="Ih5-vh-Q0f" firstAttribute="top" secondItem="Exw-xv-quL" secondAttribute="bottom" constant="-0.5" id="MJb-2f-aCp"/>
+                        <constraint firstAttribute="trailing" secondItem="Ih5-vh-Q0f" secondAttribute="trailing" constant="36" id="PKn-sU-IJf">
+                            <variation key="heightClass=regular-widthClass=compact" constant="8"/>
+                        </constraint>
+                        <constraint firstAttribute="height" constant="150" id="b5f-UX-ILP">
+                            <variation key="heightClass=regular-widthClass=compact" constant="120"/>
+                        </constraint>
+                        <constraint firstAttribute="trailing" secondItem="Exw-xv-quL" secondAttribute="trailing" constant="41" id="hl1-7H-2aw"/>
+                        <constraint firstItem="Exw-xv-quL" firstAttribute="top" secondItem="xF9-Ww-Sp5" secondAttribute="top" constant="57" id="qe2-Rm-l9r">
+                            <variation key="heightClass=regular-widthClass=compact" constant="31"/>
+                        </constraint>
+                        <constraint firstAttribute="bottom" secondItem="Ih5-vh-Q0f" secondAttribute="bottom" constant="18" id="vqe-tw-oaT">
+                            <variation key="heightClass=regular-widthClass=compact" constant="32"/>
+                        </constraint>
                     </constraints>
                     <variation key="default">
                         <mask key="subviews">
@@ -62,10 +75,11 @@
                         <mask key="constraints">
                             <exclude reference="7oq-Xn-IPS"/>
                             <exclude reference="b5f-UX-ILP"/>
-                            <exclude reference="BxB-MK-BYI"/>
-                            <exclude reference="VO4-b9-jY4"/>
+                            <exclude reference="ILz-TV-dVi"/>
+                            <exclude reference="hl1-7H-2aw"/>
                             <exclude reference="qe2-Rm-l9r"/>
                             <exclude reference="3YJ-Cp-1v3"/>
+                            <exclude reference="MJb-2f-aCp"/>
                             <exclude reference="PKn-sU-IJf"/>
                             <exclude reference="vqe-tw-oaT"/>
                         </mask>
@@ -78,10 +92,11 @@
                         <mask key="constraints">
                             <include reference="7oq-Xn-IPS"/>
                             <include reference="b5f-UX-ILP"/>
-                            <include reference="BxB-MK-BYI"/>
-                            <include reference="VO4-b9-jY4"/>
+                            <include reference="ILz-TV-dVi"/>
+                            <include reference="hl1-7H-2aw"/>
                             <include reference="qe2-Rm-l9r"/>
                             <include reference="3YJ-Cp-1v3"/>
+                            <include reference="MJb-2f-aCp"/>
                             <include reference="PKn-sU-IJf"/>
                             <include reference="vqe-tw-oaT"/>
                         </mask>

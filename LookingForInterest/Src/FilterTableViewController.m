@@ -11,8 +11,17 @@
 #import "RequestSender.h"
 #import "ExpandContractController.h"
 #import "MapViewCell.h"
+#import <MGSwipeTableCell/MGSwipeButton.h>
+#import <MGSwipeTableCell/MGSwipeTableCell.h>
+#import "MenuCell.h"
+#import "StoreCell.h"
+#import "OpenMapCell.h"
 
 #define kCellIdentifier @"FilterTableViewCell"
+#define kOpenMapCellIdentifier @"OpenMapCell"
+#define kMapViewCellIdentifier @"MapViewCell"
+#define kMenuCellIdentifier @"MenuCell"
+#define kStoreCellIdentifier @"StoreCell"
 #define kStoryboardIdentifier @"FilterTableViewController"
 #define kMajorTypeSelected @"MajorTypeSelected"
 #define kMinorTypeSelected @"MinorTypeSelected"
@@ -24,7 +33,7 @@
 #define kMinorTypeNavTitle @"選擇小類"
 #define kRangeNavTitle @"選擇範圍"
 
-@interface FilterTableViewController () <RequestSenderDelegate>
+@interface FilterTableViewController () <RequestSenderDelegate, MGSwipeTableCellDelegate>
 @property (strong, nonatomic) NSMutableArray *dataArr;
 @property (strong, nonatomic) NSMutableArray *controlArr;
 @property (nonatomic) NSUInteger numberOfRow;
@@ -209,15 +218,17 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    CGFloat heightForRow = 44.4;
+    CGFloat heightForRow = 50;
     if (self.filterType == FilterTypeMenu || self.filterType == SearchStores) {
         if (indexPath.section == 0 && indexPath.row == 1) {
             heightForRow = kMapViewSize(self.mapSize).height;
+        } else if (indexPath.section == 0 && indexPath.row == 0){
+            heightForRow = 44;
         } else {
-            heightForRow = 44.4;
+            heightForRow = 60;
         }
     } else {
-        heightForRow = 44.4;
+        heightForRow = 60;
     }
     return heightForRow;
 }
@@ -236,11 +247,24 @@
     return heightForHeader;
 }
 
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    UIView *headerView = nil;
+    if (self.filterType == FilterTypeMenu  && section == 1) {
+        headerView = [Utilities getNibWithName:@"OptionTableHeader"];
+    } else if (self.filterType == SearchStores && section == 1) {
+        headerView = [Utilities getNibWithName:@"StoreTableHeader"];
+    }
+    return headerView;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = nil;
     if ((self.filterType == FilterTypeMenu || self.filterType == SearchStores) && (indexPath.section == 0 && indexPath.row == 1)) {
-        NSArray *nibViews = [[NSBundle mainBundle] loadNibNamed:@"MapViewCell" owner:self options:nil];
-        MapViewCell *mapViewCell = [nibViews lastObject];
+        MapViewCell *mapViewCell = nil;
+        mapViewCell = [tableView dequeueReusableCellWithIdentifier:kMapViewCellIdentifier];
+        if (!mapViewCell) {
+            mapViewCell = (MapViewCell *)[Utilities getNibWithName:kMapViewCellIdentifier];
+        }
         if (self.delegate && [self.delegate respondsToSelector:@selector(getContentView)]) {
             [mapViewCell.contentView addSubview:[self.delegate getContentView]];
             if ([self.delegate respondsToSelector:@selector(getContentSize)]) {
@@ -248,19 +272,99 @@
             }
         }
         cell = mapViewCell;
+    } else if (self.filterType == FilterTypeMenu && indexPath.section == 1) {
+        MenuCell *menuCell = nil;
+        menuCell = [tableView dequeueReusableCellWithIdentifier:kMenuCellIdentifier];
+        if (!menuCell) {
+            menuCell = (MenuCell *)[Utilities getNibWithName:kMenuCellIdentifier];
+        }
+        menuCell.titleLabel.text = [NSString stringWithFormat:@"%@：",[self getTitleByIndexPath:indexPath andType:self.filterType]];
+        menuCell.detailLabel.text = [self getDetailByIndexPath:indexPath andType:self.filterType];
+//        menuCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        cell = menuCell;
+    } else if (self.filterType == SearchStores && indexPath.section == 1) {
+        StoreCell *storeCell = nil;
+        storeCell = [tableView dequeueReusableCellWithIdentifier:kStoreCellIdentifier];
+        if (!storeCell) {
+            storeCell = (StoreCell *)[Utilities getNibWithName:kStoreCellIdentifier];
+        }
+        
+        storeCell.textLabel.font = [UIFont systemFontOfSize:16];
+        storeCell.textLabel.text = [self getTitleByIndexPath:indexPath andType:self.filterType];
+        storeCell.detailTextLabel.text = [self getDetailByIndexPath:indexPath andType:self.filterType];
+        storeCell.delegate = self;
+        
+        storeCell.rightSwipeSettings.transition = MGSwipeTransitionBorder;
+        storeCell.rightExpansion.buttonIndex = 0;
+        storeCell.rightExpansion.fillOnTrigger = NO;
+        storeCell.rightExpansion.fillOnTrigger = YES;
+        storeCell.rightButtons = [self createRightButtons:2];
+        
+        storeCell.leftSwipeSettings.transition = MGSwipeTransitionBorder;
+        storeCell.leftExpansion.buttonIndex = 0;
+        storeCell.leftExpansion.fillOnTrigger = NO;
+        storeCell.leftExpansion.fillOnTrigger = YES;
+        storeCell.leftButtons = [self createRightButtons:2];
+        
+        cell = storeCell;
+    } else if ((self.filterType == FilterTypeMenu || self.filterType == SearchStores) && indexPath.section == 0 && indexPath.row == 0) {
+        OpenMapCell *openMapCell = nil;
+        openMapCell = [tableView dequeueReusableCellWithIdentifier:kOpenMapCellIdentifier];
+        if (!openMapCell) {
+            openMapCell = (OpenMapCell *)[Utilities getNibWithName:kOpenMapCellIdentifier];
+        }
+        openMapCell.titleLabel.text = [self getTitleByIndexPath:indexPath andType:self.filterType];
+        cell = openMapCell;
     } else {
         cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier forIndexPath:indexPath];
         if (!cell) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:kCellIdentifier];
         }
+        cell.layer.borderWidth = 0.0;
+        
         NSString *title = @"";
         NSString *detail = @"";
         title = [self getTitleByIndexPath:indexPath andType:self.filterType];
-        detail = [self getDetailByIndexPath:indexPath andType:self.filterType];
+//        detail = [self getDetailByIndexPath:indexPath andType:self.filterType];
         cell.textLabel.text = title;
         cell.detailTextLabel.text = detail;
     }
     return cell;
+}
+
+-(NSArray *) createLeftButtons: (int) number
+{
+    NSMutableArray * result = [NSMutableArray array];
+    UIColor * colors[3] = {[UIColor greenColor],
+        [UIColor colorWithRed:0 green:0x99/255.0 blue:0xcc/255.0 alpha:1.0],
+        [UIColor colorWithRed:0.59 green:0.29 blue:0.08 alpha:1.0]};
+    UIImage * icons[3] = {[UIImage imageNamed:@"check.png"], [UIImage imageNamed:@"fav.png"], [UIImage imageNamed:@"menu.png"]};
+    for (int i = 0; i < number; ++i)
+    {
+        MGSwipeButton * button = [MGSwipeButton buttonWithTitle:@"" icon:icons[i] backgroundColor:colors[i] padding:10 callback:^BOOL(MGSwipeTableCell * sender){
+            NSLog(@"Convenience callback received (left).");
+            return YES;
+        }];
+        [result addObject:button];
+    }
+    return result;
+}
+
+-(NSArray *) createRightButtons: (int) number
+{
+    NSMutableArray * result = [NSMutableArray array];
+    NSString *titles[2] = {@"Navigate", @"More"};
+    UIColor  *colors[2] = {[UIColor redColor], [UIColor lightGrayColor]};
+    for (int i = 0; i < number; ++i)
+    {
+//        MGSwipeButton * button = [MGSwipeButton buttonWithTitle:titles[i] backgroundColor:colors[i] callback:^BOOL(MGSwipeTableCell * sender){
+//            NSLog(@"Convenience callback received (right).");
+//            return YES;
+//        }];
+        MGSwipeButton *button = [MGSwipeButton buttonWithTitle:titles[i] backgroundColor:colors[i] padding:15];
+        [result addObject:button];
+    }
+    return result;
 }
 
 - (NSString *)getTitleByIndexPath:(NSIndexPath *)indexPath andType:(FilterType)type {
@@ -311,7 +415,7 @@
         case FilterTypeRange:
             for (int i=0; i<[self.ranges count]; i++) {
                 if (i == indexPath.row) {
-                    title = [self.ranges objectAtIndex:indexPath.row];
+                    title = [NSString stringWithFormat:@"%@公里",[self.ranges objectAtIndex:indexPath.row]];
                     break;
                 }
             }
@@ -420,17 +524,19 @@
                 [expandController expandOrContractCellByIndexPaht:indexPath dataArray:self.dataArr controlArray:self.controlArr tableView:tableView];
                 
                 BOOL isExpand = [[self.controlArr[indexPath.section][indexPath.row] objectForKey:@"IsExpand"] intValue]?YES:NO;
-                UITableViewCell *cell = [self.filterTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+                OpenMapCell *cell = (OpenMapCell *)[self.filterTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
                 if (isExpand) {
-                    cell.textLabel.text = @"收起地圖";
+                    cell.titleLabel.text = @"收起地圖";
                 } else {
-                    cell.textLabel.text = @"打開地圖";
+                    cell.titleLabel.text = @"打開地圖";
                 }
                 
             } else if (indexPath.section == 1 && self.filterType == FilterTypeMenu) {
                 [self.delegate tableBeTapIn:indexPath];
             } else if (indexPath.section == 1 && self.filterType == SearchStores){
-                [self.delegate storeBeTapIn:indexPath];
+                if ([self.stores count]) {
+                    [self.delegate storeBeTapIn:indexPath];
+                }
             }
         }
     } else {
@@ -510,7 +616,7 @@
 //            CGSize screenSize = [Utilities getScreenPixel];
 //            NSUInteger zoom = [self calculateZoomLevelwithScreenWidth:screenSize.width];
             // km:2 zoom:13
-            [self.delegate reloadMapByStores:stores withZoomLevel:13.9];
+            [self.delegate reloadMapByStores:stores withZoomLevel:13.9999999];
         }
     }
     [Utilities stopLoading];
@@ -568,4 +674,49 @@
     [self.filterTableView reloadData];
     [Utilities stopLoading];
 }
+
+#pragma mark - MGSwipeTableCellDelegate
+- (BOOL) swipeTableCell:(MGSwipeTableCell *) cell canSwipe:(MGSwipeDirection) direction {
+    if (direction == MGSwipeDirectionLeftToRight) {
+        return YES;
+    } else {
+        return YES;
+    }
+}
+
+- (void) swipeTableCell:(MGSwipeTableCell *) cell didChangeSwipeState:(MGSwipeState) state gestureIsActive:(BOOL) gestureIsActive {
+    
+}
+
+- (BOOL) swipeTableCell:(MGSwipeTableCell *) cell tappedButtonAtIndex:(NSInteger) index direction:(MGSwipeDirection)direction fromExpansion:(BOOL) fromExpansion {
+    NSLog(@"index:%d",index);
+    NSLog(@"direction:%d",direction);
+    NSLog(@"fromExpansion:%d",fromExpansion);
+    if (index == 1) {
+        [self showOptionsByCell:cell];
+    }
+    return NO;
+}
+
+- (void)showOptionsByCell:(MGSwipeTableCell *)cell {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(showOptionsWithStore:)]) {
+        NSIndexPath *indexPath = [self.filterTableView indexPathForCell:cell];
+        [self.delegate showOptionsWithStore:[self.stores objectAtIndex:indexPath.row]];   
+    }
+}
+
+//- (NSArray *) swipeTableCell:(MGSwipeTableCell *) cell swipeButtonsForDirection:(MGSwipeDirection)direction
+//              swipeSettings:(MGSwipeSettings*) swipeSettings expansionSettings:(MGSwipeExpansionSettings*) expansionSettings {
+//    
+//    swipeSettings.transition = MGSwipeTransitionBorder;
+//    if (direction == MGSwipeDirectionRightToLeft) {
+//        expansionSettings.buttonIndex = 0;
+//        expansionSettings.fillOnTrigger = YES;
+//        return [self createRightButtons:2];
+//    } else {
+//        expansionSettings.buttonIndex = 0;
+//        expansionSettings.fillOnTrigger = NO;
+//        return [self createLeftButtons:0];
+//    }
+//}
 @end

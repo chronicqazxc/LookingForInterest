@@ -67,7 +67,7 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="AA4-lk-hYI" customClass="FilterTableView">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="AA4-lk-hYI" customClass="FilterTableView">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -104,7 +104,9 @@
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <color key="backgroundColor" red="0.2156862745" green="0.50196078430000002" blue="0.72941176470000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="yWJ-pD-vzb"/>
+                                    <constraint firstAttribute="height" constant="30" id="yWJ-pD-vzb">
+                                        <variation key="heightClass=regular-widthClass=compact" constant="40"/>
+                                    </constraint>
                                 </constraints>
                                 <state key="normal" title="開始找">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -132,7 +134,7 @@
                             </constraint>
                             <constraint firstItem="rGu-yR-n5I" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="Gzr-0X-WoB"/>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="oUF-6G-vyj" secondAttribute="bottom" constant="20" id="I6S-nj-3Eu">
-                                <variation key="heightClass=regular-widthClass=compact" constant="5"/>
+                                <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                             </constraint>
                             <constraint firstItem="AA4-lk-hYI" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="401" id="Igs-96-U7i">
                                 <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
@@ -207,7 +209,7 @@
         <scene sceneID="aJ2-hO-Tfx">
             <objects>
                 <tableViewController storyboardIdentifier="FilterTableViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="pih-WN-xls" customClass="FilterTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="DzP-7W-5G3">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="DzP-7W-5G3">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

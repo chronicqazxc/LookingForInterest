@@ -37,6 +37,7 @@
 - (UIView *)getContentView;
 - (CGSize)getContentSize;
 - (void)changeTitle:(NSString *)title;
+- (void)showOptionsWithStore:(Store *)store;
 @end
 
 @interface FilterTableView : UITableView

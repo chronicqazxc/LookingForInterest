@@ -11,8 +11,24 @@
 
 #define kSearch @"開始找"
 #define kBack @"上一頁"
-#define kTitle @"找你有興趣的東西"
+#define kTitle @"找循附近有興趣的事物"
 #define kFormattedTitle(title) [NSString stringWithFormat:@"找%@",title]
+
+#define kOptionsTitle(title) title?title:@""
+#define kOptionMessage(message) message?message:@""
+#define kCallActionTitle @"撥打電話"
+#define kWebSiteActionTitle @"參觀官網"
+#define kRateActionTitle @"我要評分"
+#define kPicturesActionTitle @"瀏覽店家圖片"
+#define kNavigateActionTitle @"導航"
+#define kCloseActionTitle @"關閉"
+
+// call
+// web site
+// rate
+// pictures
+// navigate
+// close
 
 @interface ViewController () <CLLocationManagerDelegate, GMSMapViewDelegate, FilterTableViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIView *mapView;
@@ -245,6 +261,37 @@
 
 - (void)changeTitle:(NSString *)title {
     [self setFormattedTitle:title];
+}
+
+- (void)showOptionsWithStore:(Store *)store {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:kOptionsTitle(store.name) message:kOptionMessage(@"你可以") preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertAction *callAction = [UIAlertAction actionWithTitle:kCallActionTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        NSLog(@"call");
+    }];
+    UIAlertAction *webSiteAction = [UIAlertAction actionWithTitle:kWebSiteActionTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        NSLog(@"web site");
+    }];
+    UIAlertAction *rateAction = [UIAlertAction actionWithTitle:kRateActionTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        NSLog(@"rate");
+    }];
+    UIAlertAction *pictureAction = [UIAlertAction actionWithTitle:kPicturesActionTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        NSLog(@"picture");
+    }];
+    UIAlertAction *navigateAction = [UIAlertAction actionWithTitle:kNavigateActionTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        NSLog(@"navigate");
+    }];
+    UIAlertAction *closeAction = [UIAlertAction actionWithTitle:kCloseActionTitle style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        NSLog(@"close");
+    }];
+    
+    [alertController addAction:callAction];
+    [alertController addAction:webSiteAction];
+    [alertController addAction:rateAction];
+    [alertController addAction:pictureAction];
+    [alertController addAction:navigateAction];
+    [alertController addAction:closeAction];
+    
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 #pragma mark -
 - (IBAction)buttonClicked:(UIButton *)sender {

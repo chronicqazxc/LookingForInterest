@@ -51,12 +51,11 @@
 }
 
 - (void)startLoading {
-    NSArray *nibViews = [[NSBundle mainBundle] loadNibNamed:@"LoadingView" owner:self options:nil];
-    LoadingView *loadingView = [nibViews firstObject];
+    LoadingView *loadingView = (LoadingView *)[Utilities getNibWithName:@"LoadingView"];
     CGRect screenRect = [[UIScreen mainScreen] bounds];
     loadingView.frame = CGRectMake(0,0,CGRectGetWidth(screenRect), CGRectGetHeight(screenRect));
     loadingView.indicatorView.layer.masksToBounds = YES;
-    loadingView.indicatorView.layer.cornerRadius = 5.0;
+    loadingView.indicatorView.layer.cornerRadius = 8.0;
     loadingView.tag = kLoadingViewTag;
     [self.window addSubview:loadingView];
 }
