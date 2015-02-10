@@ -7,7 +7,6 @@
 //
 
 #import "ViewController.h"
-#import <GoogleMaps/GoogleMaps.h>
 #import "FilterTableViewController.h"
 
 #define kSearch @"開始找"
@@ -116,7 +115,7 @@
     self.marker.appearAnimation = kGMSMarkerAnimationPop;
     self.marker.map = self.googleMap;
     
-    [self.mapView addSubview:self.googleMap];
+//    [self.mapView addSubview:self.googleMap];
 }
 
 #pragma mark - CLLocationManagerDelegate
@@ -162,7 +161,7 @@
 
 - (BOOL)didTapMyLocationButtonForMapView:(GMSMapView *)mapView {
     NSLog(@"%.2f, %.2f",mapView.myLocation.coordinate.latitude, mapView.myLocation.coordinate.longitude);
-    GMSCameraPosition *fancy = [GMSCameraPosition cameraWithLatitude:mapView.myLocation.coordinate.latitude longitude:mapView.myLocation.coordinate.longitude zoom:17 bearing:30 viewingAngle:45];
+    GMSCameraPosition *fancy = [GMSCameraPosition cameraWithLatitude:mapView.myLocation.coordinate.latitude longitude:mapView.myLocation.coordinate.longitude zoom:16 bearing:0 viewingAngle:0];
     [mapView setCamera:fancy];
     return YES;
 }
@@ -197,13 +196,13 @@
 
 - (void)storeBeTapIn:(NSIndexPath *)indexPath {
     Store *store = [self.storesOnMap objectAtIndex:indexPath.row];
-    GMSCameraPosition *fancy = [GMSCameraPosition cameraWithLatitude:[store.latitude doubleValue] longitude:[store.longitude doubleValue] zoom:16 bearing:30 viewingAngle:0];
+    GMSCameraPosition *fancy = [GMSCameraPosition cameraWithLatitude:[store.latitude doubleValue] longitude:[store.longitude doubleValue] zoom:16 bearing:0 viewingAngle:0];
     [self.googleMap setCamera:fancy];
 }
 
 - (CLLocationCoordinate2D)sendLocationBack {
     
-    return CLLocationCoordinate2DMake(25.0525463, 121.5560048);
+    return self.currentLocation;
 }
 
 - (void)reloadMapByStores:(NSArray *)stores {
@@ -219,11 +218,16 @@
 }
 
 - (UIView *)getContentView {
-    return self.mapView;
+    return self.googleMap;
+}
+
+- (CGSize)getContentSize {
+    return self.mapViewSize;
 }
 #pragma mark -
 - (IBAction)buttonClicked:(UIButton *)sender {
     if ([self.button.titleLabel.text isEqualToString:kSearch]) {
+        [self.googleMap clear];
         [self.button setTitle:kBack forState:UIControlStateNormal];
         [self.filterTableViewController search];
     } else {

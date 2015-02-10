@@ -10,6 +10,7 @@
 #import "LookingForInterest.h"
 #import "RequestSender.h"
 #import "ExpandContractController.h"
+#import "MapViewCell.h"
 
 #define kCellIdentifier @"FilterTableViewCell"
 #define kStoryboardIdentifier @"FilterTableViewController"
@@ -17,6 +18,8 @@
 #define kMinorTypeSelected @"MinorTypeSelected"
 #define kStoreSelected @"StoreSelected"
 #define kRangeSelected @"RangeSelected"
+#define kMapViewHeight @"200"
+#define kMapViewSize(mapSize) CGSizeMake(mapSize.width, mapSize.height)
 
 @interface FilterTableViewController () <RequestSenderDelegate>
 @property (strong, nonatomic) NSMutableArray *dataArr;
@@ -28,6 +31,7 @@
 @property (strong, nonatomic) NSArray *stores;
 @property (strong, nonatomic) NSArray *ranges;
 @property (strong, nonatomic) IBOutlet UITableView *filterTableViewStoryboard;
+@property (nonatomic) CGSize mapSize;
 @end
 
 @implementation FilterTableViewController
@@ -129,6 +133,9 @@
         case FilterTypeMenu:
             numberOfSections = 2;
             break;
+        case SearchStores:
+            numberOfSections = 2;
+            break;
         default:
             numberOfSections = 1;
             break;
@@ -155,10 +162,14 @@
             numberOfRows = [self.ranges count];
             break;
         case SearchStores:
-            if ([self.stores count]) {
-                numberOfRows = [self.stores count];
+            if (section == 1) {
+                if ([self.stores count]) {
+                    numberOfRows = [self.stores count];
+                } else {
+                    numberOfRows = 1;
+                }
             } else {
-                numberOfRows = 1;
+                numberOfRows = [self.controlArr[section] count];
             }
             break;
         default:
@@ -169,9 +180,9 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     CGFloat heightForRow = 44.4;
-    if (self.filterType == FilterTypeMenu) {
+    if (self.filterType == FilterTypeMenu || self.filterType == SearchStores) {
         if (indexPath.section == 0 && indexPath.row == 1) {
-            heightForRow = 100;
+            heightForRow = kMapViewSize(self.mapSize).height;
         } else {
             heightForRow = 44.4;
         }
@@ -183,7 +194,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     CGFloat heightForHeader = 0.0;
-    if (self.filterType == FilterTypeMenu) {
+    if (self.filterType == FilterTypeMenu || self.filterType == SearchStores) {
         if (section == 1) {
             heightForHeader = 50.0;
         } else {
@@ -196,22 +207,28 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier forIndexPath:indexPath];
-    if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:kCellIdentifier];
-    }
-    NSString *title = @"";
-    NSString *detail = @"";
-    title = [self getTitleByIndexPath:indexPath andType:self.filterType];
-    detail = [self getDetailByIndexPath:indexPath andType:self.filterType];
-    cell.textLabel.text = title;
-    cell.detailTextLabel.text = detail;
-    
-    if (indexPath.section == 0 && indexPath.row == 1) {
+    UITableViewCell *cell = nil;
+    if ((self.filterType == FilterTypeMenu || self.filterType == SearchStores) && (indexPath.section == 0 && indexPath.row == 1)) {
+        NSArray *nibViews = [[NSBundle mainBundle] loadNibNamed:@"MapViewCell" owner:self options:nil];
+        MapViewCell *mapViewCell = [nibViews lastObject];
         if (self.delegate && [self.delegate respondsToSelector:@selector(getContentView)]) {
-            [cell addSubview:[self.delegate getContentView]];
+            [mapViewCell.contentView addSubview:[self.delegate getContentView]];
+            if ([self.delegate respondsToSelector:@selector(getContentSize)]) {
+                self.mapSize = CGSizeMake([self.delegate getContentSize].width, [self.delegate getContentSize].height);
+            }
         }
-        
+        cell = mapViewCell;
+    } else {
+        cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier forIndexPath:indexPath];
+        if (!cell) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:kCellIdentifier];
+        }
+        NSString *title = @"";
+        NSString *detail = @"";
+        title = [self getTitleByIndexPath:indexPath andType:self.filterType];
+        detail = [self getDetailByIndexPath:indexPath andType:self.filterType];
+        cell.textLabel.text = title;
+        cell.detailTextLabel.text = detail;
     }
     return cell;
 }
@@ -270,15 +287,24 @@
             }
             break;
         case SearchStores:
-            if ([self.stores count]) {
-                for (int i=0; i<[self.stores count]; i++) {
-                    if (i == indexPath.row) {
-                        title = ((Store *)[self.stores objectAtIndex:indexPath.row]).name;
-                        break;
-                    }
+            if (indexPath.section == 0 && indexPath.row == 0) {
+                BOOL isExpand = [[self.controlArr[indexPath.section][indexPath.row] objectForKey:@"IsExpand"] intValue]?YES:NO;
+                if (isExpand) {
+                    title = @"收起地圖";
+                } else {
+                    title = @"打開地圖";
                 }
             } else {
-                title = @"找不到...";
+                if ([self.stores count]) {
+                    for (int i=0; i<[self.stores count]; i++) {
+                        if (i == indexPath.row) {
+                            title = ((Store *)[self.stores objectAtIndex:indexPath.row]).name;
+                            break;
+                        }
+                    }
+                } else {
+                    title = @"找不到...";
+                }
             }
             break;
         default:
@@ -340,10 +366,12 @@
             }
             break;
         case SearchStores:
-            for (int i=0; i<[self.stores count]; i++) {
-                if (i == indexPath.row) {
-                    detail = [NSString stringWithFormat:@"距離%.2f公里",[((Store *)[self.stores objectAtIndex:indexPath.row]).distance doubleValue]];
-                    break;
+            if (indexPath.section == 1) {
+                for (int i=0; i<[self.stores count]; i++) {
+                    if (i == indexPath.row) {
+                        detail = [NSString stringWithFormat:@"距離%.2f公里",[((Store *)[self.stores objectAtIndex:indexPath.row]).distance doubleValue]];
+                        break;
+                    }
                 }
             }
             break;
@@ -355,15 +383,12 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
-    if (self.delegate && [self.delegate respondsToSelector:@selector(tableBeTapIn:)]) {
-        if (self.filterType == FilterTypeMenu) {
-            
-            ExpandContractController *expandController = [[ExpandContractController alloc] init];
-            [expandController expandOrContractCellByIndexPaht:indexPath dataArray:self.dataArr controlArray:self.controlArr tableView:tableView];
-            
-            if (indexPath.section == 1) {
-                [self.delegate tableBeTapIn:indexPath];
-            } else if (indexPath.section == 0) {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(tableBeTapIn:)] && [self.delegate respondsToSelector:@selector(storeBeTapIn:)]) {
+        if (self.filterType == FilterTypeMenu || self.filterType == SearchStores) {
+            if (indexPath.section == 0) {
+                ExpandContractController *expandController = [[ExpandContractController alloc] init];
+                [expandController expandOrContractCellByIndexPaht:indexPath dataArray:self.dataArr controlArray:self.controlArr tableView:tableView];
+                
                 BOOL isExpand = [[self.controlArr[indexPath.section][indexPath.row] objectForKey:@"IsExpand"] intValue]?YES:NO;
                 UITableViewCell *cell = [self.filterTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
                 if (isExpand) {
@@ -371,9 +396,10 @@
                 } else {
                     cell.textLabel.text = @"打開地圖";
                 }
-            }
-        } else {
-            if ([self.delegate respondsToSelector:@selector(storeBeTapIn:)]) {
+                
+            } else if (indexPath.section == 1 && self.filterType == FilterTypeMenu) {
+                [self.delegate tableBeTapIn:indexPath];
+            } else if (indexPath.section == 1 && self.filterType == SearchStores){
                 [self.delegate storeBeTapIn:indexPath];
             }
         }
@@ -421,7 +447,7 @@
     [expandController setNumberOfSection:2 dataArray:self.dataArr controlArray:self.controlArr];
     
     [expandController setNumberOfParent:1 andHeigh:@"44" section:0 dataArray:self.dataArr controlArray:self.controlArr];
-    [expandController setNumberOfChild:@"1" andHeigh:@"100" section:0 withParentIndex:0 dataArray:self.dataArr controlArray:self.controlArr];
+    [expandController setNumberOfChild:@"1" andHeigh:kMapViewHeight section:0 withParentIndex:0 dataArray:self.dataArr controlArray:self.controlArr];
     
     [expandController setNumberOfParent:[menu.numberOfRows integerValue] andHeigh:@"44" section:1 dataArray:self.dataArr controlArray:self.controlArr];
 }

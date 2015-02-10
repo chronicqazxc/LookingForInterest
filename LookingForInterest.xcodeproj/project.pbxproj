@@ -33,6 +33,9 @@
 		B0BF730E1A8916A400213C00 /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0BF73031A8916A400213C00 /* Icon-Small@2x.png */; };
 		B0BF730F1A8916A400213C00 /* Icon-Small@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0BF73041A8916A400213C00 /* Icon-Small@3x.png */; };
 		B0BF73121A891E9F00213C00 /* ExpandContractController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0BF73111A891E9F00213C00 /* ExpandContractController.m */; };
+		B0F06B361A89B80500FBC90C /* MapViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B0F06B341A89B80500FBC90C /* MapViewCell.m */; };
+		B0F06B371A89B80500FBC90C /* MapViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0F06B351A89B80500FBC90C /* MapViewCell.xib */; };
+		B0F06B3A1A89E5B800FBC90C /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = B0F06B391A89E5B800FBC90C /* Utilities.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,6 +90,11 @@
 		B0BF73041A8916A400213C00 /* Icon-Small@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small@3x.png"; sourceTree = "<group>"; };
 		B0BF73101A891E9F00213C00 /* ExpandContractController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExpandContractController.h; path = Src/ExpandContractController.h; sourceTree = "<group>"; };
 		B0BF73111A891E9F00213C00 /* ExpandContractController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ExpandContractController.m; path = Src/ExpandContractController.m; sourceTree = "<group>"; };
+		B0F06B331A89B80500FBC90C /* MapViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapViewCell.h; path = Src/MapViewCell.h; sourceTree = "<group>"; };
+		B0F06B341A89B80500FBC90C /* MapViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MapViewCell.m; path = Src/MapViewCell.m; sourceTree = "<group>"; };
+		B0F06B351A89B80500FBC90C /* MapViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MapViewCell.xib; path = Src/MapViewCell.xib; sourceTree = "<group>"; };
+		B0F06B381A89E5B800FBC90C /* Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Utilities.h; path = Src/Utilities.h; sourceTree = "<group>"; };
+		B0F06B391A89E5B800FBC90C /* Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Utilities.m; path = Src/Utilities.m; sourceTree = "<group>"; };
 		C1D1C794A2B62ED9A85DC3D8 /* libPods-LookingForInterest.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LookingForInterest.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -149,9 +157,14 @@
 		B034D95D1A8903A900360A6C /* LookingForInterest */ = {
 			isa = PBXGroup;
 			children = (
+				B0F06B381A89E5B800FBC90C /* Utilities.h */,
+				B0F06B391A89E5B800FBC90C /* Utilities.m */,
 				B0BF72DF1A8915CC00213C00 /* Objs */,
 				B0BF72EC1A8915ED00213C00 /* AppDelegate.h */,
 				B0BF72ED1A8915ED00213C00 /* AppDelegate.m */,
+				B0F06B331A89B80500FBC90C /* MapViewCell.h */,
+				B0F06B341A89B80500FBC90C /* MapViewCell.m */,
+				B0F06B351A89B80500FBC90C /* MapViewCell.xib */,
 				B0BF72EE1A8915ED00213C00 /* FilterTableViewController.h */,
 				B0BF72EF1A8915ED00213C00 /* FilterTableViewController.m */,
 				B0BF73101A891E9F00213C00 /* ExpandContractController.h */,
@@ -324,6 +337,7 @@
 				B0BF730B1A8916A400213C00 /* Icon-76.png in Resources */,
 				B0BF73061A8916A400213C00 /* Icon-40.png in Resources */,
 				B0BF730F1A8916A400213C00 /* Icon-Small@3x.png in Resources */,
+				B0F06B371A89B80500FBC90C /* MapViewCell.xib in Resources */,
 				B0BF73091A8916A400213C00 /* Icon-60@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -380,6 +394,8 @@
 				B0BF72EA1A8915DD00213C00 /* MinorType.m in Sources */,
 				B0BF72F61A8915ED00213C00 /* FilterTableViewController.m in Sources */,
 				B0BF72F51A8915ED00213C00 /* AppDelegate.m in Sources */,
+				B0F06B361A89B80500FBC90C /* MapViewCell.m in Sources */,
+				B0F06B3A1A89E5B800FBC90C /* Utilities.m in Sources */,
 				B0BF72F71A8915ED00213C00 /* RequestSender.m in Sources */,
 				B0BF72E81A8915DD00213C00 /* MajorType.m in Sources */,
 				B0BF73121A891E9F00213C00 /* ExpandContractController.m in Sources */,

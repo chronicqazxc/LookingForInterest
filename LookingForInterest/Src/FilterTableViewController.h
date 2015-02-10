@@ -35,6 +35,7 @@
 - (CLLocationCoordinate2D)sendLocationBack;
 - (void)reloadMapByStores:(NSArray *)stores;
 - (UIView *)getContentView;
+- (CGSize)getContentSize;
 @end
 
 @interface FilterTableView : UITableView

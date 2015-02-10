@@ -158,17 +158,17 @@
                                 <exclude reference="oUF-6G-vyj"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="GD1-3Q-6KP"/>
-                                <exclude reference="Gzr-0X-WoB"/>
-                                <exclude reference="QiB-wu-ype"/>
-                                <exclude reference="fMY-eZ-dxf"/>
+                                <exclude reference="I6S-nj-3Eu"/>
+                                <exclude reference="fcp-dy-25C"/>
                                 <exclude reference="Igs-96-U7i"/>
                                 <exclude reference="IxD-PL-YQo"/>
                                 <exclude reference="OX8-bV-3Iu"/>
                                 <exclude reference="UZ8-V4-YTh"/>
                                 <exclude reference="oc0-EL-Zci"/>
-                                <exclude reference="fcp-dy-25C"/>
-                                <exclude reference="I6S-nj-3Eu"/>
+                                <exclude reference="GD1-3Q-6KP"/>
+                                <exclude reference="Gzr-0X-WoB"/>
+                                <exclude reference="QiB-wu-ype"/>
+                                <exclude reference="fMY-eZ-dxf"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -178,17 +178,17 @@
                                 <include reference="oUF-6G-vyj"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="GD1-3Q-6KP"/>
-                                <include reference="Gzr-0X-WoB"/>
-                                <include reference="QiB-wu-ype"/>
-                                <include reference="fMY-eZ-dxf"/>
+                                <include reference="I6S-nj-3Eu"/>
+                                <include reference="fcp-dy-25C"/>
                                 <include reference="Igs-96-U7i"/>
                                 <include reference="IxD-PL-YQo"/>
                                 <include reference="OX8-bV-3Iu"/>
                                 <include reference="UZ8-V4-YTh"/>
                                 <include reference="oc0-EL-Zci"/>
-                                <include reference="fcp-dy-25C"/>
-                                <include reference="I6S-nj-3Eu"/>
+                                <include reference="GD1-3Q-6KP"/>
+                                <include reference="Gzr-0X-WoB"/>
+                                <include reference="QiB-wu-ype"/>
+                                <include reference="fMY-eZ-dxf"/>
                             </mask>
                         </variation>
                     </view>
@@ -250,7 +250,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5Z9-6i-qhQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2037" y="128.25"/>
+            <point key="canvasLocation" x="1884" y="136.5"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="T5D-9e-ND2">

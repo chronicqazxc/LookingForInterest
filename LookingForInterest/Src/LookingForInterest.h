@@ -8,6 +8,7 @@
 
 #import "Store.h"
 #import "Menu.h"
+#import <GoogleMaps/GoogleMaps.h>
 #import <CoreLocation/CoreLocation.h>
 
 #ifndef LookingForInteresting_LookingForInterest_h
