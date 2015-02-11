@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OpenMapHeaderController">
+            <connections>
+                <outlet property="openMapButton" destination="Tk4-DQ-aw2" id="WZN-Hz-RtB"/>
+                <outlet property="openMapIcon" destination="9ME-pG-tZO" id="V64-rw-lwe"/>
+                <outlet property="titleLabel" destination="eZ5-5G-7CY" id="BTp-Vv-smc"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="打開地圖" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eZ5-5G-7CY">
+                    <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="xDe-vb-0B6"/>
+                        <constraint firstAttribute="width" constant="74" id="z66-1O-ZjN"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="xDe-vb-0B6"/>
+                            <exclude reference="z66-1O-ZjN"/>
+                        </mask>
+                    </variation>
+                    <variation key="heightClass=regular-widthClass=compact">
+                        <mask key="constraints">
+                            <include reference="xDe-vb-0B6"/>
+                            <include reference="z66-1O-ZjN"/>
+                        </mask>
+                    </variation>
+                </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow-down.png" translatesAutoresizingMaskIntoConstraints="NO" id="9ME-pG-tZO">
+                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="2T7-2S-T7m"/>
+                        <constraint firstAttribute="width" constant="40" id="tjs-lq-i5D"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="2T7-2S-T7m"/>
+                            <exclude reference="tjs-lq-i5D"/>
+                        </mask>
+                    </variation>
+                    <variation key="heightClass=regular-widthClass=compact">
+                        <mask key="constraints">
+                            <include reference="2T7-2S-T7m"/>
+                            <include reference="tjs-lq-i5D"/>
+                        </mask>
+                    </variation>
+                </imageView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tk4-DQ-aw2">
+                    <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                    <state key="normal">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="clickOpenMap:" destination="-1" eventType="touchUpInside" id="VJp-Je-hmq"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="0.17254901959999999" green="0.41960784309999999" blue="0.6705882353" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="Tk4-DQ-aw2" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="1h2-4G-AHF"/>
+                <constraint firstItem="9ME-pG-tZO" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="5" id="7Jh-Dc-Ozg"/>
+                <constraint firstItem="Tk4-DQ-aw2" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="9nz-hz-z2p"/>
+                <constraint firstItem="eZ5-5G-7CY" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="14" id="HRM-Z7-e22"/>
+                <constraint firstItem="eZ5-5G-7CY" firstAttribute="leading" secondItem="9ME-pG-tZO" secondAttribute="trailing" constant="8" id="W4s-QZ-iSL">
+                    <variation key="heightClass=regular-widthClass=compact" constant="-3"/>
+                </constraint>
+                <constraint firstAttribute="bottom" secondItem="Tk4-DQ-aw2" secondAttribute="bottom" id="jRV-5Z-BCS"/>
+                <constraint firstAttribute="trailing" secondItem="Tk4-DQ-aw2" secondAttribute="trailing" constant="255" id="szi-hK-KEt">
+                    <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                </constraint>
+                <constraint firstAttribute="centerX" secondItem="9ME-pG-tZO" secondAttribute="centerX" constant="45" id="zIA-CN-KVd">
+                    <variation key="heightClass=regular-widthClass=compact" constant="42"/>
+                </constraint>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <variation key="default">
+                <mask key="subviews">
+                    <exclude reference="eZ5-5G-7CY"/>
+                    <exclude reference="9ME-pG-tZO"/>
+                    <exclude reference="Tk4-DQ-aw2"/>
+                </mask>
+                <mask key="constraints">
+                    <exclude reference="1h2-4G-AHF"/>
+                    <exclude reference="9nz-hz-z2p"/>
+                    <exclude reference="jRV-5Z-BCS"/>
+                    <exclude reference="szi-hK-KEt"/>
+                    <exclude reference="7Jh-Dc-Ozg"/>
+                    <exclude reference="zIA-CN-KVd"/>
+                    <exclude reference="HRM-Z7-e22"/>
+                    <exclude reference="W4s-QZ-iSL"/>
+                </mask>
+            </variation>
+            <variation key="heightClass=regular-widthClass=compact">
+                <mask key="subviews">
+                    <include reference="eZ5-5G-7CY"/>
+                    <include reference="9ME-pG-tZO"/>
+                    <include reference="Tk4-DQ-aw2"/>
+                </mask>
+                <mask key="constraints">
+                    <include reference="1h2-4G-AHF"/>
+                    <include reference="9nz-hz-z2p"/>
+                    <include reference="jRV-5Z-BCS"/>
+                    <include reference="szi-hK-KEt"/>
+                    <include reference="7Jh-Dc-Ozg"/>
+                    <include reference="zIA-CN-KVd"/>
+                    <include reference="HRM-Z7-e22"/>
+                    <include reference="W4s-QZ-iSL"/>
+                </mask>
+            </variation>
+            <point key="canvasLocation" x="219" y="240"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="arrow-down.png" width="106" height="90"/>
+    </resources>
+</document>

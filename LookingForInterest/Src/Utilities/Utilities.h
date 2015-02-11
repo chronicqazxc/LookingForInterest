@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "AppDelegate.h"
 #import "LoadingView.h"
+#import "LookingForInterest.h"
 
 @interface Utilities : NSObject
 + (AppDelegate *)getAppDelegate;
@@ -16,4 +17,6 @@
 + (void)stopLoading;
 + (CGSize)getScreenPixel;
 + (UIView *)getNibWithName:(NSString *)name;
++ (void)addShadowToView:(UIView *)view offset:(CGSize)size;
++ (UIImage *)rotateImage:(UIImage *)originImage toDirection:(NSInteger)direction withScale:(CGFloat)scale;
 @end

@@ -35,4 +35,12 @@ typedef enum filterType {
     SearchStores
 } FilterType;
 
+typedef NS_ENUM(NSInteger, Direction) {
+    DirectionUp = 0,
+    DirectionLeft,
+    DirectionDown,
+    DirectionRight,
+    DirectionMirror
+};
+
 #endif

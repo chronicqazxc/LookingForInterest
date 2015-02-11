@@ -8,9 +8,13 @@
 
 #import "ViewController.h"
 #import "FilterTableViewController.h"
+#import "LookingForInterest.h"
+
+#define kMagnifierImg @"iconmonstr-magnifier-3-icon-256.png"
+#define kLeftArrowImg @"arrow-left@2x.png"
 
 #define kSearch @"開始找"
-#define kBack @"上一頁"
+#define kBack @"返回"
 #define kTitle @"找循附近有興趣的事物"
 #define kFormattedTitle(title) [NSString stringWithFormat:@"找%@",title]
 
@@ -46,6 +50,11 @@
 @property (weak, nonatomic) IBOutlet UIButton *button;
 @property (strong, nonatomic) NSArray *storesOnMap;
 - (IBAction)buttonClicked:(UIButton *)sender;
+@property (weak, nonatomic) IBOutlet UILabel *searchViewTitle;
+@property (weak, nonatomic) IBOutlet UIImageView *searchViewIcon;
+@property (strong, nonatomic) UIImage *mirrorMagnifierImage;
+@property (weak, nonatomic) IBOutlet UIButton *navigationButton;
+- (IBAction)clickNavigationTitle:(UIButton *)sender;
 @end
 
 @implementation ViewController
@@ -79,6 +88,7 @@
     self.currentLocation = CLLocationCoordinate2DMake(0.0, 0.0);
     self.isFirstEntry = YES;
     self.isSendForMenu = NO;
+    self.searchViewTitle.text = kSearch;
     self.storesOnMap = [NSArray array];
 }
 
@@ -99,15 +109,17 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    self.mirrorMagnifierImage = [Utilities rotateImage:[UIImage imageNamed:kMagnifierImg] toDirection:DirectionMirror withScale:1.0];
+    self.searchViewIcon.image = self.mirrorMagnifierImage;
     [self setOriginalTitle];
 }
 
 - (void)setOriginalTitle {
-    self.navigationItem.title = kTitle;
+    [self.navigationButton setTitle:kTitle forState:UIControlStateNormal];
 }
 
 - (void)setFormattedTitle:(NSString *)title {
-    self.navigationItem.title = kFormattedTitle(title);
+    [self.navigationButton setTitle:kFormattedTitle(title) forState:UIControlStateNormal];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -144,7 +156,7 @@
     self.googleMap.settings.myLocationButton = YES;
     self.googleMap.myLocationEnabled = YES;
     self.googleMap.settings.compassButton = YES;
-        self.googleMap.accessibilityElementsHidden = NO;
+    self.googleMap.accessibilityElementsHidden = NO;
     
 //    [self.mapView addSubview:self.googleMap];
 }
@@ -172,7 +184,6 @@
 }
 
 #pragma mark - GMSMapViewDelegate
-
 - (void)mapView:(GMSMapView *)mapView willMove:(BOOL)gesture {
     //    [mapView clear];
 }
@@ -195,6 +206,48 @@
     GMSCameraPosition *fancy = [GMSCameraPosition cameraWithLatitude:mapView.myLocation.coordinate.latitude longitude:mapView.myLocation.coordinate.longitude zoom:16 bearing:0 viewingAngle:0];
     [mapView setCamera:fancy];
     return YES;
+}
+
+- (UIView *)mapView:(GMSMapView *)mapView markerInfoWindow:(GMSMarker *)marker {
+    //selectedStoreIndexPath
+    
+    Store *store = nil;
+    for (int i=0; i<[self.storesOnMap count]; i++) {
+        store = [self.storesOnMap objectAtIndex:i];
+        if ([store.storeID isEqualToString:marker.title]) {
+            self.filterTableViewController.selectedStoreIndexPath = [NSIndexPath indexPathForRow:i inSection:1];
+            break;
+        }
+    }
+    
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0,0,100,100)];
+    view.backgroundColor = [UIColor yellowColor];
+    return view;
+}
+
+- (void)mapView:(GMSMapView *)mapView didLongPressAtCoordinate:(CLLocationCoordinate2D)coordinate {
+    
+}
+
+/**
+ * Called when dragging has been initiated on a marker.
+ */
+- (void)mapView:(GMSMapView *)mapView didBeginDraggingMarker:(GMSMarker *)marker {
+    
+}
+
+/**
+ * Called after dragging of a marker ended.
+ */
+- (void)mapView:(GMSMapView *)mapView didEndDraggingMarker:(GMSMarker *)marker {
+    
+}
+
+/**
+ * Called while a marker is dragged.
+ */
+- (void)mapView:(GMSMapView *)mapView didDragMarker:(GMSMarker *)marker {
+    
 }
 
 #pragma mark - FilterTableViewControllerDelegate
@@ -246,7 +299,7 @@
         storeMark.position = CLLocationCoordinate2DMake([store.latitude doubleValue],[store.longitude doubleValue]);
         storeMark.appearAnimation = kGMSMarkerAnimationPop;
         storeMark.snippet = store.name;
-//        storeMark.icon = [UIImage imageNamed:@"Icon-Small@3x.png"];
+        storeMark.title = store.storeID;
         storeMark.map = self.googleMap;
     }
 }
@@ -295,14 +348,21 @@
 }
 #pragma mark -
 - (IBAction)buttonClicked:(UIButton *)sender {
-    if ([self.button.titleLabel.text isEqualToString:kSearch]) {
+    if ([self.searchViewTitle.text isEqualToString:kSearch]) {
         [self.googleMap clear];
-        [self.button setTitle:kBack forState:UIControlStateNormal];
+        self.searchViewTitle.text = kBack;
+        self.searchViewIcon.image = [UIImage imageNamed:kLeftArrowImg];
+        self.searchViewIcon.hidden = NO;
         [self.filterTableViewController search];
     } else {
-        [self.button setTitle:kSearch forState:UIControlStateNormal];
+        self.searchViewTitle.text = kSearch;
+        self.searchViewIcon.hidden = NO;
+        self.searchViewIcon.image = self.mirrorMagnifierImage;
         [self.filterTableViewController back];
         [self setOriginalTitle];
     }
+}
+- (IBAction)clickNavigationTitle:(UIButton *)sender {
+    [self.filterTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
 }
 @end

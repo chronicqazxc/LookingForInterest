@@ -16,7 +16,11 @@
 #import "MenuCell.h"
 #import "StoreCell.h"
 #import "OpenMapCell.h"
+#import "OpenMapHeaderController.h"
+#import "StoreTableHeaderViewController.h"
 
+#define kUpArrowImg @"arrow-up@2x.png"
+#define kDownArrowImg @"arrow-down@2x.png"
 #define kCellIdentifier @"FilterTableViewCell"
 #define kOpenMapCellIdentifier @"OpenMapCell"
 #define kMapViewCellIdentifier @"MapViewCell"
@@ -32,6 +36,8 @@
 #define kMajorTypeNavTitle @"選擇大類"
 #define kMinorTypeNavTitle @"選擇小類"
 #define kRangeNavTitle @"選擇範圍"
+#define kOpenMapMessage @"打開地圖"
+#define kCloseMapMessage @"收起地圖"
 
 @interface FilterTableViewController () <RequestSenderDelegate, MGSwipeTableCellDelegate>
 @property (strong, nonatomic) NSMutableArray *dataArr;
@@ -44,6 +50,10 @@
 @property (strong, nonatomic) NSArray *ranges;
 @property (strong, nonatomic) IBOutlet UITableView *filterTableViewStoryboard;
 @property (nonatomic) CGSize mapSize;
+@property (strong, nonatomic) OpenMapHeaderController *openMapHeader;
+@property (strong, nonatomic) StoreTableHeaderViewController *storeHeader;
+@property (strong, nonatomic) UIImage *upArrowImage;
+@property (strong, nonatomic) UIImage *downArrowImage;
 @end
 
 @implementation FilterTableViewController
@@ -52,9 +62,7 @@
     self = [super init];
     if (self) {
         if (self.filterTableView) {
-            self.filterTableView.dataSource = self;
-            self.filterTableView.delegate = self;
-            self.numberOfRow = 0;
+            [self initValue];
         }
     }
     return self;
@@ -64,12 +72,17 @@
     self = [super initWithCoder:aDecoder];
     if (self) {
         if (self.filterTableViewStoryboard) {
-            self.filterTableViewStoryboard.dataSource = self;
-            self.filterTableViewStoryboard.delegate = self;
-            self.numberOfRow = 0;
+            [self initValue];
         }
     }
     return self;
+}
+
+- (void)initValue {
+    self.filterTableViewStoryboard.dataSource = self;
+    self.filterTableViewStoryboard.delegate = self;
+    self.numberOfRow = 0;
+    self.openMapHeader = nil;
 }
 
 - (void)viewDidLoad {
@@ -223,9 +236,11 @@
         if (indexPath.section == 0 && indexPath.row == 1) {
             heightForRow = kMapViewSize(self.mapSize).height;
         } else if (indexPath.section == 0 && indexPath.row == 0){
-            heightForRow = 44;
-        } else {
+            heightForRow = 0;
+        } else if (self.filterType == FilterTypeMenu){
             heightForRow = 60;
+        } else {
+            heightForRow = 120;
         }
     } else {
         heightForRow = 60;
@@ -236,11 +251,12 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     CGFloat heightForHeader = 0.0;
     if (self.filterType == FilterTypeMenu || self.filterType == SearchStores) {
-        if (section == 1) {
-            heightForHeader = 50.0;
-        } else {
-            heightForHeader = 0.0;
-        }
+//        if (section == 1) {
+//            heightForHeader = 50.0;
+//        } else {
+//            heightForHeader = 0.0;
+//        }
+        heightForHeader = 50.0;
     } else {
         heightForHeader = 0.0;
     }
@@ -251,10 +267,56 @@
     UIView *headerView = nil;
     if (self.filterType == FilterTypeMenu  && section == 1) {
         headerView = [Utilities getNibWithName:@"OptionTableHeader"];
+        headerView.frame = CGRectMake(0,0,CGRectGetWidth(headerView.frame),50.0);
+        [Utilities addShadowToView:headerView offset:CGSizeMake(0.0f, -5.0f)];
     } else if (self.filterType == SearchStores && section == 1) {
-        headerView = [Utilities getNibWithName:@"StoreTableHeader"];
+        if (!self.storeHeader) {
+            self.storeHeader = [[StoreTableHeaderViewController alloc] initWithNibName:@"StoreTableHeaderViewController" bundle:nil];
+            self.storeHeader.caller = self;
+            self.storeHeader.callBackMethod = @selector(clickStoreTitle);
+        }
+        self.storeHeader.view.frame = CGRectMake(0,0,CGRectGetWidth(self.storeHeader.view.frame),50.0);
+        [Utilities addShadowToView:self.storeHeader.view offset:CGSizeMake(0.0f, -5.0f)];
+        headerView = self.storeHeader.view;
+        
+    } else if ((self.filterType == FilterTypeMenu || self.filterType == SearchStores) && section == 0) {
+        if (!self.openMapHeader) {
+            self.openMapHeader = [[OpenMapHeaderController alloc] initWithNibName:@"OpenMapHeaderController" bundle:nil];
+            self.openMapHeader.caller = self;
+            self.openMapHeader.callbackMethod = @selector(clickOpenMap);
+            self.upArrowImage = [UIImage imageNamed:kUpArrowImg];
+            self.downArrowImage = [UIImage imageNamed:kDownArrowImg];
+        }
+
+//        if ([self.dataArr count] > 1) {
+//            if ([[self.dataArr objectAtIndex:0] count] > 1) {
+//
+//            }
+//        } else {
+//            self.openMapHeader.openMapIcon.image = self.downArrowImage;
+//        }
+        BOOL isExpand = [[self.controlArr[0][0] objectForKey:@"IsExpand"] intValue]?YES:NO;
+        if (isExpand) {
+            self.openMapHeader.openMapIcon.image = self.upArrowImage;
+        } else {
+            self.openMapHeader.openMapIcon.image = self.downArrowImage;
+        }
+        
+        self.openMapHeader.view.frame = CGRectMake(0,0,CGRectGetWidth(self.openMapHeader.view.frame),50);
+        [Utilities addShadowToView:self.openMapHeader.view offset:CGSizeMake(0, 5.0)];
+        headerView = self.openMapHeader.view;
     }
     return headerView;
+}
+
+- (void)clickOpenMap {
+    [self tableView:self.filterTableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+}
+
+- (void)clickStoreTitle {
+    if (self.selectedStoreIndexPath && self.selectedStoreIndexPath.section == 1) {
+        [self.filterTableView scrollToRowAtIndexPath:self.selectedStoreIndexPath atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -308,12 +370,13 @@
         
         cell = storeCell;
     } else if ((self.filterType == FilterTypeMenu || self.filterType == SearchStores) && indexPath.section == 0 && indexPath.row == 0) {
-        OpenMapCell *openMapCell = nil;
-        openMapCell = [tableView dequeueReusableCellWithIdentifier:kOpenMapCellIdentifier];
+        OpenMapCell *openMapCell = [tableView dequeueReusableCellWithIdentifier:kOpenMapCellIdentifier];
         if (!openMapCell) {
             openMapCell = (OpenMapCell *)[Utilities getNibWithName:kOpenMapCellIdentifier];
         }
-        openMapCell.titleLabel.text = [self getTitleByIndexPath:indexPath andType:self.filterType];
+        openMapCell.frame = CGRectMake(0,0,CGRectGetWidth(openMapCell.frame),0);
+//        [Utilities addShadowToView:openMapCell offset:CGSizeMake(0.0f, 5.0f)];
+        openMapCell.titleLabel.text = @"";
         cell = openMapCell;
     } else {
         cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier forIndexPath:indexPath];
@@ -375,9 +438,9 @@
             if (indexPath.section == 0 && indexPath.row == 0) {
                 BOOL isExpand = [[self.controlArr[indexPath.section][indexPath.row] objectForKey:@"IsExpand"] intValue]?YES:NO;
                 if (isExpand) {
-                    title = @"收起地圖";
+                    title = kCloseMapMessage;
                 } else {
-                    title = @"打開地圖";
+                    title = kOpenMapMessage;
                 }
             } else if (indexPath.section == 1) {
                 for (int i=0; i<[self.menu.titles count]; i++) {
@@ -424,9 +487,11 @@
             if (indexPath.section == 0 && indexPath.row == 0) {
                 BOOL isExpand = [[self.controlArr[indexPath.section][indexPath.row] objectForKey:@"IsExpand"] intValue]?YES:NO;
                 if (isExpand) {
-                    title = @"收起地圖";
+                    title = kCloseMapMessage;
+                    self.openMapHeader.openMapIcon.image = [UIImage imageNamed:kUpArrowImg];
                 } else {
-                    title = @"打開地圖";
+                    title = kOpenMapMessage;
+                    self.openMapHeader.openMapIcon.image = [UIImage imageNamed:kDownArrowImg];
                 }
             } else {
                 if ([self.stores count]) {
@@ -524,11 +589,13 @@
                 [expandController expandOrContractCellByIndexPaht:indexPath dataArray:self.dataArr controlArray:self.controlArr tableView:tableView];
                 
                 BOOL isExpand = [[self.controlArr[indexPath.section][indexPath.row] objectForKey:@"IsExpand"] intValue]?YES:NO;
-                OpenMapCell *cell = (OpenMapCell *)[self.filterTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+//                OpenMapCell *cell = (OpenMapCell *)[self.filterTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
                 if (isExpand) {
-                    cell.titleLabel.text = @"收起地圖";
+                    self.openMapHeader.titleLabel.text = kCloseMapMessage;
+                    self.openMapHeader.openMapIcon.image = self.upArrowImage;
                 } else {
-                    cell.titleLabel.text = @"打開地圖";
+                    self.openMapHeader.titleLabel.text = kOpenMapMessage;
+                    self.openMapHeader.openMapIcon.image = self.downArrowImage;
                 }
                 
             } else if (indexPath.section == 1 && self.filterType == FilterTypeMenu) {
@@ -536,6 +603,7 @@
             } else if (indexPath.section == 1 && self.filterType == SearchStores){
                 if ([self.stores count]) {
                     [self.delegate storeBeTapIn:indexPath];
+                    self.selectedStoreIndexPath = indexPath;
                 }
             }
         }
@@ -586,7 +654,7 @@
     [expandController setNumberOfParent:1 andHeigh:@"44" section:0 dataArray:self.dataArr controlArray:self.controlArr];
     [expandController setNumberOfChild:@"1" andHeigh:kMapViewHeight section:0 withParentIndex:0 dataArray:self.dataArr controlArray:self.controlArr];
     
-    [expandController setNumberOfParent:[menu.numberOfRows integerValue] andHeigh:@"44" section:1 dataArray:self.dataArr controlArray:self.controlArr];
+    [expandController setNumberOfParent:[menu.numberOfRows intValue] andHeigh:@"44" section:1 dataArray:self.dataArr controlArray:self.controlArr];
 }
 
 - (void)majorsBack:(NSArray *)majorTypes {
@@ -620,6 +688,11 @@
         }
     }
     [Utilities stopLoading];
+    
+    BOOL isExpand = [[self.controlArr[0][0] objectForKey:@"IsExpand"] intValue]?YES:NO;
+    if (!isExpand) {
+        [self clickOpenMap];
+    }
     
     if (self.delegate && [self.delegate respondsToSelector:@selector(changeTitle:)]) {
         [self.delegate changeTitle:self.menu.minorType.typeDescription];
@@ -689,9 +762,6 @@
 }
 
 - (BOOL) swipeTableCell:(MGSwipeTableCell *) cell tappedButtonAtIndex:(NSInteger) index direction:(MGSwipeDirection)direction fromExpansion:(BOOL) fromExpansion {
-    NSLog(@"index:%d",index);
-    NSLog(@"direction:%d",direction);
-    NSLog(@"fromExpansion:%d",fromExpansion);
     if (index == 1) {
         [self showOptionsByCell:cell];
     }

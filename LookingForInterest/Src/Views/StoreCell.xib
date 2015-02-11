@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
@@ -84,15 +85,15 @@
                         <exclude reference="ek4-DI-dHs"/>
                     </mask>
                     <mask key="constraints">
-                        <exclude reference="LsU-ql-Vvb"/>
-                        <exclude reference="Nbw-eP-JsG"/>
-                        <exclude reference="xjB-MU-EcK"/>
-                        <exclude reference="7ZL-po-PKY"/>
-                        <exclude reference="N1N-nm-KkL"/>
-                        <exclude reference="T1B-tM-R1x"/>
                         <exclude reference="bMx-w2-nfE"/>
                         <exclude reference="bh8-z6-xh1"/>
                         <exclude reference="jbU-F9-5Qj"/>
+                        <exclude reference="7ZL-po-PKY"/>
+                        <exclude reference="N1N-nm-KkL"/>
+                        <exclude reference="T1B-tM-R1x"/>
+                        <exclude reference="LsU-ql-Vvb"/>
+                        <exclude reference="Nbw-eP-JsG"/>
+                        <exclude reference="xjB-MU-EcK"/>
                     </mask>
                 </variation>
                 <variation key="heightClass=regular-widthClass=compact">
@@ -102,15 +103,15 @@
                         <include reference="ek4-DI-dHs"/>
                     </mask>
                     <mask key="constraints">
-                        <include reference="LsU-ql-Vvb"/>
-                        <include reference="Nbw-eP-JsG"/>
-                        <include reference="xjB-MU-EcK"/>
-                        <include reference="7ZL-po-PKY"/>
-                        <include reference="N1N-nm-KkL"/>
-                        <include reference="T1B-tM-R1x"/>
                         <include reference="bMx-w2-nfE"/>
                         <include reference="bh8-z6-xh1"/>
                         <include reference="jbU-F9-5Qj"/>
+                        <include reference="7ZL-po-PKY"/>
+                        <include reference="N1N-nm-KkL"/>
+                        <include reference="T1B-tM-R1x"/>
+                        <include reference="LsU-ql-Vvb"/>
+                        <include reference="Nbw-eP-JsG"/>
+                        <include reference="xjB-MU-EcK"/>
                     </mask>
                 </variation>
             </tableViewCellContentView>

@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
@@ -95,6 +96,25 @@
                             </mask>
                         </variation>
                     </view>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow-right.png" translatesAutoresizingMaskIntoConstraints="NO" id="Ajr-vi-7pj">
+                        <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="40" id="eT0-vf-Y21"/>
+                            <constraint firstAttribute="width" constant="40" id="tvh-XT-lof"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="eT0-vf-Y21"/>
+                                <exclude reference="tvh-XT-lof"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular-widthClass=compact">
+                            <mask key="constraints">
+                                <include reference="eT0-vf-Y21"/>
+                                <include reference="tvh-XT-lof"/>
+                            </mask>
+                        </variation>
+                    </imageView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="qjP-Y0-CbN" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-8" id="0Mk-ZU-tAz"/>
@@ -102,6 +122,7 @@
                     <constraint firstItem="gJc-fZ-oXM" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-8" id="75s-S9-Hbe"/>
                     <constraint firstAttribute="bottom" secondItem="heg-Z2-dAJ" secondAttribute="bottom" constant="11.5" id="Di4-za-zHP"/>
                     <constraint firstAttribute="bottomMargin" secondItem="iFt-Ft-2rm" secondAttribute="bottom" constant="-8" id="NmA-W4-0yT"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="Ajr-vi-7pj" secondAttribute="trailing" constant="10" id="RkB-Ib-0VN"/>
                     <constraint firstAttribute="trailing" secondItem="heg-Z2-dAJ" secondAttribute="trailing" constant="137" id="Um6-0N-MhA">
                         <variation key="heightClass=regular-widthClass=compact" constant="90"/>
                     </constraint>
@@ -113,6 +134,7 @@
                     <constraint firstItem="heg-Z2-dAJ" firstAttribute="leading" secondItem="CLM-L4-fmr" secondAttribute="trailing" constant="32" id="i8s-RY-53L">
                         <variation key="heightClass=regular-widthClass=compact" constant="-3"/>
                     </constraint>
+                    <constraint firstAttribute="centerY" secondItem="Ajr-vi-7pj" secondAttribute="centerY" id="oAz-bi-02Z"/>
                     <constraint firstItem="heg-Z2-dAJ" firstAttribute="leading" secondItem="CLM-L4-fmr" secondAttribute="trailing" constant="32" id="qqO-vU-zv9">
                         <variation key="heightClass=regular-widthClass=compact" constant="-3"/>
                     </constraint>
@@ -128,6 +150,7 @@
                         <exclude reference="qjP-Y0-CbN"/>
                         <exclude reference="gJc-fZ-oXM"/>
                         <exclude reference="iFt-Ft-2rm"/>
+                        <exclude reference="Ajr-vi-7pj"/>
                     </mask>
                     <mask key="constraints">
                         <exclude reference="0Mk-ZU-tAz"/>
@@ -144,6 +167,8 @@
                         <exclude reference="akl-kl-2ra"/>
                         <exclude reference="i8s-RY-53L"/>
                         <exclude reference="qqO-vU-zv9"/>
+                        <exclude reference="RkB-Ib-0VN"/>
+                        <exclude reference="oAz-bi-02Z"/>
                         <exclude reference="1lr-Ye-iPl"/>
                         <exclude reference="75s-S9-Hbe"/>
                         <exclude reference="Yn8-B5-I3l"/>
@@ -156,6 +181,7 @@
                         <include reference="qjP-Y0-CbN"/>
                         <include reference="gJc-fZ-oXM"/>
                         <include reference="iFt-Ft-2rm"/>
+                        <include reference="Ajr-vi-7pj"/>
                     </mask>
                     <mask key="constraints">
                         <include reference="0Mk-ZU-tAz"/>
@@ -172,6 +198,8 @@
                         <include reference="akl-kl-2ra"/>
                         <include reference="i8s-RY-53L"/>
                         <include reference="qqO-vU-zv9"/>
+                        <include reference="RkB-Ib-0VN"/>
+                        <include reference="oAz-bi-02Z"/>
                         <include reference="1lr-Ye-iPl"/>
                         <include reference="75s-S9-Hbe"/>
                         <include reference="Yn8-B5-I3l"/>
@@ -185,4 +213,7 @@
             <point key="canvasLocation" x="-31" y="190"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="arrow-right.png" width="90" height="106"/>
+    </resources>
 </document>

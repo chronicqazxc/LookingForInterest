@@ -52,7 +52,9 @@
                             <variation key="heightClass=regular-widthClass=compact" constant="120"/>
                         </constraint>
                         <constraint firstItem="Exw-xv-quL" firstAttribute="leading" secondItem="xF9-Ww-Sp5" secondAttribute="leading" constant="42" id="ILz-TV-dVi"/>
-                        <constraint firstItem="Ih5-vh-Q0f" firstAttribute="top" secondItem="Exw-xv-quL" secondAttribute="bottom" constant="-0.5" id="MJb-2f-aCp"/>
+                        <constraint firstItem="Ih5-vh-Q0f" firstAttribute="top" secondItem="Exw-xv-quL" secondAttribute="bottom" constant="-0.5" id="MJb-2f-aCp">
+                            <variation key="heightClass=regular-widthClass=compact" constant="10"/>
+                        </constraint>
                         <constraint firstAttribute="trailing" secondItem="Ih5-vh-Q0f" secondAttribute="trailing" constant="36" id="PKn-sU-IJf">
                             <variation key="heightClass=regular-widthClass=compact" constant="8"/>
                         </constraint>
@@ -64,7 +66,7 @@
                             <variation key="heightClass=regular-widthClass=compact" constant="31"/>
                         </constraint>
                         <constraint firstAttribute="bottom" secondItem="Ih5-vh-Q0f" secondAttribute="bottom" constant="18" id="vqe-tw-oaT">
-                            <variation key="heightClass=regular-widthClass=compact" constant="32"/>
+                            <variation key="heightClass=regular-widthClass=compact" constant="20"/>
                         </constraint>
                     </constraints>
                     <variation key="default">
@@ -75,13 +77,13 @@
                         <mask key="constraints">
                             <exclude reference="7oq-Xn-IPS"/>
                             <exclude reference="b5f-UX-ILP"/>
-                            <exclude reference="ILz-TV-dVi"/>
-                            <exclude reference="hl1-7H-2aw"/>
-                            <exclude reference="qe2-Rm-l9r"/>
                             <exclude reference="3YJ-Cp-1v3"/>
                             <exclude reference="MJb-2f-aCp"/>
                             <exclude reference="PKn-sU-IJf"/>
                             <exclude reference="vqe-tw-oaT"/>
+                            <exclude reference="ILz-TV-dVi"/>
+                            <exclude reference="hl1-7H-2aw"/>
+                            <exclude reference="qe2-Rm-l9r"/>
                         </mask>
                     </variation>
                     <variation key="heightClass=regular-widthClass=compact">
@@ -92,13 +94,13 @@
                         <mask key="constraints">
                             <include reference="7oq-Xn-IPS"/>
                             <include reference="b5f-UX-ILP"/>
-                            <include reference="ILz-TV-dVi"/>
-                            <include reference="hl1-7H-2aw"/>
-                            <include reference="qe2-Rm-l9r"/>
                             <include reference="3YJ-Cp-1v3"/>
                             <include reference="MJb-2f-aCp"/>
                             <include reference="PKn-sU-IJf"/>
                             <include reference="vqe-tw-oaT"/>
+                            <include reference="ILz-TV-dVi"/>
+                            <include reference="hl1-7H-2aw"/>
+                            <include reference="qe2-Rm-l9r"/>
                         </mask>
                     </variation>
                 </view>

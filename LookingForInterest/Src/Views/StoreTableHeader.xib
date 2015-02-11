@@ -57,6 +57,7 @@
                     <include reference="DmR-tY-w9H"/>
                 </mask>
             </variation>
+            <point key="canvasLocation" x="180" y="168"/>
         </view>
     </objects>
 </document>
