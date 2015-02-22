@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "B034D95A1A8903A900360A6C"
-               BuildableName = "LookingForInterest.app"
+               BuildableName = "&#x627e;&#x6771;&#x897f;.app"
                BlueprintName = "LookingForInterest"
                ReferencedContainer = "container:LookingForInterest.xcodeproj">
             </BuildableReference>
@@ -31,6 +31,20 @@
                BlueprintIdentifier = "B034D9731A8903AA00360A6C"
                BuildableName = "LookingForInterestTests.xctest"
                BlueprintName = "LookingForInterestTests"
+               ReferencedContainer = "container:LookingForInterest.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "B002A29A1A964BA700808055"
+               BuildableName = "LookingForInterest Tests.xctest"
+               BlueprintName = "LookingForInterest Tests"
                ReferencedContainer = "container:LookingForInterest.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -52,12 +66,22 @@
                ReferencedContainer = "container:LookingForInterest.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "B002A29A1A964BA700808055"
+               BuildableName = "LookingForInterest Tests.xctest"
+               BlueprintName = "LookingForInterest Tests"
+               ReferencedContainer = "container:LookingForInterest.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "B034D95A1A8903A900360A6C"
-            BuildableName = "LookingForInterest.app"
+            BuildableName = "&#x627e;&#x6771;&#x897f;.app"
             BlueprintName = "LookingForInterest"
             ReferencedContainer = "container:LookingForInterest.xcodeproj">
          </BuildableReference>
@@ -76,7 +100,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "B034D95A1A8903A900360A6C"
-            BuildableName = "LookingForInterest.app"
+            BuildableName = "&#x627e;&#x6771;&#x897f;.app"
             BlueprintName = "LookingForInterest"
             ReferencedContainer = "container:LookingForInterest.xcodeproj">
          </BuildableReference>
@@ -94,7 +118,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "B034D95A1A8903A900360A6C"
-            BuildableName = "LookingForInterest.app"
+            BuildableName = "&#x627e;&#x6771;&#x897f;.app"
             BlueprintName = "LookingForInterest"
             ReferencedContainer = "container:LookingForInterest.xcodeproj">
          </BuildableReference>

@@ -13,6 +13,8 @@
 
 @interface RequestSender : NSObject
 @property (assign, nonatomic) id <RequestSenderDelegate> delegate;
+@property (strong, nonatomic) NSString *accessToken;
+- (void)getAccessToken;
 - (void)sendMenuRequest;
 - (void)sendRangeRequest;
 - (void)sendMajorRequest;
@@ -22,6 +24,7 @@
 @end
 
 @protocol RequestSenderDelegate <NSObject>
+- (void)accessTokenBack:(NSArray *)accessTokenData;
 - (void)initMenuBack:(NSArray *)menuData;
 - (void)majorsBack:(NSArray *)majorData;
 - (void)minorsBack:(NSArray *)minorData;

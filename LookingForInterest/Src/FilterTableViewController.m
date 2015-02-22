@@ -91,21 +91,25 @@
     switch (self.filterType) {
         case FilterTypeMajorType:
             requestSender.delegate = self;
+            requestSender.accessToken = self.accessToken;
             [requestSender sendMajorRequest];
             [Utilities startLoading];
             break;
         case FilterTypeMinorType:
             requestSender.delegate = self;
+            requestSender.accessToken = self.accessToken;
             [requestSender sendMinorRequestByMajorType:((FilterTableViewController *)self.notifyReceiver).menu.majorType];
             [Utilities startLoading];
             break;
         case FilterTypeStore:
             requestSender.delegate = self;
+            requestSender.accessToken = self.accessToken;
             [requestSender sendStoreRequestByMajorType:((FilterTableViewController *)self.notifyReceiver).menu.majorType minorType:((FilterTableViewController *)self.notifyReceiver).menu.minorType];
             [Utilities startLoading];
             break;
         case FilterTypeRange:
             requestSender.delegate = self;
+            requestSender.accessToken = self.accessToken;            
             [requestSender sendRangeRequest];
             [Utilities startLoading];            
             break;
@@ -140,9 +144,17 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)sendAccessTokenRequest {
+    RequestSender *requestSender = [[RequestSender alloc] init];
+    requestSender.delegate = self;
+    [requestSender getAccessToken];
+    [Utilities startLoading];
+}
+
 - (void)sendInitRequest {
     RequestSender *requestSender = [[RequestSender alloc] init];
     requestSender.delegate = self;
+    requestSender.accessToken = self.accessToken;
     [requestSender sendMenuRequest];
     [Utilities startLoading];
 }
@@ -153,7 +165,7 @@
 
 - (void)search {
     self.filterType = SearchStores;
-    
+
 //    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 //    NSData *menuData=[NSKeyedArchiver archivedDataWithRootObject:self.menu];
 //    [defaults setObject:menuData forKey:kLookingForInterestUserDefaultKey];
@@ -166,15 +178,21 @@
         if ([self.delegate respondsToSelector:@selector(sendLocationBack)]) {
             CLLocationCoordinate2D backLocation = [self.delegate sendLocationBack];
             currentLocation = CLLocationCoordinate2DMake(backLocation.latitude, backLocation.longitude);
+//            currentLocation = CLLocationCoordinate2DMake(25.0525463, 121.5560048);
         }
     }
+    requestSender.accessToken = self.accessToken;
     [requestSender sendStoreRequestByMenuObj:self.menu andLocationCoordinate:currentLocation];
     [Utilities startLoading];
+    
+    self.selectedStoreIndexPath = nil;
 }
 
 - (void)back {
     self.filterType = FilterTypeMenu;
     [self.filterTableView reloadData];
+    
+    self.selectedStoreIndexPath = nil;
 }
 
 #pragma mark - Table view data source
@@ -240,7 +258,7 @@
         } else if (self.filterType == FilterTypeMenu){
             heightForRow = 60;
         } else {
-            heightForRow = 120;
+            heightForRow = 110;
         }
     } else {
         heightForRow = 60;
@@ -352,8 +370,10 @@
         }
         
         storeCell.textLabel.font = [UIFont systemFontOfSize:16];
-        storeCell.textLabel.text = [self getTitleByIndexPath:indexPath andType:self.filterType];
-        storeCell.detailTextLabel.text = [self getDetailByIndexPath:indexPath andType:self.filterType];
+        storeCell.titleLabel.text = [self getTitleByIndexPath:indexPath andType:self.filterType];
+        storeCell.distanceLabel.text = [self getDetailByIndexPath:indexPath andType:self.filterType];
+        storeCell.addressLabel.text = ((Store *)[self.stores objectAtIndex:indexPath.row]).address;
+        
         storeCell.delegate = self;
         
         storeCell.rightSwipeSettings.transition = MGSwipeTransitionBorder;
@@ -636,6 +656,15 @@
 }
 
 #pragma mark - RequestSenderDelegate
+- (void)accessTokenBack:(NSArray *)accessTokenData {
+    if ([accessTokenData count] > 0) {
+        if (self.delegate && [self.delegate respondsToSelector:@selector(setAccessTokenValue:)]) {
+            [self.delegate setAccessTokenValue:[accessTokenData firstObject]];
+        }
+        [Utilities stopLoading];
+    }
+}
+
 - (void)initMenuBack:(NSArray *)menuData {
     self.menu = [menuData firstObject];
     [self generateDataStructureWithMenu:self.menu];

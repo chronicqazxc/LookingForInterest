@@ -14,7 +14,7 @@
     self = [super init];
     if (self) {
         if (majorTypeDic) {
-            self.typeID = [majorTypeDic objectForKey:@"type_id"];
+            self.typeID = [NSString stringWithFormat:@"%d",[[majorTypeDic objectForKey:@"id"] integerValue]];
             self.typeDescription = [majorTypeDic objectForKey:@"type_description"];
         }
     }

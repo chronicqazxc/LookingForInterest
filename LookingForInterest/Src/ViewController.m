@@ -9,23 +9,27 @@
 #import "ViewController.h"
 #import "FilterTableViewController.h"
 #import "LookingForInterest.h"
+#import "WebViewController.h"
 
 #define kMagnifierImg @"iconmonstr-magnifier-3-icon-256.png"
 #define kLeftArrowImg @"arrow-left@2x.png"
 
 #define kSearch @"開始找"
 #define kBack @"返回"
-#define kTitle @"找循附近有興趣的事物"
+#define kTitle @"目前位置附近的動物醫院"
 #define kFormattedTitle(title) [NSString stringWithFormat:@"找%@",title]
 
 #define kOptionsTitle(title) title?title:@""
 #define kOptionMessage(message) message?message:@""
 #define kCallActionTitle @"撥打電話"
-#define kWebSiteActionTitle @"參觀官網"
+#define kWebSiteActionTitle @"網路搜尋更多資訊"
 #define kRateActionTitle @"我要評分"
 #define kPicturesActionTitle @"瀏覽店家圖片"
 #define kNavigateActionTitle @"導航"
 #define kCloseActionTitle @"關閉"
+
+#define kNoPhoneNumberAlertTitle @"Opps!"
+#define kNoPhoneNumberAlertMessage @"資料庫中沒有建立電話號碼"
 
 // call
 // web site
@@ -55,6 +59,7 @@
 @property (strong, nonatomic) UIImage *mirrorMagnifierImage;
 @property (weak, nonatomic) IBOutlet UIButton *navigationButton;
 - (IBAction)clickNavigationTitle:(UIButton *)sender;
+@property (strong, nonatomic) NSString *accessToken;
 @end
 
 @implementation ViewController
@@ -90,6 +95,7 @@
     self.isSendForMenu = NO;
     self.searchViewTitle.text = kSearch;
     self.storesOnMap = [NSArray array];
+    self.accessToken = @"";
 }
 
 - (void)viewDidLoad {
@@ -131,8 +137,7 @@
         self.filterTableViewController.filterTableView = self.filterTableView;
         self.filterTableView.dataSource = self.filterTableViewController;
         self.filterTableView.delegate = self.filterTableViewController;
-        [self.filterTableViewController sendInitRequest];
-        
+        [self.filterTableViewController sendAccessTokenRequest];
         self.isSendForMenu = YES;
     }
 }
@@ -251,6 +256,12 @@
 }
 
 #pragma mark - FilterTableViewControllerDelegate
+- (void)setAccessTokenValue:(NSString *)accessToken {
+    self.accessToken = accessToken;
+    self.filterTableViewController.accessToken = self.accessToken;
+    [self.filterTableViewController sendInitRequest];    
+}
+
 -(void)tableBeTapIn:(NSIndexPath *)indexPath {
     NSString *storyboardID = [self.filterTableViewController getStoryboardID];
     FilterTableViewController *filterTableViewController = nil;
@@ -259,18 +270,21 @@
             filterTableViewController = [self.storyboard instantiateViewControllerWithIdentifier:storyboardID];
             filterTableViewController.filterType = FilterTypeMajorType;
             filterTableViewController.notifyReceiver = self.filterTableViewController;
+            filterTableViewController.accessToken = self.accessToken;
             [self.navigationController pushViewController:filterTableViewController animated:YES];
             break;
         case 1:
             filterTableViewController = [self.storyboard instantiateViewControllerWithIdentifier:storyboardID];
             filterTableViewController.filterType = FilterTypeMinorType;
             filterTableViewController.notifyReceiver = self.filterTableViewController;
+            filterTableViewController.accessToken = self.accessToken;
             [self.navigationController pushViewController:filterTableViewController animated:YES];
             break;
         case 2:
             filterTableViewController = [self.storyboard instantiateViewControllerWithIdentifier:storyboardID];
             filterTableViewController.filterType = FilterTypeRange;
             filterTableViewController.notifyReceiver = self.filterTableViewController;
+            filterTableViewController.accessToken = self.accessToken;            
             [self.navigationController pushViewController:filterTableViewController animated:YES];
             break;
         default:
@@ -318,21 +332,53 @@
 
 - (void)showOptionsWithStore:(Store *)store {
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:kOptionsTitle(store.name) message:kOptionMessage(@"你可以") preferredStyle:UIAlertControllerStyleActionSheet];
+    
     UIAlertAction *callAction = [UIAlertAction actionWithTitle:kCallActionTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        NSLog(@"call");
+        if (((NSNull *)store.phoneNumber == [NSNull null]) ||
+            !store.phoneNumber ||
+            [store.phoneNumber isEqualToString:@""]) {
+            UIAlertController *alert = [self normalAlertWithTitle:kNoPhoneNumberAlertTitle message:kNoPhoneNumberAlertMessage store:store];
+            [self presentViewController:alert animated:YES completion:^{
+                NSLog(@"click ok!");
+            }];
+        }
     }];
+    
     UIAlertAction *webSiteAction = [UIAlertAction actionWithTitle:kWebSiteActionTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         NSLog(@"web site");
+        WebViewController *webViewController = [[WebViewController alloc] initWithNibName:@"WebViewController" bundle:nil];
+        webViewController.keyword = store.name;
+        webViewController.searchType = SearchWeb;
+        [self.navigationController pushViewController:webViewController animated:YES];
     }];
+    
     UIAlertAction *rateAction = [UIAlertAction actionWithTitle:kRateActionTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         NSLog(@"rate");
     }];
+    
     UIAlertAction *pictureAction = [UIAlertAction actionWithTitle:kPicturesActionTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        
         NSLog(@"picture");
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"ok" message:@"test" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *webSiteAction = [UIAlertAction actionWithTitle:kWebSiteActionTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            NSLog(@"web site");
+            WebViewController *webViewController = [[WebViewController alloc] initWithNibName:@"WebViewController" bundle:nil];
+            webViewController.keyword = store.name;
+            webViewController.searchType = SearchImage;
+            [self.navigationController pushViewController:webViewController animated:YES];
+        }];
+        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+            NSLog(@"click cancel!");
+        }];
+        [alertController addAction:webSiteAction];
+        [alertController addAction:okAction];
+        [self presentViewController:alertController animated:YES completion:nil];
     }];
+    
     UIAlertAction *navigateAction = [UIAlertAction actionWithTitle:kNavigateActionTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         NSLog(@"navigate");
     }];
+    
     UIAlertAction *closeAction = [UIAlertAction actionWithTitle:kCloseActionTitle style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
         NSLog(@"close");
     }];
@@ -346,6 +392,28 @@
     
     [self presentViewController:alertController animated:YES completion:nil];
 }
+
+- (UIAlertController *)normalAlertWithTitle:(NSString *)title message:(NSString *)message store:(Store *)store{
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *webSiteAction = [UIAlertAction actionWithTitle:kWebSiteActionTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        NSLog(@"web site");
+        WebViewController *webViewController = [[WebViewController alloc] initWithNibName:@"WebViewController" bundle:nil];
+        webViewController.keyword = store.name;
+        webViewController.searchType = SearchWeb;
+        [self.navigationController pushViewController:webViewController animated:YES];
+    }];
+    
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        NSLog(@"click cancel!");
+    }];
+    
+    [alertController addAction:webSiteAction];
+    [alertController addAction:okAction];
+    
+    return alertController;
+}
+
 #pragma mark -
 - (IBAction)buttonClicked:(UIButton *)sender {
     if ([self.searchViewTitle.text isEqualToString:kSearch]) {
@@ -353,6 +421,7 @@
         self.searchViewTitle.text = kBack;
         self.searchViewIcon.image = [UIImage imageNamed:kLeftArrowImg];
         self.searchViewIcon.hidden = NO;
+        self.filterTableViewController.accessToken = self.accessToken;
         [self.filterTableViewController search];
     } else {
         self.searchViewTitle.text = kSearch;

@@ -1,19 +1,19 @@
 //
-//  LookingForInterestTests.m
-//  LookingForInterestTests
+//  LookingForInterest_Tests.m
+//  LookingForInterest Tests
 //
-//  Created by Wayne on 2/9/15.
+//  Created by Wayne on 2/20/15.
 //  Copyright (c) 2015 Wayne. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
 
-@interface LookingForInterestTests : XCTestCase
+@interface LookingForInterest_Tests : XCTestCase
 
 @end
 
-@implementation LookingForInterestTests
+@implementation LookingForInterest_Tests
 
 - (void)setUp {
     [super setUp];

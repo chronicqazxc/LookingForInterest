@@ -16,15 +16,17 @@
 #define LookingForInteresting_LookingForInterest_h
 
 #define kLookingForInterestURL kLookingForInterestHerokuURL
-#define kLookingForInterestHerokuURL @"https://looking-for-interest.herokuapp.com/"
-#define kLookingForInterestTestURL @"http://localhost:3000/"
-#define kGetInitMenuURL @"menus/get_init_menus/"
-#define kGetRangesURL @"menus/get_ranges/"
-#define kGetMajorTypesURL @"major_types/get_major_types/"
-#define kGetMinorTypesURL @"minor_types/get_minor_types/"
-#define kGetStoresURL @"stores/get_stores/"
-#define kGetStoresByLocationURL @"stores/get_stores_from_my_position/"
+#define kLookingForInterestHerokuURL @"https://animal-hospital.herokuapp.com/api/v1/"
+#define kLookingForInterestTestURL @"http://Waynes-MacBook-Pro.local:3000/api/v1/"
+#define kGetInitMenuURL @"datas/get_init_menus/"
+#define kGetRangesURL @"datas/get_ranges/"
+#define kGetMajorTypesURL @"datas/get_major_types/"
+#define kGetMinorTypesURL @"datas/get_minor_types/"
+#define kGetStoresURL @"datas/get_stores/"
+#define kGetStoresByLocationURL @"datas/get_stores_from_my_position/"
+#define kGetAccessToken @"tokens/get_access_token/"
 #define kLookingForInterestUserDefaultKey @"LookingForInterestMenu"
+#define kAccessTokenKey @"access_token"
 
 typedef enum filterType {
     FilterTypeMenu,
@@ -32,7 +34,8 @@ typedef enum filterType {
     FilterTypeMinorType,
     FilterTypeStore,
     FilterTypeRange,
-    SearchStores
+    SearchStores,
+    GetAccessToken
 } FilterType;
 
 typedef NS_ENUM(NSInteger, Direction) {

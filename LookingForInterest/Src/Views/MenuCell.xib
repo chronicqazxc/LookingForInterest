@@ -153,15 +153,9 @@
                         <exclude reference="Ajr-vi-7pj"/>
                     </mask>
                     <mask key="constraints">
-                        <exclude reference="0Mk-ZU-tAz"/>
-                        <exclude reference="V6D-Xx-gPz"/>
-                        <exclude reference="zph-zZ-yKw"/>
                         <exclude reference="xMj-jr-lel"/>
                         <exclude reference="y3G-H0-ktV"/>
                         <exclude reference="zF4-4e-dsF"/>
-                        <exclude reference="NmA-W4-0yT"/>
-                        <exclude reference="ZbL-xv-qXp"/>
-                        <exclude reference="hpw-TS-PvQ"/>
                         <exclude reference="Di4-za-zHP"/>
                         <exclude reference="Um6-0N-MhA"/>
                         <exclude reference="akl-kl-2ra"/>
@@ -172,6 +166,12 @@
                         <exclude reference="1lr-Ye-iPl"/>
                         <exclude reference="75s-S9-Hbe"/>
                         <exclude reference="Yn8-B5-I3l"/>
+                        <exclude reference="NmA-W4-0yT"/>
+                        <exclude reference="ZbL-xv-qXp"/>
+                        <exclude reference="hpw-TS-PvQ"/>
+                        <exclude reference="0Mk-ZU-tAz"/>
+                        <exclude reference="V6D-Xx-gPz"/>
+                        <exclude reference="zph-zZ-yKw"/>
                     </mask>
                 </variation>
                 <variation key="heightClass=regular-widthClass=compact">
@@ -184,15 +184,9 @@
                         <include reference="Ajr-vi-7pj"/>
                     </mask>
                     <mask key="constraints">
-                        <include reference="0Mk-ZU-tAz"/>
-                        <include reference="V6D-Xx-gPz"/>
-                        <include reference="zph-zZ-yKw"/>
                         <include reference="xMj-jr-lel"/>
                         <include reference="y3G-H0-ktV"/>
                         <include reference="zF4-4e-dsF"/>
-                        <include reference="NmA-W4-0yT"/>
-                        <include reference="ZbL-xv-qXp"/>
-                        <include reference="hpw-TS-PvQ"/>
                         <include reference="Di4-za-zHP"/>
                         <include reference="Um6-0N-MhA"/>
                         <include reference="akl-kl-2ra"/>
@@ -203,6 +197,12 @@
                         <include reference="1lr-Ye-iPl"/>
                         <include reference="75s-S9-Hbe"/>
                         <include reference="Yn8-B5-I3l"/>
+                        <include reference="NmA-W4-0yT"/>
+                        <include reference="ZbL-xv-qXp"/>
+                        <include reference="hpw-TS-PvQ"/>
+                        <include reference="0Mk-ZU-tAz"/>
+                        <include reference="V6D-Xx-gPz"/>
+                        <include reference="zph-zZ-yKw"/>
                     </mask>
                 </variation>
             </tableViewCellContentView>

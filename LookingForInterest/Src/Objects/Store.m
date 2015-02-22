@@ -14,7 +14,7 @@
     self = [super init];
     if (self) {
         if (storeDic) {
-            self.storeID = [storeDic objectForKey:@"store_id"];
+            self.storeID = [storeDic objectForKey:@"id"];
             self.name = [storeDic objectForKey:@"name"];
             self.phoneNumber = [storeDic objectForKey:@"phone_number"];
             self.address = [storeDic objectForKey:@"address"];

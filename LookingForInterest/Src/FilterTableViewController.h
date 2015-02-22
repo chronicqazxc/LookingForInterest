@@ -23,14 +23,16 @@
 @property (strong, nonatomic) FilterTableView *filterTableView;
 @property (strong, nonatomic) UIViewController *notifyReceiver;
 @property (strong, nonatomic) NSIndexPath *selectedStoreIndexPath;
+@property (strong, nonatomic) NSString *accessToken;
 - (NSString *)getStoryboardID;
+- (void)sendAccessTokenRequest;
 - (void)sendInitRequest;
 - (void)search;
 - (void)back;
 @end
 
 @protocol FilterTableViewControllerDelegate <NSObject>
-
+- (void)setAccessTokenValue:(NSString *)accessToken;
 - (void)tableBeTapIn:(NSIndexPath *)indexPath;
 - (void)storeBeTapIn:(NSIndexPath *)indexPath;
 - (CLLocationCoordinate2D)sendLocationBack;

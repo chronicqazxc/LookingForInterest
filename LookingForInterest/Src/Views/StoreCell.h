@@ -10,5 +10,8 @@
 #import <MGSwipeTableCell/MGSwipeTableCell.h>
 
 @interface StoreCell : MGSwipeTableCell
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *distanceLabel;
+@property (weak, nonatomic) IBOutlet UILabel *addressLabel;
 
 @end
