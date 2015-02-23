@@ -41,6 +41,7 @@
 - (CGSize)getContentSize;
 - (void)changeTitle:(NSString *)title;
 - (void)showOptionsWithStore:(Store *)store;
+- (void)showNavigationWithStore:(Store *)store;
 @end
 
 @interface FilterTableView : UITableView

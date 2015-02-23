@@ -16,6 +16,7 @@
 @property (strong, nonatomic) NSString *accessToken;
 - (void)getAccessToken;
 - (void)sendMenuRequest;
+- (void)sendMenutypesRequest;
 - (void)sendRangeRequest;
 - (void)sendMajorRequest;
 - (void)sendMinorRequestByMajorType:(MajorType *)majorType;
@@ -26,6 +27,7 @@
 @protocol RequestSenderDelegate <NSObject>
 - (void)accessTokenBack:(NSArray *)accessTokenData;
 - (void)initMenuBack:(NSArray *)menuData;
+- (void)menuTypesBack:(NSArray *)menuData;
 - (void)majorsBack:(NSArray *)majorData;
 - (void)minorsBack:(NSArray *)minorData;
 - (void)storesBack:(NSArray *)storeData;

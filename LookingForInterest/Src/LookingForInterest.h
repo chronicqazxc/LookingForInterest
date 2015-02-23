@@ -20,6 +20,7 @@
 #define kLookingForInterestTestURL @"http://Waynes-MacBook-Pro.local:3000/api/v1/"
 #define kGetInitMenuURL @"datas/get_init_menus/"
 #define kGetRangesURL @"datas/get_ranges/"
+#define kGetMenuTypesURL @"datas/get_menu_types/"
 #define kGetMajorTypesURL @"datas/get_major_types/"
 #define kGetMinorTypesURL @"datas/get_minor_types/"
 #define kGetStoresURL @"datas/get_stores/"
@@ -35,7 +36,8 @@ typedef enum filterType {
     FilterTypeStore,
     FilterTypeRange,
     SearchStores,
-    GetAccessToken
+    GetAccessToken,
+    FilterTypeMenuTypes
 } FilterType;
 
 typedef NS_ENUM(NSInteger, Direction) {
@@ -45,5 +47,4 @@ typedef NS_ENUM(NSInteger, Direction) {
     DirectionRight,
     DirectionMirror
 };
-
 #endif

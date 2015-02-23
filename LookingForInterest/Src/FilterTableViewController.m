@@ -38,6 +38,8 @@
 #define kRangeNavTitle @"選擇範圍"
 #define kOpenMapMessage @"打開地圖"
 #define kCloseMapMessage @"收起地圖"
+#define kCellNavigationTitle @"導航"
+#define kCellMoreTitle @"更多"
 
 @interface FilterTableViewController () <RequestSenderDelegate, MGSwipeTableCellDelegate>
 @property (strong, nonatomic) NSMutableArray *dataArr;
@@ -111,6 +113,12 @@
             requestSender.delegate = self;
             requestSender.accessToken = self.accessToken;            
             [requestSender sendRangeRequest];
+            [Utilities startLoading];
+            break;
+        case FilterTypeMenuTypes:
+            requestSender.delegate = self;
+            requestSender.accessToken = self.accessToken;
+            [requestSender sendMenutypesRequest];
             [Utilities startLoading];            
             break;
         default:
@@ -248,23 +256,53 @@
     return numberOfRows;
 }
 
+#pragma mark heightForRow>>>>>>
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    CGFloat heightForRow = 50;
-    if (self.filterType == FilterTypeMenu || self.filterType == SearchStores) {
-        if (indexPath.section == 0 && indexPath.row == 1) {
-            heightForRow = kMapViewSize(self.mapSize).height;
-        } else if (indexPath.section == 0 && indexPath.row == 0){
-            heightForRow = 0;
-        } else if (self.filterType == FilterTypeMenu){
-            heightForRow = 60;
-        } else {
-            heightForRow = 110;
-        }
-    } else {
-        heightForRow = 60;
+    return [self heightForRowByType:self.filterType andIndexPath:indexPath];
+}
+
+- (CGFloat)heightForRowByType:(FilterType)type andIndexPath:(NSIndexPath *)indexPath {
+    CGFloat heightForRow = 0.0;
+    switch (type) {
+        case FilterTypeMenu:
+            if (indexPath.section == 0) {
+                heightForRow = [self heightForRowInMapSectionWithIndexPath:indexPath];
+            } else {
+                heightForRow = [self heightForRowInMenuWithIndexPath:indexPath];
+            }
+            break;
+        case SearchStores:
+            if (indexPath.section == 0) {
+                heightForRow = [self heightForRowInMapSectionWithIndexPath:indexPath];
+            } else {
+                heightForRow = [self heightForRowInSearchStore];
+            }
+            break;
+        default:
+            heightForRow = 60.0;
+            break;
     }
     return heightForRow;
 }
+
+- (CGFloat)heightForRowInMapSectionWithIndexPath:(NSIndexPath *)indexPath {
+    CGFloat heightForRow = 0.0;
+    if (indexPath.row == 0) {
+        heightForRow = 0.0;
+    } else if (indexPath.row == 1) {
+        heightForRow = kMapViewSize(self.mapSize).height;
+    }
+    return heightForRow;
+}
+
+- (CGFloat)heightForRowInMenuWithIndexPath:(NSIndexPath *)indexPath {
+    return 60.0;
+}
+
+- (CGFloat)heightForRowInSearchStore {
+    return 110.0;
+}
+#pragma mark heightForRow<<<<<<<
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     CGFloat heightForHeader = 0.0;
@@ -436,7 +474,7 @@
 -(NSArray *) createRightButtons: (int) number
 {
     NSMutableArray * result = [NSMutableArray array];
-    NSString *titles[2] = {@"Navigate", @"More"};
+    NSString *titles[2] = {kCellNavigationTitle, kCellMoreTitle};
     UIColor  *colors[2] = {[UIColor redColor], [UIColor lightGrayColor]};
     for (int i = 0; i < number; ++i)
     {
@@ -463,45 +501,50 @@
                     title = kOpenMapMessage;
                 }
             } else if (indexPath.section == 1) {
-                for (int i=0; i<[self.menu.titles count]; i++) {
-                    if (i == indexPath.row) {
-                        title = [self.menu.titles objectAtIndex:indexPath.row];
-                        break;
-                    }
-                }
+//                for (int i=0; i<[self.menu.titles count]; i++) {
+//                    if (i == indexPath.row) {
+//                        title = [self.menu.titles objectAtIndex:indexPath.row];
+//                        break;
+//                    }
+//                }
+                title = [self.menu.titles objectAtIndex:indexPath.row];
             }
             break;
         case FilterTypeMajorType:
-            for (int i=0; i<[self.majorTypes count]; i++) {
-                if (i == indexPath.row) {
-                    title = ((MajorType *)[self.majorTypes objectAtIndex:indexPath.row]).typeDescription;
-                    break;
-                }
-            }
+//            for (int i=0; i<[self.majorTypes count]; i++) {
+//                if (i == indexPath.row) {
+//                    title = ((MajorType *)[self.majorTypes objectAtIndex:indexPath.row]).typeDescription;
+//                    break;
+//                }
+//            }
+            title = ((MajorType *)[self.majorTypes objectAtIndex:indexPath.row]).typeDescription;
             break;
         case FilterTypeMinorType:
-            for (int i=0; i<[self.minorTypes count]; i++) {
-                if (i == indexPath.row) {
-                    title = ((MinorType *)[self.minorTypes objectAtIndex:indexPath.row]).typeDescription;
-                    break;
-                }
-            }
+//            for (int i=0; i<[self.minorTypes count]; i++) {
+//                if (i == indexPath.row) {
+//                    title = ((MinorType *)[self.minorTypes objectAtIndex:indexPath.row]).typeDescription;
+//                    break;
+//                }
+//            }
+            title = ((MinorType *)[self.minorTypes objectAtIndex:indexPath.row]).typeDescription;
             break;
         case FilterTypeStore:
-            for (int i=0; i<[self.stores count]; i++) {
-                if (i == indexPath.row) {
-                    title = ((Store *)[self.stores objectAtIndex:indexPath.row]).name;
-                    break;
-                }
-            }
+//            for (int i=0; i<[self.stores count]; i++) {
+//                if (i == indexPath.row) {
+//                    title = ((Store *)[self.stores objectAtIndex:indexPath.row]).name;
+//                    break;
+//                }
+//            }
+            title = ((Store *)[self.stores objectAtIndex:indexPath.row]).name;
             break;
         case FilterTypeRange:
-            for (int i=0; i<[self.ranges count]; i++) {
-                if (i == indexPath.row) {
-                    title = [NSString stringWithFormat:@"%@公里",[self.ranges objectAtIndex:indexPath.row]];
-                    break;
-                }
-            }
+//            for (int i=0; i<[self.ranges count]; i++) {
+//                if (i == indexPath.row) {
+//                    title = [NSString stringWithFormat:@"%@公里",[self.ranges objectAtIndex:indexPath.row]];
+//                    break;
+//                }
+//            }
+            title = [NSString stringWithFormat:@"%@公里",[self.ranges objectAtIndex:indexPath.row]];
             break;
         case SearchStores:
             if (indexPath.section == 0 && indexPath.row == 0) {
@@ -515,12 +558,13 @@
                 }
             } else {
                 if ([self.stores count]) {
-                    for (int i=0; i<[self.stores count]; i++) {
-                        if (i == indexPath.row) {
-                            title = ((Store *)[self.stores objectAtIndex:indexPath.row]).name;
-                            break;
-                        }
-                    }
+//                    for (int i=0; i<[self.stores count]; i++) {
+//                        if (i == indexPath.row) {
+//                            title = ((Store *)[self.stores objectAtIndex:indexPath.row]).name;
+//                            break;
+//                        }
+//                    }
+                    title = ((Store *)[self.stores objectAtIndex:indexPath.row]).name;
                 } else {
                     title = @"找不到...";
                 }
@@ -537,19 +581,20 @@
     switch (type) {
         case FilterTypeMenu:
             if (indexPath.section == 1) {
-                switch (indexPath.row) {
-                    case 0:
-                        detail = self.menu.majorType.typeDescription;
-                        break;
-                    case 1:
-                        detail = self.menu.minorType.typeDescription;
-                        break;
-                    case 2:
-                        detail = self.menu.range;
-                        break;
-                    default:
-                        break;
-                }
+//                switch (indexPath.row) {
+//                    case 0:
+//                        detail = self.menu.majorType.typeDescription;
+//                        break;
+//                    case 1:
+//                        detail = self.menu.minorType.typeDescription;
+//                        break;
+//                    case 2:
+//                        detail = self.menu.range;
+//                        break;
+//                    default:
+//                        break;
+//                }
+                detail = [self.menu.content objectAtIndex:indexPath.row];
             }
             break;
         case FilterTypeMajorType:
@@ -686,6 +731,10 @@
     [expandController setNumberOfParent:[menu.numberOfRows intValue] andHeigh:@"44" section:1 dataArray:self.dataArr controlArray:self.controlArr];
 }
 
+- (void)menuTypesBack:(NSArray *)menuData {
+    
+}
+
 - (void)majorsBack:(NSArray *)majorTypes {
     self.majorTypes = majorTypes;
     [self.filterTableViewStoryboard reloadData];
@@ -791,10 +840,24 @@
 }
 
 - (BOOL) swipeTableCell:(MGSwipeTableCell *) cell tappedButtonAtIndex:(NSInteger) index direction:(MGSwipeDirection)direction fromExpansion:(BOOL) fromExpansion {
-    if (index == 1) {
-        [self showOptionsByCell:cell];
+    switch (index) {
+        case 0:
+            [self navigateWithCell:cell];
+            break;
+        case 1:
+            [self showOptionsByCell:cell];
+            break;
+        default:
+            break;
     }
     return NO;
+}
+
+- (void)navigateWithCell:(MGSwipeTableCell *)cell {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(showNavigationWithStore:)]) {
+        NSIndexPath *indexPath = [self.filterTableView indexPathForCell:cell];
+        [self.delegate showNavigationWithStore:[self.stores objectAtIndex:indexPath.row]];
+    }
 }
 
 - (void)showOptionsByCell:(MGSwipeTableCell *)cell {

@@ -24,12 +24,29 @@
 #define kCallActionTitle @"撥打電話"
 #define kWebSiteActionTitle @"網路搜尋更多資訊"
 #define kRateActionTitle @"我要評分"
+#define kRateActionStreetView @"瀏覽街景"
 #define kPicturesActionTitle @"瀏覽店家圖片"
 #define kNavigateActionTitle @"導航"
 #define kCloseActionTitle @"關閉"
 
 #define kNoPhoneNumberAlertTitle @"Opps!"
 #define kNoPhoneNumberAlertMessage @"資料庫中沒有建立電話號碼"
+
+#define kGoogleMapType kGoogleMapTypeCallback
+#define kGoogleMapTypeNormal @"comgooglemaps://"
+#define kGoogleMapTypeCallback @"comgooglemaps-x-callback://"
+
+#define kNavigateURLString(startLatitude, startLongitude, endLatitude, endLongitude, centerLatitude, centerLongitude, directionsMode, zoom) [NSString stringWithFormat:@"%@?saddr=%f,%f&daddr=%f,%f&center=%f,%f&directionsmode=%@&zoom=%d&x-success=animalhospital://?resume=true&x-source=thingsaboutpets",kGoogleMapType ,startLatitude, startLongitude, endLatitude, endLongitude, centerLatitude, centerLongitude, directionsMode, zoom]
+
+#define kDirectionsModeDrivingTitle @"開車"
+#define kDirectionsModeTransitTitle @"大眾交通工具"
+#define kDirectionsModeBicyclingTitle @"腳踏車"
+#define kDirectionsModeWalkingTitle @"走路"
+
+#define kDirectionsModeDriving @"driving"
+#define kDirectionsModeTransit @"transit"
+#define kDirectionsModeBicycling @"bicycling"
+#define kDirectionsModeWalking @"walking"
 
 // call
 // web site
@@ -267,26 +284,36 @@
     FilterTableViewController *filterTableViewController = nil;
     switch (indexPath.row) {
         case 0:
+//            filterTableViewController = [self.storyboard instantiateViewControllerWithIdentifier:storyboardID];
+//            filterTableViewController.filterType = FilterTypeMajorType;
+//            filterTableViewController.notifyReceiver = self.filterTableViewController;
+//            filterTableViewController.accessToken = self.accessToken;
+//            [self.navigationController pushViewController:filterTableViewController animated:YES];
             filterTableViewController = [self.storyboard instantiateViewControllerWithIdentifier:storyboardID];
-            filterTableViewController.filterType = FilterTypeMajorType;
+            filterTableViewController.filterType = FilterTypeMenuTypes;
             filterTableViewController.notifyReceiver = self.filterTableViewController;
             filterTableViewController.accessToken = self.accessToken;
             [self.navigationController pushViewController:filterTableViewController animated:YES];
             break;
         case 1:
+//            filterTableViewController = [self.storyboard instantiateViewControllerWithIdentifier:storyboardID];
+//            filterTableViewController.filterType = FilterTypeMinorType;
+//            filterTableViewController.notifyReceiver = self.filterTableViewController;
+//            filterTableViewController.accessToken = self.accessToken;
+//            [self.navigationController pushViewController:filterTableViewController animated:YES];
             filterTableViewController = [self.storyboard instantiateViewControllerWithIdentifier:storyboardID];
-            filterTableViewController.filterType = FilterTypeMinorType;
+            filterTableViewController.filterType = FilterTypeRange;
             filterTableViewController.notifyReceiver = self.filterTableViewController;
             filterTableViewController.accessToken = self.accessToken;
             [self.navigationController pushViewController:filterTableViewController animated:YES];
             break;
-        case 2:
-            filterTableViewController = [self.storyboard instantiateViewControllerWithIdentifier:storyboardID];
-            filterTableViewController.filterType = FilterTypeRange;
-            filterTableViewController.notifyReceiver = self.filterTableViewController;
-            filterTableViewController.accessToken = self.accessToken;            
-            [self.navigationController pushViewController:filterTableViewController animated:YES];
-            break;
+//        case 2:
+//            filterTableViewController = [self.storyboard instantiateViewControllerWithIdentifier:storyboardID];
+//            filterTableViewController.filterType = FilterTypeRange;
+//            filterTableViewController.notifyReceiver = self.filterTableViewController;
+//            filterTableViewController.accessToken = self.accessToken;            
+//            [self.navigationController pushViewController:filterTableViewController animated:YES];
+//            break;
         default:
             break;
     }
@@ -352,31 +379,49 @@
         [self.navigationController pushViewController:webViewController animated:YES];
     }];
     
-    UIAlertAction *rateAction = [UIAlertAction actionWithTitle:kRateActionTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        NSLog(@"rate");
+//    UIAlertAction *rateAction = [UIAlertAction actionWithTitle:kRateActionTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+//        NSLog(@"rate");
+//    }];
+    
+    UIAlertAction *streetViewAction = [UIAlertAction actionWithTitle:kRateActionStreetView style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        NSLog(@"street view");
+        CLLocationCoordinate2D panoramaNear = {[store.latitude doubleValue],[store.longitude doubleValue]};
+        
+        GMSPanoramaView *panoView = [GMSPanoramaView panoramaWithFrame:CGRectZero nearCoordinate:panoramaNear];
+        
+        UIViewController *streetViewController = [[UIViewController alloc] init];
+        streetViewController.view = panoView;
+        streetViewController.navigationItem.title = store.name;
+        [self.navigationController pushViewController:streetViewController animated:YES];
+        
     }];
     
     UIAlertAction *pictureAction = [UIAlertAction actionWithTitle:kPicturesActionTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         
         NSLog(@"picture");
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"ok" message:@"test" preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *webSiteAction = [UIAlertAction actionWithTitle:kWebSiteActionTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            NSLog(@"web site");
-            WebViewController *webViewController = [[WebViewController alloc] initWithNibName:@"WebViewController" bundle:nil];
-            webViewController.keyword = store.name;
-            webViewController.searchType = SearchImage;
-            [self.navigationController pushViewController:webViewController animated:YES];
-        }];
-        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-            NSLog(@"click cancel!");
-        }];
-        [alertController addAction:webSiteAction];
-        [alertController addAction:okAction];
-        [self presentViewController:alertController animated:YES completion:nil];
+//        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"ok" message:@"test" preferredStyle:UIAlertControllerStyleAlert];
+//        UIAlertAction *webSiteAction = [UIAlertAction actionWithTitle:kWebSiteActionTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+//            NSLog(@"web site");
+//            WebViewController *webViewController = [[WebViewController alloc] initWithNibName:@"WebViewController" bundle:nil];
+//            webViewController.keyword = store.name;
+//            webViewController.searchType = SearchImage;
+//            [self.navigationController pushViewController:webViewController animated:YES];
+//        }];
+//        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+//            NSLog(@"click cancel!");
+//        }];
+//        [alertController addAction:webSiteAction];
+//        [alertController addAction:okAction];
+//        [self presentViewController:alertController animated:YES completion:nil];
+        
+        WebViewController *webViewController = [[WebViewController alloc] initWithNibName:@"WebViewController" bundle:nil];
+        webViewController.keyword = store.name;
+        webViewController.searchType = SearchImage;
+        [self.navigationController pushViewController:webViewController animated:YES];
     }];
     
     UIAlertAction *navigateAction = [UIAlertAction actionWithTitle:kNavigateActionTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        NSLog(@"navigate");
+        [self selectDirectionsModeWithStore:store];
     }];
     
     UIAlertAction *closeAction = [UIAlertAction actionWithTitle:kCloseActionTitle style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
@@ -385,12 +430,53 @@
     
     [alertController addAction:callAction];
     [alertController addAction:webSiteAction];
-    [alertController addAction:rateAction];
+//    [alertController addAction:rateAction];
+    [alertController addAction:streetViewAction];
     [alertController addAction:pictureAction];
     [alertController addAction:navigateAction];
     [alertController addAction:closeAction];
     
     [self presentViewController:alertController animated:YES completion:nil];
+}
+
+- (void)showNavigationWithStore:(Store *)store {
+    [self selectDirectionsModeWithStore:store];
+}
+
+- (void)selectDirectionsModeWithStore:(Store *)store {
+    UIAlertController *selectDirectionMode = [UIAlertController alertControllerWithTitle:@"怎某去？" message:@"" preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *directionsModeDriveing = [UIAlertAction actionWithTitle:kDirectionsModeDrivingTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self launchNavigateWithStore:store withDirectionsMode:kDirectionsModeDriving];
+    }];
+    
+    UIAlertAction *directionsModeTransit = [UIAlertAction actionWithTitle:kDirectionsModeTransitTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self launchNavigateWithStore:store withDirectionsMode:kDirectionsModeTransit];
+    }];
+
+    UIAlertAction *directionsModeWalking = [UIAlertAction actionWithTitle:kDirectionsModeWalkingTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self launchNavigateWithStore:store withDirectionsMode:kDirectionsModeWalking];
+    }];
+    
+    UIAlertAction *directionsModeCancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        
+    }];
+    
+    [selectDirectionMode addAction:directionsModeDriveing];
+    [selectDirectionMode addAction:directionsModeTransit];
+    [selectDirectionMode addAction:directionsModeWalking];
+    [selectDirectionMode addAction:directionsModeCancel];
+    
+    [self presentViewController:selectDirectionMode animated:YES completion:nil];
+}
+
+- (void)launchNavigateWithStore:(Store *)store withDirectionsMode:(NSString *)directionsMode{
+    [[UIApplication sharedApplication] canOpenURL: [NSURL URLWithString:kGoogleMapType]];
+    if ([[UIApplication sharedApplication] canOpenURL: [NSURL URLWithString:kGoogleMapType]]) {
+        [[UIApplication sharedApplication] openURL: [NSURL URLWithString:kNavigateURLString(self.currentLocation.latitude, self.currentLocation.longitude, [store.latitude doubleValue], [store.longitude doubleValue], self.currentLocation.latitude, self.currentLocation.longitude, directionsMode,6)]];
+    } else {
+        NSLog(@"Can't use comgooglemaps://");
+    }
 }
 
 - (UIAlertController *)normalAlertWithTitle:(NSString *)title message:(NSString *)message store:(Store *)store{

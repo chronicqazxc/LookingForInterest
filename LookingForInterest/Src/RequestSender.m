@@ -58,6 +58,11 @@
     [self sendRequestByParams:@{} andURL:[NSString stringWithFormat:@"%@%@",kLookingForInterestURL,kGetRangesURL]];
 }
 
+- (void)sendMenutypesRequest {
+    self.type = FilterTypeRange;
+    [self sendRequestByParams:@{} andURL:[NSString stringWithFormat:@"%@%@",kLookingForInterestURL,kGetMenuTypesURL]];
+}
+
 - (void)sendRequestByParams:(NSDictionary *)paramDic andURL:(NSString *)URL{
     NSError *error;
     NSData *postData = [NSJSONSerialization dataWithJSONObject:paramDic options:0 error:&error];
@@ -146,6 +151,12 @@
                 if ([self.delegate respondsToSelector:@selector(storesBack:)]) {
                     NSArray *datas = [self parseStoreData:[self appendDataFromDatas:self.receivedDatas]];
                     [self.delegate storesBack:datas];
+                }
+                break;
+            case FilterTypeMenuTypes:
+                if ([self.delegate respondsToSelector:@selector(menuTypesBack:)]) {
+                    NSArray *datas = [self parseRangeData:[self appendDataFromDatas:self.receivedDatas]];
+                    [self.delegate menuTypesBack:datas];
                 }
                 break;
             default:
