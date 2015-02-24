@@ -18,12 +18,14 @@ typedef NS_ENUM(NSInteger, MenuSearchType) {
 
 @interface Menu : NSObject
 @property (strong, nonatomic) NSArray *titles;
-@property (strong, nonatomic) NSArray *content;
+@property (strong, nonatomic) NSMutableArray *content;
 @property (strong, nonatomic) MajorType *majorType;
 @property (strong, nonatomic) MinorType *minorType;
 @property (strong, nonatomic) Store *store;
+@property (strong, nonatomic) NSString *city;
 @property (strong, nonatomic) NSString *range;
 @property (strong, nonatomic) NSString *numberOfRows;
+@property (strong, nonatomic) NSString *depend;
 @property (nonatomic) MenuSearchType menuSearchType;
 
 - (id)initWithMenuDic:(NSDictionary *)menuDic;

@@ -279,7 +279,7 @@
     [self.filterTableViewController sendInitRequest];    
 }
 
--(void)tableBeTapIn:(NSIndexPath *)indexPath {
+-(void)tableBeTapIn:(NSIndexPath *)indexPath withMenuSearchType:(MenuSearchType)menuSearchType{
     NSString *storyboardID = [self.filterTableViewController getStoryboardID];
     FilterTableViewController *filterTableViewController = nil;
     switch (indexPath.row) {
@@ -301,8 +301,13 @@
 //            filterTableViewController.notifyReceiver = self.filterTableViewController;
 //            filterTableViewController.accessToken = self.accessToken;
 //            [self.navigationController pushViewController:filterTableViewController animated:YES];
+            
             filterTableViewController = [self.storyboard instantiateViewControllerWithIdentifier:storyboardID];
-            filterTableViewController.filterType = FilterTypeRange;
+            if (menuSearchType == MenuCurrentPosition) {
+                filterTableViewController.filterType = FilterTypeRange;
+            } else if (menuSearchType == MenuCities) {
+                filterTableViewController.filterType = FilterTypeCity;
+            }
             filterTableViewController.notifyReceiver = self.filterTableViewController;
             filterTableViewController.accessToken = self.accessToken;
             [self.navigationController pushViewController:filterTableViewController animated:YES];

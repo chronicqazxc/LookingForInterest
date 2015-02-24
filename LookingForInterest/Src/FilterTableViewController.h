@@ -33,7 +33,7 @@
 
 @protocol FilterTableViewControllerDelegate <NSObject>
 - (void)setAccessTokenValue:(NSString *)accessToken;
-- (void)tableBeTapIn:(NSIndexPath *)indexPath;
+- (void)tableBeTapIn:(NSIndexPath *)indexPath withMenuSearchType:(MenuSearchType)menuSearchType;
 - (void)storeBeTapIn:(NSIndexPath *)indexPath;
 - (CLLocationCoordinate2D)sendLocationBack;
 - (void)reloadMapByStores:(NSArray *)stores withZoomLevel:(NSUInteger)zoom;

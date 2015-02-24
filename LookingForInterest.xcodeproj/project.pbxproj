@@ -726,6 +726,7 @@
 				B002A2B51A964C0B00808055 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B034D9561A8903A900360A6C /* Build configuration list for PBXProject "LookingForInterest" */ = {
 			isa = XCConfigurationList;

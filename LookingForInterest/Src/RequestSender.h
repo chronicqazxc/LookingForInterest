@@ -16,8 +16,10 @@
 @property (strong, nonatomic) NSString *accessToken;
 - (void)getAccessToken;
 - (void)sendMenuRequest;
+- (void)sendMenuRequestWithType:(MenuSearchType)menuSearchType;
 - (void)sendMenutypesRequest;
 - (void)sendRangeRequest;
+- (void)sendCityRequest;
 - (void)sendMajorRequest;
 - (void)sendMinorRequestByMajorType:(MajorType *)majorType;
 - (void)sendStoreRequestByMajorType:(MajorType *)majorType minorType:(MinorType *)minorType;
@@ -32,4 +34,5 @@
 - (void)minorsBack:(NSArray *)minorData;
 - (void)storesBack:(NSArray *)storeData;
 - (void)rangesBack:(NSArray *)rangeData;
+- (void)citiesBack:(NSArray *)citiesData;
 @end

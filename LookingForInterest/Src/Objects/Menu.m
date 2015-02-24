@@ -15,8 +15,9 @@
     if (self) {
         if (menuDic) {
             self.titles = [menuDic objectForKey:@"Titles"];
-            self.content = [menuDic objectForKey:@"Content"];
+            self.content = [NSMutableArray arrayWithArray:[menuDic objectForKey:@"Content"]];
             self.menuSearchType = [[menuDic objectForKey:@"MenuSearchType"] intValue];
+            self.depend = [menuDic objectForKey:@"DependTitle"];
             
             NSDictionary *majorTypeDic = [menuDic objectForKey:@"MajorType"];
             MajorType *majorType = [[MajorType alloc] initWithMajorTypeDic:majorTypeDic];

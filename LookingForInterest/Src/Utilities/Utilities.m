@@ -83,4 +83,20 @@
     }
     return modifyImage;
 }
+
+//NSString* (^thousandSeparatorFormat)(NSNumber*) =
+//^(NSNumber *number) {
+//    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+//    [numberFormatter setGroupingSeparator:@","];
+//    [numberFormatter setGroupingSize:3];
+//    [numberFormatter setUsesGroupingSeparator:YES];
+//    [numberFormatter setDecimalSeparator:@"."];
+//    [numberFormatter setNumberStyle:NSNumberFormatterDecimalStyle];
+//    [numberFormatter setMaximumFractionDigits:2];
+//    NSString *formatedString = [numberFormatter stringFromNumber:number];
+//    [numberFormatter release];
+//    return formatedString;
+//};
+//NSNumber *amountNumber = [NSNumber numberWithInteger:[self.barcodeData.totAmt integerValue]];
+//self.payFullPriceLabel.text = [NSString stringWithFormat:@"$%@",thousandSeparatorFormat(amountNumber)];
 @end

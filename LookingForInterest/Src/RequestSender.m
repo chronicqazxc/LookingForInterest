@@ -58,10 +58,21 @@
     [self sendRequestByParams:@{} andURL:[NSString stringWithFormat:@"%@%@",kLookingForInterestURL,kGetRangesURL]];
 }
 
+- (void)sendCityRequest {
+    self.type = FilterTypeCity;
+    [self sendRequestByParams:@{} andURL:[NSString stringWithFormat:@"%@%@",kLookingForInterestURL,kGetCitiesURL]];
+}
+
+- (void)sendMenuRequestWithType:(MenuSearchType)menuSearchType {
+    self.type = FilterTypeMenu;
+    [self sendRequestByParams:@{@"menu_type":[NSString stringWithFormat:@"%d",menuSearchType]} andURL:[NSString stringWithFormat:@"%@%@",kLookingForInterestURL,kGetInitMenuURL]];
+}
+
 - (void)sendMenutypesRequest {
-    self.type = FilterTypeRange;
+    self.type = FilterTypeMenuTypes;
     [self sendRequestByParams:@{} andURL:[NSString stringWithFormat:@"%@%@",kLookingForInterestURL,kGetMenuTypesURL]];
 }
+
 
 - (void)sendRequestByParams:(NSDictionary *)paramDic andURL:(NSString *)URL{
     NSError *error;
@@ -147,6 +158,12 @@
                     [self.delegate rangesBack:datas];
                 }
                 break;
+            case FilterTypeCity:
+                if ([self.delegate respondsToSelector:@selector(rangesBack:)]) {
+                    NSArray *datas = [self parseCitiesData:[self appendDataFromDatas:self.receivedDatas]];
+                    [self.delegate citiesBack:datas];
+                }
+                break;
             case SearchStores:
                 if ([self.delegate respondsToSelector:@selector(storesBack:)]) {
                     NSArray *datas = [self parseStoreData:[self appendDataFromDatas:self.receivedDatas]];
@@ -155,7 +172,7 @@
                 break;
             case FilterTypeMenuTypes:
                 if ([self.delegate respondsToSelector:@selector(menuTypesBack:)]) {
-                    NSArray *datas = [self parseRangeData:[self appendDataFromDatas:self.receivedDatas]];
+                    NSArray *datas = [self parseMenuTypesData:[self appendDataFromDatas:self.receivedDatas]];
                     [self.delegate menuTypesBack:datas];
                 }
                 break;
@@ -231,6 +248,24 @@
     NSMutableArray *array = [NSMutableArray array];
     NSArray *rangesData = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
     [array addObject:rangesData];
+    return array;
+}
+
+- (NSArray *)parseCitiesData:(NSData *)data {
+    NSError *error = nil;
+    NSMutableArray *array = [NSMutableArray array];
+    NSArray *citiesData = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+    for (NSDictionary *dic in citiesData) {
+        [array addObject:[dic objectForKey:@"city"]];
+    }
+    return array;
+}
+
+- (NSArray *)parseMenuTypesData:(NSData *)data {
+    NSError *error = nil;
+    NSMutableArray *array = [NSMutableArray array];
+    NSArray *menuTypesData = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+    [array addObject:menuTypesData];
     return array;
 }
 

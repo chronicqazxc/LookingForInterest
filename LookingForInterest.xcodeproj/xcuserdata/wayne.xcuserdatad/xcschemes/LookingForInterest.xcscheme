@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "B034D95A1A8903A900360A6C"
-               BuildableName = "&#x627e;&#x6771;&#x897f;.app"
+               BuildableName = "&#x5bf5;&#x7269;&#x76f8;&#x95dc;&#x7684;.app"
                BlueprintName = "LookingForInterest"
                ReferencedContainer = "container:LookingForInterest.xcodeproj">
             </BuildableReference>
@@ -42,7 +42,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B002A29A1A964BA700808055"
+               BlueprintIdentifier = "B002A2AA1A964C0B00808055"
                BuildableName = "LookingForInterest Tests.xctest"
                BlueprintName = "LookingForInterest Tests"
                ReferencedContainer = "container:LookingForInterest.xcodeproj">
@@ -70,7 +70,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B002A29A1A964BA700808055"
+               BlueprintIdentifier = "B002A2AA1A964C0B00808055"
                BuildableName = "LookingForInterest Tests.xctest"
                BlueprintName = "LookingForInterest Tests"
                ReferencedContainer = "container:LookingForInterest.xcodeproj">
@@ -81,7 +81,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "B034D95A1A8903A900360A6C"
-            BuildableName = "&#x627e;&#x6771;&#x897f;.app"
+            BuildableName = "&#x5bf5;&#x7269;&#x76f8;&#x95dc;&#x7684;.app"
             BlueprintName = "LookingForInterest"
             ReferencedContainer = "container:LookingForInterest.xcodeproj">
          </BuildableReference>
@@ -100,7 +100,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "B034D95A1A8903A900360A6C"
-            BuildableName = "&#x627e;&#x6771;&#x897f;.app"
+            BuildableName = "&#x5bf5;&#x7269;&#x76f8;&#x95dc;&#x7684;.app"
             BlueprintName = "LookingForInterest"
             ReferencedContainer = "container:LookingForInterest.xcodeproj">
          </BuildableReference>
@@ -118,7 +118,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "B034D95A1A8903A900360A6C"
-            BuildableName = "&#x627e;&#x6771;&#x897f;.app"
+            BuildableName = "&#x5bf5;&#x7269;&#x76f8;&#x95dc;&#x7684;.app"
             BlueprintName = "LookingForInterest"
             ReferencedContainer = "container:LookingForInterest.xcodeproj">
          </BuildableReference>

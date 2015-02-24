@@ -51,6 +51,7 @@
 }
 
 - (void)startLoading {
+    [self stopLoading];
     LoadingView *loadingView = (LoadingView *)[Utilities getNibWithName:@"LoadingView"];
     CGRect screenRect = [[UIScreen mainScreen] bounds];
     loadingView.frame = CGRectMake(0,0,CGRectGetWidth(screenRect), CGRectGetHeight(screenRect));

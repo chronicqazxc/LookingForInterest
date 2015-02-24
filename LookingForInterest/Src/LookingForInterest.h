@@ -20,6 +20,7 @@
 #define kLookingForInterestTestURL @"http://Waynes-MacBook-Pro.local:3000/api/v1/"
 #define kGetInitMenuURL @"datas/get_init_menus/"
 #define kGetRangesURL @"datas/get_ranges/"
+#define kGetCitiesURL @"datas/get_cities/"
 #define kGetMenuTypesURL @"datas/get_menu_types/"
 #define kGetMajorTypesURL @"datas/get_major_types/"
 #define kGetMinorTypesURL @"datas/get_minor_types/"
@@ -35,6 +36,7 @@ typedef enum filterType {
     FilterTypeMinorType,
     FilterTypeStore,
     FilterTypeRange,
+    FilterTypeCity,
     SearchStores,
     GetAccessToken,
     FilterTypeMenuTypes
