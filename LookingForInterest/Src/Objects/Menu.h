@@ -27,6 +27,6 @@ typedef NS_ENUM(NSInteger, MenuSearchType) {
 @property (strong, nonatomic) NSString *numberOfRows;
 @property (strong, nonatomic) NSString *depend;
 @property (nonatomic) MenuSearchType menuSearchType;
-
+@property (strong, nonatomic) PageController *pageController;
 - (id)initWithMenuDic:(NSDictionary *)menuDic;
 @end

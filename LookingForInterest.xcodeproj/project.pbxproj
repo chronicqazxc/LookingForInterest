@@ -11,6 +11,7 @@
 		B002A2B01A964C0B00808055 /* LookingForInterest_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = B002A2AF1A964C0B00808055 /* LookingForInterest_Tests.m */; };
 		B002A2EB1A9885FA00808055 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B002A2E91A9885FA00808055 /* WebViewController.m */; };
 		B002A2EC1A9885FA00808055 /* WebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B002A2EA1A9885FA00808055 /* WebViewController.xib */; };
+		B002A2EF1A9CEFBA00808055 /* PageController.m in Sources */ = {isa = PBXBuildFile; fileRef = B002A2EE1A9CEFBA00808055 /* PageController.m */; };
 		B034D96A1A8903AA00360A6C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B034D9681A8903AA00360A6C /* Main.storyboard */; };
 		B034D96C1A8903AA00360A6C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B034D96B1A8903AA00360A6C /* Images.xcassets */; };
 		B034D96F1A8903AA00360A6C /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = B034D96D1A8903AA00360A6C /* LaunchScreen.xib */; };
@@ -83,6 +84,8 @@
 		B002A2E81A9885FA00808055 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WebViewController.h; path = Src/WebViewController.h; sourceTree = "<group>"; };
 		B002A2E91A9885FA00808055 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WebViewController.m; path = Src/WebViewController.m; sourceTree = "<group>"; };
 		B002A2EA1A9885FA00808055 /* WebViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WebViewController.xib; path = Src/WebViewController.xib; sourceTree = "<group>"; };
+		B002A2ED1A9CEFBA00808055 /* PageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PageController.h; path = Src/Objects/PageController.h; sourceTree = "<group>"; };
+		B002A2EE1A9CEFBA00808055 /* PageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PageController.m; path = Src/Objects/PageController.m; sourceTree = "<group>"; };
 		B034D95B1A8903A900360A6C /* 寵物相關的.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "寵物相關的.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B034D95F1A8903A900360A6C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B034D9691A8903AA00360A6C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -283,6 +286,8 @@
 				B0BF72E51A8915DD00213C00 /* MinorType.m */,
 				B0BF72E61A8915DD00213C00 /* Store.h */,
 				B0BF72E71A8915DD00213C00 /* Store.m */,
+				B002A2ED1A9CEFBA00808055 /* PageController.h */,
+				B002A2EE1A9CEFBA00808055 /* PageController.m */,
 			);
 			name = Objs;
 			sourceTree = "<group>";
@@ -532,6 +537,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B002A2EF1A9CEFBA00808055 /* PageController.m in Sources */,
 				B0BF72F81A8915ED00213C00 /* ViewController.m in Sources */,
 				B0BF72DE1A8915C500213C00 /* main.m in Sources */,
 				B002A2EB1A9885FA00808055 /* WebViewController.m in Sources */,

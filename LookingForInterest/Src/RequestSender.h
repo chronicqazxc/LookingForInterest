@@ -32,7 +32,7 @@
 - (void)menuTypesBack:(NSArray *)menuData;
 - (void)majorsBack:(NSArray *)majorData;
 - (void)minorsBack:(NSArray *)minorData;
-- (void)storesBack:(NSArray *)storeData;
+- (void)storesBack:(NSMutableDictionary *)resultDic;
 - (void)rangesBack:(NSArray *)rangeData;
 - (void)citiesBack:(NSArray *)citiesData;
 @end

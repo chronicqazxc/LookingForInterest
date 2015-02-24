@@ -50,6 +50,7 @@
 @property (strong, nonatomic) NSMutableArray *controlArr;
 @property (nonatomic) NSUInteger numberOfRow;
 @property (strong, nonatomic) Menu *menu;
+@property (strong, nonatomic) PageController *pageController;
 @property (strong, nonatomic) NSArray *majorTypes;
 @property (strong, nonatomic) NSArray *minorTypes;
 @property (strong, nonatomic) NSArray *stores;
@@ -666,7 +667,7 @@
                 break;
             case FilterTypeCity:
                 [[NSNotificationCenter defaultCenter] addObserver:self.notifyReceiver selector:@selector(receiveSelectedCity:) name:kCitySelected object:nil];
-                [[NSNotificationCenter defaultCenter] postNotificationName:kCitySelected object:self userInfo:@{@"City":[self.ranges objectAtIndex:indexPath.row]}];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kCitySelected object:self userInfo:@{@"City":[self.cities objectAtIndex:indexPath.row]}];
                 [self.navigationController popViewControllerAnimated:YES];
                 break;
             case FilterTypeMenuTypes:
@@ -742,8 +743,10 @@
     [Utilities stopLoading];
 }
 
-- (void)storesBack:(NSArray *)stores {
+- (void)storesBack:(NSMutableDictionary *)resultDic {
+    NSArray *stores = [resultDic objectForKey:@"stores"];
     self.stores = stores;
+    self.pageController = [resultDic objectForKey:@"pageController"];
     [self.filterTableView reloadData];
     if (self.delegate) {
         if ([self.delegate respondsToSelector:@selector(reloadMapByStores:withZoomLevel:)]) {
