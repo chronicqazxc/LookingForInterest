@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "MajorType.h"
 #import "MinorType.h"
+#import "PageController.h"
 #import "Store.h"
 
 typedef NS_ENUM(NSInteger, MenuSearchType) {
