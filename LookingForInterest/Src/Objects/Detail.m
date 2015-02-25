@@ -19,8 +19,8 @@
         self.imageURL2 = [detailDic objectForKey:@"image_url_2"]?[detailDic objectForKey:@"image_url_2"]:@"";
         self.imageURL3 = [detailDic objectForKey:@"image_url_3"]?[detailDic objectForKey:@"image_url_3"]:@"";
         self.webAddress = [detailDic objectForKey:@"web_address"]?[detailDic objectForKey:@"web_address"]:@"";
-        self.totalRate = [detailDic objectForKey:@"total_rate"]?[[detailDic objectForKey:@"total_rate"] intValue]:0;
-        self.averageRate = [detailDic objectForKey:@"average_rate"]?[[detailDic objectForKey:@"average_rate"] floatValue]:0.0;
+        self.totalRate = [detailDic objectForKey:@"total_rate"]==[NSNull null]?0:[[detailDic objectForKey:@"total_rate"] intValue];
+        self.averageRate = [detailDic objectForKey:@"average_rate"]==[NSNull null]?0.0:[[detailDic objectForKey:@"average_rate"] floatValue];
         self.otherInfo1 = [detailDic objectForKey:@"other_info_1"]?[detailDic objectForKey:@"other_info_1"]:@"";
         self.otherInfo2 = [detailDic objectForKey:@"other_info_2"]?[detailDic objectForKey:@"other_info_2"]:@"";
         self.otherInfo3 = [detailDic objectForKey:@"other_info_3"]?[detailDic objectForKey:@"other_info_3"]:@"";

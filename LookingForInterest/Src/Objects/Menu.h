@@ -15,7 +15,9 @@
 typedef NS_ENUM(NSInteger, MenuSearchType) {
     MenuCurrentPosition = 0,
     MenuCities,
-    MenuKeyword
+    MenuKeyword,
+    MenuMarker,
+    MenuAddress
 };
 
 @interface Menu : NSObject

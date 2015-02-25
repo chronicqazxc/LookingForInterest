@@ -30,6 +30,7 @@
 - (void)search;
 - (void)back;
 - (void)resetPage;
+- (BOOL)canDropMyMark;
 @end
 
 @protocol FilterTableViewControllerDelegate <NSObject>

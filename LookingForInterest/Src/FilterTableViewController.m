@@ -112,6 +112,15 @@
     self.pageController.totalPage = 1;
 }
 
+- (BOOL)canDropMyMark {
+    if (self.menu.menuSearchType == MenuMarker ||
+        self.menu.menuSearchType == MenuAddress) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     RequestSender *requestSender = [[RequestSender alloc] init];

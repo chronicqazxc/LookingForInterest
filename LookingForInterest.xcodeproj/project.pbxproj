@@ -12,6 +12,8 @@
 		B002A2EB1A9885FA00808055 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B002A2E91A9885FA00808055 /* WebViewController.m */; };
 		B002A2EC1A9885FA00808055 /* WebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B002A2EA1A9885FA00808055 /* WebViewController.xib */; };
 		B002A2EF1A9CEFBA00808055 /* PageController.m in Sources */ = {isa = PBXBuildFile; fileRef = B002A2EE1A9CEFBA00808055 /* PageController.m */; };
+		B002A2F51A9E31F400808055 /* EndlessScrollGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = B002A2F21A9E31F400808055 /* EndlessScrollGenerator.m */; };
+		B002A2F61A9E31F400808055 /* FullScreenScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = B002A2F41A9E31F400808055 /* FullScreenScrollView.m */; };
 		B034D96A1A8903AA00360A6C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B034D9681A8903AA00360A6C /* Main.storyboard */; };
 		B034D96C1A8903AA00360A6C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B034D96B1A8903AA00360A6C /* Images.xcassets */; };
 		B034D96F1A8903AA00360A6C /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = B034D96D1A8903AA00360A6C /* LaunchScreen.xib */; };
@@ -90,6 +92,10 @@
 		B002A2EA1A9885FA00808055 /* WebViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WebViewController.xib; path = Src/WebViewController.xib; sourceTree = "<group>"; };
 		B002A2ED1A9CEFBA00808055 /* PageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PageController.h; path = Src/Objects/PageController.h; sourceTree = "<group>"; };
 		B002A2EE1A9CEFBA00808055 /* PageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PageController.m; path = Src/Objects/PageController.m; sourceTree = "<group>"; };
+		B002A2F11A9E31F400808055 /* EndlessScrollGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EndlessScrollGenerator.h; path = Src/Views/EndlessScrollGenerator.h; sourceTree = "<group>"; };
+		B002A2F21A9E31F400808055 /* EndlessScrollGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EndlessScrollGenerator.m; path = Src/Views/EndlessScrollGenerator.m; sourceTree = "<group>"; };
+		B002A2F31A9E31F400808055 /* FullScreenScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FullScreenScrollView.h; path = Src/Views/FullScreenScrollView.h; sourceTree = "<group>"; };
+		B002A2F41A9E31F400808055 /* FullScreenScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FullScreenScrollView.m; path = Src/Views/FullScreenScrollView.m; sourceTree = "<group>"; };
 		B034D95B1A8903A900360A6C /* 寵物相關的.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "寵物相關的.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B034D95F1A8903A900360A6C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B034D9691A8903AA00360A6C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -224,6 +230,17 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		B002A2F01A9E31D700808055 /* Scroll&ZoomingView */ = {
+			isa = PBXGroup;
+			children = (
+				B002A2F11A9E31F400808055 /* EndlessScrollGenerator.h */,
+				B002A2F21A9E31F400808055 /* EndlessScrollGenerator.m */,
+				B002A2F31A9E31F400808055 /* FullScreenScrollView.h */,
+				B002A2F41A9E31F400808055 /* FullScreenScrollView.m */,
+			);
+			name = "Scroll&ZoomingView";
+			sourceTree = "<group>";
+		};
 		B034D9521A8903A900360A6C = {
 			isa = PBXGroup;
 			children = (
@@ -348,6 +365,7 @@
 				B0BF73371A8A844000213C00 /* OpenMapCell.xib */,
 				B06E56971A9D64980030B6A4 /* GoTopButton.h */,
 				B06E56981A9D64980030B6A4 /* GoTopButton.m */,
+				B002A2F01A9E31D700808055 /* Scroll&ZoomingView */,
 				B06E569A1A9DE2980030B6A4 /* AnimalHospitalViewController.h */,
 				B06E569B1A9DE2980030B6A4 /* AnimalHospitalViewController.m */,
 				B06E569C1A9DE2980030B6A4 /* AnimalHospitalViewController.xib */,
@@ -568,9 +586,11 @@
 				B0BF72F51A8915ED00213C00 /* AppDelegate.m in Sources */,
 				B0F06B361A89B80500FBC90C /* MapViewCell.m in Sources */,
 				B0F06B401A89F37500FBC90C /* Utilities.m in Sources */,
+				B002A2F61A9E31F400808055 /* FullScreenScrollView.m in Sources */,
 				B0BF72F71A8915ED00213C00 /* RequestSender.m in Sources */,
 				B0BF73381A8A844000213C00 /* OpenMapCell.m in Sources */,
 				B0BF731C1A8A406F00213C00 /* MenuCell.m in Sources */,
+				B002A2F51A9E31F400808055 /* EndlessScrollGenerator.m in Sources */,
 				B0BF72E81A8915DD00213C00 /* MajorType.m in Sources */,
 				B0BF73121A891E9F00213C00 /* ExpandContractController.m in Sources */,
 				B06E569D1A9DE2980030B6A4 /* AnimalHospitalViewController.m in Sources */,

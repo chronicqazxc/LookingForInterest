@@ -258,7 +258,18 @@
 }
 
 - (void)mapView:(GMSMapView *)mapView didLongPressAtCoordinate:(CLLocationCoordinate2D)coordinate {
-    
+    if ([self.filterTableViewController canDropMyMark]) {
+        [self.googleMap clear];        
+        GMSMarker *myMark = [[GMSMarker alloc] init];
+        myMark.position = CLLocationCoordinate2DMake(coordinate.latitude,coordinate.longitude);
+        myMark.appearAnimation = kGMSMarkerAnimationPop;
+        myMark.snippet = @"自己選的位置";
+        myMark.draggable = YES;
+        myMark.flat = YES;
+        myMark.icon = [GMSMarker markerImageWithColor:[UIColor greenColor]];
+        //    storeMark.title = store.storeID;
+        myMark.map = self.googleMap;
+    }
 }
 
 /**
