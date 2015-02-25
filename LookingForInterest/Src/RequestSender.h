@@ -23,7 +23,8 @@
 - (void)sendMajorRequest;
 - (void)sendMinorRequestByMajorType:(MajorType *)majorType;
 - (void)sendStoreRequestByMajorType:(MajorType *)majorType minorType:(MinorType *)minorType;
-- (void)sendStoreRequestByMenuObj:(Menu *)menu andLocationCoordinate:(CLLocationCoordinate2D)location;
+- (void)sendStoreRequestByMenuObj:(Menu *)menu andLocationCoordinate:(CLLocationCoordinate2D)location andPageController:(PageController *)pageController;
+- (void)sendDetailRequestByStore:(Store *)store;
 @end
 
 @protocol RequestSenderDelegate <NSObject>
@@ -33,6 +34,7 @@
 - (void)majorsBack:(NSArray *)majorData;
 - (void)minorsBack:(NSArray *)minorData;
 - (void)storesBack:(NSMutableDictionary *)resultDic;
+- (void)detailBack:(NSArray *)detailData;
 - (void)rangesBack:(NSArray *)rangeData;
 - (void)citiesBack:(NSArray *)citiesData;
 @end

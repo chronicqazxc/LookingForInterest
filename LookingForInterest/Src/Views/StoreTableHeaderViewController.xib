@@ -6,6 +6,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="StoreTableHeaderViewController">
             <connections>
+                <outlet property="goTopButton" destination="Yik-SL-tnp" id="6bP-KI-1Zz"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -58,13 +59,46 @@
                         <action selector="clickStoreTitle:" destination="-1" eventType="touchUpInside" id="gSF-fS-rwF"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yik-SL-tnp" customClass="GoTopButton">
+                    <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                    <color key="backgroundColor" red="1" green="1" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="60" id="Pm2-RD-eXD"/>
+                        <constraint firstAttribute="height" constant="30" id="wA9-RX-NWZ"/>
+                    </constraints>
+                    <state key="normal">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="Pm2-RD-eXD"/>
+                            <exclude reference="wA9-RX-NWZ"/>
+                        </mask>
+                    </variation>
+                    <variation key="heightClass=regular-widthClass=compact">
+                        <mask key="constraints">
+                            <include reference="Pm2-RD-eXD"/>
+                            <include reference="wA9-RX-NWZ"/>
+                        </mask>
+                    </variation>
+                </button>
             </subviews>
             <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstAttribute="centerY" secondItem="XCq-Qw-IB3" secondAttribute="centerY" id="E22-Od-eL0"/>
-                <constraint firstAttribute="centerY" secondItem="XO7-L7-4Ju" secondAttribute="centerY" id="TxG-u2-Bxz"/>
+                <constraint firstAttribute="bottom" secondItem="Yik-SL-tnp" secondAttribute="bottom" constant="5" id="CDF-zv-mnw">
+                    <variation key="heightClass=regular-widthClass=compact" constant="-15"/>
+                </constraint>
+                <constraint firstAttribute="centerY" secondItem="XCq-Qw-IB3" secondAttribute="centerY" id="E22-Od-eL0">
+                    <variation key="heightClass=regular-widthClass=compact" constant="6.5"/>
+                </constraint>
+                <constraint firstAttribute="centerY" secondItem="XO7-L7-4Ju" secondAttribute="centerY" id="TxG-u2-Bxz">
+                    <variation key="heightClass=regular-widthClass=compact" constant="7"/>
+                </constraint>
+                <constraint firstAttribute="centerX" secondItem="Yik-SL-tnp" secondAttribute="centerX" id="gqn-Ja-HAv"/>
                 <constraint firstAttribute="centerX" secondItem="XO7-L7-4Ju" secondAttribute="centerX" id="p46-nu-duW"/>
-                <constraint firstAttribute="bottom" secondItem="XO7-L7-4Ju" secondAttribute="bottom" id="q5W-ab-UqC"/>
+                <constraint firstAttribute="bottom" secondItem="XO7-L7-4Ju" secondAttribute="bottom" id="q5W-ab-UqC">
+                    <variation key="heightClass=regular-widthClass=compact" constant="14"/>
+                </constraint>
                 <constraint firstItem="XO7-L7-4Ju" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="8" id="rwO-z6-FLT"/>
                 <constraint firstAttribute="centerX" secondItem="XCq-Qw-IB3" secondAttribute="centerX" id="wVs-yj-DJB"/>
             </constraints>
@@ -73,6 +107,7 @@
                 <mask key="subviews">
                     <exclude reference="XCq-Qw-IB3"/>
                     <exclude reference="XO7-L7-4Ju"/>
+                    <exclude reference="Yik-SL-tnp"/>
                 </mask>
                 <mask key="constraints">
                     <exclude reference="TxG-u2-Bxz"/>
@@ -81,12 +116,15 @@
                     <exclude reference="rwO-z6-FLT"/>
                     <exclude reference="E22-Od-eL0"/>
                     <exclude reference="wVs-yj-DJB"/>
+                    <exclude reference="CDF-zv-mnw"/>
+                    <exclude reference="gqn-Ja-HAv"/>
                 </mask>
             </variation>
             <variation key="heightClass=regular-widthClass=compact">
                 <mask key="subviews">
                     <include reference="XCq-Qw-IB3"/>
                     <include reference="XO7-L7-4Ju"/>
+                    <include reference="Yik-SL-tnp"/>
                 </mask>
                 <mask key="constraints">
                     <include reference="TxG-u2-Bxz"/>
@@ -95,8 +133,11 @@
                     <exclude reference="rwO-z6-FLT"/>
                     <include reference="E22-Od-eL0"/>
                     <include reference="wVs-yj-DJB"/>
+                    <include reference="CDF-zv-mnw"/>
+                    <include reference="gqn-Ja-HAv"/>
                 </mask>
             </variation>
+            <point key="canvasLocation" x="388" y="200"/>
         </view>
     </objects>
 </document>

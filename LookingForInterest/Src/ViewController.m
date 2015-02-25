@@ -10,6 +10,7 @@
 #import "FilterTableViewController.h"
 #import "LookingForInterest.h"
 #import "WebViewController.h"
+#import "AnimalHospitalViewController.h"
 
 #define kMagnifierImg @"iconmonstr-magnifier-3-icon-256.png"
 #define kLeftArrowImg @"arrow-left@2x.png"
@@ -77,6 +78,12 @@
 @property (weak, nonatomic) IBOutlet UIButton *navigationButton;
 - (IBAction)clickNavigationTitle:(UIButton *)sender;
 @property (strong, nonatomic) NSString *accessToken;
+
+
+@property (weak, nonatomic) IBOutlet UIView *previousPageView;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *previousPageIndicator;
+@property (weak, nonatomic) IBOutlet UIView *nextPageView;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *nextPageIndicator;
 @end
 
 @implementation ViewController
@@ -128,12 +135,15 @@
     if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied || [CLLocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined ) {
         NSLog(@"%@",@"請開啟定位服務");
     }
+    
+    self.previousPageView.hidden = YES;
+    self.nextPageView.hidden = YES;
+    self.mirrorMagnifierImage = [Utilities rotateImage:[UIImage imageNamed:kMagnifierImg] toDirection:DirectionMirror withScale:1.0];
+    self.searchViewIcon.image = self.mirrorMagnifierImage;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    self.mirrorMagnifierImage = [Utilities rotateImage:[UIImage imageNamed:kMagnifierImg] toDirection:DirectionMirror withScale:1.0];
-    self.searchViewIcon.image = self.mirrorMagnifierImage;
     [self setOriginalTitle];
 }
 
@@ -324,10 +334,15 @@
     }
 }
 
-- (void)storeBeTapIn:(NSIndexPath *)indexPath {
+- (void)storeBeTapIn:(NSIndexPath *)indexPath withDetail:(Detail *)detail{
     Store *store = [self.storesOnMap objectAtIndex:indexPath.row];
     GMSCameraPosition *fancy = [GMSCameraPosition cameraWithLatitude:[store.latitude doubleValue] longitude:[store.longitude doubleValue] zoom:16 bearing:0 viewingAngle:0];
     [self.googleMap setCamera:fancy];
+
+    AnimalHospitalViewController *animalHospital = [[AnimalHospitalViewController alloc] initWithNibName:@"AnimalHospitalViewController" bundle:nil];
+    animalHospital.store = store;
+    animalHospital.detail = detail;
+    [self.navigationController pushViewController:animalHospital animated:YES];
 }
 
 - (CLLocationCoordinate2D)sendLocationBack {
@@ -335,8 +350,13 @@
     return self.currentLocation;
 }
 
-- (void)reloadMapByStores:(NSArray *)stores withZoomLevel:(NSUInteger)zoom{
-    GMSCameraPosition *fancy = [GMSCameraPosition cameraWithLatitude:self.currentLocation.latitude longitude:self.currentLocation.longitude zoom:zoom bearing:0 viewingAngle:0];
+- (void)reloadMapByStores:(NSArray *)stores withZoomLevel:(NSUInteger)zoom pageController:(PageController *)pageController andMenu:(Menu *)menu{
+    
+    CLLocationCoordinate2D location = (menu.menuSearchType == MenuCurrentPosition)?
+                                    CLLocationCoordinate2DMake(self.currentLocation.latitude, self.currentLocation.longitude):
+                                    CLLocationCoordinate2DMake([((Store *)[stores firstObject]).latitude doubleValue], [((Store *)[stores firstObject]).longitude doubleValue]);
+    
+    GMSCameraPosition *fancy = [GMSCameraPosition cameraWithLatitude:location.latitude longitude:location.longitude zoom:zoom bearing:0 viewingAngle:0];
     [self.googleMap setCamera:fancy];
     
     self.storesOnMap = stores;
@@ -348,6 +368,22 @@
         storeMark.title = store.storeID;
         storeMark.map = self.googleMap;
     }
+    
+    if (pageController.currentPage == 1 && pageController.totalPage != 1) {
+        self.previousPageView.hidden = YES;
+        self.nextPageView.hidden = NO;
+    } else if (pageController.currentPage == pageController.totalPage && pageController.currentPage != 1) {
+        self.previousPageView.hidden = NO;
+        self.nextPageView.hidden = YES;
+    } else if (pageController.totalPage == 1) {
+        self.previousPageView.hidden = YES;
+        self.nextPageView.hidden = YES;
+    } else {
+        self.previousPageView.hidden = NO;
+        self.nextPageView.hidden = NO;
+    }
+    [self.previousPageIndicator stopAnimating];
+    [self.nextPageIndicator stopAnimating];
 }
 
 - (UIView *)getContentView {
@@ -505,6 +541,16 @@
     return alertController;
 }
 
+- (void)loadPreviousPage:(PageController *)pageController {
+    [self.googleMap clear];
+    [self.previousPageIndicator startAnimating];
+}
+
+- (void)loadNextPage:(PageController *)pageController {
+    [self.googleMap clear];
+    [self.nextPageIndicator startAnimating];
+}
+
 #pragma mark -
 - (IBAction)buttonClicked:(UIButton *)sender {
     if ([self.searchViewTitle.text isEqualToString:kSearch]) {
@@ -513,6 +559,7 @@
         self.searchViewIcon.image = [UIImage imageNamed:kLeftArrowImg];
         self.searchViewIcon.hidden = NO;
         self.filterTableViewController.accessToken = self.accessToken;
+        [self.filterTableViewController resetPage];
         [self.filterTableViewController search];
     } else {
         self.searchViewTitle.text = kSearch;
@@ -520,6 +567,10 @@
         self.searchViewIcon.image = self.mirrorMagnifierImage;
         [self.filterTableViewController back];
         [self setOriginalTitle];
+        self.previousPageView.hidden = YES;
+        self.nextPageView.hidden = YES;
+        [self.previousPageIndicator stopAnimating];
+        [self.nextPageIndicator stopAnimating];
     }
 }
 - (IBAction)clickNavigationTitle:(UIButton *)sender {

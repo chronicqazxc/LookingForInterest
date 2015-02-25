@@ -45,24 +45,26 @@
 #define kCellNavigationTitle @"導航"
 #define kCellMoreTitle @"更多"
 
-@interface FilterTableViewController () <RequestSenderDelegate, MGSwipeTableCellDelegate>
+@interface FilterTableViewController () <RequestSenderDelegate, MGSwipeTableCellDelegate, UITextFieldDelegate>
 @property (strong, nonatomic) NSMutableArray *dataArr;
 @property (strong, nonatomic) NSMutableArray *controlArr;
 @property (nonatomic) NSUInteger numberOfRow;
 @property (strong, nonatomic) Menu *menu;
-@property (strong, nonatomic) PageController *pageController;
 @property (strong, nonatomic) NSArray *majorTypes;
 @property (strong, nonatomic) NSArray *minorTypes;
 @property (strong, nonatomic) NSArray *stores;
 @property (strong, nonatomic) NSArray *ranges;
 @property (strong, nonatomic) NSArray *menuTypes;
 @property (strong, nonatomic) NSArray *cities;
+@property (strong, nonatomic) Detail *detail;
+@property (strong, nonatomic) PageController *pageController;
 @property (strong, nonatomic) IBOutlet UITableView *filterTableViewStoryboard;
 @property (nonatomic) CGSize mapSize;
 @property (strong, nonatomic) OpenMapHeaderController *openMapHeader;
 @property (strong, nonatomic) StoreTableHeaderViewController *storeHeader;
 @property (strong, nonatomic) UIImage *upArrowImage;
 @property (strong, nonatomic) UIImage *downArrowImage;
+@property (nonatomic) BOOL isStartLoadingPage;
 @end
 
 @implementation FilterTableViewController
@@ -87,11 +89,27 @@
     return self;
 }
 
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        [self initValue];
+    }
+    return self;
+}
+
 - (void)initValue {
     self.filterTableViewStoryboard.dataSource = self;
     self.filterTableViewStoryboard.delegate = self;
     self.numberOfRow = 0;
     self.openMapHeader = nil;
+    self.isStartLoadingPage = NO;
+    [self resetPage];
+}
+
+- (void)resetPage {
+    self.pageController = [[PageController alloc] init];
+    self.pageController.currentPage = 1;
+    self.pageController.totalPage = 1;
 }
 
 - (void)viewDidLoad {
@@ -118,7 +136,7 @@
             break;
         case FilterTypeRange:
             requestSender.delegate = self;
-            requestSender.accessToken = self.accessToken;            
+            requestSender.accessToken = self.accessToken;
             [requestSender sendRangeRequest];
             [Utilities startLoading];
             break;
@@ -209,7 +227,7 @@
         }
     }
     requestSender.accessToken = self.accessToken;
-    [requestSender sendStoreRequestByMenuObj:self.menu andLocationCoordinate:currentLocation];
+    [requestSender sendStoreRequestByMenuObj:self.menu andLocationCoordinate:currentLocation andPageController:self.pageController];
     [Utilities startLoading];
     
     self.selectedStoreIndexPath = nil;
@@ -360,6 +378,7 @@
             self.storeHeader.caller = self;
             self.storeHeader.callBackMethod = @selector(clickStoreTitle);
         }
+        self.storeHeader.goTopButtonTitle = [NSString stringWithFormat:@"%d/%d頁",self.pageController.currentPage,self.pageController.totalPage];
         self.storeHeader.view.frame = CGRectMake(0,0,CGRectGetWidth(self.storeHeader.view.frame),50.0);
         [Utilities addShadowToView:self.storeHeader.view offset:CGSizeMake(0.0f, -5.0f)];
         headerView = self.storeHeader.view;
@@ -424,9 +443,19 @@
         menuCell = [tableView dequeueReusableCellWithIdentifier:kMenuCellIdentifier];
         if (!menuCell) {
             menuCell = (MenuCell *)[Utilities getNibWithName:kMenuCellIdentifier];
+            menuCell.textField.delegate = self;
+            menuCell.textField.placeholder = @"請輸入醫院名稱關鍵字";
+        }
+        if (self.menu.menuSearchType == MenuKeyword && indexPath.row == 1) {
+            menuCell.textField.text = self.menu.keyword;
+            menuCell.textField.hidden = NO;
+            menuCell.detailLabel.hidden = YES;
+        } else {
+            menuCell.textField.hidden = YES;
+            menuCell.detailLabel.hidden = NO;
+            menuCell.detailLabel.text = [self getDetailByIndexPath:indexPath andType:self.filterType];
         }
         menuCell.titleLabel.text = [NSString stringWithFormat:@"%@：",[self getTitleByIndexPath:indexPath andType:self.filterType]];
-        menuCell.detailLabel.text = [self getDetailByIndexPath:indexPath andType:self.filterType];
         cell = menuCell;
     } else if (self.filterType == SearchStores && indexPath.section == 1) {
         StoreCell *storeCell = nil;
@@ -619,7 +648,7 @@
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     if (self.delegate &&
         [self.delegate respondsToSelector:@selector(tableBeTapIn:withMenuSearchType:)] &&
-        [self.delegate respondsToSelector:@selector(storeBeTapIn:)]) {
+        [self.delegate respondsToSelector:@selector(storeBeTapIn:withDetail:)]) {
         if (self.filterType == FilterTypeMenu || self.filterType == SearchStores) {
             if (indexPath.section == 0) {
                 ExpandContractController *expandController = [[ExpandContractController alloc] init];
@@ -635,11 +664,17 @@
                 }
                 
             } else if (indexPath.section == 1 && self.filterType == FilterTypeMenu) {
-                [self.delegate tableBeTapIn:indexPath withMenuSearchType:self.menu.menuSearchType];
+                if (self.menu.menuSearchType != MenuKeyword || indexPath.row != 1) {
+                    [self.delegate tableBeTapIn:indexPath withMenuSearchType:self.menu.menuSearchType];
+                }
             } else if (indexPath.section == 1 && self.filterType == SearchStores){
                 if ([self.stores count]) {
-                    [self.delegate storeBeTapIn:indexPath];
                     self.selectedStoreIndexPath = indexPath;
+                    RequestSender *requestSender = [[RequestSender alloc] init];
+                    requestSender.delegate = self;
+                    requestSender.accessToken = self.accessToken;
+                    [requestSender sendDetailRequestByStore:[self.stores objectAtIndex:indexPath.row]];
+                    [Utilities startLoading];
                 }
             }
         }
@@ -749,13 +784,14 @@
     self.pageController = [resultDic objectForKey:@"pageController"];
     [self.filterTableView reloadData];
     if (self.delegate) {
-        if ([self.delegate respondsToSelector:@selector(reloadMapByStores:withZoomLevel:)]) {
+        if ([self.delegate respondsToSelector:@selector(reloadMapByStores:withZoomLevel: pageController: andMenu:)]) {
 //            CGSize screenSize = [Utilities getScreenPixel];
 //            NSUInteger zoom = [self calculateZoomLevelwithScreenWidth:screenSize.width];
             // km:2 zoom:13
-            [self.delegate reloadMapByStores:stores withZoomLevel:13.9999999];
+            [self.delegate reloadMapByStores:stores withZoomLevel:13.9999999 pageController:self.pageController andMenu:self.menu];
         }
     }
+    self.isStartLoadingPage = NO;
     [Utilities stopLoading];
     
     BOOL isExpand = [[self.controlArr[0][0] objectForKey:@"IsExpand"] intValue]?YES:NO;
@@ -766,6 +802,14 @@
     if (self.delegate && [self.delegate respondsToSelector:@selector(changeTitle:)]) {
         [self.delegate changeTitle:self.menu.minorType.typeDescription];
     }
+}
+
+- (void)detailBack:(NSArray *)detailData {
+    self.detail = [detailData firstObject];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(storeBeTapIn: withDetail:)]) {
+        [self.delegate storeBeTapIn:self.selectedStoreIndexPath withDetail:self.detail];
+    }
+    [Utilities stopLoading];
 }
 
 - (NSUInteger)calculateZoomLevelwithScreenWidth:(NSUInteger)screenWidth {
@@ -887,4 +931,72 @@
 //        return [self createLeftButtons:0];
 //    }
 //}
+
+#pragma mark - change page
+- (void)scrollViewDidScroll:(UIScrollView *)aScrollView {
+    if (self.filterType == SearchStores) {
+        CGPoint offset = aScrollView.contentOffset;
+        CGRect bounds = aScrollView.bounds;
+        CGSize size = aScrollView.contentSize;
+        UIEdgeInsets inset = aScrollView.contentInset;
+        float y = offset.y + bounds.size.height - inset.bottom;
+        float h = size.height;
+        float reloadDistance = 90;
+        
+        if(y > h + reloadDistance) {
+            if (self.pageController.currentPage < self.pageController.totalPage) {
+                [self getNextPage];
+            }
+        } else if (offset.y <= -90) {
+            if (self.pageController.currentPage > 1) {
+                [self previousPage];
+            }
+        }
+    }
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    ((UIButton *)(self.storeHeader.goTopButton)).hidden = NO;
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(hiddenPageIndicator:) userInfo:nil repeats:NO];
+}
+
+- (void)hiddenPageIndicator:(NSTimer *)timer {
+    ((UIButton *)(self.storeHeader.goTopButton)).hidden = YES;
+    [timer invalidate];
+}
+
+- (void)previousPage {
+    if (!self.isStartLoadingPage) {
+        NSLog(@"previous page");
+        if (self.delegate && [self.delegate respondsToSelector:@selector(loadPreviousPage:)]) {
+            self.isStartLoadingPage = YES;
+            [self.delegate loadPreviousPage:self.pageController];
+            self.pageController.currentPage--;
+            [self search];
+        }
+    }
+}
+
+- (void)getNextPage {
+    if (!self.isStartLoadingPage) {
+        NSLog(@"next page");
+        if (self.delegate && [self.delegate respondsToSelector:@selector(loadNextPage:)]) {
+            self.isStartLoadingPage = YES;
+            [self.delegate loadNextPage:self.pageController];
+            self.pageController.currentPage++;
+            [self search];
+        }
+    }
+}
+
+#pragma mark - UITextFieldDelegate
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    self.menu.keyword = textField.text;
+    [textField resignFirstResponder];
+    return YES;
+}
+
 @end

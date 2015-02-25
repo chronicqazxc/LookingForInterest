@@ -9,6 +9,7 @@
 #import "Store.h"
 #import "PageController.h"
 #import "Menu.h"
+#import "Detail.h"
 #import <GoogleMaps/GoogleMaps.h>
 #import <CoreLocation/CoreLocation.h>
 #import "Utilities.h"
@@ -26,8 +27,7 @@
 #define kGetMajorTypesURL @"datas/get_major_types/"
 #define kGetMinorTypesURL @"datas/get_minor_types/"
 #define kGetStoresURL @"datas/get_stores/"
-#define kGetStoresByLocationURL @"datas/get_stores_from_my_position/"
-#define kGetStoresByCityURL @"datas/get_stores_from_city/"
+#define kGetDetailURL @"datas/get_detail/"
 #define kGetAccessToken @"tokens/get_access_token/"
 #define kLookingForInterestUserDefaultKey @"LookingForInterestMenu"
 #define kAccessTokenKey @"access_token"
@@ -40,6 +40,7 @@ typedef enum filterType {
     FilterTypeRange,
     FilterTypeCity,
     SearchStores,
+    SearchDetail,
     GetAccessToken,
     FilterTypeMenuTypes
 } FilterType;

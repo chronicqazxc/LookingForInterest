@@ -8,8 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+@class GoTopButton;
+
 @interface StoreTableHeaderViewController : UIViewController
 - (IBAction)clickStoreTitle:(UIButton *)sender;
 @property (weak, nonatomic) id caller;
 @property (nonatomic) SEL callBackMethod;
+@property (weak, nonatomic) IBOutlet GoTopButton *goTopButton;
+@property (strong, nonatomic) NSString *goTopButtonTitle;
 @end

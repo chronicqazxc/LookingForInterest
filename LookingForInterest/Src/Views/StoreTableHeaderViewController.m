@@ -7,16 +7,26 @@
 //
 
 #import "StoreTableHeaderViewController.h"
+#import "GoTopButton.h"
+#import "Utilities.h"
 
 @interface StoreTableHeaderViewController ()
 
 @end
 
 @implementation StoreTableHeaderViewController
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self.goTopButton setTitleColor:UIColorFromRGB(0x006666) forState:UIControlStateNormal];
+    [self.goTopButton setTitle:self.goTopButtonTitle?self.goTopButtonTitle:@"" forState:UIControlStateNormal];
+    self.goTopButton.backgroundColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.8];
+    self.goTopButton.layer.masksToBounds = YES;
+    self.goTopButton.layer.cornerRadius = 3.0;
 }
 
 - (void)didReceiveMemoryWarning {

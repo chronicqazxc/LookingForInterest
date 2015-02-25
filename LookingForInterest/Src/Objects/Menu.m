@@ -19,6 +19,7 @@
             self.menuSearchType = [[menuDic objectForKey:@"MenuSearchType"] intValue];
             self.depend = [menuDic objectForKey:@"DependTitle"];
             self.city = [menuDic objectForKey:@"City"];
+            self.keyword = [menuDic objectForKey:@"Keyword"];
             
             NSDictionary *majorTypeDic = [menuDic objectForKey:@"MajorType"];
             MajorType *majorType = [[MajorType alloc] initWithMajorTypeDic:majorTypeDic];

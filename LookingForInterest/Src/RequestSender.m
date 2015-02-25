@@ -45,21 +45,39 @@
 
 - (void)sendStoreRequestByMajorType:(MajorType *)majorType minorType:(MinorType *)minorType {
     self.type = FilterTypeStore;
-    [self sendRequestByParams:@{@"major_type_id":majorType.typeID, @"minor_type_id":minorType.typeID} andURL:[NSString stringWithFormat:@"%@%@",kLookingForInterestTestURL,kGetStoresURL]];
+    [self sendRequestByParams:@{@"major_type_id":majorType.typeID,
+                                @"minor_type_id":minorType.typeID}
+                       andURL:[NSString stringWithFormat:@"%@%@",kLookingForInterestTestURL,kGetStoresURL]];
 }
 
-- (void)sendStoreRequestByMenuObj:(Menu *)menu andLocationCoordinate:(CLLocationCoordinate2D)location {
+- (void)sendStoreRequestByMenuObj:(Menu *)menu andLocationCoordinate:(CLLocationCoordinate2D)location andPageController:(PageController *)pageController{
+    
     self.type = SearchStores;
-    switch (menu.menuSearchType) {
-        case MenuCurrentPosition:
-            [self sendRequestByParams:@{@"major_type_id":menu.majorType.typeID, @"minor_type_id":menu.minorType.typeID, @"range":[NSNumber numberWithDouble: [menu.range doubleValue]], @"latitude":[NSNumber numberWithDouble:location.latitude], @"longitude":[NSNumber numberWithDouble:location.longitude]} andURL:[NSString stringWithFormat:@"%@%@",kLookingForInterestURL,kGetStoresByLocationURL]];
-            break;
-        case MenuCities:
-            [self sendRequestByParams:@{@"major_type_id":menu.majorType.typeID, @"minor_type_id":menu.minorType.typeID, @"latitude":[NSNumber numberWithDouble:location.latitude], @"longitude":[NSNumber numberWithDouble:location.longitude], @"city":menu.city} andURL:[NSString stringWithFormat:@"%@%@",kLookingForInterestURL,kGetStoresByCityURL]];
-            break;
-        default:
-            break;
-    }
+    NSString *majorTypeID = menu.majorType.typeID;
+    NSString *minorTypeID = menu.minorType.typeID;
+    NSString *menuSearchType = menu.menuSearchType?[NSString stringWithFormat:@"%d",menu.menuSearchType]:@"0";
+    NSNumber *currentPage = pageController.currentPage?[NSNumber numberWithInt:pageController.currentPage]:[NSNumber numberWithInt:1];
+    NSNumber *range = menu.range?[NSNumber numberWithDouble:[menu.range doubleValue]]:[NSNumber numberWithDouble:0.0];
+    NSString *city = menu.city?menu.city:@"";
+    NSString *keyword = menu.keyword?[NSString stringWithFormat:@"%@%@%@",@"%",menu.keyword,@"%"]:@"";
+    NSNumber *latitude = [NSNumber numberWithDouble:location.latitude];
+    NSNumber *longitude = [NSNumber numberWithDouble:location.longitude];
+    
+    [self sendRequestByParams:@{@"major_type_id":majorTypeID,
+                                @"minor_type_id":minorTypeID,
+                                @"menu_type":menuSearchType,
+                                @"page":currentPage,
+                                @"range":range,
+                                @"city":city,
+                                @"keyword":keyword,
+                                @"latitude":latitude,
+                                @"longitude":longitude}
+                       andURL:[NSString stringWithFormat:@"%@%@",kLookingForInterestURL,kGetStoresURL]];
+}
+
+- (void)sendDetailRequestByStore:(Store *)store {
+    self.type = SearchDetail;
+    [self sendRequestByParams:@{@"id":store.storeID} andURL:[NSString stringWithFormat:@"%@%@",kLookingForInterestURL,kGetDetailURL]];
 }
 
 - (void)sendRangeRequest {
@@ -175,8 +193,14 @@
                 break;
             case SearchStores:
                 if ([self.delegate respondsToSelector:@selector(storesBack:)]) {
-                    NSArray *datas = [self parseStoreData:[self appendDataFromDatas:self.receivedDatas]];
+                    NSMutableDictionary *datas = [self parseStoreData:[self appendDataFromDatas:self.receivedDatas]];
                     [self.delegate storesBack:datas];
+                }
+                break;
+            case SearchDetail:
+                if ([self.delegate respondsToSelector:@selector(detailBack:)]) {
+                    NSArray *datas = [self parseDetailData:[self appendDataFromDatas:self.receivedDatas]];
+                    [self.delegate detailBack:datas];
                 }
                 break;
             case FilterTypeMenuTypes:
@@ -257,6 +281,15 @@
     [resultDic setObject:array forKey:@"stores"];
     [resultDic setObject:pageController forKey:@"pageController"];
     return resultDic;
+}
+
+- (NSArray *)parseDetailData:(NSData *)data {
+    NSError *error = nil;
+    NSMutableArray *array = [NSMutableArray array];
+    NSDictionary *detailData = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+    Detail *detail = [[Detail alloc] initWithDetailDic:detailData];
+    [array addObject:detail];
+    return array;
 }
 
 - (NSArray *)parseRangeData:(NSData *)data {

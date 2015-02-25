@@ -14,7 +14,8 @@
 
 typedef NS_ENUM(NSInteger, MenuSearchType) {
     MenuCurrentPosition = 0,
-    MenuCities
+    MenuCities,
+    MenuKeyword
 };
 
 @interface Menu : NSObject
@@ -25,9 +26,9 @@ typedef NS_ENUM(NSInteger, MenuSearchType) {
 @property (strong, nonatomic) Store *store;
 @property (strong, nonatomic) NSString *city;
 @property (strong, nonatomic) NSString *range;
+@property (strong, nonatomic) NSString *keyword;
 @property (strong, nonatomic) NSString *numberOfRows;
 @property (strong, nonatomic) NSString *depend;
 @property (nonatomic) MenuSearchType menuSearchType;
-@property (strong, nonatomic) PageController *pageController;
 - (id)initWithMenuDic:(NSDictionary *)menuDic;
 @end
