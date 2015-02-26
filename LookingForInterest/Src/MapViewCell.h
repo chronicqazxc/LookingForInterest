@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <GoogleMaps/GoogleMaps.h>
 
 #define kMapViewCellIndentifier @"MapViewCell"
 

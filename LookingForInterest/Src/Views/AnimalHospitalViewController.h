@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "LookingForInterest.h"
+#import <CoreLocation/CoreLocation.h>
 
 @interface AnimalHospitalViewController : UIViewController
 @property (strong, nonatomic) Store *store;
 @property (strong, nonatomic) Detail *detail;
+@property (nonatomic) CLLocationCoordinate2D start;
+@property (nonatomic) CLLocationCoordinate2D destination;
 @end

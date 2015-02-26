@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "LookingForInterest.h"
+#import <CoreLocation/CLLocation.h>
 
 @protocol RequestSenderDelegate;
 

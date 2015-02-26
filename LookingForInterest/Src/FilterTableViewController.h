@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "LookingForInterest.h"
+#import <CoreLocation/CLLocation.h>
 
 @protocol FilterTableViewControllerDelegate;
 
@@ -31,14 +31,15 @@
 - (void)back;
 - (void)resetPage;
 - (BOOL)canDropMyMark;
+- (MenuSearchType)getMenuSearchType;
 @end
 
 @protocol FilterTableViewControllerDelegate <NSObject>
 - (void)setAccessTokenValue:(NSString *)accessToken;
 - (void)tableBeTapIn:(NSIndexPath *)indexPath withMenuSearchType:(MenuSearchType)menuSearchType;
 - (void)storeBeTapIn:(NSIndexPath *)indexPath withDetail:(Detail *)detail;
-- (CLLocationCoordinate2D)sendLocationBack;
-- (void)reloadMapByStores:(NSArray *)stores withZoomLevel:(NSUInteger)zoom pageController:(PageController *)pageController andMenu:(Menu *)menu;
+- (CLLocationCoordinate2D)sendLocationBackwithMenuSearchType:(MenuSearchType)menuSearchType;
+- (void)reloadMapByStores:(NSArray *)stores withZoomLevel:(NSUInteger)zoom pageController:(PageController *)pageController andMenu:(Menu *)menu otherInfo:(NSMutableDictionary *)otherInfo;
 - (UIView *)getContentView;
 - (CGSize)getContentSize;
 - (void)changeTitle:(NSString *)title;

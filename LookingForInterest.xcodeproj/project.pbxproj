@@ -101,6 +101,8 @@
 		B034D9691A8903AA00360A6C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B034D96B1A8903AA00360A6C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		B034D96E1A8903AA00360A6C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		B04F70131A9EFEFA007D9856 /* AnimalHospital.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimalHospital.pch; path = LookingForInterest/Src/AnimalHospital.pch; sourceTree = SOURCE_ROOT; };
+		B04F70141A9F0555007D9856 /* GoogleMapNavigation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GoogleMapNavigation.h; path = Src/GoogleMapNavigation.h; sourceTree = "<group>"; };
 		B06E56971A9D64980030B6A4 /* GoTopButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GoTopButton.h; path = Src/Views/GoTopButton.h; sourceTree = "<group>"; };
 		B06E56981A9D64980030B6A4 /* GoTopButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GoTopButton.m; path = Src/Views/GoTopButton.m; sourceTree = "<group>"; };
 		B06E569A1A9DE2980030B6A4 /* AnimalHospitalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimalHospitalViewController.h; path = Src/Views/AnimalHospitalViewController.h; sourceTree = "<group>"; };
@@ -276,7 +278,6 @@
 				B0BF72EF1A8915ED00213C00 /* FilterTableViewController.m */,
 				B0BF73101A891E9F00213C00 /* ExpandContractController.h */,
 				B0BF73111A891E9F00213C00 /* ExpandContractController.m */,
-				B0BF72F01A8915ED00213C00 /* LookingForInterest.h */,
 				B0BF72F11A8915ED00213C00 /* RequestSender.h */,
 				B0BF72F21A8915ED00213C00 /* RequestSender.m */,
 				B0BF72F31A8915ED00213C00 /* ViewController.h */,
@@ -297,6 +298,8 @@
 			children = (
 				B0F06B4E1A8A0E8800FBC90C /* Img */,
 				B0BF72F91A8916A400213C00 /* AppIcon.appiconset */,
+				B0BF72F01A8915ED00213C00 /* LookingForInterest.h */,
+				B04F70131A9EFEFA007D9856 /* AnimalHospital.pch */,
 				B0BF72DD1A8915C500213C00 /* main.m */,
 				B034D95F1A8903A900360A6C /* Info.plist */,
 			);
@@ -378,6 +381,7 @@
 			children = (
 				B0F06B3E1A89F37500FBC90C /* Utilities.h */,
 				B0F06B3F1A89F37500FBC90C /* Utilities.m */,
+				B04F70141A9F0555007D9856 /* GoogleMapNavigation.h */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -747,6 +751,8 @@
 			baseConfigurationReference = 2F0C5FF2BC540D0F473CDAE6 /* Pods-LookingForInterest.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = LookingForInterest/Src/AnimalHospital.pch;
 				INFOPLIST_FILE = LookingForInterest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "寵物相關的";
@@ -758,6 +764,8 @@
 			baseConfigurationReference = 246B5FE3AC76C49E3CBBC7EB /* Pods-LookingForInterest.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = LookingForInterest/Src/AnimalHospital.pch;
 				INFOPLIST_FILE = LookingForInterest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "寵物相關的";

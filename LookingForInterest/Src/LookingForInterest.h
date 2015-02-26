@@ -6,17 +6,18 @@
 //  Copyright (c) 2015 Wayne. All rights reserved.
 //
 
+#import "MajorType.h"
+#import "MinorType.h"
 #import "Store.h"
 #import "PageController.h"
 #import "Menu.h"
 #import "Detail.h"
-#import <GoogleMaps/GoogleMaps.h>
-#import <CoreLocation/CoreLocation.h>
 #import "Utilities.h"
 
 #ifndef LookingForInteresting_LookingForInterest_h
 #define LookingForInteresting_LookingForInterest_h
 
+#pragma mark - API URL
 #define kLookingForInterestURL kLookingForInterestHerokuURL
 #define kLookingForInterestHerokuURL @"https://animal-hospital.herokuapp.com/api/v1/"
 #define kLookingForInterestTestURL @"http://Waynes-MacBook-Pro.local:3000/api/v1/"
@@ -31,6 +32,7 @@
 #define kGetAccessToken @"tokens/get_access_token/"
 #define kLookingForInterestUserDefaultKey @"LookingForInterestMenu"
 #define kAccessTokenKey @"access_token"
+#pragma mark -
 
 typedef enum filterType {
     FilterTypeMenu,

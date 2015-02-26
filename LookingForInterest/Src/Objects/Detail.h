@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "LookingForInterest.h"
 
 @interface Detail : NSObject
 @property (strong, nonatomic) Store *store;

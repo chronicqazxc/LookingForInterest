@@ -7,8 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MajorType.h"
-#import "MinorType.h"
 
 @interface Store : NSObject
 @property (strong, nonatomic) NSString *name;

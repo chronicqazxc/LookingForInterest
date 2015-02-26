@@ -12,9 +12,6 @@
 #define kSearchWeb @"https://www.google.com.tw/search?q=%@"
 #define kSearchImage @"https://www.google.com.tw/search?site=imghp&tbm=isch&source=hp&ei=MKfpVKObL9Gm8AW12oGoAg&q=%@&oq=&gs_l=mobile-gws-hp.1.0.41.0.0.0.10252.1.0.0.1.1.0.0.0..0.0.msedr...0...1c..62.mobile-gws-hp..0.1.86.1.aIfV9iDtDOo"
 
-
-
-
 @interface WebViewController () <WKNavigationDelegate, UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UIVisualEffectView *visualEffectView;
 @property (weak, nonatomic) IBOutlet UIView *webViewContainer;

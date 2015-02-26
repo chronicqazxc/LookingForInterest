@@ -8,9 +8,11 @@
 
 #import "ViewController.h"
 #import "FilterTableViewController.h"
-#import "LookingForInterest.h"
 #import "WebViewController.h"
 #import "AnimalHospitalViewController.h"
+#import <GoogleMaps/GoogleMaps.h>
+#import "GoogleMapNavigation.h"
+#import <CoreLocation/CoreLocation.h>
 
 #define kMagnifierImg @"iconmonstr-magnifier-3-icon-256.png"
 #define kLeftArrowImg @"arrow-left@2x.png"
@@ -33,22 +35,6 @@
 #define kNoPhoneNumberAlertTitle @"Opps!"
 #define kNoPhoneNumberAlertMessage @"資料庫中沒有建立電話號碼"
 
-#define kGoogleMapType kGoogleMapTypeCallback
-#define kGoogleMapTypeNormal @"comgooglemaps://"
-#define kGoogleMapTypeCallback @"comgooglemaps-x-callback://"
-
-#define kNavigateURLString(startLatitude, startLongitude, endLatitude, endLongitude, centerLatitude, centerLongitude, directionsMode, zoom) [NSString stringWithFormat:@"%@?saddr=%f,%f&daddr=%f,%f&center=%f,%f&directionsmode=%@&zoom=%d&x-success=animalhospital://?resume=true&x-source=thingsaboutpets",kGoogleMapType ,startLatitude, startLongitude, endLatitude, endLongitude, centerLatitude, centerLongitude, directionsMode, zoom]
-
-#define kDirectionsModeDrivingTitle @"開車"
-#define kDirectionsModeTransitTitle @"大眾交通工具"
-#define kDirectionsModeBicyclingTitle @"腳踏車"
-#define kDirectionsModeWalkingTitle @"走路"
-
-#define kDirectionsModeDriving @"driving"
-#define kDirectionsModeTransit @"transit"
-#define kDirectionsModeBicycling @"bicycling"
-#define kDirectionsModeWalking @"walking"
-
 // call
 // web site
 // rate
@@ -63,8 +49,10 @@
 @property (nonatomic) BOOL isFirstEntry;
 @property (nonatomic) BOOL isSendForMenu;
 @property (nonatomic) CLLocationCoordinate2D currentLocation;
+@property (nonatomic) CLLocationCoordinate2D myMarkerLocation;
 @property (strong, nonatomic) GMSMapView *googleMap;
-@property (strong, nonatomic) GMSMarker *marker;
+@property (strong, nonatomic) GMSMarker *myMarker;
+@property (strong, nonatomic) NSMutableArray *storeMarkers;
 @property (strong, nonatomic) GMSPanoramaView *panoView;
 @property (strong, nonatomic) GMSGeocoder *gmsGeoCoder;
 @property (strong, nonatomic) FilterTableViewController *filterTableViewController;
@@ -260,37 +248,43 @@
 - (void)mapView:(GMSMapView *)mapView didLongPressAtCoordinate:(CLLocationCoordinate2D)coordinate {
     if ([self.filterTableViewController canDropMyMark]) {
         [self.googleMap clear];        
-        GMSMarker *myMark = [[GMSMarker alloc] init];
-        myMark.position = CLLocationCoordinate2DMake(coordinate.latitude,coordinate.longitude);
-        myMark.appearAnimation = kGMSMarkerAnimationPop;
-        myMark.snippet = @"自己選的位置";
-        myMark.draggable = YES;
-        myMark.flat = YES;
-        myMark.icon = [GMSMarker markerImageWithColor:[UIColor greenColor]];
-        //    storeMark.title = store.storeID;
-        myMark.map = self.googleMap;
+        [self setMyMarkerByLocation:coordinate];
     }
+}
+
+- (void)setMyMarkerByLocation:(CLLocationCoordinate2D)coordinate {
+    self.myMarker = [[GMSMarker alloc] init];
+    self.myMarker.position = CLLocationCoordinate2DMake(coordinate.latitude,coordinate.longitude);
+    self.myMarker.appearAnimation = kGMSMarkerAnimationPop;
+    self.myMarker.snippet = @"自己選的位置";
+    self.myMarker.draggable = YES;
+    self.myMarker.flat = YES;
+    self.myMarker.icon = [GMSMarker markerImageWithColor:[UIColor greenColor]];
+    //    storeMark.title = store.storeID;
+    self.myMarker.map = self.googleMap;
+    self.myMarkerLocation = coordinate;
 }
 
 /**
  * Called when dragging has been initiated on a marker.
  */
 - (void)mapView:(GMSMapView *)mapView didBeginDraggingMarker:(GMSMarker *)marker {
-    
+    marker.icon = [GMSMarker markerImageWithColor:[UIColor cyanColor]];
 }
 
 /**
  * Called after dragging of a marker ended.
  */
 - (void)mapView:(GMSMapView *)mapView didEndDraggingMarker:(GMSMarker *)marker {
-    
+    marker.icon = [GMSMarker markerImageWithColor:[UIColor greenColor]];
+    self.myMarkerLocation = marker.position;
 }
 
 /**
  * Called while a marker is dragged.
  */
 - (void)mapView:(GMSMapView *)mapView didDragMarker:(GMSMarker *)marker {
-    
+//    marker.icon = [GMSMarker markerImageWithColor:[UIColor yellowColor]];
 }
 
 #pragma mark - FilterTableViewControllerDelegate
@@ -301,15 +295,31 @@
 }
 
 -(void)tableBeTapIn:(NSIndexPath *)indexPath withMenuSearchType:(MenuSearchType)menuSearchType{
+    switch (menuSearchType) {
+        case MenuCurrentPosition:
+            [self processMenuCurrentPositionWithIndexPath:indexPath];
+            break;
+        case MenuCities:
+            [self processMenuCitiesWithIndexPath:indexPath];
+            break;
+        case MenuKeyword:
+            [self processMenuKeywordWithIndexPath:indexPath];
+            break;
+        case MenuMarker:
+            [self processMenuMarkerWithIndexPath:indexPath];
+            break;
+        case MenuAddress:
+            [self processMenuAddressWithIndexPath:indexPath];
+            break;
+    }
+
+}
+
+- (void)processMenuCurrentPositionWithIndexPath:(NSIndexPath *)indexPath {
     NSString *storyboardID = [self.filterTableViewController getStoryboardID];
     FilterTableViewController *filterTableViewController = nil;
     switch (indexPath.row) {
         case 0:
-//            filterTableViewController = [self.storyboard instantiateViewControllerWithIdentifier:storyboardID];
-//            filterTableViewController.filterType = FilterTypeMajorType;
-//            filterTableViewController.notifyReceiver = self.filterTableViewController;
-//            filterTableViewController.accessToken = self.accessToken;
-//            [self.navigationController pushViewController:filterTableViewController animated:YES];
             filterTableViewController = [self.storyboard instantiateViewControllerWithIdentifier:storyboardID];
             filterTableViewController.filterType = FilterTypeMenuTypes;
             filterTableViewController.notifyReceiver = self.filterTableViewController;
@@ -317,29 +327,90 @@
             [self.navigationController pushViewController:filterTableViewController animated:YES];
             break;
         case 1:
-//            filterTableViewController = [self.storyboard instantiateViewControllerWithIdentifier:storyboardID];
-//            filterTableViewController.filterType = FilterTypeMinorType;
-//            filterTableViewController.notifyReceiver = self.filterTableViewController;
-//            filterTableViewController.accessToken = self.accessToken;
-//            [self.navigationController pushViewController:filterTableViewController animated:YES];
-            
             filterTableViewController = [self.storyboard instantiateViewControllerWithIdentifier:storyboardID];
-            if (menuSearchType == MenuCurrentPosition) {
-                filterTableViewController.filterType = FilterTypeRange;
-            } else if (menuSearchType == MenuCities) {
-                filterTableViewController.filterType = FilterTypeCity;
-            }
+            filterTableViewController.filterType = FilterTypeRange;
             filterTableViewController.notifyReceiver = self.filterTableViewController;
             filterTableViewController.accessToken = self.accessToken;
             [self.navigationController pushViewController:filterTableViewController animated:YES];
             break;
-//        case 2:
-//            filterTableViewController = [self.storyboard instantiateViewControllerWithIdentifier:storyboardID];
-//            filterTableViewController.filterType = FilterTypeRange;
-//            filterTableViewController.notifyReceiver = self.filterTableViewController;
-//            filterTableViewController.accessToken = self.accessToken;            
-//            [self.navigationController pushViewController:filterTableViewController animated:YES];
-//            break;
+        default:
+            break;
+    }
+}
+
+- (void)processMenuCitiesWithIndexPath:(NSIndexPath *)indexPath {
+    NSString *storyboardID = [self.filterTableViewController getStoryboardID];
+    FilterTableViewController *filterTableViewController = nil;
+    switch (indexPath.row) {
+        case 0:
+            filterTableViewController = [self.storyboard instantiateViewControllerWithIdentifier:storyboardID];
+            filterTableViewController.filterType = FilterTypeMenuTypes;
+            filterTableViewController.notifyReceiver = self.filterTableViewController;
+            filterTableViewController.accessToken = self.accessToken;
+            [self.navigationController pushViewController:filterTableViewController animated:YES];
+            break;
+        case 1:
+            filterTableViewController = [self.storyboard instantiateViewControllerWithIdentifier:storyboardID];
+            filterTableViewController.filterType = FilterTypeCity;
+            filterTableViewController.notifyReceiver = self.filterTableViewController;
+            filterTableViewController.accessToken = self.accessToken;
+            [self.navigationController pushViewController:filterTableViewController animated:YES];
+            break;
+        default:
+            break;
+    }
+}
+
+- (void)processMenuKeywordWithIndexPath:(NSIndexPath *)indexPath {
+    NSString *storyboardID = [self.filterTableViewController getStoryboardID];
+    FilterTableViewController *filterTableViewController = [self.storyboard instantiateViewControllerWithIdentifier:storyboardID];
+    filterTableViewController.filterType = FilterTypeMenuTypes;
+    filterTableViewController.notifyReceiver = self.filterTableViewController;
+    filterTableViewController.accessToken = self.accessToken;
+    [self.navigationController pushViewController:filterTableViewController animated:YES];
+}
+
+- (void)processMenuMarkerWithIndexPath:(NSIndexPath *)indexPath {
+    NSString *storyboardID = [self.filterTableViewController getStoryboardID];
+    FilterTableViewController *filterTableViewController = nil;
+    switch (indexPath.row) {
+        case 0:
+            filterTableViewController = [self.storyboard instantiateViewControllerWithIdentifier:storyboardID];
+            filterTableViewController.filterType = FilterTypeMenuTypes;
+            filterTableViewController.notifyReceiver = self.filterTableViewController;
+            filterTableViewController.accessToken = self.accessToken;
+            [self.navigationController pushViewController:filterTableViewController animated:YES];
+            break;
+        case 1:
+            filterTableViewController = [self.storyboard instantiateViewControllerWithIdentifier:storyboardID];
+            filterTableViewController.filterType = FilterTypeRange;
+            filterTableViewController.notifyReceiver = self.filterTableViewController;
+            filterTableViewController.accessToken = self.accessToken;
+            [self.navigationController pushViewController:filterTableViewController animated:YES];
+            break;
+        default:
+            break;
+    }
+}
+
+- (void)processMenuAddressWithIndexPath:(NSIndexPath *)indexPath {
+    NSString *storyboardID = [self.filterTableViewController getStoryboardID];
+    FilterTableViewController *filterTableViewController = nil;
+    switch (indexPath.row) {
+        case 0:
+            filterTableViewController = [self.storyboard instantiateViewControllerWithIdentifier:storyboardID];
+            filterTableViewController.filterType = FilterTypeMenuTypes;
+            filterTableViewController.notifyReceiver = self.filterTableViewController;
+            filterTableViewController.accessToken = self.accessToken;
+            [self.navigationController pushViewController:filterTableViewController animated:YES];
+            break;
+        case 1:
+            filterTableViewController = [self.storyboard instantiateViewControllerWithIdentifier:storyboardID];
+            filterTableViewController.filterType = FilterTypeRange;
+            filterTableViewController.notifyReceiver = self.filterTableViewController;
+            filterTableViewController.accessToken = self.accessToken;
+            [self.navigationController pushViewController:filterTableViewController animated:YES];
+            break;
         default:
             break;
     }
@@ -353,32 +424,58 @@
     AnimalHospitalViewController *animalHospital = [[AnimalHospitalViewController alloc] initWithNibName:@"AnimalHospitalViewController" bundle:nil];
     animalHospital.store = store;
     animalHospital.detail = detail;
+    CLLocationCoordinate2D location;
+    if ([self.filterTableViewController getMenuSearchType] == MenuMarker ||
+        [self.filterTableViewController getMenuSearchType] == MenuAddress) {
+        location = self.myMarkerLocation;
+    } else {
+        location = self.currentLocation;
+    }
+    animalHospital.start = location;
+    animalHospital.destination = CLLocationCoordinate2DMake([store.latitude doubleValue], [store.longitude doubleValue]);
     [self.navigationController pushViewController:animalHospital animated:YES];
 }
 
-- (CLLocationCoordinate2D)sendLocationBack {
-    
-    return self.currentLocation;
+- (CLLocationCoordinate2D)sendLocationBackwithMenuSearchType:(MenuSearchType)menuSearchType {
+    CLLocationCoordinate2D location;
+    if (menuSearchType == MenuMarker) {
+        location = self.myMarkerLocation;
+    } else {
+        location = self.currentLocation;
+    }
+    return location;
 }
 
-- (void)reloadMapByStores:(NSArray *)stores withZoomLevel:(NSUInteger)zoom pageController:(PageController *)pageController andMenu:(Menu *)menu{
-    
-    CLLocationCoordinate2D location = (menu.menuSearchType == MenuCurrentPosition)?
-                                    CLLocationCoordinate2DMake(self.currentLocation.latitude, self.currentLocation.longitude):
-                                    CLLocationCoordinate2DMake([((Store *)[stores firstObject]).latitude doubleValue], [((Store *)[stores firstObject]).longitude doubleValue]);
-    
-    GMSCameraPosition *fancy = [GMSCameraPosition cameraWithLatitude:location.latitude longitude:location.longitude zoom:zoom bearing:0 viewingAngle:0];
-    [self.googleMap setCamera:fancy];
+- (void)reloadMapByStores:(NSArray *)stores withZoomLevel:(NSUInteger)zoom pageController:(PageController *)pageController andMenu:(Menu *)menu otherInfo:(NSMutableDictionary *)otherInfo{
     
     self.storesOnMap = stores;
+    self.storeMarkers = [NSMutableArray array];
     for (Store *store in stores) {
         GMSMarker *storeMark = [[GMSMarker alloc] init];
         storeMark.position = CLLocationCoordinate2DMake([store.latitude doubleValue],[store.longitude doubleValue]);
         storeMark.appearAnimation = kGMSMarkerAnimationPop;
         storeMark.snippet = store.name;
         storeMark.title = store.storeID;
+        storeMark.userData = store.storeID;;
         storeMark.map = self.googleMap;
+        [self.storeMarkers addObject:storeMark];
     }
+    
+    CLLocationCoordinate2D location;
+    if (menu.menuSearchType == MenuMarker) {
+        [self setMyMarkerByLocation:self.myMarkerLocation];
+        location = self.myMarkerLocation;
+    } else if (menu.menuSearchType == MenuCurrentPosition) {
+        location = CLLocationCoordinate2DMake(self.currentLocation.latitude, self.currentLocation.longitude);
+    } else if (menu.menuSearchType == MenuAddress) {
+        location = CLLocationCoordinate2DMake([[[otherInfo objectForKey:@"address_location"] objectForKey:@"lat"] doubleValue],
+                                              [[[otherInfo objectForKey:@"address_location"] objectForKey:@"lng"] doubleValue]);
+        [self setMyMarkerByLocation:location];
+    } else {
+        location = CLLocationCoordinate2DMake([((Store *)[stores firstObject]).latitude doubleValue], [((Store *)[stores firstObject]).longitude doubleValue]);
+    }
+    GMSCameraPosition *fancy = [GMSCameraPosition cameraWithLatitude:location.latitude longitude:location.longitude zoom:zoom bearing:0 viewingAngle:0];
+    [self.googleMap setCamera:fancy];
     
     if (pageController.currentPage == 1 && pageController.totalPage != 1) {
         self.previousPageView.hidden = YES;
@@ -440,6 +537,19 @@
         CLLocationCoordinate2D panoramaNear = {[store.latitude doubleValue],[store.longitude doubleValue]};
         
         GMSPanoramaView *panoView = [GMSPanoramaView panoramaWithFrame:CGRectZero nearCoordinate:panoramaNear];
+        
+        GMSMarker *storeMarker = nil;
+        for (GMSMarker *marker in self.storeMarkers) {
+            NSString *markerTitle = [NSString stringWithFormat:@"%@",marker.title];
+            NSString *storeID = [NSString stringWithFormat:@"%@",store.storeID];
+            if ([markerTitle isEqualToString:storeID]) {
+                storeMarker = marker;
+                break;
+            }
+        }
+        if (storeMarker) {
+            storeMarker.panoramaView = panoView;
+        }
         
         UIViewController *streetViewController = [[UIViewController alloc] init];
         streetViewController.view = panoView;
@@ -524,8 +634,15 @@
 
 - (void)launchNavigateWithStore:(Store *)store withDirectionsMode:(NSString *)directionsMode{
     [[UIApplication sharedApplication] canOpenURL: [NSURL URLWithString:kGoogleMapType]];
+    MenuSearchType menuSearchType = [self.filterTableViewController getMenuSearchType];
+    CLLocationCoordinate2D location;
+    if (menuSearchType == MenuMarker || menuSearchType == MenuAddress) {
+        location = self.myMarkerLocation;
+    } else {
+        location = self.currentLocation;
+    }
     if ([[UIApplication sharedApplication] canOpenURL: [NSURL URLWithString:kGoogleMapType]]) {
-        [[UIApplication sharedApplication] openURL: [NSURL URLWithString:kNavigateURLString(self.currentLocation.latitude, self.currentLocation.longitude, [store.latitude doubleValue], [store.longitude doubleValue], self.currentLocation.latitude, self.currentLocation.longitude, directionsMode,6)]];
+        [[UIApplication sharedApplication] openURL: [NSURL URLWithString:kNavigateURLString(location.latitude, location.longitude, [store.latitude doubleValue], [store.longitude doubleValue], location.latitude, location.longitude, directionsMode,6)]];
     } else {
         NSLog(@"Can't use comgooglemaps://");
     }
@@ -585,6 +702,6 @@
     }
 }
 - (IBAction)clickNavigationTitle:(UIButton *)sender {
-    [self.filterTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    [self.filterTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
 }
 @end

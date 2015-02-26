@@ -280,6 +280,9 @@
     }
     [resultDic setObject:array forKey:@"stores"];
     [resultDic setObject:pageController forKey:@"pageController"];
+    if ([parsedData objectForKey:@"address_location"]) {
+        [resultDic setObject:[parsedData objectForKey:@"address_location"] forKey:@"address_location"];
+    }
     return resultDic;
 }
 

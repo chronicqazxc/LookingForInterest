@@ -7,7 +7,7 @@
 //
 
 #import "Utilities.h"
-#import <UIKit/UIKit.h>
+#import "AppDelegate.h"
 
 @implementation Utilities
 + (AppDelegate *)getAppDelegate {

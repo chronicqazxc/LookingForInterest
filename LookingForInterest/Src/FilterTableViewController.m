@@ -7,7 +7,6 @@
 //
 
 #import "FilterTableViewController.h"
-#import "LookingForInterest.h"
 #import "RequestSender.h"
 #import "ExpandContractController.h"
 #import "MapViewCell.h"
@@ -113,12 +112,15 @@
 }
 
 - (BOOL)canDropMyMark {
-    if (self.menu.menuSearchType == MenuMarker ||
-        self.menu.menuSearchType == MenuAddress) {
+    if (self.menu.menuSearchType == MenuMarker && self.filterType == FilterTypeMenu) {
         return YES;
     } else {
         return NO;
     }
+}
+
+- (MenuSearchType)getMenuSearchType {
+    return self.menu.menuSearchType;
 }
 
 - (void)viewDidLoad {
@@ -229,8 +231,8 @@
     requestSender.delegate = self;
     CLLocationCoordinate2D currentLocation = CLLocationCoordinate2DMake(0, 0);
     if (self.delegate) {
-        if ([self.delegate respondsToSelector:@selector(sendLocationBack)]) {
-            CLLocationCoordinate2D backLocation = [self.delegate sendLocationBack];
+        if ([self.delegate respondsToSelector:@selector(sendLocationBackwithMenuSearchType:)]) {
+            CLLocationCoordinate2D backLocation = [self.delegate sendLocationBackwithMenuSearchType:self.menu.menuSearchType];
             currentLocation = CLLocationCoordinate2DMake(backLocation.latitude, backLocation.longitude);
 //            currentLocation = CLLocationCoordinate2DMake(25.0525463, 121.5560048);
         }
@@ -453,17 +455,23 @@
         if (!menuCell) {
             menuCell = (MenuCell *)[Utilities getNibWithName:kMenuCellIdentifier];
             menuCell.textField.delegate = self;
-            menuCell.textField.placeholder = @"請輸入醫院名稱關鍵字";
         }
         if (self.menu.menuSearchType == MenuKeyword && indexPath.row == 1) {
             menuCell.textField.text = self.menu.keyword;
             menuCell.textField.hidden = NO;
             menuCell.detailLabel.hidden = YES;
+            menuCell.textField.placeholder = @"請輸入醫院名稱關鍵字";
+        } else if (self.menu.menuSearchType == MenuAddress && indexPath.row == 2) {
+            menuCell.textField.text = self.menu.keyword;
+            menuCell.textField.hidden = NO;
+            menuCell.detailLabel.hidden = YES;
+            menuCell.textField.placeholder = @"請輸入地址";
         } else {
             menuCell.textField.hidden = YES;
             menuCell.detailLabel.hidden = NO;
             menuCell.detailLabel.text = [self getDetailByIndexPath:indexPath andType:self.filterType];
         }
+        
         menuCell.titleLabel.text = [NSString stringWithFormat:@"%@：",[self getTitleByIndexPath:indexPath andType:self.filterType]];
         cell = menuCell;
     } else if (self.filterType == SearchStores && indexPath.section == 1) {
@@ -476,7 +484,7 @@
         storeCell.textLabel.font = [UIFont systemFontOfSize:16];
         storeCell.titleLabel.text = [self getTitleByIndexPath:indexPath andType:self.filterType];
         storeCell.distanceLabel.text = [self getDetailByIndexPath:indexPath andType:self.filterType];
-        storeCell.addressLabel.text = ((Store *)[self.stores objectAtIndex:indexPath.row]).address;
+        storeCell.addressLabel.text = (indexPath.row < [self.stores count])?((Store *)[self.stores objectAtIndex:indexPath.row]).address:@"";
         
         storeCell.delegate = self;
         
@@ -620,7 +628,9 @@
             if (indexPath.row == 0) {
                 detail = self.menu.depend;
             } else if (indexPath.row == 1) {
-                if (self.menu.menuSearchType == MenuCurrentPosition) {
+                if (self.menu.menuSearchType == MenuCurrentPosition ||
+                    self.menu.menuSearchType == MenuMarker ||
+                    self.menu.menuSearchType == MenuAddress) {
                     detail = self.menu.range;
                 } else if (self.menu.menuSearchType == MenuCities) {
                     detail = self.menu.city;
@@ -793,11 +803,11 @@
     self.pageController = [resultDic objectForKey:@"pageController"];
     [self.filterTableView reloadData];
     if (self.delegate) {
-        if ([self.delegate respondsToSelector:@selector(reloadMapByStores:withZoomLevel: pageController: andMenu:)]) {
+        if ([self.delegate respondsToSelector:@selector(reloadMapByStores:withZoomLevel: pageController: andMenu: otherInfo:)]) {
 //            CGSize screenSize = [Utilities getScreenPixel];
 //            NSUInteger zoom = [self calculateZoomLevelwithScreenWidth:screenSize.width];
             // km:2 zoom:13
-            [self.delegate reloadMapByStores:stores withZoomLevel:13.9999999 pageController:self.pageController andMenu:self.menu];
+            [self.delegate reloadMapByStores:stores withZoomLevel:13.9999999 pageController:self.pageController andMenu:self.menu otherInfo:resultDic];
         }
     }
     self.isStartLoadingPage = NO;

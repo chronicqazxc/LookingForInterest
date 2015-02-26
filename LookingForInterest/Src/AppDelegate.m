@@ -8,8 +8,8 @@
 
 #import "AppDelegate.h"
 #import <GoogleMaps/GoogleMaps.h>
-#import "Utilities.h"
 #import "ViewController.h"
+#import "LoadingView.h"
 
 #define kGoogleAPIKey @"AIzaSyB0XF79VtFRkTn8N2CQqXMxeVSP82MiIh8"
 #define kLoadingViewTag 12345

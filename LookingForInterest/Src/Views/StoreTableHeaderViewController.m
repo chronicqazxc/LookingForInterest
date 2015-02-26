@@ -8,7 +8,6 @@
 
 #import "StoreTableHeaderViewController.h"
 #import "GoTopButton.h"
-#import "Utilities.h"
 
 @interface StoreTableHeaderViewController ()
 
