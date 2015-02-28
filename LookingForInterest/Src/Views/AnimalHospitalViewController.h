@@ -14,4 +14,5 @@
 @property (strong, nonatomic) Detail *detail;
 @property (nonatomic) CLLocationCoordinate2D start;
 @property (nonatomic) CLLocationCoordinate2D destination;
+@property (strong, nonatomic) NSString *accessToken;
 @end

@@ -25,9 +25,13 @@
 - (void)sendStoreRequestByMajorType:(MajorType *)majorType minorType:(MinorType *)minorType;
 - (void)sendStoreRequestByMenuObj:(Menu *)menu andLocationCoordinate:(CLLocationCoordinate2D)location andPageController:(PageController *)pageController;
 - (void)sendDetailRequestByStore:(Store *)store;
+- (void)sendCatImageRequest;
+- (void)sendDogImageRequest;
+- (void)sendAnimalsImageRequest;
 @end
 
 @protocol RequestSenderDelegate <NSObject>
+@optional
 - (void)accessTokenBack:(NSArray *)accessTokenData;
 - (void)initMenuBack:(NSArray *)menuData;
 - (void)menuTypesBack:(NSArray *)menuData;
@@ -37,4 +41,7 @@
 - (void)detailBack:(NSArray *)detailData;
 - (void)rangesBack:(NSArray *)rangeData;
 - (void)citiesBack:(NSArray *)citiesData;
+- (void)catIsBack:(NSArray *)datas;
+- (void)dogIsBack:(NSArray *)datas;
+- (void)animalsIsBack:(NSArray *)datas;
 @end

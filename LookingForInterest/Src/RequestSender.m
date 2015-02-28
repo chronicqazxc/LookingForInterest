@@ -80,6 +80,21 @@
     [self sendRequestByParams:@{@"id":store.storeID} andURL:[NSString stringWithFormat:@"%@%@",kLookingForInterestURL,kGetDetailURL]];
 }
 
+- (void)sendCatImageRequest {
+    self.type = GetCatImage;
+    [self sendRequestByParams:@{} andURL:[NSString stringWithFormat:@"%@%@",kLookingForInterestURL,kGetCatImageURL]];
+}
+
+- (void)sendDogImageRequest {
+    self.type = GetDogImage;
+    [self sendRequestByParams:@{} andURL:[NSString stringWithFormat:@"%@%@",kLookingForInterestURL,kGetDogImageURL]];
+}
+
+- (void)sendAnimalsImageRequest {
+    self.type = GetAnimalsImage;
+    [self sendRequestByParams:@{} andURL:[NSString stringWithFormat:@"%@%@",kLookingForInterestURL,kGetAnimalsImageURL]];
+}
+
 - (void)sendRangeRequest {
     self.type = FilterTypeRange;
     [self sendRequestByParams:@{} andURL:[NSString stringWithFormat:@"%@%@",kLookingForInterestURL,kGetRangesURL]];
@@ -108,7 +123,6 @@
     NSURL *url = [NSURL URLWithString:URL];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
                                                            cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
-    
     [request setHTTPBody:postData];
     [request setHTTPMethod:@"POST"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
@@ -207,6 +221,24 @@
                 if ([self.delegate respondsToSelector:@selector(menuTypesBack:)]) {
                     NSArray *datas = [self parseMenuTypesData:[self appendDataFromDatas:self.receivedDatas]];
                     [self.delegate menuTypesBack:datas];
+                }
+                break;
+            case GetCatImage:
+                if ([self.delegate respondsToSelector:@selector(catIsBack:)]) {
+                    NSArray *datas = [self parseImageData:[self appendDataFromDatas:self.receivedDatas]];
+                    [self.delegate catIsBack:datas];
+                }
+                break;
+            case GetDogImage:
+                if ([self.delegate respondsToSelector:@selector(dogIsBack:)]) {
+                    NSArray *datas = [self parseImageData:[self appendDataFromDatas:self.receivedDatas]];
+                    [self.delegate dogIsBack:datas];
+                }
+                break;
+            case GetAnimalsImage:
+                if ([self.delegate respondsToSelector:@selector(animalsIsBack:)]) {
+                    NSArray *datas = [self parseImageData:[self appendDataFromDatas:self.receivedDatas]];
+                    [self.delegate animalsIsBack:datas];
                 }
                 break;
             default:
@@ -318,6 +350,13 @@
     NSMutableArray *array = [NSMutableArray array];
     NSArray *menuTypesData = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
     [array addObject:menuTypesData];
+    return array;
+}
+
+- (NSArray *)parseImageData:(NSData *)data {
+    NSMutableArray *array = [NSMutableArray array];
+    NSData *catImageData = [NSData dataWithData:data];
+    [array addObject:catImageData];
     return array;
 }
 

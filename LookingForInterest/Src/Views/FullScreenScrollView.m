@@ -35,7 +35,7 @@
         self.contentSize = CGSizeMake(rect.size.width*[imageViews count], rect.size.height);
         for (int i=0; i<[imageViews count]; i++) {
             UIImageView *imageView = [imageViews objectAtIndex:i];
-            imageView.frame = CGRectMake(0,-23,rect.size.width,rect.size.height);
+            imageView.frame = CGRectMake(0,0,rect.size.width,rect.size.height);
             UIScrollView *zoomingScrollView = [UIScrollView new];
             if (i==0) {
                 zoomingScrollView.frame = CGRectOffset(imageView.frame,0,0);

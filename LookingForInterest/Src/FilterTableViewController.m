@@ -813,9 +813,11 @@
     self.isStartLoadingPage = NO;
     [Utilities stopLoading];
     
-    BOOL isExpand = [[self.controlArr[0][0] objectForKey:@"IsExpand"] intValue]?YES:NO;
-    if (!isExpand) {
-        [self clickOpenMap];
+    if ([stores count]){
+        BOOL isExpand = [[self.controlArr[0][0] objectForKey:@"IsExpand"] intValue]?YES:NO;
+        if (!isExpand) {
+            [self clickOpenMap];
+        }
     }
     
     if (self.delegate && [self.delegate respondsToSelector:@selector(changeTitle:)]) {

@@ -13,12 +13,13 @@
 #import "GoogleMapNavigation.h"
 #import <WebKit/WebKit.h>
 #import "WebViewController.h"
+#import "RequestSender.h"
 
 #define kScrollViewMaxScale 0.7
 #define kScrollViewMinScale 0.3
 #define kScrollViewContentHeight 1085
 
-@interface AnimalHospitalViewController () <FullScreenScrollViewDelegate, EndlessScrollGeneratorDelegate, UIScrollViewDelegate, GMSMapViewDelegate, GMSPanoramaViewDelegate>
+@interface AnimalHospitalViewController () <FullScreenScrollViewDelegate, EndlessScrollGeneratorDelegate, UIScrollViewDelegate, GMSMapViewDelegate, GMSPanoramaViewDelegate, RequestSenderDelegate>
 @property (weak, nonatomic) IBOutlet UIView *mainContainer;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) NSMutableArray *imageViews;
@@ -59,7 +60,9 @@
 - (IBAction)navigate:(UIButton *)sender;
 - (IBAction)surfWeb:(UIButton *)sender;
 
-@property (strong, nonatomic) NSMutableArray *tableData;
+@property (strong, nonatomic) UIImageView *catImageView;
+@property (strong, nonatomic) UIImageView *dogImageView;
+@property (strong, nonatomic) UIImageView *animalsImageView;
 @end
 
 @implementation AnimalHospitalViewController
@@ -67,7 +70,6 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.isInitail = YES;
-        self.tableData = [NSMutableArray array];
     }
     return self;
 }
@@ -80,6 +82,9 @@
     self.phoneCallButton.hidden = YES;
     self.navigationButton.hidden = YES;
     self.internetButton.hidden = YES;
+    self.catImageView = nil;
+    self.dogImageView = nil;
+    self.animalsImageView = nil;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -128,26 +133,28 @@
         self.mapContainer.layer.cornerRadius = 5.0;
         
         // Override point for customization after application launch.
-        dispatch_queue_t myQueue = dispatch_queue_create("Download images",NULL);
-        dispatch_async(myQueue, ^{
-            // Perform long running process
-            NSData *data = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString: @"http://static.adzerk.net/Advertisers/d47c809dea6241b9933a81fe1d0f7085.jpg"]];
-            NSData *data2 = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString: @"https://www.gravatar.com/avatar/01a51566f6163e6e9608b7c1f80ec258?s=32&d=identicon&r=PG"]];
-            NSData *data3 = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString: @"https://www.gravatar.com/avatar/92fb4563ddc5ceeaa8b19b60a7a172f4?s=32&d=identicon&r=PG"]];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                // Update the UI
-                if (data != nil && data2 != nil && data3 != nil) {
-//                    self.imageViews = [NSMutableArray array];
-                    NSMutableArray *imageViews = [NSMutableArray array];
-                    [imageViews addObject:[[UIImageView alloc] initWithImage:[UIImage imageWithData: data]]];
-                    [imageViews addObject:[[UIImageView alloc] initWithImage:[UIImage imageWithData: data2]]];
-                    [imageViews addObject:[[UIImageView alloc] initWithImage:[UIImage imageWithData: data3]]];
-                    [self reloadImage:0 withImages:imageViews];
-                } else {
-                    return;
-                }
-            });
-        });
+//        dispatch_queue_t myQueue = dispatch_queue_create("Download images",NULL);
+//        dispatch_async(myQueue, ^{
+//            // Perform long running process
+//            NSData *data = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString: @"http://static.adzerk.net/Advertisers/d47c809dea6241b9933a81fe1d0f7085.jpg"]];
+//            NSData *data2 = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString: @"https://www.gravatar.com/avatar/01a51566f6163e6e9608b7c1f80ec258?s=32&d=identicon&r=PG"]];
+//            NSData *data3 = [[NSData alloc] initWithContentsOfURL: [NSURL URLWithString: @"https://www.gravatar.com/avatar/92fb4563ddc5ceeaa8b19b60a7a172f4?s=32&d=identicon&r=PG"]];
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                // Update the UI
+//                if (data != nil && data2 != nil && data3 != nil) {
+//                    NSMutableArray *imageViews = [NSMutableArray array];
+//                    [imageViews addObject:[[UIImageView alloc] initWithImage:[UIImage imageWithData: data]]];
+//                    [imageViews addObject:[[UIImageView alloc] initWithImage:[UIImage imageWithData: data2]]];
+//                    [imageViews addObject:[[UIImageView alloc] initWithImage:[UIImage imageWithData: data3]]];
+//                    [self reloadImage:0 withImages:imageViews];
+//                } else {
+//                    return;
+//                }
+//            });
+//        });
+        [self getCatImage];
+        [self getDogImage];
+        [self getAnimalsImage];
         
         self.infoLabel1.text = self.detail.otherInfo1;
         self.infoLabel2.text = self.detail.otherInfo2;
@@ -164,6 +171,30 @@
         
         self.isInitail = YES;
     }
+}
+
+- (void)getCatImage {
+    RequestSender *requestSender = [[RequestSender alloc] init];
+    requestSender.delegate = self;
+    requestSender.accessToken = self.accessToken;
+    [requestSender sendCatImageRequest];
+    [Utilities startLoading];
+}
+
+- (void)getDogImage {
+    RequestSender *requestSender = [[RequestSender alloc] init];
+    requestSender.delegate = self;
+    requestSender.accessToken = self.accessToken;
+    [requestSender sendDogImageRequest];
+    [Utilities startLoading];
+}
+
+- (void)getAnimalsImage {
+    RequestSender *requestSender = [[RequestSender alloc] init];
+    requestSender.delegate = self;
+    requestSender.accessToken = self.accessToken;
+    [requestSender sendAnimalsImageRequest];
+    [Utilities startLoading];
 }
 
 - (void)initButtons {
@@ -541,4 +572,42 @@
 - (IBAction)surfWeb:(UIButton *)sender {
     [self surfWebWithStore:self.store];
 }
+
+#pragma mark - RequestSenderDelegate
+- (void)catIsBack:(NSArray *)datas {
+    self.catImageView = [[UIImageView alloc] initWithImage:[UIImage imageWithData:[datas firstObject]]];
+    [Utilities stopLoading];
+    NSMutableArray *imagesArr = [NSMutableArray array];
+    if (self.dogImageView && self.animalsImageView) {
+        [imagesArr addObject:self.catImageView];
+        [imagesArr addObject:self.dogImageView];
+        [imagesArr addObject:self.animalsImageView];
+        [self reloadImage:0 withImages:imagesArr];
+    }
+}
+
+- (void)dogIsBack:(NSArray *)datas {
+    self.dogImageView = [[UIImageView alloc] initWithImage:[UIImage imageWithData:[datas firstObject]]];
+    [Utilities stopLoading];
+    NSMutableArray *imagesArr = [NSMutableArray array];
+    if (self.catImageView && self.animalsImageView) {
+        [imagesArr addObject:self.catImageView];
+        [imagesArr addObject:self.dogImageView];
+        [imagesArr addObject:self.animalsImageView];
+        [self reloadImage:0 withImages:imagesArr];
+    }
+}
+
+- (void)animalsIsBack:(NSArray *)datas {
+    self.animalsImageView = [[UIImageView alloc] initWithImage:[UIImage imageWithData:[datas firstObject]]];
+    [Utilities stopLoading];
+    NSMutableArray *imagesArr = [NSMutableArray array];
+    if (self.dogImageView && self.catImageView) {
+        [imagesArr addObject:self.catImageView];
+        [imagesArr addObject:self.dogImageView];
+        [imagesArr addObject:self.animalsImageView];
+        [self reloadImage:0 withImages:imagesArr];
+    }
+}
+
 @end

@@ -420,6 +420,7 @@
     AnimalHospitalViewController *animalHospital = [[AnimalHospitalViewController alloc] initWithNibName:@"AnimalHospitalViewController" bundle:nil];
     animalHospital.store = store;
     animalHospital.detail = detail;
+    animalHospital.accessToken = self.accessToken;
     CLLocationCoordinate2D location;
     if ([self.filterTableViewController getMenuSearchType] == MenuMarker ||
         [self.filterTableViewController getMenuSearchType] == MenuAddress) {
