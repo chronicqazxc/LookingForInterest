@@ -8,6 +8,7 @@
 
 #import "Utilities.h"
 #import "AppDelegate.h"
+#import "GoogleMapNavigation.h"
 
 @implementation Utilities
 + (AppDelegate *)getAppDelegate {
@@ -84,6 +85,72 @@
     return modifyImage;
 }
 
++ (NSMutableArray *)decodePolyLine: (NSMutableString *)encoded {
+    [encoded replaceOccurrencesOfString:@"\\\\" withString:@"\\"
+                                options:NSLiteralSearch
+                                  range:NSMakeRange(0, [encoded length])];
+    NSInteger len = [encoded length];
+    NSInteger index = 0;
+    NSMutableArray *array = [[NSMutableArray alloc] init];
+    NSInteger lat=0;
+    NSInteger lng=0;
+    while (index < len) {
+        NSInteger b;
+        NSInteger shift = 0;
+        NSInteger result = 0;
+        do {
+            b = [encoded characterAtIndex:index++] - 63;
+            result |= (b & 0x1f) << shift;
+            shift += 5;
+        } while (b >= 0x20);
+        NSInteger dlat = ((result & 1) ? ~(result >> 1) : (result >> 1));
+        lat += dlat;
+        shift = 0;
+        result = 0;
+        do {
+            b = [encoded characterAtIndex:index++] - 63;
+            result |= (b & 0x1f) << shift;
+            shift += 5;
+        } while (b >= 0x20);
+        NSInteger dlng = ((result & 1) ? ~(result >> 1) : (result >> 1));
+        lng += dlng;
+        NSNumber *latitude = [[NSNumber alloc] initWithFloat:lat * 1e-5];
+        NSNumber *longitude = [[NSNumber alloc] initWithFloat:lng * 1e-5];
+        CLLocation *loc = [[CLLocation alloc] initWithLatitude:[latitude floatValue] longitude:[longitude floatValue]];
+        [array addObject:loc];
+    }
+    return array;
+}
+
++ (UIAlertController *)normalAlertWithTitle:(NSString *)title message:(NSString *)message store:(Store *)store withSEL:(SEL)selector byCaller:(UIViewController *)caller{
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *webSiteAction = [UIAlertAction actionWithTitle:kWebSiteActionTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        NSLog(@"web site");
+        //        [self performSelectorOnMainThread:selector withObject:store waitUntilDone:NO modes:nil];
+        if (selector && [caller respondsToSelector:selector]) {
+            [caller performSelectorOnMainThread:selector withObject:store waitUntilDone:NO];
+        }
+    }];
+    
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        NSLog(@"click cancel!");
+    }];
+    
+    [alertController addAction:webSiteAction];
+    [alertController addAction:okAction];
+    
+    return alertController;
+}
+
++ (void)launchNavigateWithStore:(Store *)store startLocation:(CLLocationCoordinate2D)startLocation andDirectionsMode:(NSString *)directionsMode{
+    [[UIApplication sharedApplication] canOpenURL: [NSURL URLWithString:kGoogleMapType]];
+    if ([[UIApplication sharedApplication] canOpenURL: [NSURL URLWithString:kGoogleMapType]]) {
+        [[UIApplication sharedApplication] openURL: [NSURL URLWithString:kNavigateURLString(startLocation.latitude, startLocation.longitude, [store.latitude doubleValue], [store.longitude doubleValue], startLocation.latitude, startLocation.longitude, directionsMode,6)]];
+    } else {
+        NSLog(@"Can't use comgooglemaps://");
+    }
+}
 //NSString* (^thousandSeparatorFormat)(NSNumber*) =
 //^(NSNumber *number) {
 //    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];

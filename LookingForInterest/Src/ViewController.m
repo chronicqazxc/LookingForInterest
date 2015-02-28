@@ -25,15 +25,11 @@
 #define kOptionsTitle(title) title?title:@""
 #define kOptionMessage(message) message?message:@""
 #define kCallActionTitle @"撥打電話"
-#define kWebSiteActionTitle @"網路搜尋更多資訊"
 #define kRateActionTitle @"我要評分"
 #define kRateActionStreetView @"瀏覽街景"
 #define kPicturesActionTitle @"瀏覽店家圖片"
 #define kNavigateActionTitle @"導航"
 #define kCloseActionTitle @"關閉"
-
-#define kNoPhoneNumberAlertTitle @"Opps!"
-#define kNoPhoneNumberAlertMessage @"資料庫中沒有建立電話號碼"
 
 // call
 // web site
@@ -506,14 +502,21 @@
     [self setFormattedTitle:title];
 }
 
+- (void)surfWebWithStore:(Store *)store {
+    WebViewController *webViewController = [[WebViewController alloc] initWithNibName:@"WebViewController" bundle:nil];
+    webViewController.keyword = store.name;
+    webViewController.searchType = SearchWeb;
+    [self.navigationController pushViewController:webViewController animated:YES];
+}
+
 - (void)showOptionsWithStore:(Store *)store {
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:kOptionsTitle(store.name) message:kOptionMessage(@"你可以") preferredStyle:UIAlertControllerStyleActionSheet];
     
     UIAlertAction *callAction = [UIAlertAction actionWithTitle:kCallActionTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        if (((NSNull *)store.phoneNumber == [NSNull null]) ||
+        if ((NSNull *)store.phoneNumber == [NSNull null] ||
             !store.phoneNumber ||
             [store.phoneNumber isEqualToString:@""]) {
-            UIAlertController *alert = [self normalAlertWithTitle:kNoPhoneNumberAlertTitle message:kNoPhoneNumberAlertMessage store:store];
+            UIAlertController *alert = [Utilities normalAlertWithTitle:kNoPhoneNumberAlertTitle message:kNoPhoneNumberAlertMessage store:store withSEL:@selector(surfWebWithStore:) byCaller:self];
             [self presentViewController:alert animated:YES completion:^{
                 NSLog(@"click ok!");
             }];
@@ -633,7 +636,6 @@
 }
 
 - (void)launchNavigateWithStore:(Store *)store withDirectionsMode:(NSString *)directionsMode{
-    [[UIApplication sharedApplication] canOpenURL: [NSURL URLWithString:kGoogleMapType]];
     MenuSearchType menuSearchType = [self.filterTableViewController getMenuSearchType];
     CLLocationCoordinate2D location;
     if (menuSearchType == MenuMarker || menuSearchType == MenuAddress) {
@@ -641,32 +643,7 @@
     } else {
         location = self.currentLocation;
     }
-    if ([[UIApplication sharedApplication] canOpenURL: [NSURL URLWithString:kGoogleMapType]]) {
-        [[UIApplication sharedApplication] openURL: [NSURL URLWithString:kNavigateURLString(location.latitude, location.longitude, [store.latitude doubleValue], [store.longitude doubleValue], location.latitude, location.longitude, directionsMode,6)]];
-    } else {
-        NSLog(@"Can't use comgooglemaps://");
-    }
-}
-
-- (UIAlertController *)normalAlertWithTitle:(NSString *)title message:(NSString *)message store:(Store *)store{
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
-    
-    UIAlertAction *webSiteAction = [UIAlertAction actionWithTitle:kWebSiteActionTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        NSLog(@"web site");
-        WebViewController *webViewController = [[WebViewController alloc] initWithNibName:@"WebViewController" bundle:nil];
-        webViewController.keyword = store.name;
-        webViewController.searchType = SearchWeb;
-        [self.navigationController pushViewController:webViewController animated:YES];
-    }];
-    
-    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-        NSLog(@"click cancel!");
-    }];
-    
-    [alertController addAction:webSiteAction];
-    [alertController addAction:okAction];
-    
-    return alertController;
+    [Utilities launchNavigateWithStore:store startLocation:location andDirectionsMode:directionsMode];
 }
 
 - (void)loadPreviousPage:(PageController *)pageController {

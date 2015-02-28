@@ -105,6 +105,7 @@
     [self stopPaging];
     [self.viewController scrollViewDidEndDecelerating:self.scrollView];
     [self determinePageWhetherIsManulSwipe:YES];
+    self.startRotateTimer = [NSTimer scheduledTimerWithTimeInterval:3.0 target:self selector:@selector(startPaging) userInfo:nil repeats:NO];
     
 }
 

@@ -193,7 +193,9 @@
                     <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                 </constraint>
                 <constraint firstAttribute="trailing" secondItem="fGE-ma-z9D" secondAttribute="trailing" id="C52-AF-KJj"/>
-                <constraint firstItem="mAF-8n-mxh" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="62" id="Kqx-Zp-WZM"/>
+                <constraint firstItem="mAF-8n-mxh" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="62" id="Kqx-Zp-WZM">
+                    <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                </constraint>
                 <constraint firstItem="fGE-ma-z9D" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Xas-62-g5z"/>
                 <constraint firstAttribute="trailing" secondItem="mAF-8n-mxh" secondAttribute="trailing" id="oes-lC-DOz"/>
                 <constraint firstItem="mAF-8n-mxh" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="rAe-Qo-QzK"/>

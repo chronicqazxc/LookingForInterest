@@ -11,11 +11,15 @@
 #import "EndlessScrollGenerator.h"
 #import <GoogleMaps/GoogleMaps.h>
 #import "GoogleMapNavigation.h"
+#import <WebKit/WebKit.h>
+#import "WebViewController.h"
 
 #define kScrollViewMaxScale 0.7
 #define kScrollViewMinScale 0.3
+#define kScrollViewContentHeight 1085
 
 @interface AnimalHospitalViewController () <FullScreenScrollViewDelegate, EndlessScrollGeneratorDelegate, UIScrollViewDelegate, GMSMapViewDelegate, GMSPanoramaViewDelegate>
+@property (weak, nonatomic) IBOutlet UIView *mainContainer;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) NSMutableArray *imageViews;
 @property (strong, nonatomic) FullScreenScrollView *imageScrollView;
@@ -27,12 +31,15 @@
 @property (nonatomic) CLLocationCoordinate2D myMarkerLocation;
 @property (weak, nonatomic) IBOutlet UIView *mapContainer;
 @property (nonatomic) CGRect mapContainerFrame;
+@property (nonatomic) CGSize instructionContanerSize;
 - (IBAction)switchMapMode:(UISegmentedControl *)sender;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *mapModeSwitch;
+- (IBAction)switchDirectionMode:(UISegmentedControl *)sender;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *directionModeSwitch;
 
 @property (nonatomic) CGRect imageScrollFrame;
 @property (nonatomic) BOOL isInitail;
-@property (weak, nonatomic) IBOutlet UITextView *textView;
+@property (weak, nonatomic) IBOutlet UIView *instructionContainer;
 
 @property (weak, nonatomic) IBOutlet UILabel *infoLabel1;
 @property (weak, nonatomic) IBOutlet UILabel *infoLabel2;
@@ -41,12 +48,38 @@
 @property (weak, nonatomic) IBOutlet UILabel *infoLabel5;
 
 @property (strong, nonatomic) NSMutableArray *totalRoutes;
+@property (strong, nonatomic) NSMutableString *htmlString;
+
+@property (weak, nonatomic) IBOutlet UIImageView *iconButton;
+@property (weak, nonatomic) IBOutlet UIButton *phoneCallButton;
+@property (weak, nonatomic) IBOutlet UIButton *navigationButton;
+@property (weak, nonatomic) IBOutlet UIButton *internetButton;
+
+- (IBAction)callOut:(UIButton *)sender;
+- (IBAction)navigate:(UIButton *)sender;
+- (IBAction)surfWeb:(UIButton *)sender;
+
+@property (strong, nonatomic) NSMutableArray *tableData;
 @end
 
 @implementation AnimalHospitalViewController
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        self.isInitail = YES;
+        self.tableData = [NSMutableArray array];
+    }
+    return self;
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.edgesForExtendedLayout = UIRectEdgeNone;
+    self.iconButton.hidden = YES;
+    self.phoneCallButton.hidden = YES;
+    self.navigationButton.hidden = YES;
+    self.internetButton.hidden = YES;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -56,26 +89,33 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    self.navigationItem.title = self.store.name;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     self.isInitail = NO;
-    self.navigationItem.title = self.store.name;
 }
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     if (!self.isInitail) {
-        self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.scrollView.frame), 1163);
+        [self initButtons];
+        
+        self.iconButton.hidden = NO;
+        self.phoneCallButton.hidden = NO;
+        self.navigationButton.hidden = NO;
+        self.internetButton.hidden = NO;
+        
+        self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.scrollView.frame), kScrollViewContentHeight);
         self.imageScrollFrame = self.imageScrollContainer.frame;
-        
         self.mapContainerFrame = self.mapContainer.frame;
+        self.instructionContanerSize = self.instructionContainer.frame.size;
         
-        self.textView.layer.masksToBounds = YES;
-        self.textView.layer.borderColor = [UIColor grayColor].CGColor;
-        self.textView.layer.borderWidth = 1.0;
-        self.textView.layer.cornerRadius = 5.0;
+        self.instructionContainer.layer.masksToBounds = YES;
+        self.instructionContainer.layer.borderColor = [UIColor grayColor].CGColor;
+        self.instructionContainer.layer.borderWidth = 1.0;
+        self.instructionContainer.layer.cornerRadius = 5.0;
         
         self.imageScrollContainer.layer.masksToBounds = YES;
         self.imageScrollContainer.layer.borderColor = [UIColor grayColor].CGColor;
@@ -115,20 +155,60 @@
         self.infoLabel4.text = self.detail.otherInfo4;
         self.infoLabel5.text = self.detail.otherInfo5;
         
-        [self loadPath];
-        
         [self showMap];
+        [self loadPathWithMode:kDirectionsModeDriving];
+        [self placeMarker];
+        
+        [self.mapContainer bringSubviewToFront:self.mapModeSwitch];
+        [self.mapContainer bringSubviewToFront:self.directionModeSwitch];
         
         self.isInitail = YES;
     }
 }
 
-- (void)loadPath {
+- (void)initButtons {
+    [self initCircleView:self.iconButton];
+    [self initCircleView:self.phoneCallButton];
+    [self initCircleView:self.navigationButton];
+    [self initCircleView:self.internetButton];
+    
+//    [self setUpTouchEventsToButton:self.phoneCallButton];
+//    [self setUpTouchEventsToButton:self.navigationButton];
+//    [self setUpTouchEventsToButton:self.internetButton];
+}
+
+- (void)initCircleView:(UIView *)view {
+    view.layer.masksToBounds = YES;
+    view.layer.cornerRadius = CGRectGetHeight(view.frame)/2.0;
+    view.layer.borderWidth = 1.0;
+    if ([view isKindOfClass:[UIButton class]]) {
+        view.layer.borderColor = ((UIButton *)view).titleLabel.textColor.CGColor;
+    }
+}
+
+//- (void)setUpTouchEventsToButton:(UIButton *)button {
+//    [button addTarget:self action:@selector(didTapButtonForHighlight:) forControlEvents:UIControlEventTouchDown];
+//    [button addTarget:self action:@selector(didUnTapButtonForHighlight:) forControlEvents:UIControlEventTouchDragInside];
+//    [button addTarget:self action:@selector(didUnTapButtonForHighlight:) forControlEvents:UIControlEventTouchDragOutside];
+//    [button addTarget:self action:@selector(didUnTapButtonForHighlight:) forControlEvents:UIControlEventTouchCancel];
+//}
+
+//- (void)didTapButtonForHighlight:(UIButton *)button {
+//    button.layer.borderColor = [UIColor blueColor].CGColor;
+//    button.titleLabel.textColor = [UIColor blueColor];
+//}
+
+//- (void)didUnTapButtonForHighlight:(UIButton *)button {
+//    button.titleLabel.textColor = [UIColor whiteColor];
+//    button.layer.borderColor = button.titleLabel.textColor.CGColor;
+//}
+
+- (void)loadPathWithMode:(NSString *)mode {
     NSString *startLatitudeString = [NSString stringWithFormat:@"%f",self.start.latitude];
     NSString *startLongitudeString = [NSString stringWithFormat:@"%f",self.start.longitude];
     NSString *endLatitudeString = [NSString stringWithFormat:@"%f",self.destination.latitude];
     NSString *endLongitudeString = [NSString stringWithFormat:@"%f",self.destination.longitude];
-    NSString *polyLineURLString = kPolylineURLString(startLatitudeString, startLongitudeString, endLatitudeString, endLongitudeString, kDirectionsModeDriving);
+    NSString *polyLineURLString = kPolylineURLString(startLatitudeString, startLongitudeString, endLatitudeString, endLongitudeString, mode);
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:polyLineURLString]];
     NSURLResponse *response = nil;
     NSError *error = nil;
@@ -138,52 +218,86 @@
     if (error == nil) {
         parseDataDic = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
     }
-    if (parseDataDic) {
-        NSLog(@"%@",parseDataDic);
-        NSString *encodePolyline = [[[[parseDataDic objectForKey:@"routes"] objectAtIndex:0] objectForKey:@"overview_polyline"] objectForKey:@"points"];
-        self.totalRoutes = [NSMutableArray array];
-        NSMutableString *polyline = [NSMutableString stringWithString:encodePolyline];
-        self.totalRoutes = [self decodePolyLine:polyline];
+    if (parseDataDic && [[parseDataDic objectForKey:@"status"] isEqualToString:@"OK"]) {
+        NSDictionary *route = [[parseDataDic objectForKey:@"routes"] firstObject];
+        
+        [self parseOverviewPolyline:[route objectForKey:@"overview_polyline"]];
+        
+        self.htmlString = [NSMutableString string];
+        [self.htmlString appendFormat:@"<head><style>body{background-color:lightgray; font-size:40px;} table{border-collapse:collapse} table,td,th{padding:15px; border:1px solid blue; font-size:40px;} th{background-color:blue; color:white; font-size:40px;} p{color:red; font-size:40px;}</style></head>"];
+        [self parseLegs:[route objectForKey:@"legs"]];
+//        NSString *summary = [route objectForKey:@"summary"];
+        NSString *warning = [[route objectForKey:@"warnings"] firstObject];
+//        [self.htmlString appendFormat:@"<font size=\"3\">%@</font>",summary];
+        if (warning) {
+            [self.htmlString appendFormat:@"<p>%@</p>",warning];
+        }
+        [self loadHtmlWithStringContent:self.htmlString];
+        
     }
-    NSLog(@"%@",self.totalRoutes);
+    GMSMutablePath *path = [GMSMutablePath path];
+    for (CLLocation *location in self.totalRoutes) {
+        [path addCoordinate:location.coordinate];
+    }
+    GMSPolyline *polyline = [GMSPolyline polylineWithPath:path];
+    polyline.map = self.googleMap;
 }
 
--(NSMutableArray *)decodePolyLine: (NSMutableString *)encoded {
-    [encoded replaceOccurrencesOfString:@"\\\\" withString:@"\\"
-                                options:NSLiteralSearch
-                                  range:NSMakeRange(0, [encoded length])];
-    NSInteger len = [encoded length];
-    NSInteger index = 0;
-    NSMutableArray *array = [[NSMutableArray alloc] init];
-    NSInteger lat=0;
-    NSInteger lng=0;
-    while (index < len) {
-        NSInteger b;
-        NSInteger shift = 0;
-        NSInteger result = 0;
-        do {
-            b = [encoded characterAtIndex:index++] - 63;
-            result |= (b & 0x1f) << shift;
-            shift += 5;
-        } while (b >= 0x20);
-        NSInteger dlat = ((result & 1) ? ~(result >> 1) : (result >> 1));
-        lat += dlat;
-        shift = 0;
-        result = 0;
-        do {
-            b = [encoded characterAtIndex:index++] - 63;
-            result |= (b & 0x1f) << shift;
-            shift += 5;
-        } while (b >= 0x20);
-        NSInteger dlng = ((result & 1) ? ~(result >> 1) : (result >> 1));
-        lng += dlng;
-        NSNumber *latitude = [[NSNumber alloc] initWithFloat:lat * 1e-5];
-        NSNumber *longitude = [[NSNumber alloc] initWithFloat:lng * 1e-5];
-        CLLocation *loc = [[CLLocation alloc] initWithLatitude:[latitude floatValue] longitude:[longitude floatValue]];
-        [array addObject:loc];
-        NSLog(@"%f,%f",[latitude floatValue],[longitude floatValue]);
+
+- (void)parseLegs:(NSArray *)legs {
+//    NSLog(@"%@",legs);
+    
+    NSDictionary *leg = [legs firstObject];
+    NSString *distance = [[leg objectForKey:@"distance"] objectForKey:@"text"];
+    NSString *duration = [[leg objectForKey:@"duration"] objectForKey:@"text"];
+    NSString *startAddress = [leg objectForKey:@"start_address"];
+    NSString *endAddress = [leg objectForKey:@"end_address"];
+//    NSLog(@"%@",[leg objectForKey:@"steps"]);
+    
+    [self.htmlString appendFormat:@"<dl><dt><b>Original</b></dt><dd>- %@</dd><dt><b>Destination</b></dt><dd>- %@</dd><dt><b>Distance</b></dt><dd>- %@</dd><dt><b>Duration</b></dt><dd>- %@</dd></dl>",startAddress,endAddress,distance,duration];
+    [self.htmlString appendString:@"<table style=\"width:100%\" border>"];
+    [self.htmlString appendString:@"<tr><th>Travel Mode</th><th>Distance</th><th>Duration</th><th>Steps</th></tr>"];
+    for (NSDictionary *step in [leg objectForKey:@"steps"]) {
+        [self parseStep:step];
     }
-    return array;
+    [self.htmlString appendString:@"</table>"];
+}
+
+- (void)parseStep:(NSDictionary *)step {
+    NSString *distance = [[step objectForKey:@"distance"] objectForKey:@"text"];
+    NSString *duration = [[step objectForKey:@"duration"] objectForKey:@"text"];
+    NSString *travelMode = [step objectForKey:@"travel_mode"];;
+    NSString *instructions = [step objectForKey:@"html_instructions"];
+//    NSString *travelMode = [step objectForKey:@"travel_mode"];
+    NSLog(@"%@",instructions);
+    [self.htmlString appendFormat:@"<tr><td>%@</td><td>%@</td><td>%@</td><td>%@</td><tr>",travelMode,distance, duration, instructions];
+}
+
+- (void)loadHtmlWithStringContent:(NSString *)content {
+    WKWebView *wkwebView = [[WKWebView alloc] initWithFrame:CGRectMake(0,0,self.instructionContanerSize.width,self.instructionContanerSize.height)];
+    [wkwebView loadHTMLString:content baseURL:nil];
+    [self.instructionContainer addSubview:wkwebView];
+}
+
+- (void)parseOverviewPolyline:(NSDictionary *)overviewPolyline {
+    NSString *encodePolyline = [overviewPolyline objectForKey:@"points"];
+    self.totalRoutes = [NSMutableArray array];
+    NSMutableString *polyline = [NSMutableString stringWithString:encodePolyline];
+    self.totalRoutes = [Utilities decodePolyLine:polyline];
+}
+
+- (void)placeMarker {
+    GMSMarker *originalMarker = [[GMSMarker alloc] init];
+    originalMarker.position = CLLocationCoordinate2DMake(self.start.latitude, self.start.longitude);
+    originalMarker.appearAnimation = kGMSMarkerAnimationPop;
+    originalMarker.snippet = @"起始位置";
+    originalMarker.map = self.googleMap;
+    
+    GMSMarker *destinationMarker = [[GMSMarker alloc] init];
+    destinationMarker.position = CLLocationCoordinate2DMake(self.destination.latitude, self.destination.longitude);
+    destinationMarker.appearAnimation = kGMSMarkerAnimationPop;
+    destinationMarker.snippet = self.store.name;
+    destinationMarker.map = self.googleMap;
 }
 
 - (void)showMap {
@@ -195,7 +309,6 @@
     self.googleMap.settings.compassButton = YES;
     self.googleMap.accessibilityElementsHidden = NO;
     [self.mapContainer addSubview:self.googleMap];
-    [self.mapContainer bringSubviewToFront:self.mapModeSwitch];
 }
 
 - (void)reloadImage:(NSUInteger)index withImages:(NSMutableArray *)images {
@@ -263,6 +376,7 @@
             [self.streetView removeFromSuperview];
             [self.mapContainer addSubview:self.googleMap];
             [self.mapContainer bringSubviewToFront:self.mapModeSwitch];
+            [self.mapContainer bringSubviewToFront:self.directionModeSwitch];
             self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.scrollView.frame), 1163);
             break;
         case 1:
@@ -366,5 +480,65 @@
 #pragma mark - GMSPanoramaViewDelegate
 - (BOOL)panoramaView:(GMSPanoramaView *)panoramaView didTapMarker:(GMSMarker *)marker {
     return YES;
+}
+
+- (IBAction)switchDirectionMode:(UISegmentedControl *)sender {
+    [self.googleMap clear];
+    switch (sender.selectedSegmentIndex) {
+        case 0:
+            [self loadPathWithMode:kDirectionsModeDriving];
+            break;
+        case 1:
+            [self loadPathWithMode:kDirectionsModeTransit];
+            break;
+        case 2:
+            [self loadPathWithMode:kDirectionsModeWalking];
+            break;
+        default:
+            break;
+    }
+    [self placeMarker];
+}
+
+- (IBAction)callOut:(UIButton *)sender {
+    
+    if ((NSNull *)self.store.phoneNumber == [NSNull null] ||
+        !self.store.phoneNumber ||
+        [self.store.phoneNumber isEqualToString:@""]) {
+            UIAlertController *alert = [Utilities normalAlertWithTitle:kNoPhoneNumberAlertTitle message:kNoPhoneNumberAlertMessage store:self.store withSEL:@selector(surfWebWithStore:) byCaller:self];
+            [self presentViewController:alert animated:YES completion:^{
+                nil;
+        }];
+    }
+}
+
+- (void)surfWebWithStore:(Store *)store {
+    WebViewController *webViewController = [[WebViewController alloc] initWithNibName:@"WebViewController" bundle:nil];
+    webViewController.keyword = store.name;
+    webViewController.searchType = SearchWeb;
+    [self.navigationController pushViewController:webViewController animated:YES];
+}
+
+- (IBAction)navigate:(UIButton *)sender {
+    NSString *directionMode = @"";
+    switch (self.directionModeSwitch.selectedSegmentIndex) {
+        case 0:
+            directionMode = kDirectionsModeDriving;
+            break;
+        case 1:
+            directionMode = kDirectionsModeTransit;
+            break;
+        case 2:
+            directionMode = kDirectionsModeWalking;
+            break;
+        default:
+            directionMode = kDirectionsModeDriving;
+            break;
+    }
+    [Utilities launchNavigateWithStore:self.store startLocation:self.start andDirectionsMode:directionMode];
+}
+
+- (IBAction)surfWeb:(UIButton *)sender {
+    [self surfWebWithStore:self.store];
 }
 @end

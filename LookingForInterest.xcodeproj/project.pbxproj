@@ -14,6 +14,7 @@
 		B002A2EF1A9CEFBA00808055 /* PageController.m in Sources */ = {isa = PBXBuildFile; fileRef = B002A2EE1A9CEFBA00808055 /* PageController.m */; };
 		B002A2F51A9E31F400808055 /* EndlessScrollGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = B002A2F21A9E31F400808055 /* EndlessScrollGenerator.m */; };
 		B002A2F61A9E31F400808055 /* FullScreenScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = B002A2F41A9E31F400808055 /* FullScreenScrollView.m */; };
+		B002A2F81AA02FE800808055 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B002A2F71AA02FE700808055 /* QuartzCore.framework */; };
 		B034D96A1A8903AA00360A6C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B034D9681A8903AA00360A6C /* Main.storyboard */; };
 		B034D96C1A8903AA00360A6C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B034D96B1A8903AA00360A6C /* Images.xcassets */; };
 		B034D96F1A8903AA00360A6C /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = B034D96D1A8903AA00360A6C /* LaunchScreen.xib */; };
@@ -96,6 +97,7 @@
 		B002A2F21A9E31F400808055 /* EndlessScrollGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EndlessScrollGenerator.m; path = Src/Views/EndlessScrollGenerator.m; sourceTree = "<group>"; };
 		B002A2F31A9E31F400808055 /* FullScreenScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FullScreenScrollView.h; path = Src/Views/FullScreenScrollView.h; sourceTree = "<group>"; };
 		B002A2F41A9E31F400808055 /* FullScreenScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FullScreenScrollView.m; path = Src/Views/FullScreenScrollView.m; sourceTree = "<group>"; };
+		B002A2F71AA02FE700808055 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		B034D95B1A8903A900360A6C /* 寵物相關的.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "寵物相關的.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B034D95F1A8903A900360A6C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B034D9691A8903AA00360A6C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -191,6 +193,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B002A2F81AA02FE800808055 /* QuartzCore.framework in Frameworks */,
 				8441E412FA271BBDE77D111F /* libPods-LookingForInterest.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -201,6 +204,7 @@
 		6481B35C53C0A6FBF51E0A0E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B002A2F71AA02FE700808055 /* QuartzCore.framework */,
 				C1D1C794A2B62ED9A85DC3D8 /* libPods-LookingForInterest.a */,
 			);
 			name = Frameworks;

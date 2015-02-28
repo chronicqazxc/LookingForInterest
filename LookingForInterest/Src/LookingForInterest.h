@@ -34,6 +34,12 @@
 #define kAccessTokenKey @"access_token"
 #pragma mark -
 
+#pragma mark - Messages
+#define kNoPhoneNumberAlertTitle @"Opps!"
+#define kNoPhoneNumberAlertMessage @"資料庫中沒有建立電話號碼"
+#define kWebSiteActionTitle @"網路搜尋更多資訊"
+#pragma mark -
+
 typedef enum filterType {
     FilterTypeMenu,
     FilterTypeMajorType,

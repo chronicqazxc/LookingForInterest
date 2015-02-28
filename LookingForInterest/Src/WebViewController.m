@@ -30,6 +30,7 @@
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     self.isWebViewBeSetting = NO;
     self.addressTextField.delegate = self;
+    self.edgesForExtendedLayout = UIRectEdgeNone;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
