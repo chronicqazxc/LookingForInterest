@@ -459,18 +459,42 @@
     }
     
     CLLocationCoordinate2D location;
+    CLLocationCoordinate2D center;
+    double radius;
+    
     if (menu.menuSearchType == MenuMarker) {
         [self setMyMarkerByLocation:self.myMarkerLocation];
         location = self.myMarkerLocation;
+        center = self.myMarkerLocation;
+        radius = [menu.range doubleValue];
     } else if (menu.menuSearchType == MenuCurrentPosition) {
         location = CLLocationCoordinate2DMake(self.currentLocation.latitude, self.currentLocation.longitude);
+        center = location;
+        radius = [menu.range doubleValue];
     } else if (menu.menuSearchType == MenuAddress) {
         location = CLLocationCoordinate2DMake([[[otherInfo objectForKey:@"address_location"] objectForKey:@"lat"] doubleValue],
                                               [[[otherInfo objectForKey:@"address_location"] objectForKey:@"lng"] doubleValue]);
         [self setMyMarkerByLocation:location];
+        center = location;
+        radius = [menu.range doubleValue];
     } else {
-        location = CLLocationCoordinate2DMake([((Store *)[stores firstObject]).latitude doubleValue], [((Store *)[stores firstObject]).longitude doubleValue]);
+
+        center = CLLocationCoordinate2DMake(self.currentLocation.latitude, self.currentLocation.longitude);
+        if ([stores count]) {
+            location = CLLocationCoordinate2DMake([((Store *)[stores firstObject]).latitude doubleValue], [((Store *)[stores firstObject]).longitude doubleValue]);
+            radius = [((Store *)[stores lastObject]).distance doubleValue];
+        } else {
+            location = self.currentLocation;
+            radius = 0.5;
+        }
     }
+    
+    GMSCircle *circ = [GMSCircle circleWithPosition:center radius:radius*1000];
+    circ.fillColor = [UIColor colorWithRed:0.25 green:0 blue:0 alpha:0.25];
+    circ.strokeColor = [UIColor blueColor];
+    circ.strokeWidth = 1;
+    circ.map = self.googleMap;
+    
     GMSCameraPosition *fancy = [GMSCameraPosition cameraWithLatitude:location.latitude longitude:location.longitude zoom:zoom bearing:0 viewingAngle:0];
     [self.googleMap setCamera:fancy];
     

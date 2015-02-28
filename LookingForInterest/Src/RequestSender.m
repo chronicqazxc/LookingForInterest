@@ -80,19 +80,9 @@
     [self sendRequestByParams:@{@"id":store.storeID} andURL:[NSString stringWithFormat:@"%@%@",kLookingForInterestURL,kGetDetailURL]];
 }
 
-- (void)sendCatImageRequest {
-    self.type = GetCatImage;
-    [self sendRequestByParams:@{} andURL:[NSString stringWithFormat:@"%@%@",kLookingForInterestURL,kGetCatImageURL]];
-}
-
-- (void)sendDogImageRequest {
-    self.type = GetDogImage;
-    [self sendRequestByParams:@{} andURL:[NSString stringWithFormat:@"%@%@",kLookingForInterestURL,kGetDogImageURL]];
-}
-
-- (void)sendAnimalsImageRequest {
-    self.type = GetAnimalsImage;
-    [self sendRequestByParams:@{} andURL:[NSString stringWithFormat:@"%@%@",kLookingForInterestURL,kGetAnimalsImageURL]];
+- (void)sendDefaultImagesRequest {
+    self.type = GetDefaultImages;
+    [self sendRequestByParams:@{} andURL:[NSString stringWithFormat:@"%@%@",kLookingForInterestURL,kGetDefaultImagesURL]];
 }
 
 - (void)sendRangeRequest {
@@ -223,22 +213,10 @@
                     [self.delegate menuTypesBack:datas];
                 }
                 break;
-            case GetCatImage:
-                if ([self.delegate respondsToSelector:@selector(catIsBack:)]) {
+            case GetDefaultImages:
+                if ([self.delegate respondsToSelector:@selector(defaultImagesIsBack:)]) {
                     NSArray *datas = [self parseImageData:[self appendDataFromDatas:self.receivedDatas]];
-                    [self.delegate catIsBack:datas];
-                }
-                break;
-            case GetDogImage:
-                if ([self.delegate respondsToSelector:@selector(dogIsBack:)]) {
-                    NSArray *datas = [self parseImageData:[self appendDataFromDatas:self.receivedDatas]];
-                    [self.delegate dogIsBack:datas];
-                }
-                break;
-            case GetAnimalsImage:
-                if ([self.delegate respondsToSelector:@selector(animalsIsBack:)]) {
-                    NSArray *datas = [self parseImageData:[self appendDataFromDatas:self.receivedDatas]];
-                    [self.delegate animalsIsBack:datas];
+                    [self.delegate defaultImagesIsBack:datas];
                 }
                 break;
             default:
@@ -354,9 +332,13 @@
 }
 
 - (NSArray *)parseImageData:(NSData *)data {
+    NSError *error = nil;
     NSMutableArray *array = [NSMutableArray array];
-    NSData *catImageData = [NSData dataWithData:data];
-    [array addObject:catImageData];
+    NSArray *encodeStrings = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+    for (NSString *encode in encodeStrings) {
+        NSData *decodeData = [[NSData alloc] initWithBase64EncodedString:encode options:0];
+        [array addObject:decodeData];
+    }
     return array;
 }
 

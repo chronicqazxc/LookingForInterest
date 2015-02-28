@@ -488,18 +488,22 @@
         
         storeCell.delegate = self;
         
-        storeCell.rightSwipeSettings.transition = MGSwipeTransitionBorder;
-        storeCell.rightExpansion.buttonIndex = 0;
-        storeCell.rightExpansion.fillOnTrigger = NO;
-        storeCell.rightExpansion.fillOnTrigger = YES;
-        storeCell.rightButtons = [self createRightButtons:2];
-        
-        storeCell.leftSwipeSettings.transition = MGSwipeTransitionBorder;
-        storeCell.leftExpansion.buttonIndex = 0;
-        storeCell.leftExpansion.fillOnTrigger = NO;
-        storeCell.leftExpansion.fillOnTrigger = YES;
-        storeCell.leftButtons = [self createRightButtons:2];
-        
+        if ([self.stores count]) {
+            storeCell.rightSwipeSettings.transition = MGSwipeTransitionBorder;
+            storeCell.rightExpansion.buttonIndex = 0;
+            storeCell.rightExpansion.fillOnTrigger = NO;
+            storeCell.rightExpansion.fillOnTrigger = YES;
+            storeCell.rightButtons = [self createRightButtons:2];
+            
+            storeCell.leftSwipeSettings.transition = MGSwipeTransitionBorder;
+            storeCell.leftExpansion.buttonIndex = 0;
+            storeCell.leftExpansion.fillOnTrigger = NO;
+            storeCell.leftExpansion.fillOnTrigger = YES;
+            storeCell.leftButtons = [self createRightButtons:2];
+        } else {
+            storeCell.rightButtons = nil;
+            storeCell.leftButtons = nil;
+        }
         cell = storeCell;
     } else if ((self.filterType == FilterTypeMenu || self.filterType == SearchStores) && indexPath.section == 0 && indexPath.row == 0) {
         OpenMapCell *openMapCell = [tableView dequeueReusableCellWithIdentifier:kOpenMapCellIdentifier];
@@ -1014,6 +1018,45 @@
 }
 
 #pragma mark - UITextFieldDelegate
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    NSString *message = @"";
+    if (self.menu.menuSearchType == MenuKeyword) {
+        message = @"請輸入店家名稱";
+    } else if (self.menu.menuSearchType == MenuAddress) {
+        message = @"請輸入地址";
+    }
+    
+    UIAlertController *searchViewController = [UIAlertController alertControllerWithTitle:@"輸入關鍵字" message:message preferredStyle:UIAlertControllerStyleAlert];
+    [searchViewController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        if (self.menu.keyword) {
+            textField.text = self.menu.keyword;
+        }
+    }];
+    
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        [self.delegate dismissViewControllerAnimated:YES completion:nil];
+    }];
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"確定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        self.menu.keyword = [[searchViewController.textFields firstObject] text];
+        MenuCell *menuCell;
+        if (self.menu.menuSearchType == MenuKeyword) {
+            menuCell = (MenuCell *)[self.filterTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:1]];
+            menuCell.textField.text = [[searchViewController.textFields firstObject] text];
+        } else if (self.menu.menuSearchType == MenuAddress) {
+            menuCell = (MenuCell *)[self.filterTableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:2 inSection:1]];
+            menuCell.textField.text = [[searchViewController.textFields firstObject] text];
+        }
+        
+    }];
+    
+    [searchViewController addAction:cancelAction];
+    [searchViewController addAction:okAction];
+    
+    [self.delegate presentViewController:searchViewController animated:YES completion:nil];
+    
+    return NO;
+}
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     self.menu.keyword = textField.text;
     [textField resignFirstResponder];

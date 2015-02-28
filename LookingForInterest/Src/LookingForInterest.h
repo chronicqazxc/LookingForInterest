@@ -29,9 +29,7 @@
 #define kGetMinorTypesURL @"datas/get_minor_types/"
 #define kGetStoresURL @"datas/get_stores/"
 #define kGetDetailURL @"datas/get_detail/"
-#define kGetCatImageURL @"datas/get_cat/"
-#define kGetDogImageURL @"datas/get_dog/"
-#define kGetAnimalsImageURL @"datas/get_animals/"
+#define kGetDefaultImagesURL @"datas/get_default_images/"
 #define kGetAccessToken @"tokens/get_access_token/"
 #define kLookingForInterestUserDefaultKey @"LookingForInterestMenu"
 #define kAccessTokenKey @"access_token"
@@ -54,9 +52,7 @@ typedef enum filterType {
     SearchDetail,
     GetAccessToken,
     FilterTypeMenuTypes,
-    GetCatImage,
-    GetDogImage,
-    GetAnimalsImage
+    GetDefaultImages
 } FilterType;
 
 typedef NS_ENUM(NSInteger, Direction) {

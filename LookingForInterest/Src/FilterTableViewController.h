@@ -19,7 +19,7 @@
 @property (strong, nonatomic) NSString *nameDetail;
 @property (strong, nonatomic) NSString *rangeDetail;
 @property (nonatomic) FilterType filterType;
-@property (assign, nonatomic) id <FilterTableViewControllerDelegate>delegate;
+@property (assign, nonatomic) UIViewController <FilterTableViewControllerDelegate> *delegate;
 @property (strong, nonatomic) FilterTableView *filterTableView;
 @property (strong, nonatomic) UIViewController *notifyReceiver;
 @property (strong, nonatomic) NSIndexPath *selectedStoreIndexPath;
