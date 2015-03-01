@@ -222,6 +222,8 @@
             default:
                 break;
         }
+    } else {
+        [Utilities stopLoading];
     }
     
 }

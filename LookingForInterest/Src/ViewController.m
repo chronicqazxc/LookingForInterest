@@ -13,6 +13,7 @@
 #import <GoogleMaps/GoogleMaps.h>
 #import "GoogleMapNavigation.h"
 #import <CoreLocation/CoreLocation.h>
+#import "RequestSender.h"
 
 #define kMagnifierImg @"iconmonstr-magnifier-3-icon-256.png"
 #define kLeftArrowImg @"arrow-left@2x.png"
@@ -129,6 +130,24 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self setOriginalTitle];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self clearFilterTableRequestDelegate];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [self clearFilterTableRequestDelegate];
+}
+
+- (void)clearFilterTableRequestDelegate {
+    NSArray *requestSenders = [self.filterTableViewController getRequestArr];
+    for (RequestSender *requestSender in requestSenders) {
+        requestSender.delegate = nil;
+    }
+    [self.filterTableViewController resetRequestArr];
 }
 
 - (void)setOriginalTitle {
@@ -556,10 +575,6 @@
         [self.navigationController pushViewController:webViewController animated:YES];
     }];
     
-//    UIAlertAction *rateAction = [UIAlertAction actionWithTitle:kRateActionTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-//        NSLog(@"rate");
-//    }];
-    
     UIAlertAction *streetViewAction = [UIAlertAction actionWithTitle:kRateActionStreetView style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         NSLog(@"street view");
         CLLocationCoordinate2D panoramaNear = {[store.latitude doubleValue],[store.longitude doubleValue]};
@@ -587,23 +602,6 @@
     }];
     
     UIAlertAction *pictureAction = [UIAlertAction actionWithTitle:kPicturesActionTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        
-        NSLog(@"picture");
-//        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"ok" message:@"test" preferredStyle:UIAlertControllerStyleAlert];
-//        UIAlertAction *webSiteAction = [UIAlertAction actionWithTitle:kWebSiteActionTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-//            NSLog(@"web site");
-//            WebViewController *webViewController = [[WebViewController alloc] initWithNibName:@"WebViewController" bundle:nil];
-//            webViewController.keyword = store.name;
-//            webViewController.searchType = SearchImage;
-//            [self.navigationController pushViewController:webViewController animated:YES];
-//        }];
-//        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-//            NSLog(@"click cancel!");
-//        }];
-//        [alertController addAction:webSiteAction];
-//        [alertController addAction:okAction];
-//        [self presentViewController:alertController animated:YES completion:nil];
-        
         WebViewController *webViewController = [[WebViewController alloc] initWithNibName:@"WebViewController" bundle:nil];
         webViewController.keyword = store.name;
         webViewController.searchType = SearchImage;
@@ -620,7 +618,6 @@
     
     [alertController addAction:callAction];
     [alertController addAction:webSiteAction];
-//    [alertController addAction:rateAction];
     [alertController addAction:streetViewAction];
     [alertController addAction:pictureAction];
     [alertController addAction:navigateAction];

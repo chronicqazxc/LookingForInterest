@@ -64,6 +64,7 @@
 @property (strong, nonatomic) UIImage *upArrowImage;
 @property (strong, nonatomic) UIImage *downArrowImage;
 @property (nonatomic) BOOL isStartLoadingPage;
+@property (strong, nonatomic) NSMutableArray *requestArr;
 @end
 
 @implementation FilterTableViewController
@@ -102,6 +103,7 @@
     self.numberOfRow = 0;
     self.openMapHeader = nil;
     self.isStartLoadingPage = NO;
+    self.requestArr = [NSMutableArray array];
     [self resetPage];
 }
 
@@ -123,6 +125,15 @@
     return self.menu.menuSearchType;
 }
 
+- (NSArray *)getRequestArr {
+    NSArray *array = [NSArray arrayWithArray:self.requestArr];
+    return array;
+}
+
+- (void)resetRequestArr {
+    self.requestArr = [NSMutableArray array];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     RequestSender *requestSender = [[RequestSender alloc] init];
@@ -131,36 +142,42 @@
             requestSender.delegate = self;
             requestSender.accessToken = self.accessToken;
             [requestSender sendMajorRequest];
+            [self.requestArr addObject:requestSender];
             [Utilities startLoading];
             break;
         case FilterTypeMinorType:
             requestSender.delegate = self;
             requestSender.accessToken = self.accessToken;
             [requestSender sendMinorRequestByMajorType:((FilterTableViewController *)self.notifyReceiver).menu.majorType];
+            [self.requestArr addObject:requestSender];
             [Utilities startLoading];
             break;
         case FilterTypeStore:
             requestSender.delegate = self;
             requestSender.accessToken = self.accessToken;
             [requestSender sendStoreRequestByMajorType:((FilterTableViewController *)self.notifyReceiver).menu.majorType minorType:((FilterTableViewController *)self.notifyReceiver).menu.minorType];
+            [self.requestArr addObject:requestSender];
             [Utilities startLoading];
             break;
         case FilterTypeRange:
             requestSender.delegate = self;
             requestSender.accessToken = self.accessToken;
             [requestSender sendRangeRequest];
+            [self.requestArr addObject:requestSender];
             [Utilities startLoading];
             break;
         case FilterTypeCity:
             requestSender.delegate = self;
             requestSender.accessToken = self.accessToken;
             [requestSender sendCityRequest];
+            [self.requestArr addObject:requestSender];
             [Utilities startLoading];            
             break;
         case FilterTypeMenuTypes:
             requestSender.delegate = self;
             requestSender.accessToken = self.accessToken;
             [requestSender sendMenutypesRequest];
+            [self.requestArr addObject:requestSender];
             [Utilities startLoading];            
             break;
         default:
@@ -191,6 +208,10 @@
     }
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+}
+
 - (void)setNavigationTitle:(NSString *)title {
     self.navigationItem.title = title;
 }
@@ -204,6 +225,7 @@
     RequestSender *requestSender = [[RequestSender alloc] init];
     requestSender.delegate = self;
     [requestSender getAccessToken];
+    [self.requestArr addObject:requestSender];
     [Utilities startLoading];
 }
 
@@ -212,6 +234,7 @@
     requestSender.delegate = self;
     requestSender.accessToken = self.accessToken;
     [requestSender sendMenuRequest];
+    [self.requestArr addObject:requestSender];
     [Utilities startLoading];
 }
 
@@ -239,6 +262,7 @@
     }
     requestSender.accessToken = self.accessToken;
     [requestSender sendStoreRequestByMenuObj:self.menu andLocationCoordinate:currentLocation andPageController:self.pageController];
+    [self.requestArr addObject:requestSender];
     [Utilities startLoading];
     
     self.selectedStoreIndexPath = nil;
@@ -491,15 +515,14 @@
         if ([self.stores count]) {
             storeCell.rightSwipeSettings.transition = MGSwipeTransitionBorder;
             storeCell.rightExpansion.buttonIndex = 0;
-            storeCell.rightExpansion.fillOnTrigger = NO;
             storeCell.rightExpansion.fillOnTrigger = YES;
             storeCell.rightButtons = [self createRightButtons:2];
             
             storeCell.leftSwipeSettings.transition = MGSwipeTransitionBorder;
             storeCell.leftExpansion.buttonIndex = 0;
-            storeCell.leftExpansion.fillOnTrigger = NO;
             storeCell.leftExpansion.fillOnTrigger = YES;
-            storeCell.leftButtons = [self createRightButtons:2];
+            storeCell.leftExpansion.threshold = 4.0;
+            storeCell.leftButtons = [self createLeftButtonWithIndexPath:indexPath];
         } else {
             storeCell.rightButtons = nil;
             storeCell.leftButtons = nil;
@@ -529,26 +552,42 @@
     return cell;
 }
 
--(NSArray *) createLeftButtons: (int) number
-{
+-(NSArray *) createLeftButtonWithIndexPath:(NSIndexPath *)indexPath {
     NSMutableArray * result = [NSMutableArray array];
-    UIColor * colors[3] = {[UIColor greenColor],
-        [UIColor colorWithRed:0 green:0x99/255.0 blue:0xcc/255.0 alpha:1.0],
-        [UIColor colorWithRed:0.59 green:0.29 blue:0.08 alpha:1.0]};
-    UIImage * icons[3] = {[UIImage imageNamed:@"check.png"], [UIImage imageNamed:@"fav.png"], [UIImage imageNamed:@"menu.png"]};
-    for (int i = 0; i < number; ++i)
-    {
-        MGSwipeButton * button = [MGSwipeButton buttonWithTitle:@"" icon:icons[i] backgroundColor:colors[i] padding:10 callback:^BOOL(MGSwipeTableCell * sender){
-            NSLog(@"Convenience callback received (left).");
-            return YES;
-        }];
-        [result addObject:button];
+//    UIColor * colors[3] = {[UIColor greenColor],
+//        [UIColor colorWithRed:0 green:0x99/255.0 blue:0xcc/255.0 alpha:1.0],
+//        [UIColor colorWithRed:0.59 green:0.29 blue:0.08 alpha:1.0]};
+//    UIImage * icons[3] = {[UIImage imageNamed:@"check.png"], [UIImage imageNamed:@"fav.png"], [UIImage imageNamed:@"menu.png"]};
+//    for (int i = 0; i < number; ++i)
+//    {
+//        MGSwipeButton * button = [MGSwipeButton buttonWithTitle:@"" icon:icons[i] backgroundColor:colors[i] padding:10 callback:^BOOL(MGSwipeTableCell * sender){
+//            NSLog(@"Convenience callback received (left).");
+//            return YES;
+//        }];
+//        [result addObject:button];
+//    }
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSMutableArray *favoriteStores = [defaults objectForKey:kFavoriteStoresKey];
+    BOOL isMyFavorite = NO;
+    for (NSString *storeID in favoriteStores) {
+        if ([[[self.stores objectAtIndex:indexPath.row] storeID] isEqualToString:storeID]) {
+            isMyFavorite = YES;
+            break;
+        }
     }
+    UIColor *backgroundColor;
+    if (isMyFavorite) {
+        backgroundColor = [UIColor redColor];
+    } else {
+        backgroundColor = [UIColor greenColor];
+    }
+    MGSwipeButton *leftButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"fav.png"] backgroundColor:backgroundColor padding:20];
+    [result addObject:leftButton];
     return result;
 }
 
--(NSArray *) createRightButtons: (int) number
-{
+-(NSArray *) createRightButtons: (int) number {
     NSMutableArray * result = [NSMutableArray array];
     NSString *titles[2] = {kCellNavigationTitle, kCellMoreTitle};
     UIColor  *colors[2] = {[UIColor redColor], [UIColor lightGrayColor]};
@@ -697,6 +736,7 @@
                     requestSender.delegate = self;
                     requestSender.accessToken = self.accessToken;
                     [requestSender sendDetailRequestByStore:[self.stores objectAtIndex:indexPath.row]];
+                    [self.requestArr addObject:requestSender];
                     [Utilities startLoading];
                 }
             }
@@ -745,6 +785,7 @@
         if (self.delegate && [self.delegate respondsToSelector:@selector(setAccessTokenValue:)]) {
             [self.delegate setAccessTokenValue:[accessTokenData firstObject]];
         }
+        self.delegate.navigationItem.leftBarButtonItem.enabled = NO;
         [Utilities stopLoading];
     }
 }
@@ -753,6 +794,7 @@
     self.menu = [menuData firstObject];
     [self generateDataStructureWithMenu:self.menu];
     [self.filterTableView reloadData];
+    self.delegate.navigationItem.leftBarButtonItem.enabled = YES;
     [Utilities stopLoading];
 }
 
@@ -862,6 +904,7 @@
         self.menu.majorType = backMajorType;
         RequestSender *requestSender = [[RequestSender alloc] init];
         requestSender.delegate = self;
+        [self.requestArr addObject:requestSender];
         [requestSender sendMinorRequestByMajorType:backMajorType];
     }
     [self.filterTableView reloadData];
@@ -898,6 +941,7 @@
     requestSender.delegate = self;
     requestSender.accessToken = self.accessToken;
     [requestSender sendMenuRequestWithType:menuType];
+    [self.requestArr addObject:requestSender];
     [Utilities startLoading];
 }
 
@@ -915,15 +959,19 @@
 }
 
 - (BOOL) swipeTableCell:(MGSwipeTableCell *) cell tappedButtonAtIndex:(NSInteger) index direction:(MGSwipeDirection)direction fromExpansion:(BOOL) fromExpansion {
-    switch (index) {
-        case 0:
-            [self navigateWithCell:cell];
-            break;
-        case 1:
-            [self showOptionsByCell:cell];
-            break;
-        default:
-            break;
+    if (MGSwipeDirectionLeftToRight) {
+        
+    } else {
+        switch (index) {
+            case 0:
+                [self navigateWithCell:cell];
+                break;
+            case 1:
+                [self showOptionsByCell:cell];
+                break;
+            default:
+                break;
+        }
     }
     return NO;
 }

@@ -39,6 +39,7 @@
 #define kNoPhoneNumberAlertTitle @"Opps!"
 #define kNoPhoneNumberAlertMessage @"資料庫中沒有建立電話號碼"
 #define kWebSiteActionTitle @"網路搜尋更多資訊"
+#define kFavoriteStoresKey @"favoriteStoresKey"
 #pragma mark -
 
 typedef enum filterType {

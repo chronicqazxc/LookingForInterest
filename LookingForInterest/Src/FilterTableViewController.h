@@ -32,6 +32,8 @@
 - (void)resetPage;
 - (BOOL)canDropMyMark;
 - (MenuSearchType)getMenuSearchType;
+- (NSArray *)getRequestArr;
+- (void)resetRequestArr;
 @end
 
 @protocol FilterTableViewControllerDelegate <NSObject>

@@ -63,6 +63,8 @@
 @property (strong, nonatomic) UIImageView *catImageView;
 @property (strong, nonatomic) UIImageView *dogImageView;
 @property (strong, nonatomic) UIImageView *animalsImageView;
+
+@property (strong, nonatomic) NSMutableArray *requests;
 @end
 
 @implementation AnimalHospitalViewController
@@ -85,6 +87,7 @@
     self.catImageView = nil;
     self.dogImageView = nil;
     self.animalsImageView = nil;
+    self.requests = [NSMutableArray array];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -100,6 +103,23 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     self.isInitail = NO;
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self clearRequestDelegate];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [self clearRequestDelegate];
+}
+
+- (void)clearRequestDelegate {
+    for (RequestSender *requestSender in self.requests) {
+        requestSender.delegate = nil;
+    }
+    self.requests = [NSMutableArray array];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -156,6 +176,8 @@
     requestSender.delegate = self;
     requestSender.accessToken = self.accessToken;
     [requestSender sendDefaultImagesRequest];
+    [self.requests addObject:requestSender];
+    [Utilities startLoading];
 }
 
 - (void)initButtons {
@@ -525,5 +547,6 @@
         [imagesArr addObject:imageView];
     }
     [self reloadImage:0 withImages:imagesArr];
+    [Utilities stopLoading];
 }
 @end
