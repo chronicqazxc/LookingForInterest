@@ -521,7 +521,7 @@
             storeCell.leftSwipeSettings.transition = MGSwipeTransitionBorder;
             storeCell.leftExpansion.buttonIndex = 0;
             storeCell.leftExpansion.fillOnTrigger = YES;
-            storeCell.leftExpansion.threshold = 4.0;
+            storeCell.leftExpansion.threshold = 3.5;
             storeCell.leftButtons = [self createLeftButtonWithIndexPath:indexPath];
         } else {
             storeCell.rightButtons = nil;
