@@ -37,4 +37,12 @@
     }];
 }
 
+- (void)testArray {
+    NSMutableArray *array = [NSMutableArray array];
+    [array addObject:@"3"];
+    BOOL result1 = [array containsObject:@"3"];
+    BOOL result2 = [array containsObject:@"2"];
+    NSLog(@"%d,%d",result1,result2);
+}
+
 @end

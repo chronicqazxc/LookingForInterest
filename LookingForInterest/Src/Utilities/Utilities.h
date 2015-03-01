@@ -28,4 +28,6 @@
 + (NSMutableArray *)decodePolyLine:(NSMutableString *)encoded;
 + (UIAlertController *)normalAlertWithTitle:(NSString *)title message:(NSString *)message store:(Store *)store withSEL:(SEL)selector byCaller:(UIViewController *)caller;
 + (void)launchNavigateWithStore:(Store *)store startLocation:(CLLocationCoordinate2D)startLocation andDirectionsMode:(NSString *)directionsMode;
++ (void)addToMyFavoriteStore:(Store *)store;
++ (void)removeFromMyFavoriteStore:(Store *)store;
 @end

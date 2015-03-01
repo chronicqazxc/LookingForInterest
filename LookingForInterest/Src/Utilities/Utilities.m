@@ -151,6 +151,27 @@
         NSLog(@"Can't use comgooglemaps://");
     }
 }
+
++ (void)addToMyFavoriteStore:(Store *)store {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSArray *stores = [defaults objectForKey:kFavoriteStoresKey];
+    if (!stores) {
+        stores = [NSArray array];
+    }
+    NSMutableArray *favoriteStores = [NSMutableArray arrayWithArray:stores];
+    [favoriteStores addObject:store.storeID];
+    [defaults setObject:favoriteStores forKey:kFavoriteStoresKey];
+    [defaults synchronize];
+}
+
++ (void)removeFromMyFavoriteStore:(Store *)store {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSArray *stores = [defaults objectForKey:kFavoriteStoresKey];
+    NSMutableArray *favoriteStores = [NSMutableArray arrayWithArray:stores];
+    [favoriteStores removeObject:store.storeID];
+    [defaults setObject:favoriteStores forKey:kFavoriteStoresKey];
+    [defaults synchronize];
+}
 //NSString* (^thousandSeparatorFormat)(NSNumber*) =
 //^(NSNumber *number) {
 //    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];

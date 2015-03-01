@@ -567,17 +567,8 @@
 //        [result addObject:button];
 //    }
     
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSMutableArray *favoriteStores = [defaults objectForKey:kFavoriteStoresKey];
-    BOOL isMyFavorite = NO;
-    for (NSString *storeID in favoriteStores) {
-        if ([[[self.stores objectAtIndex:indexPath.row] storeID] isEqualToString:storeID]) {
-            isMyFavorite = YES;
-            break;
-        }
-    }
     UIColor *backgroundColor;
-    if (isMyFavorite) {
+    if ([self isMyFavoriteStoresByIndex:indexPath.row]) {
         backgroundColor = [UIColor redColor];
     } else {
         backgroundColor = [UIColor greenColor];
@@ -585,6 +576,13 @@
     MGSwipeButton *leftButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"fav.png"] backgroundColor:backgroundColor padding:20];
     [result addObject:leftButton];
     return result;
+}
+
+- (BOOL)isMyFavoriteStoresByIndex:(NSInteger)index {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSMutableArray *favoriteStores = [defaults objectForKey:kFavoriteStoresKey];
+    NSString *storeID = [[self.stores objectAtIndex:index] storeID];
+    return [favoriteStores containsObject:storeID]?YES:NO;
 }
 
 -(NSArray *) createRightButtons: (int) number {
@@ -959,8 +957,15 @@
 }
 
 - (BOOL) swipeTableCell:(MGSwipeTableCell *) cell tappedButtonAtIndex:(NSInteger) index direction:(MGSwipeDirection)direction fromExpansion:(BOOL) fromExpansion {
-    if (MGSwipeDirectionLeftToRight) {
-        
+    NSIndexPath *indexPath = [self.filterTableView indexPathForCell:cell];
+    if (direction == MGSwipeDirectionLeftToRight) {
+        Store *store = [self.stores objectAtIndex:indexPath.row];
+        if ([self isMyFavoriteStoresByIndex:indexPath.row]) {
+            [Utilities removeFromMyFavoriteStore:store];
+        } else {
+            [Utilities addToMyFavoriteStore:store];
+        }
+        [self.filterTableView reloadData];
     } else {
         switch (index) {
             case 0:
