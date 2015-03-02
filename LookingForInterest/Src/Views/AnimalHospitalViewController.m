@@ -65,6 +65,8 @@
 @property (strong, nonatomic) UIImageView *animalsImageView;
 
 @property (strong, nonatomic) NSMutableArray *requests;
+
+@property (strong, nonatomic) AppDelegate *appdelegate;
 @end
 
 @implementation AnimalHospitalViewController
@@ -84,10 +86,13 @@
     self.phoneCallButton.hidden = YES;
     self.navigationButton.hidden = YES;
     self.internetButton.hidden = YES;
+    self.mapModeSwitch.hidden = YES;
+    self.directionModeSwitch.hidden = YES;
     self.catImageView = nil;
     self.dogImageView = nil;
     self.animalsImageView = nil;
     self.requests = [NSMutableArray array];
+    self.appdelegate = [Utilities appdelegate];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -113,6 +118,7 @@
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     [self clearRequestDelegate];
+    self.appdelegate.viewController = nil;
 }
 
 - (void)clearRequestDelegate {
@@ -124,6 +130,11 @@
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
+    
+    if (!self.appdelegate.viewController) {
+        self.appdelegate.viewController = self;
+    }
+    
     if (!self.isInitail) {
         [self initButtons];
         
@@ -131,6 +142,8 @@
         self.phoneCallButton.hidden = NO;
         self.navigationButton.hidden = NO;
         self.internetButton.hidden = NO;
+        self.mapModeSwitch.hidden = NO;
+        self.directionModeSwitch.hidden = NO;
         
         self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.scrollView.frame), kScrollViewContentHeight);
         self.imageScrollFrame = self.imageScrollContainer.frame;

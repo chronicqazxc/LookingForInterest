@@ -21,7 +21,7 @@
                                 <constraint firstAttribute="width" constant="186" id="gAj-v2-cda"/>
                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="21" id="wqz-Yg-vJU"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                             <variation key="default">
@@ -75,13 +75,15 @@
                     <constraints>
                         <constraint firstAttribute="centerX" secondItem="TKY-4C-G2E" secondAttribute="centerX" id="2AN-6h-hy8"/>
                         <constraint firstItem="TKY-4C-G2E" firstAttribute="top" secondItem="w5E-xK-sct" secondAttribute="bottom" constant="9" id="5aa-gS-VWf"/>
-                        <constraint firstAttribute="centerY" secondItem="w5E-xK-sct" secondAttribute="centerY" id="6mq-3Z-iKx"/>
+                        <constraint firstAttribute="centerY" secondItem="w5E-xK-sct" secondAttribute="centerY" id="6mq-3Z-iKx">
+                            <variation key="heightClass=regular-widthClass=compact" constant="9.5"/>
+                        </constraint>
                         <constraint firstAttribute="centerX" secondItem="w5E-xK-sct" secondAttribute="centerX" id="mmK-Np-zgv"/>
                         <constraint firstAttribute="width" constant="200" id="tY8-tE-Pt4">
-                            <variation key="heightClass=regular-widthClass=compact" constant="150"/>
+                            <variation key="heightClass=regular-widthClass=compact" constant="120"/>
                         </constraint>
                         <constraint firstAttribute="height" constant="200" id="xLa-Qn-GpU">
-                            <variation key="heightClass=regular-widthClass=compact" constant="150"/>
+                            <variation key="heightClass=regular-widthClass=compact" constant="120"/>
                         </constraint>
                     </constraints>
                     <variation key="default">

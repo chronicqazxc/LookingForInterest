@@ -28,7 +28,7 @@
     self.backgroundView.alpha = 0.0;
     [UIView animateWithDuration:speed animations:^{
         self.indicatorView.alpha = finishOpacity;
-        self.backgroundView.alpha = 0.3;
+        self.backgroundView.alpha = 0.5;
     } completion:^(BOOL finished) {
     }];
 }
@@ -37,7 +37,7 @@
     self.indicatorView.layer.masksToBounds = YES;
     self.indicatorView.layer.cornerRadius = 8.0;
     self.indicatorView.alpha = startOpacity;
-    self.backgroundView.alpha = 0.3;
+    self.backgroundView.alpha = 0.5;
     [UIView animateWithDuration:speed animations:^{
         self.indicatorView.alpha = finishOpacity;
         self.backgroundView.alpha = 0.0;

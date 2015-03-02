@@ -68,7 +68,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *navigationButton;
 - (IBAction)clickNavigationTitle:(UIButton *)sender;
 @property (strong, nonatomic) NSString *accessToken;
-
+@property (strong, nonatomic) AppDelegate *appDelegate;
 
 @property (weak, nonatomic) IBOutlet UIView *previousPageView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *previousPageIndicator;
@@ -110,6 +110,7 @@
     self.searchViewTitle.text = kSearch;
     self.storesOnMap = [NSArray array];
     self.accessToken = @"";
+    self.appDelegate = [Utilities appdelegate];
 }
 
 - (void)viewDidLoad {
@@ -140,11 +141,13 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [self clearFilterTableRequestDelegate];
+//    self.appDelegate.viewController = nil;    
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     [self clearFilterTableRequestDelegate];
+//    self.appDelegate.viewController = nil;
 }
 
 - (void)clearFilterTableRequestDelegate {
@@ -185,9 +188,8 @@
 - (void)viewDidLayoutSubviews NS_AVAILABLE_IOS(5_0) {
     [super viewDidLayoutSubviews];
     
-    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    if (!appDelegate.viewController) {
-        appDelegate.viewController = self;
+    if (!self.appDelegate.viewController) {
+        self.appDelegate.viewController = self;
     }
     
     if (self.mapViewSize.width == CGSizeZero.width && self.mapViewSize.height == CGSizeZero.height) {
@@ -323,21 +325,27 @@
 -(void)tableBeTapIn:(NSIndexPath *)indexPath withMenuSearchType:(MenuSearchType)menuSearchType{
     switch (menuSearchType) {
         case MenuCurrentPosition:
+            self.appDelegate.viewController = nil;
             [self processMenuCurrentPositionWithIndexPath:indexPath];
             break;
         case MenuCities:
+            self.appDelegate.viewController = nil;
             [self processMenuCitiesWithIndexPath:indexPath];
             break;
         case MenuKeyword:
+            self.appDelegate.viewController = nil;
             [self processMenuKeywordWithIndexPath:indexPath];
             break;
         case MenuMarker:
+            self.appDelegate.viewController = nil;
             [self processMenuMarkerWithIndexPath:indexPath];
             break;
         case MenuAddress:
+            self.appDelegate.viewController = nil;
             [self processMenuAddressWithIndexPath:indexPath];
             break;
         case MenuFavorite:
+            self.appDelegate.viewController = nil;
             [self processMenuFavoriteWithIndexPath:indexPath];
             break;
         default:
@@ -464,6 +472,7 @@
 }
 
 - (void)storeBeTapIn:(NSIndexPath *)indexPath withDetail:(Detail *)detail{
+    self.appDelegate.viewController = nil;
     Store *store = [self.storesOnMap objectAtIndex:indexPath.row];
     GMSCameraPosition *fancy = [GMSCameraPosition cameraWithLatitude:[store.latitude doubleValue] longitude:[store.longitude doubleValue] zoom:16 bearing:0 viewingAngle:0];
     [self.googleMap setCamera:fancy];

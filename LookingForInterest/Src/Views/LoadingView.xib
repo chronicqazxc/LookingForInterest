@@ -12,7 +12,7 @@
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rNs-0h-WxN" userLabel="BackgroundView">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xF9-Ww-Sp5" userLabel="IndicatorView">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -46,13 +46,13 @@
                     <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                     <constraints>
                         <constraint firstItem="Ih5-vh-Q0f" firstAttribute="leading" secondItem="xF9-Ww-Sp5" secondAttribute="leading" constant="36" id="3YJ-Cp-1v3">
-                            <variation key="heightClass=regular-widthClass=compact" constant="33"/>
+                            <variation key="heightClass=regular-widthClass=compact" constant="25"/>
                         </constraint>
                         <constraint firstAttribute="centerY" secondItem="Exw-xv-quL" secondAttribute="centerY" constant="25.5" id="7Rh-Nf-Tef">
-                            <variation key="heightClass=regular-widthClass=compact" constant="17.5"/>
+                            <variation key="heightClass=regular-widthClass=compact" constant="15.5"/>
                         </constraint>
                         <constraint firstAttribute="width" constant="150" id="7oq-Xn-IPS">
-                            <variation key="heightClass=regular-widthClass=compact" constant="130"/>
+                            <variation key="heightClass=regular-widthClass=compact" constant="120"/>
                         </constraint>
                         <constraint firstItem="Exw-xv-quL" firstAttribute="leading" secondItem="xF9-Ww-Sp5" secondAttribute="leading" constant="42" id="ILz-TV-dVi"/>
                         <constraint firstItem="Ih5-vh-Q0f" firstAttribute="top" secondItem="Exw-xv-quL" secondAttribute="bottom" constant="-0.5" id="MJb-2f-aCp">
@@ -65,7 +65,7 @@
                             <variation key="heightClass=regular-widthClass=compact" constant="-8"/>
                         </constraint>
                         <constraint firstAttribute="height" constant="150" id="b5f-UX-ILP">
-                            <variation key="heightClass=regular-widthClass=compact" constant="130"/>
+                            <variation key="heightClass=regular-widthClass=compact" constant="120"/>
                         </constraint>
                         <constraint firstAttribute="trailing" secondItem="Exw-xv-quL" secondAttribute="trailing" constant="41" id="hl1-7H-2aw"/>
                         <constraint firstAttribute="centerX" secondItem="Exw-xv-quL" secondAttribute="centerX" id="khN-jY-wB4"/>
@@ -74,7 +74,7 @@
                         </constraint>
                         <constraint firstAttribute="centerY" secondItem="Ih5-vh-Q0f" secondAttribute="centerY" constant="-29" id="rO8-gD-NpF"/>
                         <constraint firstAttribute="bottom" secondItem="Ih5-vh-Q0f" secondAttribute="bottom" constant="18" id="vqe-tw-oaT">
-                            <variation key="heightClass=regular-widthClass=compact" constant="35"/>
+                            <variation key="heightClass=regular-widthClass=compact" constant="31"/>
                         </constraint>
                     </constraints>
                     <variation key="default">

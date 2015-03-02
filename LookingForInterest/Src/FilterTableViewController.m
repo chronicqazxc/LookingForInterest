@@ -66,6 +66,7 @@
 @property (strong, nonatomic) UIImage *downArrowImage;
 @property (nonatomic) BOOL isStartLoadingPage;
 @property (strong, nonatomic) NSMutableArray *requestArr;
+@property (strong, nonatomic) AppDelegate *appdelegate;
 @end
 
 @implementation FilterTableViewController
@@ -99,6 +100,7 @@
 }
 
 - (void)initValue {
+    self.appdelegate = [Utilities appdelegate];
     self.filterTableViewStoryboard.dataSource = self;
     self.filterTableViewStoryboard.delegate = self;
     self.numberOfRow = 0;
@@ -137,6 +139,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    if (!self.filterTableView) {
+        self.appdelegate = [Utilities appdelegate];
+        self.appdelegate.viewController = self;
+    }
     RequestSender *requestSender = [[RequestSender alloc] init];
     switch (self.filterType) {
         case FilterTypeMajorType:
@@ -209,8 +215,18 @@
     }
 }
 
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+}
+
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    self.appdelegate.viewController = nil;
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    self.appdelegate.viewController = nil;
 }
 
 - (void)setNavigationTitle:(NSString *)title {
@@ -814,24 +830,25 @@
 }
 
 - (void)menuTypesBack:(NSArray *)menuData {
+    [Utilities stopLoading];
     self.menuTypes = [menuData firstObject];
     [self.filterTableViewStoryboard reloadData];
-    [Utilities stopLoading];
 }
 
 - (void)citiesBack:(NSArray *)citiesData {
+    [Utilities stopLoading];
     self.cities = [NSArray arrayWithArray:citiesData];
     [self.filterTableViewStoryboard reloadData];
-    [Utilities stopLoading];
 }
 
 - (void)majorsBack:(NSArray *)majorTypes {
+    [Utilities stopLoading];
     self.majorTypes = majorTypes;
     [self.filterTableViewStoryboard reloadData];
-    [Utilities stopLoading];
 }
 
 - (void)minorsBack:(NSArray *)minorTypes {
+    [Utilities stopLoading];
     self.minorTypes = minorTypes;
     if (self.menu) {
         self.menu.minorType = [minorTypes firstObject];
@@ -841,10 +858,10 @@
     } else if (self.filterTableViewStoryboard) {
         [self.filterTableViewStoryboard reloadData];
     }
-    [Utilities stopLoading];
 }
 
 - (void)storesBack:(NSMutableDictionary *)resultDic {
+    [Utilities stopLoading];
     NSArray *stores = [resultDic objectForKey:@"stores"];
     self.stores = stores;
     self.pageController = [resultDic objectForKey:@"pageController"];
@@ -858,7 +875,6 @@
         }
     }
     self.isStartLoadingPage = NO;
-    [Utilities stopLoading];
     
     if ([stores count]){
         BOOL isExpand = [[self.controlArr[0][0] objectForKey:@"IsExpand"] intValue]?YES:NO;
@@ -873,11 +889,11 @@
 }
 
 - (void)detailBack:(NSArray *)detailData {
+    [Utilities stopLoading];
     self.detail = [detailData firstObject];
     if (self.delegate && [self.delegate respondsToSelector:@selector(storeBeTapIn: withDetail:)]) {
         [self.delegate storeBeTapIn:self.selectedStoreIndexPath withDetail:self.detail];
     }
-    [Utilities stopLoading];
 }
 
 - (NSUInteger)calculateZoomLevelwithScreenWidth:(NSUInteger)screenWidth {

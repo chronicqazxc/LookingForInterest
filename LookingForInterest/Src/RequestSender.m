@@ -234,6 +234,7 @@
     
 }
 
+#pragma mark - parse data
 - (NSData *)appendDataFromDatas:(NSMutableArray *)datas {
     NSMutableData *mutableData = [NSMutableData data];
     for (NSData *data in datas) {

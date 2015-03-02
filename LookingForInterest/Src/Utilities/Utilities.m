@@ -192,6 +192,10 @@
         [hudView removeFromSuperview];
     }];
 }
+
++ (AppDelegate *)appdelegate {
+    return (AppDelegate *)[[UIApplication sharedApplication] delegate];
+}
 //NSString* (^thousandSeparatorFormat)(NSNumber*) =
 //^(NSNumber *number) {
 //    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
