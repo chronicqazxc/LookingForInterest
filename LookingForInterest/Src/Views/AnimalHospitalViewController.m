@@ -51,7 +51,7 @@
 @property (strong, nonatomic) NSMutableArray *totalRoutes;
 @property (strong, nonatomic) NSMutableString *htmlString;
 
-@property (weak, nonatomic) IBOutlet UIImageView *iconButton;
+@property (weak, nonatomic) IBOutlet UIButton *favoriteButton;
 @property (weak, nonatomic) IBOutlet UIButton *phoneCallButton;
 @property (weak, nonatomic) IBOutlet UIButton *navigationButton;
 @property (weak, nonatomic) IBOutlet UIButton *internetButton;
@@ -82,7 +82,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.edgesForExtendedLayout = UIRectEdgeNone;
-    self.iconButton.hidden = YES;
+    self.favoriteButton.hidden = YES;
     self.phoneCallButton.hidden = YES;
     self.navigationButton.hidden = YES;
     self.internetButton.hidden = YES;
@@ -138,7 +138,7 @@
     if (!self.isInitail) {
         [self initButtons];
         
-        self.iconButton.hidden = NO;
+        self.favoriteButton.hidden = NO;
         self.phoneCallButton.hidden = NO;
         self.navigationButton.hidden = NO;
         self.internetButton.hidden = NO;
@@ -194,14 +194,29 @@
 }
 
 - (void)initButtons {
-    [self initCircleView:self.iconButton];
+    [self initCircleView:self.favoriteButton];
     [self initCircleView:self.phoneCallButton];
     [self initCircleView:self.navigationButton];
     [self initCircleView:self.internetButton];
-    
-//    [self setUpTouchEventsToButton:self.phoneCallButton];
-//    [self setUpTouchEventsToButton:self.navigationButton];
-//    [self setUpTouchEventsToButton:self.internetButton];
+
+    [self setUpTouchEventsToButton:self.favoriteButton];
+    [self setUpTouchEventsToButton:self.phoneCallButton];
+    [self setUpTouchEventsToButton:self.navigationButton];
+    [self setUpTouchEventsToButton:self.internetButton];
+}
+
+- (void)setUpTouchEventsToButton:(UIButton *)button {
+    [button addTarget:self action:@selector(highlightBorder:) forControlEvents:UIControlEventTouchDown];
+    [button addTarget:self action:@selector(unhighlightBorder:) forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)highlightBorder:(UIButton *)button {
+    button.layer.borderColor = [[UIColor blueColor]CGColor];
+}
+
+- (void)unhighlightBorder:(UIButton *)button {
+    button.layer.borderColor = [[UIColor whiteColor]CGColor];
+    //additional code for an action when the button is released can go here.
 }
 
 - (void)initCircleView:(UIView *)view {
