@@ -13,7 +13,8 @@ typedef NS_ENUM(NSInteger, MenuSearchType) {
     MenuCities,
     MenuKeyword,
     MenuMarker,
-    MenuAddress
+    MenuAddress,
+    MenuFavorite
 };
 
 @interface Menu : NSObject

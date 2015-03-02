@@ -44,7 +44,7 @@
 - (void)reloadMapByStores:(NSArray *)stores withZoomLevel:(NSUInteger)zoom pageController:(PageController *)pageController andMenu:(Menu *)menu otherInfo:(NSMutableDictionary *)otherInfo;
 - (UIView *)getContentView;
 - (CGSize)getContentSize;
-- (void)changeTitle:(NSString *)title;
+- (void)changeTitleByMenu:(Menu *)menu;
 - (void)showOptionsWithStore:(Store *)store;
 - (void)showNavigationWithStore:(Store *)store;
 - (void)loadPreviousPage:(PageController *)pageController;

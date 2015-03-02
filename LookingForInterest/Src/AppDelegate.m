@@ -23,6 +23,7 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    self.viewController = nil;
     [GMSServices provideAPIKey:kGoogleAPIKey];
     
     return YES;
@@ -52,20 +53,23 @@
 
 - (void)startLoading {
     [self stopLoading];
-    LoadingView *loadingView = (LoadingView *)[Utilities getNibWithName:@"LoadingView"];
-    CGRect screenRect = [[UIScreen mainScreen] bounds];
-    loadingView.frame = CGRectMake(0,0,CGRectGetWidth(screenRect), CGRectGetHeight(screenRect));
-    loadingView.indicatorView.layer.masksToBounds = YES;
-    loadingView.indicatorView.layer.cornerRadius = 8.0;
-    loadingView.tag = kLoadingViewTag;
-    [self.window addSubview:loadingView];
+    if (self.viewController) {
+        LoadingView *loadingView = (LoadingView *)[Utilities getNibWithName:@"LoadingView"];
+        loadingView.frame = CGRectMake(0,0,CGRectGetWidth(self.viewController.view.frame), CGRectGetHeight(self.viewController.view.frame));
+        loadingView.tag = kLoadingViewTag;
+        [self.viewController.view addSubview:loadingView];
+        [loadingView presentWithDuration:1.0 speed:1.0 startOpacity:0.0 finishOpacity:0.8 completion:nil];
+    }
 }
 
 - (void)stopLoading {
-    for (UIView *view in [self.window subviews]) {
-        if (view.tag == kLoadingViewTag) {
-            [view removeFromSuperview];
-            break;
+    if (self.viewController) {
+        for (UIView *view in [self.viewController.view subviews]) {
+            if (view.tag == kLoadingViewTag) {
+                [(LoadingView *)view removeWithDuration:1.0 speed:1.0 startOpacity:0.8 finishOpacity:0.0 completion:^{
+                }];
+                break;
+            }
         }
     }
 }

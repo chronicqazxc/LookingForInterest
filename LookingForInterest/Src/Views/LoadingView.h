@@ -10,4 +10,6 @@
 
 @interface LoadingView : UIView
 @property (weak, nonatomic) IBOutlet UIView *indicatorView;
+- (void)presentWithDuration:(CGFloat)duration speed:(CGFloat)speed startOpacity:(CGFloat)startOpacity finishOpacity:(CGFloat)finishOpacity completion:(void (^)(void))completion;
+- (void)removeWithDuration:(CGFloat)duration speed:(CGFloat)speed startOpacity:(CGFloat)startOpacity finishOpacity:(CGFloat)finishOpacity completion:(void (^)(void))completion;
 @end

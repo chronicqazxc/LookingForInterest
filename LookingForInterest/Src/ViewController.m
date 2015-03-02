@@ -20,7 +20,12 @@
 
 #define kSearch @"開始找"
 #define kBack @"返回"
-#define kTitle @"目前位置附近的動物醫院"
+#define kTitleCurrentPosition @"目前位置附近"
+#define kTitleCities @"縣市"
+#define kTitleKeyword @"關鍵字"
+#define kTitleMarker @"大頭針"
+#define kTitleAddress @"地址"
+#define kTitleFavorite @"我的最愛"
 #define kFormattedTitle(title) [NSString stringWithFormat:@"找%@",title]
 
 #define kOptionsTitle(title) title?title:@""
@@ -151,7 +156,7 @@
 }
 
 - (void)setOriginalTitle {
-    [self.navigationButton setTitle:kTitle forState:UIControlStateNormal];
+    [self.navigationButton setTitle:kFormattedTitle(kTitleCurrentPosition) forState:UIControlStateNormal];
 }
 
 - (void)setFormattedTitle:(NSString *)title {
@@ -179,6 +184,12 @@
 
 - (void)viewDidLayoutSubviews NS_AVAILABLE_IOS(5_0) {
     [super viewDidLayoutSubviews];
+    
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    if (!appDelegate.viewController) {
+        appDelegate.viewController = self;
+    }
+    
     if (self.mapViewSize.width == CGSizeZero.width && self.mapViewSize.height == CGSizeZero.height) {
         self.mapViewSize = CGSizeMake(self.mapView.frame.size.width, self.mapView.frame.size.height);
     }
@@ -326,6 +337,11 @@
         case MenuAddress:
             [self processMenuAddressWithIndexPath:indexPath];
             break;
+        case MenuFavorite:
+            [self processMenuFavoriteWithIndexPath:indexPath];
+            break;
+        default:
+            break;
     }
 
 }
@@ -422,6 +438,22 @@
         case 1:
             filterTableViewController = [self.storyboard instantiateViewControllerWithIdentifier:storyboardID];
             filterTableViewController.filterType = FilterTypeRange;
+            filterTableViewController.notifyReceiver = self.filterTableViewController;
+            filterTableViewController.accessToken = self.accessToken;
+            [self.navigationController pushViewController:filterTableViewController animated:YES];
+            break;
+        default:
+            break;
+    }
+}
+
+- (void)processMenuFavoriteWithIndexPath:(NSIndexPath *)indexPath {
+    NSString *storyboardID = [self.filterTableViewController getStoryboardID];
+    FilterTableViewController *filterTableViewController = nil;
+    switch (indexPath.row) {
+        case 0:
+            filterTableViewController = [self.storyboard instantiateViewControllerWithIdentifier:storyboardID];
+            filterTableViewController.filterType = FilterTypeMenuTypes;
             filterTableViewController.notifyReceiver = self.filterTableViewController;
             filterTableViewController.accessToken = self.accessToken;
             [self.navigationController pushViewController:filterTableViewController animated:YES];
@@ -542,8 +574,30 @@
     return self.mapViewSize;
 }
 
-- (void)changeTitle:(NSString *)title {
-    [self setFormattedTitle:title];
+- (void)changeTitleByMenu:(Menu *)menu {
+    switch (menu.menuSearchType) {
+        case MenuCurrentPosition:
+            [self setFormattedTitle:kTitleCurrentPosition];
+            break;
+        case MenuCities:
+            [self setFormattedTitle:kTitleCities];
+            break;
+        case MenuKeyword:
+            [self setFormattedTitle:kTitleKeyword];
+            break;
+        case MenuMarker:
+            [self setFormattedTitle:kTitleMarker];
+            break;
+        case MenuAddress:
+            [self setFormattedTitle:kTitleAddress];
+            break;
+        case MenuFavorite:
+            [self setFormattedTitle:kTitleFavorite];
+            break;
+        default:
+            break;
+    }
+    
 }
 
 - (void)surfWebWithStore:(Store *)store {

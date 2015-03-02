@@ -13,6 +13,7 @@
 #import "Menu.h"
 #import "Detail.h"
 #import "Utilities.h"
+#import "AppDelegate.h"
 
 #ifndef LookingForInteresting_LookingForInterest_h
 #define LookingForInteresting_LookingForInterest_h

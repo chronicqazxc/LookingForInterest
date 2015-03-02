@@ -17,6 +17,7 @@
 #import "OpenMapCell.h"
 #import "OpenMapHeaderController.h"
 #import "StoreTableHeaderViewController.h"
+#import "HUDView.h"
 
 #define kUpArrowImg @"arrow-up@2x.png"
 #define kDownArrowImg @"arrow-down@2x.png"
@@ -413,7 +414,7 @@
             self.storeHeader.caller = self;
             self.storeHeader.callBackMethod = @selector(clickStoreTitle);
         }
-        self.storeHeader.goTopButtonTitle = [NSString stringWithFormat:@"%d/%d頁",self.pageController.currentPage,self.pageController.totalPage];
+        self.storeHeader.goTopButtonTitle = [NSString stringWithFormat:@"%lu/%lu頁",(unsigned long)self.pageController.currentPage,(unsigned long)self.pageController.totalPage];
         self.storeHeader.view.frame = CGRectMake(0,0,CGRectGetWidth(self.storeHeader.view.frame),50.0);
         [Utilities addShadowToView:self.storeHeader.view offset:CGSizeMake(0.0f, -5.0f)];
         headerView = self.storeHeader.view;
@@ -768,7 +769,7 @@
                 break;
             case FilterTypeMenuTypes:
                 [[NSNotificationCenter defaultCenter] addObserver:self.notifyReceiver selector:@selector(receiveSelectedMenuType:) name:kMenuTypeSelected object:nil];
-                [[NSNotificationCenter defaultCenter] postNotificationName:kMenuTypeSelected object:self userInfo:@{@"MenuType":[NSNumber numberWithInt:indexPath.row]}];
+                [[NSNotificationCenter defaultCenter] postNotificationName:kMenuTypeSelected object:self userInfo:@{@"MenuType":[NSNumber numberWithUnsignedInteger:indexPath.row]}];
                 [self.navigationController popViewControllerAnimated:YES];
                 break;
             default:
@@ -792,7 +793,9 @@
     self.menu = [menuData firstObject];
     [self generateDataStructureWithMenu:self.menu];
     [self.filterTableView reloadData];
-    self.delegate.navigationItem.leftBarButtonItem.enabled = YES;
+    if (self.delegate && [self.delegate respondsToSelector:@selector(changeTitleByMenu:)]) {
+        [self.delegate changeTitleByMenu:self.menu];
+    }
     [Utilities stopLoading];
 }
 
@@ -864,8 +867,8 @@
         }
     }
     
-    if (self.delegate && [self.delegate respondsToSelector:@selector(changeTitle:)]) {
-        [self.delegate changeTitle:self.menu.minorType.typeDescription];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(changeTitleByMenu:)]) {
+        [self.delegate changeTitleByMenu:self.menu];
     }
 }
 
@@ -962,8 +965,10 @@
         Store *store = [self.stores objectAtIndex:indexPath.row];
         if ([self isMyFavoriteStoresByIndex:indexPath.row]) {
             [Utilities removeFromMyFavoriteStore:store];
+            [Utilities addHudViewTo:self.delegate withMessage:@"移除我的最愛"];
         } else {
             [Utilities addToMyFavoriteStore:store];
+            [Utilities addHudViewTo:self.delegate withMessage:@"加到我的最愛"];
         }
         [self.filterTableView reloadData];
     } else {
@@ -979,6 +984,15 @@
         }
     }
     return NO;
+}
+
+- (void)addHudViewTo:(UIViewController *)controller withMessage:(NSString *)message {
+    HUDView *hudView = [[HUDView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.delegate.view.frame), CGRectGetHeight(self.delegate.view.frame))];
+    hudView.messageLabel.text = message;
+    [controller.view addSubview:hudView];
+    [hudView presentWithDuration:0.5 speed:0.5 inView:nil completion:^{
+        [hudView removeFromSuperview];
+    }];
 }
 
 - (void)navigateWithCell:(MGSwipeTableCell *)cell {

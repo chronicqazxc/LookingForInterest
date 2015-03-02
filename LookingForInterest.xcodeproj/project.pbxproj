@@ -18,6 +18,8 @@
 		B034D96A1A8903AA00360A6C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B034D9681A8903AA00360A6C /* Main.storyboard */; };
 		B034D96C1A8903AA00360A6C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B034D96B1A8903AA00360A6C /* Images.xcassets */; };
 		B034D96F1A8903AA00360A6C /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = B034D96D1A8903AA00360A6C /* LaunchScreen.xib */; };
+		B04F70171AA4406D007D9856 /* HUDView.m in Sources */ = {isa = PBXBuildFile; fileRef = B04F70161AA4406D007D9856 /* HUDView.m */; };
+		B04F70191AA44089007D9856 /* HUDView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B04F70181AA44089007D9856 /* HUDView.xib */; };
 		B06E56991A9D64980030B6A4 /* GoTopButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B06E56981A9D64980030B6A4 /* GoTopButton.m */; };
 		B06E569D1A9DE2980030B6A4 /* AnimalHospitalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B06E569B1A9DE2980030B6A4 /* AnimalHospitalViewController.m */; };
 		B06E569E1A9DE2980030B6A4 /* AnimalHospitalViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B06E569C1A9DE2980030B6A4 /* AnimalHospitalViewController.xib */; };
@@ -105,6 +107,9 @@
 		B034D96E1A8903AA00360A6C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		B04F70131A9EFEFA007D9856 /* AnimalHospital.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimalHospital.pch; path = LookingForInterest/Src/AnimalHospital.pch; sourceTree = SOURCE_ROOT; };
 		B04F70141A9F0555007D9856 /* GoogleMapNavigation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GoogleMapNavigation.h; path = Src/GoogleMapNavigation.h; sourceTree = "<group>"; };
+		B04F70151AA4406D007D9856 /* HUDView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HUDView.h; path = Src/Views/HUDView.h; sourceTree = "<group>"; };
+		B04F70161AA4406D007D9856 /* HUDView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HUDView.m; path = Src/Views/HUDView.m; sourceTree = "<group>"; };
+		B04F70181AA44089007D9856 /* HUDView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HUDView.xib; path = Src/Views/HUDView.xib; sourceTree = "<group>"; };
 		B06E56971A9D64980030B6A4 /* GoTopButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GoTopButton.h; path = Src/Views/GoTopButton.h; sourceTree = "<group>"; };
 		B06E56981A9D64980030B6A4 /* GoTopButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GoTopButton.m; path = Src/Views/GoTopButton.m; sourceTree = "<group>"; };
 		B06E569A1A9DE2980030B6A4 /* AnimalHospitalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimalHospitalViewController.h; path = Src/Views/AnimalHospitalViewController.h; sourceTree = "<group>"; };
@@ -353,6 +358,9 @@
 				B0BF73141A8A3FF500213C00 /* LoadingView.h */,
 				B0BF73151A8A3FF500213C00 /* LoadingView.m */,
 				B0BF73161A8A3FF500213C00 /* LoadingView.xib */,
+				B04F70151AA4406D007D9856 /* HUDView.h */,
+				B04F70161AA4406D007D9856 /* HUDView.m */,
+				B04F70181AA44089007D9856 /* HUDView.xib */,
 				B0BF73191A8A406F00213C00 /* MenuCell.h */,
 				B0BF731A1A8A406F00213C00 /* MenuCell.m */,
 				B0BF731B1A8A406F00213C00 /* MenuCell.xib */,
@@ -516,6 +524,7 @@
 				B0BF73301A8A4EE000213C00 /* menu@2x.png in Resources */,
 				B0BF732F1A8A4EE000213C00 /* fav@2x.png in Resources */,
 				B06E569E1A9DE2980030B6A4 /* AnimalHospitalViewController.xib in Resources */,
+				B04F70191AA44089007D9856 /* HUDView.xib in Resources */,
 				B0BF730D1A8916A400213C00 /* Icon-Small.png in Resources */,
 				B0F06B641A8B259F00FBC90C /* iconmonstr-magnifier-3-icon-256.png in Resources */,
 				B0BF73181A8A3FF500213C00 /* LoadingView.xib in Resources */,
@@ -592,6 +601,7 @@
 				B06E56A11A9DE2BD0030B6A4 /* Detail.m in Sources */,
 				B0F06B701A8B51E500FBC90C /* StoreTableHeaderViewController.m in Sources */,
 				B0BF72F51A8915ED00213C00 /* AppDelegate.m in Sources */,
+				B04F70171AA4406D007D9856 /* HUDView.m in Sources */,
 				B0F06B361A89B80500FBC90C /* MapViewCell.m in Sources */,
 				B0F06B401A89F37500FBC90C /* Utilities.m in Sources */,
 				B002A2F61A9E31F400808055 /* FullScreenScrollView.m in Sources */,

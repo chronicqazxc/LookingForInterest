@@ -63,6 +63,11 @@
     NSNumber *latitude = [NSNumber numberWithDouble:location.latitude];
     NSNumber *longitude = [NSNumber numberWithDouble:location.longitude];
     
+    NSString *store_ids = [NSMutableArray array];
+    if (menu.menuSearchType == MenuFavorite) {
+        store_ids = [Utilities getMyFavoriteStores];
+    }
+    
     [self sendRequestByParams:@{@"major_type_id":majorTypeID,
                                 @"minor_type_id":minorTypeID,
                                 @"menu_type":menuSearchType,
@@ -71,7 +76,8 @@
                                 @"city":city,
                                 @"keyword":keyword,
                                 @"latitude":latitude,
-                                @"longitude":longitude}
+                                @"longitude":longitude,
+                                @"store_ids":store_ids}
                        andURL:[NSString stringWithFormat:@"%@%@",kLookingForInterestURL,kGetStoresURL]];
 }
 

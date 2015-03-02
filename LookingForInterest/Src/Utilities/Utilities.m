@@ -9,6 +9,7 @@
 #import "Utilities.h"
 #import "AppDelegate.h"
 #import "GoogleMapNavigation.h"
+#import "HUDView.h"
 
 @implementation Utilities
 + (AppDelegate *)getAppDelegate {
@@ -152,6 +153,15 @@
     }
 }
 
++ (NSArray *)getMyFavoriteStores {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSArray *stores = [defaults objectForKey:kFavoriteStoresKey];
+    if (!stores) {
+        stores = [NSArray array];
+    }
+    return stores;
+}
+
 + (void)addToMyFavoriteStore:(Store *)store {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSArray *stores = [defaults objectForKey:kFavoriteStoresKey];
@@ -171,6 +181,16 @@
     [favoriteStores removeObject:store.storeID];
     [defaults setObject:favoriteStores forKey:kFavoriteStoresKey];
     [defaults synchronize];
+}
+
++ (void)addHudViewTo:(UIViewController *)controller withMessage:(NSString *)message {
+    HUDView *hudView = (HUDView *)[Utilities getNibWithName:@"HUDView"];
+    hudView.frame = CGRectMake(0,0,CGRectGetWidth(controller.view.frame), CGRectGetHeight(controller.view.frame));
+    hudView.messageLabel.text = message;
+    [controller.view addSubview:hudView];
+    [hudView presentWithDuration:0.5 speed:0.5 inView:nil completion:^{
+        [hudView removeFromSuperview];
+    }];
 }
 //NSString* (^thousandSeparatorFormat)(NSNumber*) =
 //^(NSNumber *number) {

@@ -9,6 +9,7 @@
 #import "LoadingView.h"
 
 @interface LoadingView()
+@property (weak, nonatomic) IBOutlet UIView *backgroundView;
 
 @end
 
@@ -19,12 +20,30 @@
     }
     return self;
 }
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
+
+- (void)presentWithDuration:(CGFloat)duration speed:(CGFloat)speed startOpacity:(CGFloat)startOpacity finishOpacity:(CGFloat)finishOpacity completion:(void (^)(void))completion {
+    self.indicatorView.layer.masksToBounds = YES;
+    self.indicatorView.layer.cornerRadius = 8.0;
+    self.indicatorView.alpha = startOpacity;
+    self.backgroundView.alpha = 0.0;
+    [UIView animateWithDuration:speed animations:^{
+        self.indicatorView.alpha = finishOpacity;
+        self.backgroundView.alpha = 0.3;
+    } completion:^(BOOL finished) {
+    }];
 }
-*/
+
+- (void)removeWithDuration:(CGFloat)duration speed:(CGFloat)speed startOpacity:(CGFloat)startOpacity finishOpacity:(CGFloat)finishOpacity completion:(void (^)(void))completion {
+    self.indicatorView.layer.masksToBounds = YES;
+    self.indicatorView.layer.cornerRadius = 8.0;
+    self.indicatorView.alpha = startOpacity;
+    self.backgroundView.alpha = 0.3;
+    [UIView animateWithDuration:speed animations:^{
+        self.indicatorView.alpha = finishOpacity;
+        self.backgroundView.alpha = 0.0;
+    } completion:^(BOOL finished) {
+        [self removeFromSuperview];
+    }];
+}
 
 @end
