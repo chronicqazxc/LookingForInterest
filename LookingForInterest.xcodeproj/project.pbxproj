@@ -24,6 +24,7 @@
 		B06E569D1A9DE2980030B6A4 /* AnimalHospitalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B06E569B1A9DE2980030B6A4 /* AnimalHospitalViewController.m */; };
 		B06E569E1A9DE2980030B6A4 /* AnimalHospitalViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B06E569C1A9DE2980030B6A4 /* AnimalHospitalViewController.xib */; };
 		B06E56A11A9DE2BD0030B6A4 /* Detail.m in Sources */ = {isa = PBXBuildFile; fileRef = B06E56A01A9DE2BD0030B6A4 /* Detail.m */; };
+		B08572471AA4C18400F0F8FD /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B08572461AA4C18400F0F8FD /* MenuViewController.m */; };
 		B0BF72DE1A8915C500213C00 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B0BF72DD1A8915C500213C00 /* main.m */; };
 		B0BF72E81A8915DD00213C00 /* MajorType.m in Sources */ = {isa = PBXBuildFile; fileRef = B0BF72E11A8915DD00213C00 /* MajorType.m */; };
 		B0BF72E91A8915DD00213C00 /* Menu.m in Sources */ = {isa = PBXBuildFile; fileRef = B0BF72E31A8915DD00213C00 /* Menu.m */; };
@@ -117,6 +118,8 @@
 		B06E569C1A9DE2980030B6A4 /* AnimalHospitalViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AnimalHospitalViewController.xib; path = Src/Views/AnimalHospitalViewController.xib; sourceTree = "<group>"; };
 		B06E569F1A9DE2BD0030B6A4 /* Detail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Detail.h; path = Src/Objects/Detail.h; sourceTree = "<group>"; };
 		B06E56A01A9DE2BD0030B6A4 /* Detail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Detail.m; path = Src/Objects/Detail.m; sourceTree = "<group>"; };
+		B08572451AA4C18400F0F8FD /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MenuViewController.h; path = Src/MenuViewController.h; sourceTree = "<group>"; };
+		B08572461AA4C18400F0F8FD /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MenuViewController.m; path = Src/MenuViewController.m; sourceTree = "<group>"; };
 		B0BF72DD1A8915C500213C00 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Src/main.m; sourceTree = "<group>"; };
 		B0BF72E01A8915DD00213C00 /* MajorType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MajorType.h; path = Src/Objects/MajorType.h; sourceTree = "<group>"; };
 		B0BF72E11A8915DD00213C00 /* MajorType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MajorType.m; path = Src/Objects/MajorType.m; sourceTree = "<group>"; };
@@ -291,6 +294,11 @@
 				B0BF72F21A8915ED00213C00 /* RequestSender.m */,
 				B0BF72F31A8915ED00213C00 /* ViewController.h */,
 				B0BF72F41A8915ED00213C00 /* ViewController.m */,
+				B08572451AA4C18400F0F8FD /* MenuViewController.h */,
+				B08572461AA4C18400F0F8FD /* MenuViewController.m */,
+				B06E569A1A9DE2980030B6A4 /* AnimalHospitalViewController.h */,
+				B06E569B1A9DE2980030B6A4 /* AnimalHospitalViewController.m */,
+				B06E569C1A9DE2980030B6A4 /* AnimalHospitalViewController.xib */,
 				B002A2E81A9885FA00808055 /* WebViewController.h */,
 				B002A2E91A9885FA00808055 /* WebViewController.m */,
 				B002A2EA1A9885FA00808055 /* WebViewController.xib */,
@@ -381,9 +389,6 @@
 				B06E56971A9D64980030B6A4 /* GoTopButton.h */,
 				B06E56981A9D64980030B6A4 /* GoTopButton.m */,
 				B002A2F01A9E31D700808055 /* Scroll&ZoomingView */,
-				B06E569A1A9DE2980030B6A4 /* AnimalHospitalViewController.h */,
-				B06E569B1A9DE2980030B6A4 /* AnimalHospitalViewController.m */,
-				B06E569C1A9DE2980030B6A4 /* AnimalHospitalViewController.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -592,6 +597,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B002A2EF1A9CEFBA00808055 /* PageController.m in Sources */,
+				B08572471AA4C18400F0F8FD /* MenuViewController.m in Sources */,
 				B0BF72F81A8915ED00213C00 /* ViewController.m in Sources */,
 				B0BF72DE1A8915C500213C00 /* main.m in Sources */,
 				B002A2EB1A9885FA00808055 /* WebViewController.m in Sources */,

@@ -5,10 +5,10 @@
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--跟動物有關的-->
         <scene sceneID="q0p-Na-C68">
             <objects>
-                <viewController id="Cd6-4V-3Qa" sceneMemberID="viewController">
+                <viewController id="Cd6-4V-3Qa" customClass="MenuViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="xCy-hE-7bh"/>
                         <viewControllerLayoutGuide type="bottom" id="eqB-k9-9y3"/>
@@ -17,17 +17,24 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="rtb-nr-57j">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                            </imageView>
                             <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e7K-Sr-kx3">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="wLo-MV-ZZC">
                                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f57-dH-u7Z">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f57-dH-u7Z">
                                             <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="30" id="2lo-BB-0hQ"/>
-                                                <constraint firstAttribute="width" constant="60" id="xVz-49-p60"/>
+                                                <constraint firstAttribute="height" constant="30" id="2lo-BB-0hQ">
+                                                    <variation key="heightClass=regular-widthClass=compact" constant="100"/>
+                                                </constraint>
+                                                <constraint firstAttribute="width" constant="60" id="xVz-49-p60">
+                                                    <variation key="heightClass=regular-widthClass=compact" constant="100"/>
+                                                </constraint>
                                             </constraints>
                                             <state key="normal" title="我要領養">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -45,15 +52,17 @@
                                                 </mask>
                                             </variation>
                                         </button>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3XV-2o-Dca">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3XV-2o-Dca">
                                             <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="75" id="mSP-nJ-K4m"/>
-                                                <constraint firstAttribute="height" constant="30" id="vBb-f7-20h"/>
+                                                <constraint firstAttribute="width" constant="75" id="mSP-nJ-K4m">
+                                                    <variation key="heightClass=regular-widthClass=compact" constant="100"/>
+                                                </constraint>
+                                                <constraint firstAttribute="height" constant="30" id="vBb-f7-20h">
+                                                    <variation key="heightClass=regular-widthClass=compact" constant="100"/>
+                                                </constraint>
                                             </constraints>
-                                            <state key="normal" title="找動物醫院">
-                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                            </state>
+                                            <state key="normal" title="找動物醫院"/>
                                             <variation key="default">
                                                 <mask key="constraints">
                                                     <exclude reference="mSP-nJ-K4m"/>
@@ -72,9 +81,13 @@
                                         </button>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="centerX" secondItem="3XV-2o-Dca" secondAttribute="centerX" constant="-89.5" id="01x-pl-z9Q"/>
+                                        <constraint firstAttribute="centerX" secondItem="3XV-2o-Dca" secondAttribute="centerX" constant="-89.5" id="01x-pl-z9Q">
+                                            <variation key="heightClass=regular-widthClass=compact" constant="-91"/>
+                                        </constraint>
                                         <constraint firstAttribute="centerY" secondItem="f57-dH-u7Z" secondAttribute="centerY" id="7dO-JT-D44"/>
-                                        <constraint firstItem="3XV-2o-Dca" firstAttribute="leading" secondItem="f57-dH-u7Z" secondAttribute="trailing" constant="118" id="BPi-Kh-FSg"/>
+                                        <constraint firstItem="3XV-2o-Dca" firstAttribute="leading" secondItem="f57-dH-u7Z" secondAttribute="trailing" constant="118" id="BPi-Kh-FSg">
+                                            <variation key="heightClass=regular-widthClass=compact" constant="82"/>
+                                        </constraint>
                                         <constraint firstAttribute="centerY" secondItem="3XV-2o-Dca" secondAttribute="centerY" id="Ncg-hu-i4C"/>
                                     </constraints>
                                     <variation key="default">
@@ -108,12 +121,17 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="e7K-Sr-kx3" secondAttribute="bottom" id="4ml-oT-a6X"/>
+                            <constraint firstItem="eqB-k9-9y3" firstAttribute="top" secondItem="rtb-nr-57j" secondAttribute="bottom" id="CXf-pR-ENC"/>
+                            <constraint firstItem="rtb-nr-57j" firstAttribute="leading" secondItem="6L7-Aa-e4h" secondAttribute="leading" id="Gpf-qV-kTM"/>
+                            <constraint firstAttribute="trailing" secondItem="rtb-nr-57j" secondAttribute="trailing" id="VMq-d7-R4I"/>
                             <constraint firstAttribute="trailing" secondItem="e7K-Sr-kx3" secondAttribute="trailing" id="aDV-pa-s9Y"/>
                             <constraint firstItem="e7K-Sr-kx3" firstAttribute="leading" secondItem="6L7-Aa-e4h" secondAttribute="leading" id="l5Z-we-fVt"/>
+                            <constraint firstItem="rtb-nr-57j" firstAttribute="top" secondItem="xCy-hE-7bh" secondAttribute="bottom" id="vMi-pY-4gQ"/>
                             <constraint firstItem="e7K-Sr-kx3" firstAttribute="top" secondItem="xCy-hE-7bh" secondAttribute="bottom" id="zCC-t1-UoZ"/>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
+                                <exclude reference="rtb-nr-57j"/>
                                 <exclude reference="e7K-Sr-kx3"/>
                             </mask>
                             <mask key="constraints">
@@ -121,10 +139,15 @@
                                 <exclude reference="aDV-pa-s9Y"/>
                                 <exclude reference="l5Z-we-fVt"/>
                                 <exclude reference="zCC-t1-UoZ"/>
+                                <exclude reference="Gpf-qV-kTM"/>
+                                <exclude reference="VMq-d7-R4I"/>
+                                <exclude reference="vMi-pY-4gQ"/>
+                                <exclude reference="CXf-pR-ENC"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
                             <mask key="subviews">
+                                <include reference="rtb-nr-57j"/>
                                 <include reference="e7K-Sr-kx3"/>
                             </mask>
                             <mask key="constraints">
@@ -132,10 +155,19 @@
                                 <include reference="aDV-pa-s9Y"/>
                                 <include reference="l5Z-we-fVt"/>
                                 <include reference="zCC-t1-UoZ"/>
+                                <include reference="Gpf-qV-kTM"/>
+                                <include reference="VMq-d7-R4I"/>
+                                <include reference="vMi-pY-4gQ"/>
+                                <include reference="CXf-pR-ENC"/>
                             </mask>
                         </variation>
                     </view>
-                    <navigationItem key="navigationItem" id="mrb-Br-tnE"/>
+                    <navigationItem key="navigationItem" title="跟動物有關的" id="mrb-Br-tnE"/>
+                    <connections>
+                        <outlet property="adoptButton" destination="f57-dH-u7Z" id="dLf-V1-B0z"/>
+                        <outlet property="animalHospitalButton" destination="3XV-2o-Dca" id="hsB-sO-q5E"/>
+                        <outlet property="backgroundImageView" destination="rtb-nr-57j" id="EQC-tr-8uj"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xgn-OD-EH5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -518,23 +550,23 @@
                                 <exclude reference="QnI-wi-oa9"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="jlB-mf-0b5"/>
+                                <exclude reference="spf-ft-eV2"/>
                                 <exclude reference="Igs-96-U7i"/>
                                 <exclude reference="IxD-PL-YQo"/>
                                 <exclude reference="oc0-EL-Zci"/>
+                                <exclude reference="bct-e8-s8P"/>
+                                <exclude reference="cRu-y4-ncW"/>
+                                <exclude reference="jDw-2P-T2P"/>
+                                <exclude reference="RA8-DW-OiN"/>
+                                <exclude reference="bQi-iP-MBk"/>
+                                <exclude reference="ycB-6L-hHx"/>
                                 <exclude reference="GD1-3Q-6KP"/>
                                 <exclude reference="Gzr-0X-WoB"/>
                                 <exclude reference="QiB-wu-ype"/>
                                 <exclude reference="fMY-eZ-dxf"/>
-                                <exclude reference="bct-e8-s8P"/>
-                                <exclude reference="cRu-y4-ncW"/>
-                                <exclude reference="jDw-2P-T2P"/>
                                 <exclude reference="NHe-g9-UiJ"/>
                                 <exclude reference="sCQ-Gy-MWi"/>
-                                <exclude reference="RA8-DW-OiN"/>
-                                <exclude reference="bQi-iP-MBk"/>
-                                <exclude reference="ycB-6L-hHx"/>
-                                <exclude reference="jlB-mf-0b5"/>
-                                <exclude reference="spf-ft-eV2"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -546,23 +578,23 @@
                                 <include reference="QnI-wi-oa9"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="jlB-mf-0b5"/>
+                                <include reference="spf-ft-eV2"/>
                                 <include reference="Igs-96-U7i"/>
                                 <include reference="IxD-PL-YQo"/>
                                 <include reference="oc0-EL-Zci"/>
+                                <include reference="bct-e8-s8P"/>
+                                <include reference="cRu-y4-ncW"/>
+                                <include reference="jDw-2P-T2P"/>
+                                <include reference="RA8-DW-OiN"/>
+                                <include reference="bQi-iP-MBk"/>
+                                <include reference="ycB-6L-hHx"/>
                                 <include reference="GD1-3Q-6KP"/>
                                 <include reference="Gzr-0X-WoB"/>
                                 <include reference="QiB-wu-ype"/>
                                 <include reference="fMY-eZ-dxf"/>
-                                <include reference="bct-e8-s8P"/>
-                                <include reference="cRu-y4-ncW"/>
-                                <include reference="jDw-2P-T2P"/>
                                 <include reference="NHe-g9-UiJ"/>
                                 <include reference="sCQ-Gy-MWi"/>
-                                <include reference="RA8-DW-OiN"/>
-                                <include reference="bQi-iP-MBk"/>
-                                <include reference="ycB-6L-hHx"/>
-                                <include reference="jlB-mf-0b5"/>
-                                <include reference="spf-ft-eV2"/>
                             </mask>
                         </variation>
                     </view>

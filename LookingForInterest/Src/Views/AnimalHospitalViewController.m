@@ -40,6 +40,7 @@
 
 @property (nonatomic) CGRect imageScrollFrame;
 @property (nonatomic) BOOL isInitail;
+@property (nonatomic) BOOL isViewDidAppear;
 @property (weak, nonatomic) IBOutlet UIView *instructionContainer;
 
 @property (weak, nonatomic) IBOutlet UILabel *infoLabel1;
@@ -73,11 +74,11 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.isInitail = YES;
+        self.isInitail = NO;
+        self.isViewDidAppear = NO;
     }
     return self;
 }
-
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -93,6 +94,7 @@
     self.animalsImageView = nil;
     self.requests = [NSMutableArray array];
     self.appdelegate = [Utilities appdelegate];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -107,7 +109,7 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    self.isInitail = NO;
+    self.isViewDidAppear = YES;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -135,7 +137,9 @@
         self.appdelegate.viewController = self;
     }
     
-    if (!self.isInitail) {
+    if (self.isViewDidAppear && !self.isInitail) {
+        [self getDefaultImages];
+        
         [self initButtons];
         
         self.favoriteButton.hidden = NO;
@@ -164,8 +168,6 @@
         self.mapContainer.layer.borderColor = [UIColor grayColor].CGColor;
         self.mapContainer.layer.borderWidth = 1.0;
         self.mapContainer.layer.cornerRadius = 5.0;
-        
-        [self getDefaultImages];
         
         self.infoLabel1.text = self.detail.otherInfo1;
         self.infoLabel2.text = self.detail.otherInfo2;
@@ -270,8 +272,7 @@
 
 
 - (void)parseLegs:(NSArray *)legs {
-//    NSLog(@"%@",legs);
-    
+    NSLog(@"legs:%d",[legs count]);
     NSDictionary *leg = [legs firstObject];
     NSString *distance = [[leg objectForKey:@"distance"] objectForKey:@"text"];
     NSString *duration = [[leg objectForKey:@"duration"] objectForKey:@"text"];
@@ -294,7 +295,7 @@
     NSString *travelMode = [step objectForKey:@"travel_mode"];;
     NSString *instructions = [step objectForKey:@"html_instructions"];
 //    NSString *travelMode = [step objectForKey:@"travel_mode"];
-    NSLog(@"%@",instructions);
+//    NSLog(@"%@",instructions);
     [self.htmlString appendFormat:@"<tr><td>%@</td><td>%@</td><td>%@</td><td>%@</td><tr>",travelMode,distance, duration, instructions];
 }
 

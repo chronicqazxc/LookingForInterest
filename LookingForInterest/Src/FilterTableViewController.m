@@ -252,7 +252,7 @@
     requestSender.accessToken = self.accessToken;
     [requestSender sendMenuRequest];
     [self.requestArr addObject:requestSender];
-    [Utilities startLoading];
+//    [Utilities startLoading];
 }
 
 - (NSString *)getStoryboardID {
@@ -406,11 +406,6 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     CGFloat heightForHeader = 0.0;
     if (self.filterType == FilterTypeMenu || self.filterType == SearchStores) {
-//        if (section == 1) {
-//            heightForHeader = 50.0;
-//        } else {
-//            heightForHeader = 0.0;
-//        }
         heightForHeader = 50.0;
     } else {
         heightForHeader = 0.0;
@@ -444,13 +439,6 @@
             self.downArrowImage = [UIImage imageNamed:kDownArrowImg];
         }
 
-//        if ([self.dataArr count] > 1) {
-//            if ([[self.dataArr objectAtIndex:0] count] > 1) {
-//
-//            }
-//        } else {
-//            self.openMapHeader.openMapIcon.image = self.downArrowImage;
-//        }
         BOOL isExpand = [[self.controlArr[0][0] objectForKey:@"IsExpand"] intValue]?YES:NO;
         if (isExpand) {
             self.openMapHeader.openMapIcon.image = self.upArrowImage;
@@ -801,7 +789,7 @@
             [self.delegate setAccessTokenValue:[accessTokenData firstObject]];
         }
         self.delegate.navigationItem.leftBarButtonItem.enabled = NO;
-        [Utilities stopLoading];
+//        [Utilities stopLoading];
     }
 }
 
