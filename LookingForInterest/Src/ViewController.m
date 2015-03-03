@@ -136,6 +136,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self setOriginalTitle];
+    [self.filterTableView reloadData];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -258,20 +259,59 @@
 
 - (UIView *)mapView:(GMSMapView *)mapView markerInfoWindow:(GMSMarker *)marker {
     //selectedStoreIndexPath
-    
     Store *store = nil;
     for (int i=0; i<[self.storesOnMap count]; i++) {
         store = [self.storesOnMap objectAtIndex:i];
-        if ([store.storeID isEqualToString:marker.title]) {
+        NSString *markerTitle = [NSString stringWithFormat:@"%@",marker.title];
+        NSString *storeTitle = [NSString stringWithFormat:@"%@",store.storeID];
+        if ([storeTitle isEqualToString:markerTitle]) {
             self.filterTableViewController.selectedStoreIndexPath = [NSIndexPath indexPathForRow:i inSection:1];
             break;
         }
     }
     
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0,0,100,100)];
-    view.backgroundColor = [UIColor yellowColor];
-    return view;
+    UIView *markerInfoView = [[UIView alloc] initWithFrame:CGRectMake(0,0,280,100)];
+    
+    UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:markerInfoView.bounds];
+    
+    markerInfoView.layer.masksToBounds = NO;
+    markerInfoView.layer.cornerRadius = 5.0f;
+    markerInfoView.layer.shadowColor = [UIColor blackColor].CGColor;
+    markerInfoView.layer.shadowOffset = CGSizeMake(0.0f, 5.0f);
+    markerInfoView.layer.shadowOpacity = 0.5f;
+    markerInfoView.layer.shadowPath = shadowPath.CGPath;
+    markerInfoView.backgroundColor = [UIColor whiteColor];
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 237, 21)];
+    UILabel *distanceLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 41, 280, 21)];
+    UILabel *addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 63, 280, 21)];
+    titleLabel.font = [UIFont systemFontOfSize:24];
+    distanceLabel.textColor = [UIColor lightGrayColor];
+    if (store) {
+        titleLabel.text = store.name;
+        distanceLabel.text = [NSString stringWithFormat:@"距離%.2f公里",[store.distance doubleValue]];
+        addressLabel.text = store.address;
+    } else {
+        titleLabel.text = @"";
+        distanceLabel.text = @"";
+        addressLabel.text = @"";
+    }
+    [markerInfoView addSubview:titleLabel];
+    [markerInfoView addSubview:distanceLabel];
+    [markerInfoView addSubview:addressLabel];
+    
+    [self.view setNeedsDisplay];
+    
+    return markerInfoView;
 }
+
+
+- (void)clickMarkerInfoDetail:(UIButton *)sender {
+    [self.filterTableViewController tableView:self.filterTableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:sender.tag inSection:1]];
+}
+
+//- (BOOL)mapView:(GMSMapView *)mapView didTapMarker:(GMSMarker *)marker {
+//    return YES;
+//}
 
 - (void)mapView:(GMSMapView *)mapView didLongPressAtCoordinate:(CLLocationCoordinate2D)coordinate {
     if ([self.filterTableViewController canDropMyMark]) {
@@ -288,7 +328,6 @@
     self.myMarker.draggable = YES;
     self.myMarker.flat = YES;
     self.myMarker.icon = [GMSMarker markerImageWithColor:[UIColor greenColor]];
-    //    storeMark.title = store.storeID;
     self.myMarker.map = self.googleMap;
     self.myMarkerLocation = coordinate;
 }
@@ -575,6 +614,12 @@
     [self.nextPageIndicator stopAnimating];
 }
 
+- (void)resetMap {
+    [self.googleMap clear];
+    GMSCameraPosition *fancy = [GMSCameraPosition cameraWithLatitude:self.currentLocation.latitude longitude:self.currentLocation.longitude zoom:16 bearing:0 viewingAngle:0];
+    [self.googleMap setCamera:fancy];
+}
+
 - (UIView *)getContentView {
     return self.googleMap;
 }
@@ -584,6 +629,8 @@
 }
 
 - (void)changeTitleByMenu:(Menu *)menu {
+    [self resetMap];
+    
     switch (menu.menuSearchType) {
         case MenuCurrentPosition:
             [self setFormattedTitle:kTitleCurrentPosition];
@@ -732,19 +779,19 @@
 }
 
 - (void)loadPreviousPage:(PageController *)pageController {
-    [self.googleMap clear];
+    [self resetMap];
     [self.previousPageIndicator startAnimating];
 }
 
 - (void)loadNextPage:(PageController *)pageController {
-    [self.googleMap clear];
+    [self resetMap];
     [self.nextPageIndicator startAnimating];
 }
 
 #pragma mark -
 - (IBAction)buttonClicked:(UIButton *)sender {
     if ([self.searchViewTitle.text isEqualToString:kSearch]) {
-        [self.googleMap clear];
+        [self resetMap];
         self.searchViewTitle.text = kBack;
         self.searchViewIcon.image = [UIImage imageNamed:kLeftArrowImg];
         self.searchViewIcon.hidden = NO;

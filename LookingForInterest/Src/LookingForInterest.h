@@ -41,6 +41,13 @@
 #define kNoPhoneNumberAlertMessage @"資料庫中沒有建立電話號碼"
 #define kWebSiteActionTitle @"網路搜尋更多資訊"
 #define kFavoriteStoresKey @"favoriteStoresKey"
+#define kAddToFavorite @"加到我的最愛"
+#define kRemoveFromFavorite @"移除我的最愛"
+#pragma mark -
+
+#pragma mark - Favorite store colors
+#define kColorIsFavoriteStore [UIColor redColor]
+#define kColorNotFavoriteStore [UIColor greenColor]
 #pragma mark -
 
 typedef enum filterType {

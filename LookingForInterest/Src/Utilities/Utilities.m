@@ -162,6 +162,10 @@
     return stores;
 }
 
++ (BOOL)isMyFavoriteStore:(Store *)store {
+    return [[Utilities getMyFavoriteStores] containsObject:store.storeID];
+}
+
 + (void)addToMyFavoriteStore:(Store *)store {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSArray *stores = [defaults objectForKey:kFavoriteStoresKey];

@@ -14,6 +14,7 @@
 #import <WebKit/WebKit.h>
 #import "WebViewController.h"
 #import "RequestSender.h"
+#import "DialingButton.h"
 
 #define kScrollViewMaxScale 0.7
 #define kScrollViewMinScale 0.3
@@ -52,14 +53,15 @@
 @property (strong, nonatomic) NSMutableArray *totalRoutes;
 @property (strong, nonatomic) NSMutableString *htmlString;
 
-@property (weak, nonatomic) IBOutlet UIButton *favoriteButton;
-@property (weak, nonatomic) IBOutlet UIButton *phoneCallButton;
-@property (weak, nonatomic) IBOutlet UIButton *navigationButton;
-@property (weak, nonatomic) IBOutlet UIButton *internetButton;
+@property (weak, nonatomic) IBOutlet DialingButton *favoriteButton;
+@property (weak, nonatomic) IBOutlet DialingButton *phoneCallButton;
+@property (weak, nonatomic) IBOutlet DialingButton *navigationButton;
+@property (weak, nonatomic) IBOutlet DialingButton *internetButton;
 
-- (IBAction)callOut:(UIButton *)sender;
-- (IBAction)navigate:(UIButton *)sender;
-- (IBAction)surfWeb:(UIButton *)sender;
+- (IBAction)clickFavorite:(DialingButton *)sender;
+- (IBAction)callOut:(DialingButton *)sender;
+- (IBAction)navigate:(DialingButton *)sender;
+- (IBAction)surfWeb:(DialingButton *)sender;
 
 @property (strong, nonatomic) UIImageView *catImageView;
 @property (strong, nonatomic) UIImageView *dogImageView;
@@ -196,38 +198,23 @@
 }
 
 - (void)initButtons {
-    [self initCircleView:self.favoriteButton];
-    [self initCircleView:self.phoneCallButton];
-    [self initCircleView:self.navigationButton];
-    [self initCircleView:self.internetButton];
-
-    [self setUpTouchEventsToButton:self.favoriteButton];
-    [self setUpTouchEventsToButton:self.phoneCallButton];
-    [self setUpTouchEventsToButton:self.navigationButton];
-    [self setUpTouchEventsToButton:self.internetButton];
-}
-
-- (void)setUpTouchEventsToButton:(UIButton *)button {
-    [button addTarget:self action:@selector(highlightBorder:) forControlEvents:UIControlEventTouchDown];
-    [button addTarget:self action:@selector(unhighlightBorder:) forControlEvents:UIControlEventTouchUpInside];
-}
-
-- (void)highlightBorder:(UIButton *)button {
-    button.layer.borderColor = [[UIColor blueColor]CGColor];
-}
-
-- (void)unhighlightBorder:(UIButton *)button {
-    button.layer.borderColor = [[UIColor whiteColor]CGColor];
-    //additional code for an action when the button is released can go here.
-}
-
-- (void)initCircleView:(UIView *)view {
-    view.layer.masksToBounds = YES;
-    view.layer.cornerRadius = CGRectGetHeight(view.frame)/2.0;
-    view.layer.borderWidth = 1.0;
-    if ([view isKindOfClass:[UIButton class]]) {
-        view.layer.borderColor = ((UIButton *)view).titleLabel.textColor.CGColor;
+    [self initDialingButton:self.favoriteButton];
+    [self initDialingButton:self.phoneCallButton];
+    [self initDialingButton:self.navigationButton];
+    [self initDialingButton:self.internetButton];
+    
+    if ([Utilities isMyFavoriteStore:self.store]) {
+        self.favoriteButton.borderColor = kColorIsFavoriteStore;
+        [self.favoriteButton setTitle:kRemoveFromFavorite forState:UIControlStateNormal];
+    } else {
+        self.favoriteButton.borderColor = kColorNotFavoriteStore;
+        [self.favoriteButton setTitle:kAddToFavorite forState:UIControlStateNormal];
     }
+}
+
+- (void)initDialingButton:(DialingButton *)button {
+    button.layer.masksToBounds = YES;
+    button.layer.cornerRadius = 5.0f;
 }
 
 - (void)loadPathWithMode:(NSString *)mode {
@@ -251,14 +238,16 @@
         [self parseOverviewPolyline:[route objectForKey:@"overview_polyline"]];
         
         self.htmlString = [NSMutableString string];
-        [self.htmlString appendFormat:@"<head><style>body{background-color:lightgray; font-size:40px;} table{border-collapse:collapse} table,td,th{padding:15px; border:1px solid blue; font-size:40px;} th{background-color:blue; color:white; font-size:40px;} p{color:red; font-size:40px;}</style></head>"];
+        [self.htmlString appendFormat:@"<head><style>body{background-color:lightgray; font-size:40px;} table{border-collapse:collapse} table,td,th{padding:15px; border:1px solid blue; font-size:40px;} th{background-color:blue; color:white; font-size:40px;} .warning{color:red; font-size:40px;} p{font-size:40px;}</style></head>"];
+        [self.htmlString appendFormat:@"<h1>Route</h1>"];
         [self parseLegs:[route objectForKey:@"legs"]];
 //        NSString *summary = [route objectForKey:@"summary"];
         NSString *warning = [[route objectForKey:@"warnings"] firstObject];
 //        [self.htmlString appendFormat:@"<font size=\"3\">%@</font>",summary];
         if (warning) {
-            [self.htmlString appendFormat:@"<p>%@</p>",warning];
+            [self.htmlString appendFormat:@"<p class=\"warning\">%@</p>",warning];
         }
+        [self.htmlString appendFormat:@"<p>更多路線請參考導航功能</p>"];
         [self loadHtmlWithStringContent:self.htmlString];
         
     }
@@ -272,7 +261,7 @@
 
 
 - (void)parseLegs:(NSArray *)legs {
-    NSLog(@"legs:%d",[legs count]);
+    NSLog(@"legs:%lu",(unsigned long)[legs count]);
     NSDictionary *leg = [legs firstObject];
     NSString *distance = [[leg objectForKey:@"distance"] objectForKey:@"text"];
     NSString *duration = [[leg objectForKey:@"duration"] objectForKey:@"text"];
@@ -524,6 +513,21 @@
             break;
     }
     [self placeMarker];
+}
+
+- (IBAction)clickFavorite:(DialingButton *)sender {
+    NSArray *favoriteStores = [Utilities getMyFavoriteStores];
+    if ([favoriteStores containsObject:self.store.storeID]) {
+        [Utilities removeFromMyFavoriteStore:self.store];
+        [Utilities addHudViewTo:self withMessage:kRemoveFromFavorite];
+        self.favoriteButton.borderColor = kColorNotFavoriteStore;
+        [self.favoriteButton setTitle:kAddToFavorite forState:UIControlStateNormal];
+    } else {
+        [Utilities addToMyFavoriteStore:self.store];
+        [Utilities addHudViewTo:self withMessage:kAddToFavorite];
+        self.favoriteButton.borderColor = kColorIsFavoriteStore;
+        [self.favoriteButton setTitle:kRemoveFromFavorite forState:UIControlStateNormal];
+    }
 }
 
 - (IBAction)callOut:(UIButton *)sender {

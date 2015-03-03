@@ -100,12 +100,14 @@
                                         </mask>
                                     </variation>
                                 </view>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bBJ-1J-eIQ">
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bBJ-1J-eIQ" customClass="DialingButton">
                                     <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                     <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="100" id="4z1-tj-2Rh"/>
-                                        <constraint firstAttribute="width" constant="100" id="hSz-wW-YaK"/>
+                                        <constraint firstAttribute="width" constant="100" id="hSz-wW-YaK">
+                                            <variation key="heightClass=regular-widthClass=compact" constant="150"/>
+                                        </constraint>
                                     </constraints>
                                     <state key="normal" title="網路查資料">
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -129,11 +131,13 @@
                                         <action selector="surfWeb:" destination="-1" eventType="touchUpInside" id="1c3-r4-6Cb"/>
                                     </connections>
                                 </button>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AKr-7F-L0L">
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AKr-7F-L0L" customClass="DialingButton">
                                     <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                     <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
-                                        <constraint firstAttribute="width" constant="100" id="1Xr-PY-Twv"/>
+                                        <constraint firstAttribute="width" constant="100" id="1Xr-PY-Twv">
+                                            <variation key="heightClass=regular-widthClass=compact" constant="150"/>
+                                        </constraint>
                                         <constraint firstAttribute="height" constant="100" id="s0N-6g-Xt1"/>
                                     </constraints>
                                     <state key="normal" title="撥打電話">
@@ -158,12 +162,14 @@
                                         <action selector="callOut:" destination="-1" eventType="touchUpInside" id="l9n-kf-UVf"/>
                                     </connections>
                                 </button>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sMp-lN-InT">
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sMp-lN-InT" customClass="DialingButton">
                                     <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                     <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="100" id="mH6-Nc-vcp"/>
-                                        <constraint firstAttribute="width" constant="100" id="tOC-lp-Fbw"/>
+                                        <constraint firstAttribute="width" constant="100" id="tOC-lp-Fbw">
+                                            <variation key="heightClass=regular-widthClass=compact" constant="150"/>
+                                        </constraint>
                                     </constraints>
                                     <state key="normal" title="導航">
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -348,12 +354,14 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </view>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ohL-hd-Yxk">
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ohL-hd-Yxk" customClass="DialingButton">
                                     <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                     <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="100" id="2L8-I7-Jp8"/>
-                                        <constraint firstAttribute="width" constant="100" id="G1i-bZ-oOU"/>
+                                        <constraint firstAttribute="width" constant="100" id="G1i-bZ-oOU">
+                                            <variation key="heightClass=regular-widthClass=compact" constant="150"/>
+                                        </constraint>
                                     </constraints>
                                     <state key="normal" title="Favorite">
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -373,6 +381,9 @@
                                             <include reference="G1i-bZ-oOU"/>
                                         </mask>
                                     </variation>
+                                    <connections>
+                                        <action selector="clickFavorite:" destination="-1" eventType="touchUpInside" id="i7S-Lg-8qD"/>
+                                    </connections>
                                 </button>
                             </subviews>
                             <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -386,7 +397,9 @@
                                     <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                                 </constraint>
                                 <constraint firstAttribute="trailing" secondItem="Bts-mJ-236" secondAttribute="trailing" constant="10" id="65d-kZ-6EQ"/>
-                                <constraint firstAttribute="centerX" secondItem="bBJ-1J-eIQ" secondAttribute="centerX" constant="-72" id="85Z-LI-GH2"/>
+                                <constraint firstAttribute="centerX" secondItem="bBJ-1J-eIQ" secondAttribute="centerX" constant="-72" id="85Z-LI-GH2">
+                                    <variation key="heightClass=regular-widthClass=compact" constant="-80"/>
+                                </constraint>
                                 <constraint firstAttribute="centerX" secondItem="m8i-aa-74G" secondAttribute="centerX" id="AHW-P3-m86"/>
                                 <constraint firstAttribute="trailing" secondItem="kSI-61-2ok" secondAttribute="trailing" constant="10" id="C0A-Qc-3XR"/>
                                 <constraint firstAttribute="trailing" secondItem="m8i-aa-74G" secondAttribute="trailing" constant="10" id="CHv-XL-42q"/>
@@ -420,8 +433,12 @@
                                 </constraint>
                                 <constraint firstItem="CkQ-Lb-Qfi" firstAttribute="top" secondItem="sMp-lN-InT" secondAttribute="bottom" constant="16" id="bFt-3f-aVk"/>
                                 <constraint firstItem="m8i-aa-74G" firstAttribute="leading" secondItem="UsF-yw-oCQ" secondAttribute="leading" constant="10" id="btA-hd-LX4"/>
-                                <constraint firstAttribute="centerX" secondItem="AKr-7F-L0L" secondAttribute="centerX" constant="-72" id="cUy-Nm-MQz"/>
-                                <constraint firstItem="AKr-7F-L0L" firstAttribute="leading" secondItem="ohL-hd-Yxk" secondAttribute="trailing" constant="43" id="hHr-IS-hOj"/>
+                                <constraint firstAttribute="centerX" secondItem="AKr-7F-L0L" secondAttribute="centerX" constant="-72" id="cUy-Nm-MQz">
+                                    <variation key="heightClass=regular-widthClass=compact" constant="-80"/>
+                                </constraint>
+                                <constraint firstItem="AKr-7F-L0L" firstAttribute="leading" secondItem="ohL-hd-Yxk" secondAttribute="trailing" constant="43" id="hHr-IS-hOj">
+                                    <variation key="heightClass=regular-widthClass=compact" constant="10"/>
+                                </constraint>
                                 <constraint firstItem="9pL-d6-EHh" firstAttribute="centerY" secondItem="6aA-aw-q49" secondAttribute="centerY" id="hYC-BM-BQm"/>
                                 <constraint firstItem="bBJ-1J-eIQ" firstAttribute="top" secondItem="sMp-lN-InT" secondAttribute="top" id="jEy-T5-VCj"/>
                                 <constraint firstItem="m8i-aa-74G" firstAttribute="top" secondItem="CkQ-Lb-Qfi" secondAttribute="bottom" constant="15" id="lMG-pn-Fec"/>
@@ -429,7 +446,9 @@
                                 <constraint firstItem="Bts-mJ-236" firstAttribute="centerY" secondItem="LUN-54-U7m" secondAttribute="centerY" constant="-1" id="mPD-xW-owp">
                                     <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                                 </constraint>
-                                <constraint firstItem="bBJ-1J-eIQ" firstAttribute="leading" secondItem="sMp-lN-InT" secondAttribute="trailing" constant="43" id="nFX-vh-rxz"/>
+                                <constraint firstItem="bBJ-1J-eIQ" firstAttribute="leading" secondItem="sMp-lN-InT" secondAttribute="trailing" constant="43" id="nFX-vh-rxz">
+                                    <variation key="heightClass=regular-widthClass=compact" constant="10"/>
+                                </constraint>
                                 <constraint firstAttribute="trailing" secondItem="S0m-zp-AiM" secondAttribute="trailing" id="oBn-lb-HMR">
                                     <variation key="heightClass=regular-widthClass=compact" constant="10"/>
                                 </constraint>
@@ -515,7 +534,7 @@
                                     <exclude reference="lMG-pn-Fec"/>
                                 </mask>
                             </variation>
-                            <variation key="heightClass=regular-widthClass=compact" ambiguous="YES" misplaced="YES">
+                            <variation key="heightClass=regular-widthClass=compact" ambiguous="YES">
                                 <rect key="frame" x="0.0" y="0.0" width="400" height="1085"/>
                                 <mask key="subviews">
                                     <include reference="S0m-zp-AiM"/>
@@ -652,7 +671,7 @@
                     <include reference="xbd-iq-vSQ"/>
                 </mask>
             </variation>
-            <point key="canvasLocation" x="225" y="1597.5"/>
+            <point key="canvasLocation" x="225" y="1839.5"/>
         </view>
     </objects>
 </document>

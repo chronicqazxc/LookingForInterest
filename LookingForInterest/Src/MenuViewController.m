@@ -7,12 +7,13 @@
 //
 
 #import "MenuViewController.h"
+#import "DialingButton.h"
 
 @interface MenuViewController ()
 @property (nonatomic) BOOL isInitial;
 @property (nonatomic) BOOL isViewDidAppear;
-@property (weak, nonatomic) IBOutlet UIButton *adoptButton;
-@property (weak, nonatomic) IBOutlet UIButton *animalHospitalButton;
+@property (weak, nonatomic) IBOutlet DialingButton *adoptButton;
+@property (weak, nonatomic) IBOutlet DialingButton *animalHospitalButton;
 @property (weak, nonatomic) IBOutlet UIImageView *backgroundImageView;
 @end
 
@@ -28,7 +29,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    self.adoptButton.hidden = YES;
+    self.animalHospitalButton.hidden = YES;
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
         //Background Thread
         UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://i.ytimg.com/vi/usasigkvhDY/hqdefault.jpg"]]];
@@ -61,15 +63,13 @@
 - (void)initButtons {
     [self initCircleView:self.adoptButton];
     [self initCircleView:self.animalHospitalButton];
+    self.adoptButton.hidden = NO;
+    self.animalHospitalButton.hidden = NO;
 }
 
 - (void)initCircleView:(UIView *)view {
     view.layer.masksToBounds = YES;
     view.layer.cornerRadius = CGRectGetHeight(view.frame)/2.0;
-    view.layer.borderWidth = 1.0;
-    if ([view isKindOfClass:[UIButton class]]) {
-        view.layer.borderColor = ((UIButton *)view).titleLabel.textColor.CGColor;
-    }
 }
 
 /*

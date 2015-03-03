@@ -574,9 +574,9 @@
     
     UIColor *backgroundColor;
     if ([self isMyFavoriteStoresByIndex:indexPath.row]) {
-        backgroundColor = [UIColor redColor];
+        backgroundColor = kColorIsFavoriteStore;
     } else {
-        backgroundColor = [UIColor greenColor];
+        backgroundColor = kColorNotFavoriteStore;
     }
     MGSwipeButton *leftButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"fav.png"] backgroundColor:backgroundColor padding:20];
     [result addObject:leftButton];
@@ -854,6 +854,11 @@
     self.stores = stores;
     self.pageController = [resultDic objectForKey:@"pageController"];
     [self.filterTableView reloadData];
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(changeTitleByMenu:)]) {
+        [self.delegate changeTitleByMenu:self.menu];
+    }
+    
     if (self.delegate) {
         if ([self.delegate respondsToSelector:@selector(reloadMapByStores:withZoomLevel: pageController: andMenu: otherInfo:)]) {
 //            CGSize screenSize = [Utilities getScreenPixel];
@@ -869,10 +874,6 @@
         if (!isExpand) {
             [self clickOpenMap];
         }
-    }
-    
-    if (self.delegate && [self.delegate respondsToSelector:@selector(changeTitleByMenu:)]) {
-        [self.delegate changeTitleByMenu:self.menu];
     }
 }
 
@@ -969,10 +970,10 @@
         Store *store = [self.stores objectAtIndex:indexPath.row];
         if ([self isMyFavoriteStoresByIndex:indexPath.row]) {
             [Utilities removeFromMyFavoriteStore:store];
-            [Utilities addHudViewTo:self.delegate withMessage:@"移除我的最愛"];
+            [Utilities addHudViewTo:self.delegate withMessage:kRemoveFromFavorite];
         } else {
             [Utilities addToMyFavoriteStore:store];
-            [Utilities addHudViewTo:self.delegate withMessage:@"加到我的最愛"];
+            [Utilities addHudViewTo:self.delegate withMessage:kAddToFavorite];
         }
         [self.filterTableView reloadData];
     } else {

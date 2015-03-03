@@ -29,6 +29,7 @@
 + (UIAlertController *)normalAlertWithTitle:(NSString *)title message:(NSString *)message store:(Store *)store withSEL:(SEL)selector byCaller:(UIViewController *)caller;
 + (void)launchNavigateWithStore:(Store *)store startLocation:(CLLocationCoordinate2D)startLocation andDirectionsMode:(NSString *)directionsMode;
 + (NSArray *)getMyFavoriteStores;
++ (BOOL)isMyFavoriteStore:(Store *)store;
 + (void)addToMyFavoriteStore:(Store *)store;
 + (void)removeFromMyFavoriteStore:(Store *)store;
 + (void)addHudViewTo:(UIViewController *)controller withMessage:(NSString *)message;
