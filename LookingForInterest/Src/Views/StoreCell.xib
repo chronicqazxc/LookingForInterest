@@ -142,26 +142,26 @@
                         <exclude reference="d75-tz-Hob"/>
                     </mask>
                     <mask key="constraints">
-                        <exclude reference="LsU-ql-Vvb"/>
-                        <exclude reference="Nbw-eP-JsG"/>
-                        <exclude reference="xjB-MU-EcK"/>
-                        <exclude reference="SPq-jv-0pq"/>
-                        <exclude reference="ta4-4f-9tS"/>
                         <exclude reference="KWL-Ap-wRW"/>
                         <exclude reference="YRV-3h-Muz"/>
+                        <exclude reference="SPq-jv-0pq"/>
+                        <exclude reference="ta4-4f-9tS"/>
                         <exclude reference="31E-Bz-umX"/>
                         <exclude reference="CTv-sI-Ebt"/>
-                        <exclude reference="7ZL-po-PKY"/>
-                        <exclude reference="7oN-N9-d3I"/>
-                        <exclude reference="GcH-1X-Tdc"/>
-                        <exclude reference="N1N-nm-KkL"/>
-                        <exclude reference="T1B-tM-R1x"/>
                         <exclude reference="1vx-f7-H2t"/>
                         <exclude reference="bMx-w2-nfE"/>
                         <exclude reference="beW-iF-szj"/>
                         <exclude reference="bh8-z6-xh1"/>
                         <exclude reference="jbU-F9-5Qj"/>
                         <exclude reference="rAr-55-QjF"/>
+                        <exclude reference="7ZL-po-PKY"/>
+                        <exclude reference="7oN-N9-d3I"/>
+                        <exclude reference="GcH-1X-Tdc"/>
+                        <exclude reference="N1N-nm-KkL"/>
+                        <exclude reference="T1B-tM-R1x"/>
+                        <exclude reference="LsU-ql-Vvb"/>
+                        <exclude reference="Nbw-eP-JsG"/>
+                        <exclude reference="xjB-MU-EcK"/>
                     </mask>
                 </variation>
                 <variation key="heightClass=regular-widthClass=compact">
@@ -174,26 +174,26 @@
                         <include reference="d75-tz-Hob"/>
                     </mask>
                     <mask key="constraints">
-                        <include reference="LsU-ql-Vvb"/>
-                        <include reference="Nbw-eP-JsG"/>
-                        <include reference="xjB-MU-EcK"/>
-                        <include reference="SPq-jv-0pq"/>
-                        <include reference="ta4-4f-9tS"/>
                         <include reference="KWL-Ap-wRW"/>
                         <include reference="YRV-3h-Muz"/>
+                        <include reference="SPq-jv-0pq"/>
+                        <include reference="ta4-4f-9tS"/>
                         <include reference="31E-Bz-umX"/>
                         <include reference="CTv-sI-Ebt"/>
-                        <include reference="7ZL-po-PKY"/>
-                        <include reference="7oN-N9-d3I"/>
-                        <include reference="GcH-1X-Tdc"/>
-                        <include reference="N1N-nm-KkL"/>
-                        <include reference="T1B-tM-R1x"/>
                         <include reference="1vx-f7-H2t"/>
                         <include reference="bMx-w2-nfE"/>
                         <include reference="beW-iF-szj"/>
                         <include reference="bh8-z6-xh1"/>
                         <include reference="jbU-F9-5Qj"/>
                         <include reference="rAr-55-QjF"/>
+                        <include reference="7ZL-po-PKY"/>
+                        <include reference="7oN-N9-d3I"/>
+                        <include reference="GcH-1X-Tdc"/>
+                        <include reference="N1N-nm-KkL"/>
+                        <include reference="T1B-tM-R1x"/>
+                        <include reference="LsU-ql-Vvb"/>
+                        <include reference="Nbw-eP-JsG"/>
+                        <include reference="xjB-MU-EcK"/>
                     </mask>
                 </variation>
             </tableViewCellContentView>

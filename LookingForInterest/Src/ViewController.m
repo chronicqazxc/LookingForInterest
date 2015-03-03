@@ -270,7 +270,7 @@
         }
     }
     
-    UIView *markerInfoView = [[UIView alloc] initWithFrame:CGRectMake(0,0,280,100)];
+    UIView *markerInfoView = [[UIView alloc] initWithFrame:CGRectMake(0,0,290,100)];
     
     UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:markerInfoView.bounds];
     
@@ -286,6 +286,7 @@
     UILabel *addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 63, 280, 21)];
     titleLabel.font = [UIFont systemFontOfSize:24];
     distanceLabel.textColor = [UIColor lightGrayColor];
+    addressLabel.numberOfLines = 0;
     if (store) {
         titleLabel.text = store.name;
         distanceLabel.text = [NSString stringWithFormat:@"距離%.2f公里",[store.distance doubleValue]];
