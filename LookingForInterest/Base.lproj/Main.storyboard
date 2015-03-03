@@ -630,6 +630,11 @@
                     </view>
                     <navigationItem key="navigationItem" id="KyK-N3-ED2">
                         <nil key="title"/>
+                        <barButtonItem key="leftBarButtonItem" title="Back" id="LIA-eO-Hdq">
+                            <connections>
+                                <segue destination="Cd6-4V-3Qa" kind="presentation" modalTransitionStyle="crossDissolve" id="LuT-Vh-zi3"/>
+                            </connections>
+                        </barButtonItem>
                         <button key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="ymX-Ci-T4Q">
                             <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
