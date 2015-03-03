@@ -150,6 +150,7 @@
             requestSender.accessToken = self.accessToken;
             [requestSender sendMajorRequest];
             [self.requestArr addObject:requestSender];
+            self.appdelegate.viewController = self;
             [Utilities startLoading];
             break;
         case FilterTypeMinorType:
@@ -157,6 +158,7 @@
             requestSender.accessToken = self.accessToken;
             [requestSender sendMinorRequestByMajorType:((FilterTableViewController *)self.notifyReceiver).menu.majorType];
             [self.requestArr addObject:requestSender];
+            self.appdelegate.viewController = self;
             [Utilities startLoading];
             break;
         case FilterTypeStore:
@@ -164,6 +166,7 @@
             requestSender.accessToken = self.accessToken;
             [requestSender sendStoreRequestByMajorType:((FilterTableViewController *)self.notifyReceiver).menu.majorType minorType:((FilterTableViewController *)self.notifyReceiver).menu.minorType];
             [self.requestArr addObject:requestSender];
+            self.appdelegate.viewController = self;
             [Utilities startLoading];
             break;
         case FilterTypeRange:
@@ -171,6 +174,7 @@
             requestSender.accessToken = self.accessToken;
             [requestSender sendRangeRequest];
             [self.requestArr addObject:requestSender];
+            self.appdelegate.viewController = self;
             [Utilities startLoading];
             break;
         case FilterTypeCity:
@@ -178,6 +182,7 @@
             requestSender.accessToken = self.accessToken;
             [requestSender sendCityRequest];
             [self.requestArr addObject:requestSender];
+            self.appdelegate.viewController = self;
             [Utilities startLoading];            
             break;
         case FilterTypeMenuTypes:
@@ -185,6 +190,7 @@
             requestSender.accessToken = self.accessToken;
             [requestSender sendMenutypesRequest];
             [self.requestArr addObject:requestSender];
+            self.appdelegate.viewController = self;
             [Utilities startLoading];            
             break;
         default:
@@ -221,12 +227,10 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    self.appdelegate.viewController = nil;
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
-    self.appdelegate.viewController = nil;
 }
 
 - (void)setNavigationTitle:(NSString *)title {
@@ -243,6 +247,7 @@
     requestSender.delegate = self;
     [requestSender getAccessToken];
     [self.requestArr addObject:requestSender];
+    self.appdelegate.viewController = self.delegate;
     [Utilities startLoading];
 }
 
@@ -252,7 +257,6 @@
     requestSender.accessToken = self.accessToken;
     [requestSender sendMenuRequest];
     [self.requestArr addObject:requestSender];
-//    [Utilities startLoading];
 }
 
 - (NSString *)getStoryboardID {
@@ -280,6 +284,7 @@
     requestSender.accessToken = self.accessToken;
     [requestSender sendStoreRequestByMenuObj:self.menu andLocationCoordinate:currentLocation andPageController:self.pageController];
     [self.requestArr addObject:requestSender];
+    self.appdelegate.viewController = self.delegate;
     [Utilities startLoading];
     
     self.selectedStoreIndexPath = nil;
@@ -740,6 +745,7 @@
                     requestSender.accessToken = self.accessToken;
                     [requestSender sendDetailRequestByStore:[self.stores objectAtIndex:indexPath.row]];
                     [self.requestArr addObject:requestSender];
+                    self.appdelegate.viewController = self.delegate;
                     [Utilities startLoading];
                 }
             }
@@ -789,18 +795,19 @@
             [self.delegate setAccessTokenValue:[accessTokenData firstObject]];
         }
         self.delegate.navigationItem.leftBarButtonItem.enabled = NO;
-//        [Utilities stopLoading];
     }
 }
 
 - (void)initMenuBack:(NSArray *)menuData {
+    [Utilities stopLoading];    
     self.menu = [menuData firstObject];
     [self generateDataStructureWithMenu:self.menu];
     [self.filterTableView reloadData];
     if (self.delegate && [self.delegate respondsToSelector:@selector(changeTitleByMenu:)]) {
         [self.delegate changeTitleByMenu:self.menu];
     }
-    [Utilities stopLoading];
+    self.appdelegate.viewController = nil;
+    self.appdelegate.viewController = self.delegate;
 }
 
 - (void)generateDataStructureWithMenu:(Menu *)menu {
@@ -905,6 +912,7 @@
 
 #pragma mark - Notify
 - (void)receiveSelectedMajorType:(NSNotification *)notification {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     MajorType *backMajorType = [notification.userInfo objectForKey:@"MajorType"];
     if (![self.menu.majorType.typeID isEqualToString:backMajorType.typeID]) {
         self.menu.majorType = backMajorType;
@@ -918,36 +926,42 @@
 }
 
 - (void)receiveSelectedMinorType:(NSNotification *)notification {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     self.menu.minorType = [notification.userInfo objectForKey:@"MinorType"];
     [self.filterTableView reloadData];
     [Utilities stopLoading];
 }
 
 - (void)receiveSelectedStore:(NSNotification *)notification {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     self.menu.store = [notification.userInfo objectForKey:@"Store"];
     [self.filterTableView reloadData];
     [Utilities stopLoading];
 }
 
 - (void)receiveSelectedRange:(NSNotification *)notification {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     self.menu.range = [notification.userInfo objectForKey:@"Range"];
     [self.filterTableView reloadData];
     [Utilities stopLoading];
 }
 
 - (void)receiveSelectedCity:(NSNotification *)notification {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     self.menu.city = [notification.userInfo objectForKey:@"City"];
     [self.filterTableView reloadData];
     [Utilities stopLoading];
 }
 
 - (void)receiveSelectedMenuType:(NSNotification *)notification {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     MenuSearchType menuType = [[notification.userInfo objectForKey:@"MenuType"] intValue];
     RequestSender *requestSender = [[RequestSender alloc] init];
     requestSender.delegate = self;
     requestSender.accessToken = self.accessToken;
     [requestSender sendMenuRequestWithType:menuType];
     [self.requestArr addObject:requestSender];
+    self.appdelegate.viewController = self.delegate;
     [Utilities startLoading];
 }
 

@@ -122,7 +122,6 @@
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     [self clearRequestDelegate];
-    self.appdelegate.viewController = nil;
 }
 
 - (void)clearRequestDelegate {
@@ -134,10 +133,6 @@
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
-    
-    if (!self.appdelegate.viewController) {
-        self.appdelegate.viewController = self;
-    }
     
     if (self.isViewDidAppear && !self.isInitail) {
         [self getDefaultImages];
@@ -194,6 +189,7 @@
     requestSender.accessToken = self.accessToken;
     [requestSender sendDefaultImagesRequest];
     [self.requests addObject:requestSender];
+    self.appdelegate.viewController = self;
     [Utilities startLoading];
 }
 

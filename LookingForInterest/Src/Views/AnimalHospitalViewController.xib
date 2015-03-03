@@ -534,7 +534,7 @@
                                     <exclude reference="lMG-pn-Fec"/>
                                 </mask>
                             </variation>
-                            <variation key="heightClass=regular-widthClass=compact" ambiguous="YES">
+                            <variation key="heightClass=regular-widthClass=compact" ambiguous="YES" misplaced="YES">
                                 <rect key="frame" x="0.0" y="0.0" width="400" height="1085"/>
                                 <mask key="subviews">
                                     <include reference="S0m-zp-AiM"/>

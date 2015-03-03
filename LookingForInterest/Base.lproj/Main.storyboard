@@ -122,11 +122,11 @@
                                         </mask>
                                         <mask key="constraints">
                                             <exclude reference="sel-ji-VLm"/>
-                                            <exclude reference="7dO-JT-D44"/>
-                                            <exclude reference="NYR-UX-G8p"/>
                                             <exclude reference="01x-pl-z9Q"/>
                                             <exclude reference="BPi-Kh-FSg"/>
                                             <exclude reference="Ncg-hu-i4C"/>
+                                            <exclude reference="7dO-JT-D44"/>
+                                            <exclude reference="NYR-UX-G8p"/>
                                         </mask>
                                     </variation>
                                     <variation key="heightClass=regular-widthClass=compact">
@@ -137,11 +137,11 @@
                                         </mask>
                                         <mask key="constraints">
                                             <include reference="sel-ji-VLm"/>
-                                            <include reference="7dO-JT-D44"/>
-                                            <include reference="NYR-UX-G8p"/>
                                             <include reference="01x-pl-z9Q"/>
                                             <include reference="BPi-Kh-FSg"/>
                                             <include reference="Ncg-hu-i4C"/>
+                                            <include reference="7dO-JT-D44"/>
+                                            <include reference="NYR-UX-G8p"/>
                                         </mask>
                                     </variation>
                                 </view>
@@ -165,6 +165,7 @@
                                 <exclude reference="e7K-Sr-kx3"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="CXf-pR-ENC"/>
                                 <exclude reference="4ml-oT-a6X"/>
                                 <exclude reference="aDV-pa-s9Y"/>
                                 <exclude reference="hh5-5J-b7b"/>
@@ -172,7 +173,6 @@
                                 <exclude reference="Gpf-qV-kTM"/>
                                 <exclude reference="VMq-d7-R4I"/>
                                 <exclude reference="vMi-pY-4gQ"/>
-                                <exclude reference="CXf-pR-ENC"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -181,6 +181,7 @@
                                 <include reference="e7K-Sr-kx3"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="CXf-pR-ENC"/>
                                 <include reference="4ml-oT-a6X"/>
                                 <include reference="aDV-pa-s9Y"/>
                                 <include reference="hh5-5J-b7b"/>
@@ -188,7 +189,6 @@
                                 <include reference="Gpf-qV-kTM"/>
                                 <include reference="VMq-d7-R4I"/>
                                 <include reference="vMi-pY-4gQ"/>
-                                <include reference="CXf-pR-ENC"/>
                             </mask>
                         </variation>
                     </view>
