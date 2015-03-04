@@ -7,6 +7,7 @@
 //
 
 #import "PetResult.h"
+#import "PetFilters.h"
 
 @implementation PetResult
 - (id)initWithResult:(NSDictionary *)result {
@@ -18,7 +19,6 @@
         self.next = [links objectForKey:@"next"]?[links objectForKey:@"next"]:@"";
         self.total = [result objectForKey:@"total"]?[result objectForKey:@"total"]:@"";
         self.offset = [result objectForKey:@"offset"]?[result objectForKey:@"offset"]:@"";
-        self.filters = [result objectForKey:@"filters"];
     }
     return self;
 }

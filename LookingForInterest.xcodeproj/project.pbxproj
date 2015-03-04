@@ -26,8 +26,10 @@
 		B06E569E1A9DE2980030B6A4 /* AnimalHospitalViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B06E569C1A9DE2980030B6A4 /* AnimalHospitalViewController.xib */; };
 		B06E56A11A9DE2BD0030B6A4 /* Detail.m in Sources */ = {isa = PBXBuildFile; fileRef = B06E56A01A9DE2BD0030B6A4 /* Detail.m */; };
 		B08572471AA4C18400F0F8FD /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B08572461AA4C18400F0F8FD /* MenuViewController.m */; };
+		B085724D1AA74FC700F0F8FD /* FacebookController.m in Sources */ = {isa = PBXBuildFile; fileRef = B085724C1AA74FC700F0F8FD /* FacebookController.m */; };
 		B0ACC90A1AA6F8520068A7D5 /* Pet.m in Sources */ = {isa = PBXBuildFile; fileRef = B0ACC9091AA6F8520068A7D5 /* Pet.m */; };
 		B0ACC90D1AA6F9FA0068A7D5 /* PetResult.m in Sources */ = {isa = PBXBuildFile; fileRef = B0ACC90C1AA6F9FA0068A7D5 /* PetResult.m */; };
+		B0B230001AA7639E003FE4D7 /* PetFilters.m in Sources */ = {isa = PBXBuildFile; fileRef = B0B22FFF1AA7639E003FE4D7 /* PetFilters.m */; };
 		B0BF72DE1A8915C500213C00 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B0BF72DD1A8915C500213C00 /* main.m */; };
 		B0BF72E81A8915DD00213C00 /* MajorType.m in Sources */ = {isa = PBXBuildFile; fileRef = B0BF72E11A8915DD00213C00 /* MajorType.m */; };
 		B0BF72E91A8915DD00213C00 /* Menu.m in Sources */ = {isa = PBXBuildFile; fileRef = B0BF72E31A8915DD00213C00 /* Menu.m */; };
@@ -127,10 +129,14 @@
 		B06E56A01A9DE2BD0030B6A4 /* Detail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Detail.m; path = Src/Objects/Detail.m; sourceTree = "<group>"; };
 		B08572451AA4C18400F0F8FD /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MenuViewController.h; path = Src/MenuViewController.h; sourceTree = "<group>"; };
 		B08572461AA4C18400F0F8FD /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MenuViewController.m; path = Src/MenuViewController.m; sourceTree = "<group>"; };
+		B085724B1AA74FC700F0F8FD /* FacebookController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FacebookController.h; path = Src/Objects/FacebookController.h; sourceTree = "<group>"; };
+		B085724C1AA74FC700F0F8FD /* FacebookController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FacebookController.m; path = Src/Objects/FacebookController.m; sourceTree = "<group>"; };
 		B0ACC9081AA6F8520068A7D5 /* Pet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Pet.h; path = Src/Objects/Pet.h; sourceTree = "<group>"; };
 		B0ACC9091AA6F8520068A7D5 /* Pet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Pet.m; path = Src/Objects/Pet.m; sourceTree = "<group>"; };
 		B0ACC90B1AA6F9FA0068A7D5 /* PetResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PetResult.h; path = Src/Objects/PetResult.h; sourceTree = "<group>"; };
 		B0ACC90C1AA6F9FA0068A7D5 /* PetResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PetResult.m; path = Src/Objects/PetResult.m; sourceTree = "<group>"; };
+		B0B22FFE1AA7639E003FE4D7 /* PetFilters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PetFilters.h; path = Src/Objects/PetFilters.h; sourceTree = "<group>"; };
+		B0B22FFF1AA7639E003FE4D7 /* PetFilters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PetFilters.m; path = Src/Objects/PetFilters.m; sourceTree = "<group>"; };
 		B0BF72DD1A8915C500213C00 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Src/main.m; sourceTree = "<group>"; };
 		B0BF72E01A8915DD00213C00 /* MajorType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MajorType.h; path = Src/Objects/MajorType.h; sourceTree = "<group>"; };
 		B0BF72E11A8915DD00213C00 /* MajorType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MajorType.m; path = Src/Objects/MajorType.m; sourceTree = "<group>"; };
@@ -355,6 +361,8 @@
 		B0BF72DF1A8915CC00213C00 /* Objs */ = {
 			isa = PBXGroup;
 			children = (
+				B085724B1AA74FC700F0F8FD /* FacebookController.h */,
+				B085724C1AA74FC700F0F8FD /* FacebookController.m */,
 				B0BF72E01A8915DD00213C00 /* MajorType.h */,
 				B0BF72E11A8915DD00213C00 /* MajorType.m */,
 				B0BF72E21A8915DD00213C00 /* Menu.h */,
@@ -369,6 +377,8 @@
 				B06E56A01A9DE2BD0030B6A4 /* Detail.m */,
 				B0ACC9081AA6F8520068A7D5 /* Pet.h */,
 				B0ACC9091AA6F8520068A7D5 /* Pet.m */,
+				B0B22FFE1AA7639E003FE4D7 /* PetFilters.h */,
+				B0B22FFF1AA7639E003FE4D7 /* PetFilters.m */,
 				B0ACC90B1AA6F9FA0068A7D5 /* PetResult.h */,
 				B0ACC90C1AA6F9FA0068A7D5 /* PetResult.m */,
 			);
@@ -631,6 +641,8 @@
 				B002A2EB1A9885FA00808055 /* WebViewController.m in Sources */,
 				B0BF72EA1A8915DD00213C00 /* MinorType.m in Sources */,
 				B06E56991A9D64980030B6A4 /* GoTopButton.m in Sources */,
+				B085724D1AA74FC700F0F8FD /* FacebookController.m in Sources */,
+				B0B230001AA7639E003FE4D7 /* PetFilters.m in Sources */,
 				B0BF72F61A8915ED00213C00 /* FilterTableViewController.m in Sources */,
 				B06E56A11A9DE2BD0030B6A4 /* Detail.m in Sources */,
 				B0F06B701A8B51E500FBC90C /* StoreTableHeaderViewController.m in Sources */,

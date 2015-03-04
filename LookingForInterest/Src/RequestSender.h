@@ -13,6 +13,8 @@
 
 @interface RequestSender : NSObject
 @property (assign, nonatomic) id <RequestSenderDelegate> delegate;
+
+#pragma mark - properties and methods for animal hospital
 @property (strong, nonatomic) NSString *accessToken;
 - (void)getAccessToken;
 - (void)sendMenuRequest;
@@ -26,10 +28,13 @@
 - (void)sendStoreRequestByMenuObj:(Menu *)menu andLocationCoordinate:(CLLocationCoordinate2D)location andPageController:(PageController *)pageController;
 - (void)sendDetailRequestByStore:(Store *)store;
 - (void)sendDefaultImagesRequest;
+#pragma mark - properies and methods for adopt animals
+
 @end
 
 @protocol RequestSenderDelegate <NSObject>
 @optional
+#pragma mark - delegate for animal hospital
 - (void)accessTokenBack:(NSArray *)accessTokenData;
 - (void)initMenuBack:(NSArray *)menuData;
 - (void)menuTypesBack:(NSArray *)menuData;

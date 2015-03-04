@@ -200,6 +200,12 @@
 + (AppDelegate *)appdelegate {
     return (AppDelegate *)[[UIApplication sharedApplication] delegate];
 }
+
++ (void)cellPhoneNumber:(NSString *)phoneNumber {
+    phoneNumber = [NSString stringWithFormat:@"tel://%@",phoneNumber];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumber]];
+}
+
 //NSString* (^thousandSeparatorFormat)(NSNumber*) =
 //^(NSNumber *number) {
 //    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];

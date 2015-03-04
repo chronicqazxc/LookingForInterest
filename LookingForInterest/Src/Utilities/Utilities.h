@@ -34,4 +34,5 @@
 + (void)removeFromMyFavoriteStore:(Store *)store;
 + (void)addHudViewTo:(UIViewController *)controller withMessage:(NSString *)message;
 + (AppDelegate *)appdelegate;
++ (void)cellPhoneNumber:(NSString *)phoneNumber;
 @end

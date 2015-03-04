@@ -14,6 +14,7 @@
 @end
 
 @implementation RequestSender
+#pragma mark - Request for animal hospital
 
 - (id)init {
     self = [super init];
@@ -63,9 +64,9 @@
     NSNumber *latitude = [NSNumber numberWithDouble:location.latitude];
     NSNumber *longitude = [NSNumber numberWithDouble:location.longitude];
     
-    NSString *store_ids = [NSMutableArray array];
+    NSArray *storeIDs = [NSArray array];
     if (menu.menuSearchType == MenuFavorite) {
-        store_ids = [Utilities getMyFavoriteStores];
+        storeIDs = [Utilities getMyFavoriteStores];
     }
     
     [self sendRequestByParams:@{@"major_type_id":majorTypeID,
@@ -77,7 +78,7 @@
                                 @"keyword":keyword,
                                 @"latitude":latitude,
                                 @"longitude":longitude,
-                                @"store_ids":store_ids}
+                                @"store_ids":storeIDs}
                        andURL:[NSString stringWithFormat:@"%@%@",kLookingForInterestURL,kGetStoresURL]];
 }
 
@@ -351,4 +352,87 @@
     return array;
 }
 
+#pragma mark - Request for adopt animals
+- (void)requestForAdoptAnimalsWithPetFilters:(PetFilters *)petFilters {
+    
+    NSURL *url = [NSURL URLWithString:kAdoptAnimalsInTPCURL];
+    
+    NSMutableDictionary *dataDic = [NSMutableDictionary dictionary];
+    [dataDic setObject:kResourceID forKey:kResourceIDKey];
+    [dataDic setObject:kLimitValue forKey:kLimitKey];
+    
+    NSMutableDictionary *filters = [NSMutableDictionary dictionary];
+    if (petFilters.acceptNum)[filters setObject:petFilters.acceptNum forKey:@"AcceptNum"];
+    if (petFilters.isSterilization)[filters setObject:petFilters.isSterilization forKey:@"IsSterilization"];
+    if (petFilters.name)[filters setObject:petFilters.name forKey:@"Name"];
+    if (petFilters.variety)[filters setObject:petFilters.variety forKey:@"Variety"];
+    if (petFilters.age)[filters setObject:petFilters.age forKey:@"Age"];
+    if (petFilters.childreAnlong)[filters setObject:petFilters.childreAnlong forKey:@"ChildreAnlong"];
+    if (petFilters.resettlement)[filters setObject:petFilters.resettlement forKey:@"Resettlement"];
+    if (petFilters.sex)[filters setObject:petFilters.sex forKey:@"Sex"];
+    if (petFilters.note)[filters setObject:petFilters.note forKey:@"Note"];
+    if (petFilters.phone)[filters setObject:petFilters.phone forKey:@"Phone"];
+    if (petFilters.reason)[filters setObject:petFilters.reason forKey:@"Reason"];
+    if (petFilters.imageName)[filters setObject:petFilters.imageName forKey:@"ImageName"];
+    if (petFilters.hairType)[filters setObject:petFilters.hairType forKey:@"HairType"];
+    if (petFilters.build)[filters setObject:petFilters.build forKey:@"Build"];
+    if (petFilters.chipNum)[filters setObject:petFilters.chipNum forKey:@"ChipNum"];
+    if (petFilters.petID)[filters setObject:petFilters.petID forKey:@"PetID"];
+    if (petFilters.type)[filters setObject:petFilters.type forKey:@"Type"];
+    if (petFilters.email)[filters setObject:petFilters.email forKey:@"Email"];
+    if (petFilters.bodyweight)[filters setObject:petFilters.bodyweight forKey:@"Bodyweight"];
+    if (petFilters.offset)[filters setObject:petFilters.offset forKey:@"Offset"];
+    [dataDic setObject:filters forKey:@"filters"];
+    
+    NSError *error = nil;
+    NSData *postData = [NSJSONSerialization dataWithJSONObject:dataDic options:NSJSONWritingPrettyPrinted error:&error];
+    
+    NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[postData length]];
+    
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+    [urlRequest setValue:postLength forHTTPHeaderField:@"Content-Length"];
+    [urlRequest setHTTPMethod:@"POST"];
+    [urlRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    [urlRequest setHTTPBody:postData];
+    
+    NSURLResponse *response = nil;
+    
+    NSData *data = [NSURLConnection sendSynchronousRequest:urlRequest returningResponse:&response error:&error];
+    
+    if (error == nil) {
+        NSDictionary *encodeStrings = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+        NSString *success = [NSString stringWithFormat:@"%@",[encodeStrings objectForKey:@"success"]];
+        if ([success isEqualToString:@"1"]) {
+            NSDictionary *result = [encodeStrings objectForKey:@"result"];
+            PetResult *petResult = [self parseResult:result];
+            NSArray *records = [result objectForKey:@"records"];
+            NSMutableArray *pets = [NSMutableArray array];
+            for (NSDictionary *record in records) {
+                [pets addObject:[self parseRecord:record]];
+            }
+            petResult.pets = pets;
+            PetFilters *petFilters = [[PetFilters alloc] initWithFilters:[result objectForKey:@"filters"]];
+            petResult.filters = petFilters;
+        } else {
+            NSLog(@"faild");
+        }
+        
+    }
+    
+}
+
+- (PetResult *)parseResult:(NSDictionary *)result {
+    PetResult *petResult = [[PetResult alloc] initWithResult:result];
+    return petResult;
+}
+
+- (Pet *)parseRecord:(NSDictionary *)record {
+    Pet *pet = [[Pet alloc] initWithRecord:record];
+    return pet;
+}
+
+- (PetFilters *)parseFilters:(NSDictionary *)filters {
+    PetFilters *petFilters = [[PetFilters alloc] initWithFilters:filters];
+    return petFilters;
+}
 @end
