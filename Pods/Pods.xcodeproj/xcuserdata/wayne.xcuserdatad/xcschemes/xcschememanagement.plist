@@ -4,6 +4,16 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Pods-LookingForInterest-Bolts.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-LookingForInterest-Facebook-iOS-SDK.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-LookingForInterest-Google-Maps-iOS-SDK.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -22,17 +32,27 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>877E2E2DC9F3128CF3EF02EB</key>
+		<key>1E59E2E74B9AE16E4451DA9B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>B340E5FC956B975858484FD0</key>
+		<key>4EBEEC59C8831F904F04E27E</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>D7564F1FCFB24DDFFD4894B6</key>
+		<key>7EEE95F444348F07280698B5</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>86656EC2E4906BA235A4C89B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E050DA7B31954A286064C8AA</key>
 		<dict>
 			<key>primary</key>
 			<true/>

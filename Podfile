@@ -4,9 +4,10 @@
 target 'LookingForInterest' do
 pod 'Google-Maps-iOS-SDK', '~> 1.9'
 pod 'MGSwipeTableCell', '~> 1.3'
+pod 'Facebook-iOS-SDK', '~> 3.23'
 end
 
-target 'LookingForInterestTests' do
+target 'LookingForInterest Tests' do
 
 end
 

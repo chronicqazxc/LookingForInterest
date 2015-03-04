@@ -794,7 +794,6 @@
         if (self.delegate && [self.delegate respondsToSelector:@selector(setAccessTokenValue:)]) {
             [self.delegate setAccessTokenValue:[accessTokenData firstObject]];
         }
-        self.delegate.navigationItem.leftBarButtonItem.enabled = NO;
     }
 }
 

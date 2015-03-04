@@ -18,7 +18,7 @@
 
 #define kScrollViewMaxScale 0.7
 #define kScrollViewMinScale 0.3
-#define kScrollViewContentHeight 1085
+#define kScrollViewContentHeight 1111
 
 @interface AnimalHospitalViewController () <FullScreenScrollViewDelegate, EndlessScrollGeneratorDelegate, UIScrollViewDelegate, GMSMapViewDelegate, GMSPanoramaViewDelegate, RequestSenderDelegate>
 @property (weak, nonatomic) IBOutlet UIView *mainContainer;
@@ -49,6 +49,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *infoLabel3;
 @property (weak, nonatomic) IBOutlet UILabel *infoLabel4;
 @property (weak, nonatomic) IBOutlet UILabel *infoLabel5;
+@property (weak, nonatomic) IBOutlet UILabel *addressLabel;
 
 @property (strong, nonatomic) NSMutableArray *totalRoutes;
 @property (strong, nonatomic) NSMutableString *htmlString;
@@ -96,7 +97,8 @@
     self.animalsImageView = nil;
     self.requests = [NSMutableArray array];
     self.appdelegate = [Utilities appdelegate];
-    
+    self.addressLabel.text = [NSString stringWithFormat:@"地址：%@",self.store.address];
+    self.addressLabel.hidden = YES;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -139,6 +141,7 @@
         
         [self initButtons];
         
+        self.addressLabel.hidden = NO;
         self.favoriteButton.hidden = NO;
         self.phoneCallButton.hidden = NO;
         self.navigationButton.hidden = NO;

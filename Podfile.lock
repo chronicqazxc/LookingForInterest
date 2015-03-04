@@ -1,12 +1,18 @@
 PODS:
+  - Bolts (1.1.4)
+  - Facebook-iOS-SDK (3.23.0):
+    - Bolts (~> 1.0)
   - Google-Maps-iOS-SDK (1.9.1)
   - MGSwipeTableCell (1.3.5)
 
 DEPENDENCIES:
+  - Facebook-iOS-SDK (~> 3.23)
   - Google-Maps-iOS-SDK (~> 1.9)
   - MGSwipeTableCell (~> 1.3)
 
 SPEC CHECKSUMS:
+  Bolts: dd9fb8433d67f5acc3b6b4d1379bbc5513d716c1
+  Facebook-iOS-SDK: 3d65f685348b789e46a9aacf92bfa85b60b63755
   Google-Maps-iOS-SDK: 25fa3c054c74a7dcb82e3ef38224cfa6b66c9344
   MGSwipeTableCell: fe0d8896b57db2498d81bccf18a8ff98c72539aa
 

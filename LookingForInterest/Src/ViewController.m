@@ -256,56 +256,49 @@
 }
 
 - (UIView *)mapView:(GMSMapView *)mapView markerInfoWindow:(GMSMarker *)marker {
-    //selectedStoreIndexPath
     Store *store = nil;
-    for (int i=0; i<[self.storesOnMap count]; i++) {
-        store = [self.storesOnMap objectAtIndex:i];
-        NSString *markerTitle = [NSString stringWithFormat:@"%@",marker.title];
-        NSString *storeTitle = [NSString stringWithFormat:@"%@",store.storeID];
-        if ([storeTitle isEqualToString:markerTitle]) {
-            self.filterTableViewController.selectedStoreIndexPath = [NSIndexPath indexPathForRow:i inSection:1];
-            break;
-        }
-    }
     
     UIView *markerInfoView = [[UIView alloc] initWithFrame:CGRectMake(0,0,290,100)];
-    
-    UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:markerInfoView.bounds];
-    
     markerInfoView.layer.masksToBounds = NO;
     markerInfoView.layer.cornerRadius = 5.0f;
-    markerInfoView.layer.shadowColor = [UIColor blackColor].CGColor;
-    markerInfoView.layer.shadowOffset = CGSizeMake(0.0f, 5.0f);
-    markerInfoView.layer.shadowOpacity = 0.5f;
-    markerInfoView.layer.shadowPath = shadowPath.CGPath;
     markerInfoView.backgroundColor = [UIColor whiteColor];
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 237, 21)];
     UILabel *distanceLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 41, 280, 21)];
     UILabel *addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 63, 280, 21)];
     titleLabel.font = [UIFont systemFontOfSize:24];
     distanceLabel.textColor = [UIColor lightGrayColor];
-    addressLabel.numberOfLines = 0;
-    if (store) {
-        titleLabel.text = store.name;
-        distanceLabel.text = [NSString stringWithFormat:@"距離%.2f公里",[store.distance doubleValue]];
-        addressLabel.text = store.address;
-    } else {
-        titleLabel.text = @"";
-        distanceLabel.text = @"";
-        addressLabel.text = @"";
+    addressLabel.numberOfLines = 2;
+    
+    BOOL found = NO;
+    for (int i=0; i<[self.storesOnMap count]; i++) {
+        store = [self.storesOnMap objectAtIndex:i];
+        NSString *markerTitle = [NSString stringWithFormat:@"%@",marker.title];
+        NSString *storeTitle = [NSString stringWithFormat:@"%@",store.storeID];
+        if ([storeTitle isEqualToString:markerTitle]) {
+            self.filterTableViewController.selectedStoreIndexPath = [NSIndexPath indexPathForRow:i inSection:1];
+            titleLabel.text = store.name;
+            distanceLabel.text = [NSString stringWithFormat:@"距離%.2f公里",[store.distance doubleValue]];
+            addressLabel.text = store.address;
+            found = YES;
+            break;
+        } else {
+            continue;
+        }
     }
+    
+    if (!found) {
+        titleLabel.text = self.myMarker.snippet;
+        distanceLabel.text = @"";
+        if (self.myMarker.userData) {
+            addressLabel.text = self.myMarker.userData;
+        }
+    }
+    
     [markerInfoView addSubview:titleLabel];
     [markerInfoView addSubview:distanceLabel];
     [markerInfoView addSubview:addressLabel];
     
-    [self.view setNeedsDisplay];
-    
     return markerInfoView;
-}
-
-
-- (void)clickMarkerInfoDetail:(UIButton *)sender {
-    [self.filterTableViewController tableView:self.filterTableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:sender.tag inSection:1]];
 }
 
 //- (BOOL)mapView:(GMSMapView *)mapView didTapMarker:(GMSMarker *)marker {
@@ -329,6 +322,17 @@
     self.myMarker.icon = [GMSMarker markerImageWithColor:[UIColor greenColor]];
     self.myMarker.map = self.googleMap;
     self.myMarkerLocation = coordinate;
+    
+    [[GMSGeocoder geocoder] reverseGeocodeCoordinate:self.myMarker.position completionHandler:^(GMSReverseGeocodeResponse *response, NSError *error) {
+        if (!error) {
+            self.myMarker.userData = [NSString stringWithFormat:@"%@,%@,%@,%@",response.firstResult.locality
+                                      ,response.firstResult.subLocality
+                                      ,response.firstResult.administrativeArea
+                                      ,response.firstResult.lines];
+        } else {
+            self.myMarker.userData = nil;
+        }
+    }];
 }
 
 /**
@@ -343,7 +347,7 @@
  */
 - (void)mapView:(GMSMapView *)mapView didEndDraggingMarker:(GMSMarker *)marker {
     marker.icon = [GMSMarker markerImageWithColor:[UIColor greenColor]];
-    self.myMarkerLocation = marker.position;
+    [self setMyMarkerByLocation:marker.position];
 }
 
 /**
