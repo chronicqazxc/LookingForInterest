@@ -8,6 +8,9 @@
 
 #import "RequestSender.h"
 
+#define kGetDataError @"擷取資料失敗"
+#define kRequestError @"網路連線錯誤"
+
 @interface RequestSender() <NSURLConnectionDelegate>
 @property (strong, nonatomic) NSMutableArray *receivedDatas;
 @property (nonatomic) FilterType type;
@@ -56,8 +59,8 @@
     self.type = SearchStores;
     NSString *majorTypeID = menu.majorType.typeID;
     NSString *minorTypeID = menu.minorType.typeID;
-    NSString *menuSearchType = menu.menuSearchType?[NSString stringWithFormat:@"%d",menu.menuSearchType]:@"0";
-    NSNumber *currentPage = pageController.currentPage?[NSNumber numberWithInt:pageController.currentPage]:[NSNumber numberWithInt:1];
+    NSString *menuSearchType = menu.menuSearchType?[NSString stringWithFormat:@"%d",(int)menu.menuSearchType]:@"0";
+    NSNumber *currentPage = pageController.currentPage?[NSNumber numberWithUnsignedInteger:pageController.currentPage]:[NSNumber numberWithInt:1];
     NSNumber *range = menu.range?[NSNumber numberWithDouble:[menu.range doubleValue]]:[NSNumber numberWithDouble:0.0];
     NSString *city = menu.city?menu.city:@"";
     NSString *keyword = menu.keyword?[NSString stringWithFormat:@"%@%@%@",@"%",menu.keyword,@"%"]:@"";
@@ -104,7 +107,7 @@
 
 - (void)sendMenuRequestWithType:(MenuSearchType)menuSearchType {
     self.type = FilterTypeMenu;
-    [self sendRequestByParams:@{@"menu_type":[NSString stringWithFormat:@"%d",menuSearchType]} andURL:[NSString stringWithFormat:@"%@%@",kLookingForInterestURL,kGetInitMenuURL]];
+    [self sendRequestByParams:@{@"menu_type":[NSString stringWithFormat:@"%d",(int)menuSearchType]} andURL:[NSString stringWithFormat:@"%@%@",kLookingForInterestURL,kGetInitMenuURL]];
 }
 
 - (void)sendMenutypesRequest {
@@ -155,6 +158,7 @@
     // The request has failed for some reason!
     // Check the error var
     NSLog(@"%@",error.description);
+    [self processErrorWithMessage:@"連線錯誤"];
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
@@ -226,6 +230,10 @@
                     [self.delegate defaultImagesIsBack:datas];
                 }
                 break;
+            case AdoptAnimals:
+                if ([self.delegate respondsToSelector:@selector(petResultBack:)]) {
+                    [self parsePetResultData:[self appendDataFromDatas:self.receivedDatas]];
+                }
             default:
                 break;
         }
@@ -353,8 +361,8 @@
 }
 
 #pragma mark - Request for adopt animals
-- (void)requestForAdoptAnimalsWithPetFilters:(PetFilters *)petFilters {
-    
+- (void)sendRequestForAdoptAnimalsWithPetFilters:(PetFilters *)petFilters {
+    self.type = AdoptAnimals;
     NSURL *url = [NSURL URLWithString:kAdoptAnimalsInTPCURL];
     
     NSMutableDictionary *dataDic = [NSMutableDictionary dictionary];
@@ -381,7 +389,7 @@
     if (petFilters.type)[filters setObject:petFilters.type forKey:@"Type"];
     if (petFilters.email)[filters setObject:petFilters.email forKey:@"Email"];
     if (petFilters.bodyweight)[filters setObject:petFilters.bodyweight forKey:@"Bodyweight"];
-    if (petFilters.offset)[filters setObject:petFilters.offset forKey:@"Offset"];
+    if (petFilters.offset)[dataDic setObject:petFilters.offset forKey:@"offset"];
     [dataDic setObject:filters forKey:@"filters"];
     
     NSError *error = nil;
@@ -389,36 +397,37 @@
     
     NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[postData length]];
     
-    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
     [urlRequest setValue:postLength forHTTPHeaderField:@"Content-Length"];
     [urlRequest setHTTPMethod:@"POST"];
     [urlRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [urlRequest setHTTPBody:postData];
     
-    NSURLResponse *response = nil;
-    
-    NSData *data = [NSURLConnection sendSynchronousRequest:urlRequest returningResponse:&response error:&error];
-    
-    if (error == nil) {
-        NSDictionary *encodeStrings = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
-        NSString *success = [NSString stringWithFormat:@"%@",[encodeStrings objectForKey:@"success"]];
-        if ([success isEqualToString:@"1"]) {
-            NSDictionary *result = [encodeStrings objectForKey:@"result"];
-            PetResult *petResult = [self parseResult:result];
-            NSArray *records = [result objectForKey:@"records"];
-            NSMutableArray *pets = [NSMutableArray array];
-            for (NSDictionary *record in records) {
-                [pets addObject:[self parseRecord:record]];
-            }
-            petResult.pets = pets;
-            PetFilters *petFilters = [[PetFilters alloc] initWithFilters:[result objectForKey:@"filters"]];
-            petResult.filters = petFilters;
-        } else {
-            NSLog(@"faild");
+    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
+    [connection start];
+}
+
+- (void)parsePetResultData:(NSData *)data {
+    NSError *error = nil;
+    NSDictionary *encodeStrings = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+    NSString *success = [NSString stringWithFormat:@"%@",[encodeStrings objectForKey:@"success"]];
+    if ([success isEqualToString:@"1"]) {
+        NSDictionary *result = [encodeStrings objectForKey:@"result"];
+        PetResult *petResult = [self parseResult:result];
+        NSArray *records = [result objectForKey:@"records"];
+        NSMutableArray *pets = [NSMutableArray array];
+        for (NSDictionary *record in records) {
+            [pets addObject:[self parseRecord:record]];
         }
-        
+        petResult.pets = pets;
+        PetFilters *petFilters = [self parseFilters:[result objectForKey:@"filters"]];
+        petResult.filters = petFilters;
+        if (self.delegate && [self.delegate respondsToSelector:@selector(petResultBack:)]) {
+            [self.delegate petResultBack:petResult];
+        }
+    } else {
+        [self processErrorWithMessage:kGetDataError];
     }
-    
 }
 
 - (PetResult *)parseResult:(NSDictionary *)result {
@@ -434,5 +443,12 @@
 - (PetFilters *)parseFilters:(NSDictionary *)filters {
     PetFilters *petFilters = [[PetFilters alloc] initWithFilters:filters];
     return petFilters;
+}
+
+#pragma mark - process error
+- (void)processErrorWithMessage:(NSString *)message {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(requestFaildWithMessage:)]) {
+        [self.delegate requestFaildWithMessage:message];
+    }
 }
 @end

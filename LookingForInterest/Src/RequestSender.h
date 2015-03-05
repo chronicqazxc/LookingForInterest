@@ -29,11 +29,12 @@
 - (void)sendDetailRequestByStore:(Store *)store;
 - (void)sendDefaultImagesRequest;
 #pragma mark - properies and methods for adopt animals
-
+- (void)sendRequestForAdoptAnimalsWithPetFilters:(PetFilters *)petFilters;
 @end
 
 @protocol RequestSenderDelegate <NSObject>
 @optional
+- (void)requestFaildWithMessage:(NSString *)message;
 #pragma mark - delegate for animal hospital
 - (void)accessTokenBack:(NSArray *)accessTokenData;
 - (void)initMenuBack:(NSArray *)menuData;
@@ -45,4 +46,6 @@
 - (void)rangesBack:(NSArray *)rangeData;
 - (void)citiesBack:(NSArray *)citiesData;
 - (void)defaultImagesIsBack:(NSArray *)datas;
+#pragma mark - delegate for adopt animal
+- (void)petResultBack:(PetResult *)petResult;
 @end
