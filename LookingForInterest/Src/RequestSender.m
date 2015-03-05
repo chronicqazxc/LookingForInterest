@@ -10,10 +10,14 @@
 
 #define kGetDataError @"擷取資料失敗"
 #define kRequestError @"網路連線錯誤"
+#define kPetThumbNailHeigh 79
+#define kPetThumbNailWeigh 117
 
 @interface RequestSender() <NSURLConnectionDelegate>
 @property (strong, nonatomic) NSMutableArray *receivedDatas;
 @property (nonatomic) FilterType type;
+#pragma mark - PetAdopt properties
+@property (strong, nonatomic) NSIndexPath *indexPath;
 @end
 
 @implementation RequestSender
@@ -234,6 +238,12 @@
                 if ([self.delegate respondsToSelector:@selector(petResultBack:)]) {
                     [self parsePetResultData:[self appendDataFromDatas:self.receivedDatas]];
                 }
+                break;
+            case PetThumbNail:
+                if ([self.delegate respondsToSelector:@selector(thumbNailBack:indexPath:)]) {
+                    [self parseThumbNailData:[self appendDataFromDatas:self.receivedDatas]];
+                }
+                break;
             default:
                 break;
         }
@@ -443,6 +453,29 @@
 - (PetFilters *)parseFilters:(NSDictionary *)filters {
     PetFilters *petFilters = [[PetFilters alloc] initWithFilters:filters];
     return petFilters;
+}
+
+- (void)sendRequestForPetThumbNail:(Pet *)pet indexPath:(NSIndexPath *)indexPath {
+    self.type = PetThumbNail;
+    self.indexPath = indexPath;
+    NSURL *url = [NSURL URLWithString:pet.imageName];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
+                                                           cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
+    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    [connection start];
+}
+
+- (void)parseThumbNailData:(NSData *)data {
+    UIImage *image = [UIImage imageWithData:data];
+    if (image.size.width != kPetThumbNailWeigh && image.size.height != kPetThumbNailHeigh) {
+        CGSize itemSize = CGSizeMake(kPetThumbNailWeigh, kPetThumbNailHeigh);
+        UIGraphicsBeginImageContext(itemSize);
+        CGRect imageRect = CGRectMake(0.0, 0.0, itemSize.width, itemSize.height);
+        [image drawInRect:imageRect];
+        image = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+    }
+    [self.delegate thumbNailBack:image indexPath:self.indexPath];
 }
 
 #pragma mark - process error

@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @interface Pet : NSObject
 @property (strong, nonatomic) NSString *acceptNum;
@@ -28,6 +29,6 @@
 @property (strong, nonatomic) NSString *type;
 @property (strong, nonatomic) NSString *email;
 @property (strong, nonatomic) NSString *bodyweight;
-
+@property (strong, nonatomic) UIImage *thumbNail;
 - (id)initWithRecord:(NSDictionary *)record;
 @end

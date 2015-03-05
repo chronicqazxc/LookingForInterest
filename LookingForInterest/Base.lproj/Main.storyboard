@@ -748,7 +748,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="629-Z8-cNt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="183" y="472.5"/>
+            <point key="canvasLocation" x="-309" y="635.25"/>
         </scene>
         <!--Adopt Animal View Controller-->
         <scene sceneID="zxs-0t-cDW">
@@ -759,6 +759,7 @@
                         <viewControllerLayoutGuide type="bottom" id="ahD-AK-dYg"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="1fK-Nm-BNJ">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="d9I-dT-n42">
@@ -797,7 +798,11 @@
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" id="HEG-Kl-Sn4">
-                        <barButtonItem key="leftBarButtonItem" title="Home" id="0eb-La-6e9"/>
+                        <barButtonItem key="leftBarButtonItem" title="Home" id="0eb-La-6e9">
+                            <connections>
+                                <segue destination="Cd6-4V-3Qa" kind="presentation" modalTransitionStyle="crossDissolve" id="T8p-5V-2Jd"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Edit" id="gXe-PI-vPr"/>
                     </navigationItem>
                     <connections>
@@ -806,10 +811,13 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PXe-Xv-DJH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="978" y="564.75"/>
+            <point key="canvasLocation" x="712.5" y="618"/>
         </scene>
     </scenes>
     <resources>
         <image name="iconmonstr-magnifier-3-icon-256.png" width="256" height="256"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="T8p-5V-2Jd"/>
+    </inferredMetricsTieBreakers>
 </document>

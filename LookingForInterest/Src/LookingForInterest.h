@@ -71,7 +71,8 @@ typedef enum filterType {
     GetAccessToken,
     FilterTypeMenuTypes,
     GetDefaultImages,
-    AdoptAnimals
+    AdoptAnimals,
+    PetThumbNail
 } FilterType;
 
 typedef NS_ENUM(NSInteger, Direction) {

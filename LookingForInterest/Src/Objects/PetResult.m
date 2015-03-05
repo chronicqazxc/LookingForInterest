@@ -16,6 +16,13 @@
         NSDictionary *links = [result objectForKey:@"_links"]?[result objectForKey:@"_links"]:@"";
         self.start = [links objectForKey:@"start"]?[links objectForKey:@"start"]:@"";
         self.previous = [links objectForKey:@"prev"]?[self parseOffset:[links objectForKey:@"prev"]]:@"";
+        if ([result objectForKey:@"offset"]) {
+            if ([result objectForKey:@"offset"] == [result objectForKey:@"limit"]) {
+                self.previous = @"0";
+            } else if ([result objectForKey:@"offset"] == [NSNumber numberWithLong:0]) {
+                self.previous = @"";
+            }
+        }
         self.next = [links objectForKey:@"next"]?[self parseOffset:[links objectForKey:@"next"]]:@"";
         self.total = [result objectForKey:@"total"]?[NSNumber numberWithInteger:[[result objectForKey:@"total"] integerValue]]:@0;
         self.offset = [result objectForKey:@"offset"]?[result objectForKey:@"offset"]:@"";

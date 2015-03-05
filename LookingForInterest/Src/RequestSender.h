@@ -30,6 +30,7 @@
 - (void)sendDefaultImagesRequest;
 #pragma mark - properies and methods for adopt animals
 - (void)sendRequestForAdoptAnimalsWithPetFilters:(PetFilters *)petFilters;
+- (void)sendRequestForPetThumbNail:(Pet *)pet indexPath:(NSIndexPath *)indexPath;
 @end
 
 @protocol RequestSenderDelegate <NSObject>
@@ -48,4 +49,5 @@
 - (void)defaultImagesIsBack:(NSArray *)datas;
 #pragma mark - delegate for adopt animal
 - (void)petResultBack:(PetResult *)petResult;
+- (void)thumbNailBack:(UIImage *)image indexPath:(NSIndexPath *)indexPath;
 @end

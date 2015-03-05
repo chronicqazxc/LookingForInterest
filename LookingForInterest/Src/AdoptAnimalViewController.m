@@ -16,7 +16,6 @@
 @property (strong, nonatomic) PetFilters *petFilters;
 @property (strong, nonatomic) AppDelegate *appDelegate;
 @property (nonatomic) BOOL isSendInitRequest;
-@property (strong, nonatomic) NSMutableArray *thumbNails;
 @property (strong, nonatomic) NSString *nextPage;
 @property (strong, nonatomic) NSString *previousPage;
 @property (nonatomic) BOOL isStartLoading;
@@ -42,7 +41,6 @@
 - (void)initProperties {
     self.requests = [NSMutableArray array];
     self.petFilters = [[PetFilters alloc] init];
-    self.thumbNails = [[NSMutableArray array] init];
     self.appDelegate = [Utilities getAppDelegate];
     self.isStartLoading = NO;
 }
@@ -132,16 +130,20 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     PetListCell *petCell = [tableView dequeueReusableCellWithIdentifier:kPetListCellIdentifier];
     if (!petCell) {
-//        [tableView registerClass:[PetListCell class] forCellReuseIdentifier:kPetListCellIdentifier];
         petCell = (PetListCell *)[Utilities getNibWithName:@"PetListCell"];
     }
     Pet *pet = [self.petResult.pets objectAtIndex:indexPath.row];
-    petCell.imageView.image = [self.thumbNails objectAtIndex:indexPath.row];
+    if (!pet.thumbNail) {
+        [self startThumbNailDownload:pet forIndexPath:indexPath];
+    } else {
+        petCell.imageView.image = pet.thumbNail;
+    }
     petCell.name.text = [NSString stringWithFormat:@"名字：%@",pet.name];
     petCell.age.text = [NSString stringWithFormat:@"年齡：%@",pet.age];
-    petCell.gender.text = pet.sex;
+    petCell.gender.text = [NSString stringWithFormat:@"性別：%@",pet.sex];
     petCell.body.text = [NSString stringWithFormat:@"體型：%@",pet.build];
     return petCell;
 }
@@ -171,6 +173,37 @@
     }
 }
 
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    if (!decelerate) {
+        [self loadThumbNailForOnScreenRows];
+    }
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    [self loadThumbNailForOnScreenRows];
+}
+
+- (void)loadThumbNailForOnScreenRows {
+    if([self.petResult.pets count] >0){
+        NSArray *visiblePaths = [self.tableView indexPathsForVisibleRows];
+        for(NSIndexPath *indexPath in visiblePaths){
+            Pet *pet = [self.petResult.pets objectAtIndex:indexPath.row];
+            if (!pet.thumbNail)
+                [self startThumbNailDownload:pet forIndexPath:indexPath];
+        }
+    }
+}
+
+#pragma mark - lazy loading
+- (void)startThumbNailDownload:(Pet *)pet forIndexPath:(NSIndexPath *)indexPath{
+    RequestSender *request = [[RequestSender alloc] init];
+    request.delegate = self;
+    [request sendRequestForPetThumbNail:pet indexPath:indexPath];
+    [self.requests addObject:request];
+}
+
 #pragma mark - RequestSenderDelegate
 - (void)requestFaildWithMessage:(NSString *)message {
     [Utilities stopLoading];
@@ -182,22 +215,18 @@
 - (void)petResultBack:(PetResult *)petResult {
     self.isStartLoading = NO;
     self.petResult = petResult;
-    self.thumbNails = [self parseThumbNailsByPetResult:petResult];
     self.nextPage = petResult.next;
     self.previousPage = petResult.previous;
     [self.tableView reloadData];
+    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     [Utilities stopLoading];
 }
 
-#pragma mark - methods
-- (NSMutableArray *)parseThumbNailsByPetResult:(PetResult *)petResult {
-    NSMutableArray *thumbNails = [NSMutableArray array];
-    for (Pet *pet in petResult.pets) {
-        NSURL *thumbNailURL = [NSURL URLWithString:pet.imageName];
-        NSData *thumbNailData = [NSData dataWithContentsOfURL:thumbNailURL];
-        UIImage *thumbNailImage = [UIImage imageWithData:thumbNailData];
-        [thumbNails addObject:thumbNailImage];
-    }
-    return thumbNails;
+- (void)thumbNailBack:(UIImage *)image indexPath:(NSIndexPath *)indexPath {
+    Pet *pet = [self.petResult.pets objectAtIndex:indexPath.row];
+    pet.thumbNail = image;
+    PetListCell *cell = (PetListCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+    cell.thumbNail.image = image;
 }
 @end
