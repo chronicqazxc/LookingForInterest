@@ -534,7 +534,7 @@
     if ((NSNull *)self.store.phoneNumber == [NSNull null] ||
         !self.store.phoneNumber ||
         [self.store.phoneNumber isEqualToString:@""]) {
-            UIAlertController *alert = [Utilities normalAlertWithTitle:kNoPhoneNumberAlertTitle message:kNoPhoneNumberAlertMessage store:self.store withSEL:@selector(surfWebWithStore:) byCaller:self];
+            UIAlertController *alert = [Utilities normalAlertWithTitle:kNoPhoneNumberAlertTitle message:kNoPhoneNumberAlertMessage withObj:self.store andSEL:@selector(surfWebWithStore:) byCaller:self];
             [self presentViewController:alert animated:YES completion:^{
                 nil;
         }];

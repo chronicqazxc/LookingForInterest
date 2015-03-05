@@ -123,14 +123,14 @@
     return array;
 }
 
-+ (UIAlertController *)normalAlertWithTitle:(NSString *)title message:(NSString *)message store:(Store *)store withSEL:(SEL)selector byCaller:(UIViewController *)caller{
++ (UIAlertController *)normalAlertWithTitle:(NSString *)title message:(NSString *)message withObj:(id)obj andSEL:(SEL)selector byCaller:(UIViewController *)caller{
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
     
     UIAlertAction *webSiteAction = [UIAlertAction actionWithTitle:kWebSiteActionTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         NSLog(@"web site");
         //        [self performSelectorOnMainThread:selector withObject:store waitUntilDone:NO modes:nil];
         if (selector && [caller respondsToSelector:selector]) {
-            [caller performSelectorOnMainThread:selector withObject:store waitUntilDone:NO];
+            [caller performSelectorOnMainThread:selector withObject:obj waitUntilDone:NO];
         }
     }];
     

@@ -13,8 +13,8 @@
 @interface PetResult : NSObject
 @property (strong, nonatomic) NSString *start;
 @property (strong, nonatomic) NSString *previous;
-@property (strong, nonatomic) NSString*next;
-@property (strong, nonatomic) NSString *total;
+@property (strong, nonatomic) NSString *next;
+@property (strong, nonatomic) NSNumber *total;
 @property (strong, nonatomic) NSString *offset;
 @property (strong, nonatomic) PetFilters *filters;
 @property (strong, nonatomic) NSMutableArray *pets;

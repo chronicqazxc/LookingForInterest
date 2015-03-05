@@ -39,7 +39,7 @@
 #define kAccessTokenKey @"access_token"
 #pragma mark -
 #pragma mark - Adopt animals URL
-#define kAdoptAnimalsInTPCURL @"http://210.65.114.15/api/action/datastore_search?"
+#define kAdoptAnimalsInTPCURL @"http://210.65.114.15/api/action/datastore_search"
 #define kResourceIDKey @"resource_id"
 #define kResourceID @"c57f54e2-8ac3-4d30-bce0-637a8968796e"
 #define kLimitKey @"limit"
@@ -70,7 +70,8 @@ typedef enum filterType {
     SearchDetail,
     GetAccessToken,
     FilterTypeMenuTypes,
-    GetDefaultImages
+    GetDefaultImages,
+    AdoptAnimals
 } FilterType;
 
 typedef NS_ENUM(NSInteger, Direction) {

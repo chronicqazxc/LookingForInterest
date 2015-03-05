@@ -120,4 +120,10 @@
     Pet *pet = [[Pet alloc] initWithRecord:record];
     return pet;
 }
+
+- (void) testPet {
+    Pet *pet = [[Pet alloc] init];
+    PetResult *petResult = [[PetResult alloc] init];
+    NSLog(@"%@",petResult);
+}
 @end

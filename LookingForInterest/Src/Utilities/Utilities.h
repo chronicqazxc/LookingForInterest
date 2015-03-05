@@ -26,7 +26,7 @@
 + (void)addShadowToView:(UIView *)view offset:(CGSize)size;
 + (UIImage *)rotateImage:(UIImage *)originImage toDirection:(NSInteger)direction withScale:(CGFloat)scale;
 + (NSMutableArray *)decodePolyLine:(NSMutableString *)encoded;
-+ (UIAlertController *)normalAlertWithTitle:(NSString *)title message:(NSString *)message store:(Store *)store withSEL:(SEL)selector byCaller:(UIViewController *)caller;
++ (UIAlertController *)normalAlertWithTitle:(NSString *)title message:(NSString *)message withObj:(id)obj andSEL:(SEL)selector byCaller:(UIViewController *)caller;
 + (void)launchNavigateWithStore:(Store *)store startLocation:(CLLocationCoordinate2D)startLocation andDirectionsMode:(NSString *)directionsMode;
 + (NSArray *)getMyFavoriteStores;
 + (BOOL)isMyFavoriteStore:(Store *)store;

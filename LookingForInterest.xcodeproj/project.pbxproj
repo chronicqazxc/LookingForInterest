@@ -29,6 +29,9 @@
 		B085724D1AA74FC700F0F8FD /* FacebookController.m in Sources */ = {isa = PBXBuildFile; fileRef = B085724C1AA74FC700F0F8FD /* FacebookController.m */; };
 		B0ACC90A1AA6F8520068A7D5 /* Pet.m in Sources */ = {isa = PBXBuildFile; fileRef = B0ACC9091AA6F8520068A7D5 /* Pet.m */; };
 		B0ACC90D1AA6F9FA0068A7D5 /* PetResult.m in Sources */ = {isa = PBXBuildFile; fileRef = B0ACC90C1AA6F9FA0068A7D5 /* PetResult.m */; };
+		B0ACC9111AA836A20068A7D5 /* PetListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B0ACC90F1AA836A20068A7D5 /* PetListCell.m */; };
+		B0ACC9121AA836A20068A7D5 /* PetListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0ACC9101AA836A20068A7D5 /* PetListCell.xib */; };
+		B0ACC9191AA84B1B0068A7D5 /* AdoptAnimalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0ACC9181AA84B1B0068A7D5 /* AdoptAnimalViewController.m */; };
 		B0B230001AA7639E003FE4D7 /* PetFilters.m in Sources */ = {isa = PBXBuildFile; fileRef = B0B22FFF1AA7639E003FE4D7 /* PetFilters.m */; };
 		B0BF72DE1A8915C500213C00 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B0BF72DD1A8915C500213C00 /* main.m */; };
 		B0BF72E81A8915DD00213C00 /* MajorType.m in Sources */ = {isa = PBXBuildFile; fileRef = B0BF72E11A8915DD00213C00 /* MajorType.m */; };
@@ -135,6 +138,11 @@
 		B0ACC9091AA6F8520068A7D5 /* Pet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Pet.m; path = Src/Objects/Pet.m; sourceTree = "<group>"; };
 		B0ACC90B1AA6F9FA0068A7D5 /* PetResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PetResult.h; path = Src/Objects/PetResult.h; sourceTree = "<group>"; };
 		B0ACC90C1AA6F9FA0068A7D5 /* PetResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PetResult.m; path = Src/Objects/PetResult.m; sourceTree = "<group>"; };
+		B0ACC90E1AA836A20068A7D5 /* PetListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PetListCell.h; path = Src/Views/PetListCell.h; sourceTree = "<group>"; };
+		B0ACC90F1AA836A20068A7D5 /* PetListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PetListCell.m; path = Src/Views/PetListCell.m; sourceTree = "<group>"; };
+		B0ACC9101AA836A20068A7D5 /* PetListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PetListCell.xib; path = Src/Views/PetListCell.xib; sourceTree = "<group>"; };
+		B0ACC9171AA84B1B0068A7D5 /* AdoptAnimalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AdoptAnimalViewController.h; path = Src/AdoptAnimalViewController.h; sourceTree = "<group>"; };
+		B0ACC9181AA84B1B0068A7D5 /* AdoptAnimalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AdoptAnimalViewController.m; path = Src/AdoptAnimalViewController.m; sourceTree = "<group>"; };
 		B0B22FFE1AA7639E003FE4D7 /* PetFilters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PetFilters.h; path = Src/Objects/PetFilters.h; sourceTree = "<group>"; };
 		B0B22FFF1AA7639E003FE4D7 /* PetFilters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PetFilters.m; path = Src/Objects/PetFilters.m; sourceTree = "<group>"; };
 		B0BF72DD1A8915C500213C00 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Src/main.m; sourceTree = "<group>"; };
@@ -299,24 +307,12 @@
 				B0BF73131A8A3FA400213C00 /* Views */,
 				B0F06B3B1A89F30500FBC90C /* Utilities */,
 				B0BF72DF1A8915CC00213C00 /* Objs */,
+				B0ACC9131AA849670068A7D5 /* AnimalHospital */,
+				B0ACC9161AA84A650068A7D5 /* AdoptAnimal */,
 				B0BF72EC1A8915ED00213C00 /* AppDelegate.h */,
 				B0BF72ED1A8915ED00213C00 /* AppDelegate.m */,
-				B0F06B331A89B80500FBC90C /* MapViewCell.h */,
-				B0F06B341A89B80500FBC90C /* MapViewCell.m */,
-				B0F06B351A89B80500FBC90C /* MapViewCell.xib */,
-				B0BF72EE1A8915ED00213C00 /* FilterTableViewController.h */,
-				B0BF72EF1A8915ED00213C00 /* FilterTableViewController.m */,
-				B0BF73101A891E9F00213C00 /* ExpandContractController.h */,
-				B0BF73111A891E9F00213C00 /* ExpandContractController.m */,
-				B0BF72F11A8915ED00213C00 /* RequestSender.h */,
-				B0BF72F21A8915ED00213C00 /* RequestSender.m */,
-				B0BF72F31A8915ED00213C00 /* ViewController.h */,
-				B0BF72F41A8915ED00213C00 /* ViewController.m */,
 				B08572451AA4C18400F0F8FD /* MenuViewController.h */,
 				B08572461AA4C18400F0F8FD /* MenuViewController.m */,
-				B06E569A1A9DE2980030B6A4 /* AnimalHospitalViewController.h */,
-				B06E569B1A9DE2980030B6A4 /* AnimalHospitalViewController.m */,
-				B06E569C1A9DE2980030B6A4 /* AnimalHospitalViewController.xib */,
 				B002A2E81A9885FA00808055 /* WebViewController.h */,
 				B002A2E91A9885FA00808055 /* WebViewController.m */,
 				B002A2EA1A9885FA00808055 /* WebViewController.xib */,
@@ -356,6 +352,66 @@
 				B04F70291AA6DA32007D9856 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B0ACC9131AA849670068A7D5 /* AnimalHospital */ = {
+			isa = PBXGroup;
+			children = (
+				B0BF72EE1A8915ED00213C00 /* FilterTableViewController.h */,
+				B0BF72EF1A8915ED00213C00 /* FilterTableViewController.m */,
+				B0BF72F31A8915ED00213C00 /* ViewController.h */,
+				B0BF72F41A8915ED00213C00 /* ViewController.m */,
+				B06E569A1A9DE2980030B6A4 /* AnimalHospitalViewController.h */,
+				B06E569B1A9DE2980030B6A4 /* AnimalHospitalViewController.m */,
+				B06E569C1A9DE2980030B6A4 /* AnimalHospitalViewController.xib */,
+			);
+			name = AnimalHospital;
+			sourceTree = "<group>";
+		};
+		B0ACC9141AA84A020068A7D5 /* AnimalHospital */ = {
+			isa = PBXGroup;
+			children = (
+				B0F06B331A89B80500FBC90C /* MapViewCell.h */,
+				B0F06B341A89B80500FBC90C /* MapViewCell.m */,
+				B0F06B351A89B80500FBC90C /* MapViewCell.xib */,
+				B0BF73191A8A406F00213C00 /* MenuCell.h */,
+				B0BF731A1A8A406F00213C00 /* MenuCell.m */,
+				B0BF731B1A8A406F00213C00 /* MenuCell.xib */,
+				B0BF73261A8A414500213C00 /* StoreCell.h */,
+				B0BF73271A8A414500213C00 /* StoreCell.m */,
+				B0BF73281A8A414500213C00 /* StoreCell.xib */,
+				B0F06B551A8B089A00FBC90C /* OptionTableHeader.xib */,
+				B0F06B6D1A8B51E500FBC90C /* StoreTableHeaderViewController.h */,
+				B0F06B6E1A8B51E500FBC90C /* StoreTableHeaderViewController.m */,
+				B0F06B6F1A8B51E500FBC90C /* StoreTableHeaderViewController.xib */,
+				B0F06B561A8B089A00FBC90C /* StoreTableHeader.xib */,
+				B0F06B5C1A8B0FA200FBC90C /* OpenMapHeaderController.h */,
+				B0F06B5D1A8B0FA200FBC90C /* OpenMapHeaderController.m */,
+				B0F06B5E1A8B0FA200FBC90C /* OpenMapHeaderController.xib */,
+				B0BF73351A8A844000213C00 /* OpenMapCell.h */,
+				B0BF73361A8A844000213C00 /* OpenMapCell.m */,
+				B0BF73371A8A844000213C00 /* OpenMapCell.xib */,
+			);
+			name = AnimalHospital;
+			sourceTree = "<group>";
+		};
+		B0ACC9151AA84A2A0068A7D5 /* AdoptAnimal */ = {
+			isa = PBXGroup;
+			children = (
+				B0ACC90E1AA836A20068A7D5 /* PetListCell.h */,
+				B0ACC90F1AA836A20068A7D5 /* PetListCell.m */,
+				B0ACC9101AA836A20068A7D5 /* PetListCell.xib */,
+			);
+			name = AdoptAnimal;
+			sourceTree = "<group>";
+		};
+		B0ACC9161AA84A650068A7D5 /* AdoptAnimal */ = {
+			isa = PBXGroup;
+			children = (
+				B0ACC9171AA84B1B0068A7D5 /* AdoptAnimalViewController.h */,
+				B0ACC9181AA84B1B0068A7D5 /* AdoptAnimalViewController.m */,
+			);
+			name = AdoptAnimal;
 			sourceTree = "<group>";
 		};
 		B0BF72DF1A8915CC00213C00 /* Objs */ = {
@@ -406,33 +462,18 @@
 		B0BF73131A8A3FA400213C00 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				B0ACC9141AA84A020068A7D5 /* AnimalHospital */,
 				B0BF73141A8A3FF500213C00 /* LoadingView.h */,
 				B0BF73151A8A3FF500213C00 /* LoadingView.m */,
 				B0BF73161A8A3FF500213C00 /* LoadingView.xib */,
 				B04F70151AA4406D007D9856 /* HUDView.h */,
 				B04F70161AA4406D007D9856 /* HUDView.m */,
 				B04F70181AA44089007D9856 /* HUDView.xib */,
-				B0BF73191A8A406F00213C00 /* MenuCell.h */,
-				B0BF731A1A8A406F00213C00 /* MenuCell.m */,
-				B0BF731B1A8A406F00213C00 /* MenuCell.xib */,
-				B0BF73261A8A414500213C00 /* StoreCell.h */,
-				B0BF73271A8A414500213C00 /* StoreCell.m */,
-				B0BF73281A8A414500213C00 /* StoreCell.xib */,
-				B0F06B551A8B089A00FBC90C /* OptionTableHeader.xib */,
-				B0F06B6D1A8B51E500FBC90C /* StoreTableHeaderViewController.h */,
-				B0F06B6E1A8B51E500FBC90C /* StoreTableHeaderViewController.m */,
-				B0F06B6F1A8B51E500FBC90C /* StoreTableHeaderViewController.xib */,
-				B0F06B561A8B089A00FBC90C /* StoreTableHeader.xib */,
-				B0F06B5C1A8B0FA200FBC90C /* OpenMapHeaderController.h */,
-				B0F06B5D1A8B0FA200FBC90C /* OpenMapHeaderController.m */,
-				B0F06B5E1A8B0FA200FBC90C /* OpenMapHeaderController.xib */,
-				B0BF73351A8A844000213C00 /* OpenMapCell.h */,
-				B0BF73361A8A844000213C00 /* OpenMapCell.m */,
-				B0BF73371A8A844000213C00 /* OpenMapCell.xib */,
 				B06E56971A9D64980030B6A4 /* GoTopButton.h */,
 				B06E56981A9D64980030B6A4 /* GoTopButton.m */,
 				B04F701A1AA585CB007D9856 /* DialingButton.h */,
 				B04F701B1AA585CB007D9856 /* DialingButton.m */,
+				B0ACC9151AA84A2A0068A7D5 /* AdoptAnimal */,
 				B002A2F01A9E31D700808055 /* Scroll&ZoomingView */,
 			);
 			name = Views;
@@ -443,6 +484,10 @@
 			children = (
 				B0F06B3E1A89F37500FBC90C /* Utilities.h */,
 				B0F06B3F1A89F37500FBC90C /* Utilities.m */,
+				B0BF73101A891E9F00213C00 /* ExpandContractController.h */,
+				B0BF73111A891E9F00213C00 /* ExpandContractController.m */,
+				B0BF72F11A8915ED00213C00 /* RequestSender.h */,
+				B0BF72F21A8915ED00213C00 /* RequestSender.m */,
 				B04F70141A9F0555007D9856 /* GoogleMapNavigation.h */,
 			);
 			name = Utilities;
@@ -575,6 +620,7 @@
 				B0F06B691A8B3DFA00FBC90C /* arrow-down@2x.png in Resources */,
 				B0BF730B1A8916A400213C00 /* Icon-76.png in Resources */,
 				B0F06B661A8B2B5300FBC90C /* arrow-left@2x.png in Resources */,
+				B0ACC9121AA836A20068A7D5 /* PetListCell.xib in Resources */,
 				B0BF732E1A8A4EE000213C00 /* check@2x.png in Resources */,
 				B0BF73061A8916A400213C00 /* Icon-40.png in Resources */,
 				B0F06B581A8B089A00FBC90C /* StoreTableHeader.xib in Resources */,
@@ -643,6 +689,7 @@
 				B06E56991A9D64980030B6A4 /* GoTopButton.m in Sources */,
 				B085724D1AA74FC700F0F8FD /* FacebookController.m in Sources */,
 				B0B230001AA7639E003FE4D7 /* PetFilters.m in Sources */,
+				B0ACC9111AA836A20068A7D5 /* PetListCell.m in Sources */,
 				B0BF72F61A8915ED00213C00 /* FilterTableViewController.m in Sources */,
 				B06E56A11A9DE2BD0030B6A4 /* Detail.m in Sources */,
 				B0F06B701A8B51E500FBC90C /* StoreTableHeaderViewController.m in Sources */,
@@ -663,6 +710,7 @@
 				B0ACC90A1AA6F8520068A7D5 /* Pet.m in Sources */,
 				B0BF73171A8A3FF500213C00 /* LoadingView.m in Sources */,
 				B0BF73291A8A414500213C00 /* StoreCell.m in Sources */,
+				B0ACC9191AA84B1B0068A7D5 /* AdoptAnimalViewController.m in Sources */,
 				B0BF72EB1A8915DD00213C00 /* Store.m in Sources */,
 				B0BF72E91A8915DD00213C00 /* Menu.m in Sources */,
 			);

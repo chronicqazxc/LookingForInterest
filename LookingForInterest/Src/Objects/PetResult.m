@@ -15,11 +15,17 @@
     if (self) {
         NSDictionary *links = [result objectForKey:@"_links"]?[result objectForKey:@"_links"]:@"";
         self.start = [links objectForKey:@"start"]?[links objectForKey:@"start"]:@"";
-        self.previous = [links objectForKey:@"prev"]?[links objectForKey:@"prev"]:@"";
-        self.next = [links objectForKey:@"next"]?[links objectForKey:@"next"]:@"";
-        self.total = [result objectForKey:@"total"]?[result objectForKey:@"total"]:@"";
+        self.previous = [links objectForKey:@"prev"]?[self parseOffset:[links objectForKey:@"prev"]]:@"";
+        self.next = [links objectForKey:@"next"]?[self parseOffset:[links objectForKey:@"next"]]:@"";
+        self.total = [result objectForKey:@"total"]?[NSNumber numberWithInteger:[[result objectForKey:@"total"] integerValue]]:@0;
         self.offset = [result objectForKey:@"offset"]?[result objectForKey:@"offset"]:@"";
     }
     return self;
+}
+
+- (NSString *)parseOffset:(NSString *)offset {
+    NSArray *separateString = [offset componentsSeparatedByString:@"offset="];
+    NSString *offsetString = [separateString lastObject];
+    return offsetString;
 }
 @end
