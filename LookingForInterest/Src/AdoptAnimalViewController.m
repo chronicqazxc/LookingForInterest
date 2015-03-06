@@ -9,8 +9,9 @@
 #import "AdoptAnimalViewController.h"
 #import "PetListCell.h"
 #import "RequestSender.h"
+#import "AdoptAnimalFilterController.h"
 
-@interface AdoptAnimalViewController () <UITableViewDataSource, UITableViewDelegate, RequestSenderDelegate>
+@interface AdoptAnimalViewController () <UITableViewDataSource, UITableViewDelegate, UITabBarDelegate, RequestSenderDelegate, AdoptAnimalFilterControllerDelegate>
 @property (strong, nonatomic) PetResult *petResult;
 @property (strong, nonatomic) NSMutableArray *requests;
 @property (strong, nonatomic) PetFilters *petFilters;
@@ -20,6 +21,8 @@
 @property (strong, nonatomic) NSString *previousPage;
 @property (nonatomic) BOOL isStartLoading;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+- (IBAction)clickFilter:(UIBarButtonItem *)sender;
+@property (weak, nonatomic) IBOutlet UITabBar *tabBar;
 @end
 
 @implementation AdoptAnimalViewController
@@ -30,6 +33,7 @@
     self.isSendInitRequest = NO;
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
+    self.tabBar.delegate = self;
     [self initProperties];
 }
 
@@ -41,8 +45,10 @@
 - (void)initProperties {
     self.requests = [NSMutableArray array];
     self.petFilters = [[PetFilters alloc] init];
+    [self composeFilters];
     self.appDelegate = [Utilities getAppDelegate];
     self.isStartLoading = NO;
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -51,11 +57,18 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    if (!self.isSendInitRequest) {
+    if (!self.isSendInitRequest && ![self.petResult.pets count]) {
         [self startLoading];
         [self sendInitRequest];
         self.isSendInitRequest = YES;
     }
+}
+
+- (void)composeFilters {
+    self.petFilters.age = nil;
+    self.petFilters.type = nil;
+    self.petFilters.sex = nil;
+    self.petFilters.build = nil;
 }
 
 - (void)startLoading {
@@ -71,16 +84,20 @@
 
 - (void)getNextPage {
     [self startLoading];
-    PetFilters *petFilters = [[PetFilters alloc] init];
-    petFilters.offset = self.nextPage;
-    [self sendRequestWithFilters:petFilters];
+//    PetFilters *petFilters = [[PetFilters alloc] init];
+//    petFilters.offset = self.nextPage;
+    self.petFilters.offset = self.nextPage;
+    self.petResult.filters = self.petFilters;
+    [self sendRequestWithFilters:self.petFilters];
 }
 
 - (void)getPreviousPage {
     [self startLoading];
-    PetFilters *petFilters = [[PetFilters alloc] init];
-    petFilters.offset = self.previousPage;
-    [self sendRequestWithFilters:petFilters];
+//    PetFilters *petFilters = [[PetFilters alloc] init];
+//    petFilters.offset = self.previousPage;
+    self.petFilters.offset = self.previousPage;
+    self.petResult.filters = self.petFilters;    
+    [self sendRequestWithFilters:self.petFilters];
 }
 
 - (void)sendRequestWithFilters:(PetFilters *)petFilters {
@@ -218,7 +235,9 @@
     self.nextPage = petResult.next;
     self.previousPage = petResult.previous;
     [self.tableView reloadData];
-    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+    if ([self.petResult.pets count]) {
+        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+    }
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     [Utilities stopLoading];
 }
@@ -228,5 +247,43 @@
     pet.thumbNail = image;
     PetListCell *cell = (PetListCell *)[self.tableView cellForRowAtIndexPath:indexPath];
     cell.thumbNail.image = image;
+}
+- (IBAction)clickFilter:(UIBarButtonItem *)sender {
+    //AdoptAnimalFilterViewController
+}
+
+#pragma mark - UITabBarDelegate
+- (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item {
+    switch (item.tag) {
+        case 0:
+            
+            break;
+        case 1:
+            break;
+        case 2:
+            break;
+        case 3:
+            break;
+        case 4:
+            [self showFilter];
+            break;
+        default:
+            break;
+    }
+}
+
+- (void)showFilter {
+    AdoptAnimalFilterController *adoptAnimalFilterViewController = [[AdoptAnimalFilterController alloc] initWithPetFilters:self.petFilters andDelegate:self andFrame:self.view.frame];
+    [adoptAnimalFilterViewController showPickerView];
+}
+
+#pragma mark - AdoptAnimalFilterControllerDelegate
+- (void)clickSearchWithPetFilters:(PetFilters *)petFilters {
+    self.petFilters.age = [self.petFilters.age isEqualToString:kAdoptFilterAll]?nil:self.petFilters.age;
+    self.petFilters.type = [self.petFilters.type isEqualToString:kAdoptFilterAll]?nil:self.petFilters.type;
+    self.petFilters.sex = [self.petFilters.sex isEqualToString:kAdoptFilterAll]?nil:self.petFilters.sex;
+    self.petFilters.build = [self.petFilters.build isEqualToString:kAdoptFilterAll]?nil:self.petFilters.build;
+    self.petResult.filters = self.petFilters;
+    [self sendRequestWithFilters:self.petFilters];
 }
 @end

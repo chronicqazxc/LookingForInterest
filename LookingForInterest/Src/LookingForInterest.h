@@ -54,6 +54,24 @@
 #define kRemoveFromFavorite @"移除我的最愛"
 #pragma mark -
 
+#pragma mark - AdoptAnimalNames
+#define kAdoptFilterAll @"全"
+#define kAdoptFilterAgeBaby @"幼齡"
+#define kAdoptFilterAgeYoung @"年輕"
+#define kAdoptFilterAgeAdult @"成年"
+#define kAdoptFilterAgeOld @"老年"
+#define kAdoptFilterTypeDog @"犬"
+#define kAdoptFilterTypeCat @"貓"
+#define kAdoptFilterTypeOther @"其他"
+#define kAdoptFilterGenderMale @"雄"
+#define kAdoptFilterGenderFemale @"雌"
+#define kAdoptFilterGenderUnknow @"未知"
+#define kAdoptFilterBodyMini @"微"
+#define kAdoptFilterBodySmall @"小"
+#define kAdoptFilterBodyMiddle @"中"
+#define kAdoptFilterBodyBig @"大"
+#pragma mark - 
+
 #pragma mark - Favorite store colors
 #define kColorIsFavoriteStore [UIColor redColor]
 #define kColorNotFavoriteStore [UIColor greenColor]

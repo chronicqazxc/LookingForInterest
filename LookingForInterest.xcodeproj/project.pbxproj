@@ -25,8 +25,11 @@
 		B06E569D1A9DE2980030B6A4 /* AnimalHospitalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B06E569B1A9DE2980030B6A4 /* AnimalHospitalViewController.m */; };
 		B06E569E1A9DE2980030B6A4 /* AnimalHospitalViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B06E569C1A9DE2980030B6A4 /* AnimalHospitalViewController.xib */; };
 		B06E56A11A9DE2BD0030B6A4 /* Detail.m in Sources */ = {isa = PBXBuildFile; fileRef = B06E56A01A9DE2BD0030B6A4 /* Detail.m */; };
+		B07804AB1AA9467900DE8AD0 /* PopUpPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = B07804A91AA9467900DE8AD0 /* PopUpPicker.m */; };
+		B07804AC1AA9467900DE8AD0 /* PopUpPicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = B07804AA1AA9467900DE8AD0 /* PopUpPicker.xib */; };
 		B08572471AA4C18400F0F8FD /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B08572461AA4C18400F0F8FD /* MenuViewController.m */; };
 		B085724D1AA74FC700F0F8FD /* FacebookController.m in Sources */ = {isa = PBXBuildFile; fileRef = B085724C1AA74FC700F0F8FD /* FacebookController.m */; };
+		B0A320511AA98BEC0061384A /* AdoptAnimalFilterController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0A320501AA98BEC0061384A /* AdoptAnimalFilterController.m */; };
 		B0ACC90A1AA6F8520068A7D5 /* Pet.m in Sources */ = {isa = PBXBuildFile; fileRef = B0ACC9091AA6F8520068A7D5 /* Pet.m */; };
 		B0ACC90D1AA6F9FA0068A7D5 /* PetResult.m in Sources */ = {isa = PBXBuildFile; fileRef = B0ACC90C1AA6F9FA0068A7D5 /* PetResult.m */; };
 		B0ACC9111AA836A20068A7D5 /* PetListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B0ACC90F1AA836A20068A7D5 /* PetListCell.m */; };
@@ -130,10 +133,15 @@
 		B06E569C1A9DE2980030B6A4 /* AnimalHospitalViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AnimalHospitalViewController.xib; path = Src/Views/AnimalHospitalViewController.xib; sourceTree = "<group>"; };
 		B06E569F1A9DE2BD0030B6A4 /* Detail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Detail.h; path = Src/Objects/Detail.h; sourceTree = "<group>"; };
 		B06E56A01A9DE2BD0030B6A4 /* Detail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Detail.m; path = Src/Objects/Detail.m; sourceTree = "<group>"; };
+		B07804A81AA9467900DE8AD0 /* PopUpPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PopUpPicker.h; path = Src/Views/PopUpPicker.h; sourceTree = "<group>"; };
+		B07804A91AA9467900DE8AD0 /* PopUpPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PopUpPicker.m; path = Src/Views/PopUpPicker.m; sourceTree = "<group>"; };
+		B07804AA1AA9467900DE8AD0 /* PopUpPicker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PopUpPicker.xib; path = Src/Views/PopUpPicker.xib; sourceTree = "<group>"; };
 		B08572451AA4C18400F0F8FD /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MenuViewController.h; path = Src/MenuViewController.h; sourceTree = "<group>"; };
 		B08572461AA4C18400F0F8FD /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MenuViewController.m; path = Src/MenuViewController.m; sourceTree = "<group>"; };
 		B085724B1AA74FC700F0F8FD /* FacebookController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FacebookController.h; path = Src/Objects/FacebookController.h; sourceTree = "<group>"; };
 		B085724C1AA74FC700F0F8FD /* FacebookController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FacebookController.m; path = Src/Objects/FacebookController.m; sourceTree = "<group>"; };
+		B0A3204F1AA98BEC0061384A /* AdoptAnimalFilterController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AdoptAnimalFilterController.h; path = Src/AdoptAnimalFilterController.h; sourceTree = "<group>"; };
+		B0A320501AA98BEC0061384A /* AdoptAnimalFilterController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AdoptAnimalFilterController.m; path = Src/AdoptAnimalFilterController.m; sourceTree = "<group>"; };
 		B0ACC9081AA6F8520068A7D5 /* Pet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Pet.h; path = Src/Objects/Pet.h; sourceTree = "<group>"; };
 		B0ACC9091AA6F8520068A7D5 /* Pet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Pet.m; path = Src/Objects/Pet.m; sourceTree = "<group>"; };
 		B0ACC90B1AA6F9FA0068A7D5 /* PetResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PetResult.h; path = Src/Objects/PetResult.h; sourceTree = "<group>"; };
@@ -410,6 +418,8 @@
 			children = (
 				B0ACC9171AA84B1B0068A7D5 /* AdoptAnimalViewController.h */,
 				B0ACC9181AA84B1B0068A7D5 /* AdoptAnimalViewController.m */,
+				B0A3204F1AA98BEC0061384A /* AdoptAnimalFilterController.h */,
+				B0A320501AA98BEC0061384A /* AdoptAnimalFilterController.m */,
 			);
 			name = AdoptAnimal;
 			sourceTree = "<group>";
@@ -473,6 +483,9 @@
 				B06E56981A9D64980030B6A4 /* GoTopButton.m */,
 				B04F701A1AA585CB007D9856 /* DialingButton.h */,
 				B04F701B1AA585CB007D9856 /* DialingButton.m */,
+				B07804A81AA9467900DE8AD0 /* PopUpPicker.h */,
+				B07804A91AA9467900DE8AD0 /* PopUpPicker.m */,
+				B07804AA1AA9467900DE8AD0 /* PopUpPicker.xib */,
 				B0ACC9151AA84A2A0068A7D5 /* AdoptAnimal */,
 				B002A2F01A9E31D700808055 /* Scroll&ZoomingView */,
 			);
@@ -602,6 +615,7 @@
 				B0BF73051A8916A400213C00 /* Contents.json in Resources */,
 				B0F06B711A8B51E500FBC90C /* StoreTableHeaderViewController.xib in Resources */,
 				B0BF730E1A8916A400213C00 /* Icon-Small@2x.png in Resources */,
+				B07804AC1AA9467900DE8AD0 /* PopUpPicker.xib in Resources */,
 				B0F06B621A8B252900FBC90C /* magnifier.png in Resources */,
 				B0F06B601A8B0FA200FBC90C /* OpenMapHeaderController.xib in Resources */,
 				B0BF732A1A8A414500213C00 /* StoreCell.xib in Resources */,
@@ -695,6 +709,7 @@
 				B0F06B701A8B51E500FBC90C /* StoreTableHeaderViewController.m in Sources */,
 				B0BF72F51A8915ED00213C00 /* AppDelegate.m in Sources */,
 				B04F70171AA4406D007D9856 /* HUDView.m in Sources */,
+				B07804AB1AA9467900DE8AD0 /* PopUpPicker.m in Sources */,
 				B0F06B361A89B80500FBC90C /* MapViewCell.m in Sources */,
 				B0F06B401A89F37500FBC90C /* Utilities.m in Sources */,
 				B002A2F61A9E31F400808055 /* FullScreenScrollView.m in Sources */,
@@ -707,6 +722,7 @@
 				B0ACC90D1AA6F9FA0068A7D5 /* PetResult.m in Sources */,
 				B06E569D1A9DE2980030B6A4 /* AnimalHospitalViewController.m in Sources */,
 				B0F06B5F1A8B0FA200FBC90C /* OpenMapHeaderController.m in Sources */,
+				B0A320511AA98BEC0061384A /* AdoptAnimalFilterController.m in Sources */,
 				B0ACC90A1AA6F8520068A7D5 /* Pet.m in Sources */,
 				B0BF73171A8A3FF500213C00 /* LoadingView.m in Sources */,
 				B0BF73291A8A414500213C00 /* StoreCell.m in Sources */,

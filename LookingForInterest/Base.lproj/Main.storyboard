@@ -204,7 +204,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xgn-OD-EH5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-348" y="-189.75"/>
+            <point key="canvasLocation" x="-481.5" y="-119.25"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="ufC-wZ-h7g">
@@ -635,7 +635,7 @@
                         <nil key="title"/>
                         <barButtonItem key="leftBarButtonItem" title="Home" id="LIA-eO-Hdq">
                             <connections>
-                                <segue destination="Cd6-4V-3Qa" kind="presentation" modalTransitionStyle="crossDissolve" id="LuT-Vh-zi3"/>
+                                <segue destination="Cd6-4V-3Qa" kind="presentation" modalTransitionStyle="crossDissolve" id="Bss-qP-rJf"/>
                             </connections>
                         </barButtonItem>
                         <button key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="ymX-Ci-T4Q">
@@ -665,7 +665,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1201.5" y="-216.75"/>
+            <point key="canvasLocation" x="949.5" y="-68.25"/>
         </scene>
         <!--Filter Table View Controller-->
         <scene sceneID="aJ2-hO-Tfx">
@@ -732,7 +732,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hTO-55-DaV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="432" y="-354.75"/>
+            <point key="canvasLocation" x="235.5" y="-3"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="TXg-ij-30X">
@@ -748,7 +748,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="629-Z8-cNt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-309" y="635.25"/>
+            <point key="canvasLocation" x="-931.5" y="1269"/>
         </scene>
         <!--Adopt Animal View Controller-->
         <scene sceneID="zxs-0t-cDW">
@@ -762,38 +762,77 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="d9I-dT-n42">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="d9I-dT-n42">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableView>
+                            <tabBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nGR-aS-U21">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="49" id="ncR-0x-3bj"/>
+                                </constraints>
+                                <items>
+                                    <tabBarItem title="狗" id="x1R-Ef-Mxd"/>
+                                    <tabBarItem tag="1" title="貓" id="qhB-AL-Xap"/>
+                                    <tabBarItem tag="2" title="其他" id="ybF-3k-cjp"/>
+                                    <tabBarItem tag="3" title="我的最愛" id="0WA-6s-eSX"/>
+                                    <tabBarItem tag="4" systemItem="search" id="cUl-wE-SaM"/>
+                                </items>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="ncR-0x-3bj"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="ncR-0x-3bj"/>
+                                    </mask>
+                                </variation>
+                            </tabBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="d9I-dT-n42" firstAttribute="top" secondItem="joO-3Y-wz2" secondAttribute="bottom" id="8UN-h3-kb8"/>
                             <constraint firstItem="d9I-dT-n42" firstAttribute="leading" secondItem="1fK-Nm-BNJ" secondAttribute="leading" id="A7q-wF-H90"/>
-                            <constraint firstAttribute="bottom" secondItem="d9I-dT-n42" secondAttribute="bottom" id="FUO-vu-FFL"/>
                             <constraint firstAttribute="trailing" secondItem="d9I-dT-n42" secondAttribute="trailing" id="PSP-0u-rbm"/>
+                            <constraint firstAttribute="trailing" secondItem="nGR-aS-U21" secondAttribute="trailing" id="VOM-LA-8dy"/>
+                            <constraint firstItem="d9I-dT-n42" firstAttribute="bottom" secondItem="nGR-aS-U21" secondAttribute="top" constant="-49" id="g6a-2K-Xgc">
+                                <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                            </constraint>
+                            <constraint firstItem="nGR-aS-U21" firstAttribute="leading" secondItem="1fK-Nm-BNJ" secondAttribute="leading" id="jSp-54-H1g"/>
+                            <constraint firstItem="ahD-AK-dYg" firstAttribute="top" secondItem="nGR-aS-U21" secondAttribute="bottom" constant="375" id="kwK-RJ-5Bb">
+                                <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                            </constraint>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="d9I-dT-n42"/>
+                                <exclude reference="nGR-aS-U21"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="kwK-RJ-5Bb"/>
+                                <exclude reference="VOM-LA-8dy"/>
+                                <exclude reference="jSp-54-H1g"/>
                                 <exclude reference="8UN-h3-kb8"/>
                                 <exclude reference="A7q-wF-H90"/>
-                                <exclude reference="FUO-vu-FFL"/>
                                 <exclude reference="PSP-0u-rbm"/>
+                                <exclude reference="g6a-2K-Xgc"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
                             <mask key="subviews">
                                 <include reference="d9I-dT-n42"/>
+                                <include reference="nGR-aS-U21"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="kwK-RJ-5Bb"/>
+                                <include reference="VOM-LA-8dy"/>
+                                <include reference="jSp-54-H1g"/>
                                 <include reference="8UN-h3-kb8"/>
                                 <include reference="A7q-wF-H90"/>
-                                <include reference="FUO-vu-FFL"/>
                                 <include reference="PSP-0u-rbm"/>
+                                <include reference="g6a-2K-Xgc"/>
                             </mask>
                         </variation>
                     </view>
@@ -803,15 +842,15 @@
                                 <segue destination="Cd6-4V-3Qa" kind="presentation" modalTransitionStyle="crossDissolve" id="T8p-5V-2Jd"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Edit" id="gXe-PI-vPr"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="tabBar" destination="nGR-aS-U21" id="Hfo-mf-jNY"/>
                         <outlet property="tableView" destination="d9I-dT-n42" id="h9S-Xc-qXN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PXe-Xv-DJH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="712.5" y="618"/>
+            <point key="canvasLocation" x="403.5" y="656.25"/>
         </scene>
     </scenes>
     <resources>

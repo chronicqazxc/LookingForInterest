@@ -97,7 +97,7 @@
         NSString *success = [NSString stringWithFormat:@"%@",[encodeStrings objectForKey:@"success"]];
         if ([success isEqualToString:@"1"]) {
             NSDictionary *result = [encodeStrings objectForKey:@"result"];
-            PetResult *petResult = [self parseResult:result];
+//            PetResult *petResult = [self parseResult:result];
             NSArray *records = [result objectForKey:@"records"];
             NSMutableArray *pets = [NSMutableArray array];
             for (NSDictionary *record in records) {
@@ -122,7 +122,7 @@
 }
 
 - (void) testPet {
-    Pet *pet = [[Pet alloc] init];
+//    Pet *pet = [[Pet alloc] init];
     PetResult *petResult = [[PetResult alloc] init];
     NSLog(@"%@",petResult);
 }
