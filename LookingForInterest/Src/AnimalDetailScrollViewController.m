@@ -44,7 +44,6 @@
         }
         self.isInit = YES;
     }
-//    self.animalDetailCollectionViewCell.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.view.frame), 1000);
 }
 
 /*
@@ -75,7 +74,6 @@
         self.animalDetailCollectionViewCell = (AnimalDetailCollectionViewCell *)[Utilities getNibWithName:@"AnimalDetailCollectionViewCell"];
     }
     self.animalDetailCollectionViewCell.pet = [self.petResult.pets objectAtIndex:indexPath.row];
-    self.animalDetailCollectionViewCell.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.view.frame), 1000);
     [self.animalDetailCollectionViewCell awakeFromNib];
     return self.animalDetailCollectionViewCell;
 }
@@ -87,7 +85,9 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didEndDisplayingCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
     NSArray *cells = [collectionView visibleCells];
-    self.navigationItem.title = ((AnimalDetailCollectionViewCell *)cells.firstObject).pet.name;
+    if ([cells count]) {
+        self.navigationItem.title = ((AnimalDetailCollectionViewCell *)cells.firstObject).pet.name;
+    }
 }
 
 #pragma mark - UICollectionViewDelegateFlowLayout

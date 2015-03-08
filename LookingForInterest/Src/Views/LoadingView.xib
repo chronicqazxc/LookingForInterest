@@ -85,17 +85,17 @@
                         <mask key="constraints">
                             <exclude reference="7oq-Xn-IPS"/>
                             <exclude reference="b5f-UX-ILP"/>
-                            <exclude reference="7Rh-Nf-Tef"/>
-                            <exclude reference="ILz-TV-dVi"/>
-                            <exclude reference="hl1-7H-2aw"/>
-                            <exclude reference="khN-jY-wB4"/>
-                            <exclude reference="qe2-Rm-l9r"/>
                             <exclude reference="3YJ-Cp-1v3"/>
                             <exclude reference="MJb-2f-aCp"/>
                             <exclude reference="PKn-sU-IJf"/>
                             <exclude reference="Qfe-nG-LCi"/>
                             <exclude reference="rO8-gD-NpF"/>
                             <exclude reference="vqe-tw-oaT"/>
+                            <exclude reference="7Rh-Nf-Tef"/>
+                            <exclude reference="ILz-TV-dVi"/>
+                            <exclude reference="hl1-7H-2aw"/>
+                            <exclude reference="khN-jY-wB4"/>
+                            <exclude reference="qe2-Rm-l9r"/>
                         </mask>
                     </variation>
                     <variation key="heightClass=regular-widthClass=compact">
@@ -106,17 +106,17 @@
                         <mask key="constraints">
                             <include reference="7oq-Xn-IPS"/>
                             <include reference="b5f-UX-ILP"/>
-                            <include reference="7Rh-Nf-Tef"/>
-                            <exclude reference="ILz-TV-dVi"/>
-                            <exclude reference="hl1-7H-2aw"/>
-                            <include reference="khN-jY-wB4"/>
-                            <exclude reference="qe2-Rm-l9r"/>
                             <include reference="3YJ-Cp-1v3"/>
                             <exclude reference="MJb-2f-aCp"/>
                             <exclude reference="PKn-sU-IJf"/>
                             <include reference="Qfe-nG-LCi"/>
                             <exclude reference="rO8-gD-NpF"/>
                             <include reference="vqe-tw-oaT"/>
+                            <include reference="7Rh-Nf-Tef"/>
+                            <exclude reference="ILz-TV-dVi"/>
+                            <exclude reference="hl1-7H-2aw"/>
+                            <include reference="khN-jY-wB4"/>
+                            <exclude reference="qe2-Rm-l9r"/>
                         </mask>
                     </variation>
                 </view>

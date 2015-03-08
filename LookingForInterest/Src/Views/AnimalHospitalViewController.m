@@ -149,7 +149,6 @@
         self.mapModeSwitch.hidden = NO;
         self.directionModeSwitch.hidden = NO;
         
-        self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.scrollView.frame), kScrollViewContentHeight);
         self.imageScrollFrame = self.imageScrollContainer.frame;
         self.mapContainerFrame = self.mapContainer.frame;
         self.instructionContanerSize = self.instructionContainer.frame.size;

@@ -222,7 +222,7 @@
     return (AppDelegate *)[[UIApplication sharedApplication] delegate];
 }
 
-+ (void)cellPhoneNumber:(NSString *)phoneNumber {
++ (void)callPhoneNumber:(NSString *)phoneNumber {
     phoneNumber = [NSString stringWithFormat:@"tel://%@",phoneNumber];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumber]];
 }

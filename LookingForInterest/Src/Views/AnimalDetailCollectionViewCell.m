@@ -21,7 +21,7 @@
 #define kAnimalAnlongTitle @"可否與其他動物相處"
 #define kReasonTitle @"來的原因"
 #define kBodyweightTitle @"體重"
-#define kPetImageWeigh 300
+#define kPetImageWeigh CGRectGetWidth(self.frame)
 #define kPetImageHeigh 400
 
 @interface AnimalDetailCollectionViewCell()
@@ -40,12 +40,15 @@
 @property (weak, nonatomic) IBOutlet UILabel *reason;
 @property (weak, nonatomic) IBOutlet UILabel *bodyweight;
 @property (strong, nonatomic) UIImage *image;
+- (IBAction)facebookShare:(UIBarButtonItem *)sender;
+- (IBAction)lineShare:(UIBarButtonItem *)sender;
+- (IBAction)callOut:(UIBarButtonItem *)sender;
+- (IBAction)sendEmail:(UIBarButtonItem *)sender;
 @end
 
 @implementation AnimalDetailCollectionViewCell
 
 - (void)awakeFromNib {
-    self.imageView.frame = CGRectMake(0,0,CGRectGetWidth(self.frame),400);
     [self loadImage];
     [self setLabel:self.variety title:kVarietyTitle andContent:self.pet.variety];
     [self setLabel:self.sex title:kSexTitle andContent:self.pet.sex];
@@ -91,4 +94,17 @@
     textView.text = [NSString stringWithFormat:@"%@：%@", title, content];
 }
 
+- (IBAction)facebookShare:(UIBarButtonItem *)sender {
+}
+
+- (IBAction)lineShare:(UIBarButtonItem *)sender {
+}
+
+- (IBAction)callOut:(UIBarButtonItem *)sender {
+    [Utilities callPhoneNumber:self.pet.phone];
+}
+
+- (IBAction)sendEmail:(UIBarButtonItem *)sender {
+    
+}
 @end

@@ -93,14 +93,14 @@
                     <exclude reference="Tk4-DQ-aw2"/>
                 </mask>
                 <mask key="constraints">
+                    <exclude reference="HRM-Z7-e22"/>
+                    <exclude reference="W4s-QZ-iSL"/>
                     <exclude reference="1h2-4G-AHF"/>
                     <exclude reference="9nz-hz-z2p"/>
                     <exclude reference="jRV-5Z-BCS"/>
                     <exclude reference="szi-hK-KEt"/>
                     <exclude reference="7Jh-Dc-Ozg"/>
                     <exclude reference="zIA-CN-KVd"/>
-                    <exclude reference="HRM-Z7-e22"/>
-                    <exclude reference="W4s-QZ-iSL"/>
                 </mask>
             </variation>
             <variation key="heightClass=regular-widthClass=compact">
@@ -110,14 +110,14 @@
                     <include reference="Tk4-DQ-aw2"/>
                 </mask>
                 <mask key="constraints">
+                    <include reference="HRM-Z7-e22"/>
+                    <include reference="W4s-QZ-iSL"/>
                     <include reference="1h2-4G-AHF"/>
                     <include reference="9nz-hz-z2p"/>
                     <include reference="jRV-5Z-BCS"/>
                     <include reference="szi-hK-KEt"/>
                     <include reference="7Jh-Dc-Ozg"/>
                     <include reference="zIA-CN-KVd"/>
-                    <include reference="HRM-Z7-e22"/>
-                    <include reference="W4s-QZ-iSL"/>
                 </mask>
             </variation>
             <point key="canvasLocation" x="219" y="240"/>

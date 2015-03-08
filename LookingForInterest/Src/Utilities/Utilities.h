@@ -36,5 +36,5 @@
 + (void)removeFromMyFavoriteAnimal:(Pet *)pet;
 + (void)addHudViewTo:(UIViewController *)controller withMessage:(NSString *)message;
 + (AppDelegate *)appdelegate;
-+ (void)cellPhoneNumber:(NSString *)phoneNumber;
++ (void)callPhoneNumber:(NSString *)phoneNumber;
 @end
