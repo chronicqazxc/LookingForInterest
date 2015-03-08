@@ -39,17 +39,26 @@ typedef enum adoptAnimalFilterType {
 }
 
 - (void)showPickerView {
-    if (self.petFilters.age)
-        [self selectedRowInComponent:AdoptFilterAge];
+    NSInteger selectedRow = 0;
+    if (self.petFilters.age) {
+        selectedRow = [self selectedRowInComponent:AdoptFilterAge];
+        [self.popUpPicker.pickerView selectRow:selectedRow inComponent:AdoptFilterAge animated:YES];
+    }
     
-    if (self.petFilters.type)
-        [self selectedRowInComponent:AdoptFilterType];
+    if (self.petFilters.type) {
+        selectedRow = [self selectedRowInComponent:AdoptFilterType];
+        [self.popUpPicker.pickerView selectRow:selectedRow inComponent:AdoptFilterType animated:YES];
+    }
     
-    if (self.petFilters.sex)
-        [self selectedRowInComponent:AdoptFilterGender];
+    if (self.petFilters.sex) {
+        selectedRow = [self selectedRowInComponent:AdoptFilterGender];
+        [self.popUpPicker.pickerView selectRow:selectedRow inComponent:AdoptFilterGender animated:YES];
+    }
     
-    if (self.petFilters.build)
-        [self selectedRowInComponent:AdoptFilterBody];
+    if (self.petFilters.build) {
+        selectedRow = [self selectedRowInComponent:AdoptFilterBody];
+        [self.popUpPicker.pickerView selectRow:selectedRow inComponent:AdoptFilterBody animated:YES];
+    }
     
     [self.popUpPicker popUpPickerView];
 }
@@ -244,7 +253,7 @@ typedef enum adoptAnimalFilterType {
 
 - (NSString *)parseSelectedBody {
     NSString *selectedBody = kAdoptFilterAll;
-    NSInteger selectedRow = [self.popUpPicker.pickerView selectedRowInComponent:AdoptFilterAge];
+    NSInteger selectedRow = [self.popUpPicker.pickerView selectedRowInComponent:AdoptFilterBody];
     switch (selectedRow) {
         case -1:
             selectedBody = @"";

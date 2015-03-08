@@ -30,5 +30,6 @@
 @property (strong, nonatomic) NSString *email;
 @property (strong, nonatomic) NSString *bodyweight;
 @property (strong, nonatomic) UIImage *thumbNail;
+@property (strong, nonatomic) NSString *animalAnlong;
 - (id)initWithRecord:(NSDictionary *)record;
 @end

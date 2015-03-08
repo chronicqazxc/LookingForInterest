@@ -14,6 +14,11 @@
 		B002A2F51A9E31F400808055 /* EndlessScrollGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = B002A2F21A9E31F400808055 /* EndlessScrollGenerator.m */; };
 		B002A2F61A9E31F400808055 /* FullScreenScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = B002A2F41A9E31F400808055 /* FullScreenScrollView.m */; };
 		B002A2F81AA02FE800808055 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B002A2F71AA02FE700808055 /* QuartzCore.framework */; };
+		B02861FC1AAAD90C001C50DB /* AnimalDetailScrollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B02861FA1AAAD90C001C50DB /* AnimalDetailScrollViewController.m */; };
+		B02861FD1AAAD90C001C50DB /* AnimalDetailScrollViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B02861FB1AAAD90C001C50DB /* AnimalDetailScrollViewController.xib */; };
+		B02862011AAAEB40001C50DB /* AnimalDetailCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B02861FF1AAAEB40001C50DB /* AnimalDetailCollectionViewCell.m */; };
+		B02862021AAAEB40001C50DB /* AnimalDetailCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B02862001AAAEB40001C50DB /* AnimalDetailCollectionViewCell.xib */; };
+		B02862051AAAF2F6001C50DB /* AnimalDetailScrollLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = B02862041AAAF2F6001C50DB /* AnimalDetailScrollLayout.m */; };
 		B034D96A1A8903AA00360A6C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B034D9681A8903AA00360A6C /* Main.storyboard */; };
 		B034D96C1A8903AA00360A6C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B034D96B1A8903AA00360A6C /* Images.xcassets */; };
 		B034D96F1A8903AA00360A6C /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = B034D96D1A8903AA00360A6C /* LaunchScreen.xib */; };
@@ -111,6 +116,14 @@
 		B002A2F31A9E31F400808055 /* FullScreenScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FullScreenScrollView.h; path = Src/Views/FullScreenScrollView.h; sourceTree = "<group>"; };
 		B002A2F41A9E31F400808055 /* FullScreenScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FullScreenScrollView.m; path = Src/Views/FullScreenScrollView.m; sourceTree = "<group>"; };
 		B002A2F71AA02FE700808055 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		B02861F91AAAD90C001C50DB /* AnimalDetailScrollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimalDetailScrollViewController.h; path = Src/AnimalDetailScrollViewController.h; sourceTree = "<group>"; };
+		B02861FA1AAAD90C001C50DB /* AnimalDetailScrollViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AnimalDetailScrollViewController.m; path = Src/AnimalDetailScrollViewController.m; sourceTree = "<group>"; };
+		B02861FB1AAAD90C001C50DB /* AnimalDetailScrollViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AnimalDetailScrollViewController.xib; path = Src/AnimalDetailScrollViewController.xib; sourceTree = "<group>"; };
+		B02861FE1AAAEB40001C50DB /* AnimalDetailCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimalDetailCollectionViewCell.h; path = Src/Views/AnimalDetailCollectionViewCell.h; sourceTree = "<group>"; };
+		B02861FF1AAAEB40001C50DB /* AnimalDetailCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AnimalDetailCollectionViewCell.m; path = Src/Views/AnimalDetailCollectionViewCell.m; sourceTree = "<group>"; };
+		B02862001AAAEB40001C50DB /* AnimalDetailCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AnimalDetailCollectionViewCell.xib; path = Src/Views/AnimalDetailCollectionViewCell.xib; sourceTree = "<group>"; };
+		B02862031AAAF2F6001C50DB /* AnimalDetailScrollLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimalDetailScrollLayout.h; path = Src/Views/AnimalDetailScrollLayout.h; sourceTree = "<group>"; };
+		B02862041AAAF2F6001C50DB /* AnimalDetailScrollLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AnimalDetailScrollLayout.m; path = Src/Views/AnimalDetailScrollLayout.m; sourceTree = "<group>"; };
 		B034D95B1A8903A900360A6C /* 寵物相關的.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "寵物相關的.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B034D95F1A8903A900360A6C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B034D9691A8903AA00360A6C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -420,6 +433,14 @@
 				B0ACC9181AA84B1B0068A7D5 /* AdoptAnimalViewController.m */,
 				B0A3204F1AA98BEC0061384A /* AdoptAnimalFilterController.h */,
 				B0A320501AA98BEC0061384A /* AdoptAnimalFilterController.m */,
+				B02861F91AAAD90C001C50DB /* AnimalDetailScrollViewController.h */,
+				B02861FA1AAAD90C001C50DB /* AnimalDetailScrollViewController.m */,
+				B02861FB1AAAD90C001C50DB /* AnimalDetailScrollViewController.xib */,
+				B02862031AAAF2F6001C50DB /* AnimalDetailScrollLayout.h */,
+				B02862041AAAF2F6001C50DB /* AnimalDetailScrollLayout.m */,
+				B02861FE1AAAEB40001C50DB /* AnimalDetailCollectionViewCell.h */,
+				B02861FF1AAAEB40001C50DB /* AnimalDetailCollectionViewCell.m */,
+				B02862001AAAEB40001C50DB /* AnimalDetailCollectionViewCell.xib */,
 			);
 			name = AdoptAnimal;
 			sourceTree = "<group>";
@@ -608,6 +629,7 @@
 				B034D96A1A8903AA00360A6C /* Main.storyboard in Resources */,
 				B0F06B6A1A8B3DFA00FBC90C /* arrow-up@2x.png in Resources */,
 				B034D96F1A8903AA00360A6C /* LaunchScreen.xib in Resources */,
+				B02862021AAAEB40001C50DB /* AnimalDetailCollectionViewCell.xib in Resources */,
 				B034D96C1A8903AA00360A6C /* Images.xcassets in Resources */,
 				B0F06B521A8A10E500FBC90C /* magnifier-4.png in Resources */,
 				B0F06B6C1A8B479F00FBC90C /* arrow-right@2x.png in Resources */,
@@ -621,6 +643,7 @@
 				B0BF732A1A8A414500213C00 /* StoreCell.xib in Resources */,
 				B0BF73391A8A844000213C00 /* OpenMapCell.xib in Resources */,
 				B0BF730C1A8916A400213C00 /* Icon-76@2x.png in Resources */,
+				B02861FD1AAAD90C001C50DB /* AnimalDetailScrollViewController.xib in Resources */,
 				B0BF73081A8916A400213C00 /* Icon-40@3x.png in Resources */,
 				B0BF730A1A8916A400213C00 /* Icon-60@3x.png in Resources */,
 				B0BF73301A8A4EE000213C00 /* menu@2x.png in Resources */,
@@ -697,11 +720,13 @@
 				B08572471AA4C18400F0F8FD /* MenuViewController.m in Sources */,
 				B04F701C1AA585CB007D9856 /* DialingButton.m in Sources */,
 				B0BF72F81A8915ED00213C00 /* ViewController.m in Sources */,
+				B02862011AAAEB40001C50DB /* AnimalDetailCollectionViewCell.m in Sources */,
 				B0BF72DE1A8915C500213C00 /* main.m in Sources */,
 				B002A2EB1A9885FA00808055 /* WebViewController.m in Sources */,
 				B0BF72EA1A8915DD00213C00 /* MinorType.m in Sources */,
 				B06E56991A9D64980030B6A4 /* GoTopButton.m in Sources */,
 				B085724D1AA74FC700F0F8FD /* FacebookController.m in Sources */,
+				B02862051AAAF2F6001C50DB /* AnimalDetailScrollLayout.m in Sources */,
 				B0B230001AA7639E003FE4D7 /* PetFilters.m in Sources */,
 				B0ACC9111AA836A20068A7D5 /* PetListCell.m in Sources */,
 				B0BF72F61A8915ED00213C00 /* FilterTableViewController.m in Sources */,
@@ -714,6 +739,7 @@
 				B0F06B401A89F37500FBC90C /* Utilities.m in Sources */,
 				B002A2F61A9E31F400808055 /* FullScreenScrollView.m in Sources */,
 				B0BF72F71A8915ED00213C00 /* RequestSender.m in Sources */,
+				B02861FC1AAAD90C001C50DB /* AnimalDetailScrollViewController.m in Sources */,
 				B0BF73381A8A844000213C00 /* OpenMapCell.m in Sources */,
 				B0BF731C1A8A406F00213C00 /* MenuCell.m in Sources */,
 				B002A2F51A9E31F400808055 /* EndlessScrollGenerator.m in Sources */,

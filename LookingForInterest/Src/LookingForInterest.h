@@ -50,6 +50,7 @@
 #define kNoPhoneNumberAlertMessage @"資料庫中沒有建立電話號碼"
 #define kWebSiteActionTitle @"網路搜尋更多資訊"
 #define kFavoriteStoresKey @"favoriteStoresKey"
+#define kFavoriteAnimalsKey @"favoriteAnimalsKey"
 #define kAddToFavorite @"加到我的最愛"
 #define kRemoveFromFavorite @"移除我的最愛"
 #pragma mark -

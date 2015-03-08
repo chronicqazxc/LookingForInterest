@@ -10,8 +10,11 @@
 #import "PetListCell.h"
 #import "RequestSender.h"
 #import "AdoptAnimalFilterController.h"
+#import <MGSwipeTableCell/MGSwipeButton.h>
+#import <MGSwipeTableCell/MGSwipeTableCell.h>
+#import "AnimalDetailScrollViewController.h"
 
-@interface AdoptAnimalViewController () <UITableViewDataSource, UITableViewDelegate, UITabBarDelegate, RequestSenderDelegate, AdoptAnimalFilterControllerDelegate>
+@interface AdoptAnimalViewController () <UITableViewDataSource, UITableViewDelegate, UITabBarDelegate, RequestSenderDelegate, AdoptAnimalFilterControllerDelegate, MGSwipeTableCellDelegate>
 @property (strong, nonatomic) PetResult *petResult;
 @property (strong, nonatomic) NSMutableArray *requests;
 @property (strong, nonatomic) PetFilters *petFilters;
@@ -21,7 +24,6 @@
 @property (strong, nonatomic) NSString *previousPage;
 @property (nonatomic) BOOL isStartLoading;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-- (IBAction)clickFilter:(UIBarButtonItem *)sender;
 @property (weak, nonatomic) IBOutlet UITabBar *tabBar;
 @end
 
@@ -29,7 +31,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.edgesForExtendedLayout = UIRectEdgeNone;    
+    self.edgesForExtendedLayout = UIRectEdgeNone;   
     self.isSendInitRequest = NO;
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
@@ -83,6 +85,7 @@
 }
 
 - (void)getNextPage {
+    [self clearRequestSenderDelegate];
     [self startLoading];
 //    PetFilters *petFilters = [[PetFilters alloc] init];
 //    petFilters.offset = self.nextPage;
@@ -92,6 +95,7 @@
 }
 
 - (void)getPreviousPage {
+    [self clearRequestSenderDelegate];
     [self startLoading];
 //    PetFilters *petFilters = [[PetFilters alloc] init];
 //    petFilters.offset = self.previousPage;
@@ -104,23 +108,26 @@
     RequestSender *requestSender = [[RequestSender alloc] init];
     requestSender.delegate = self;
     [requestSender sendRequestForAdoptAnimalsWithPetFilters:petFilters];
+    [self.requests addObject:requestSender];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [self clearRequestSenderDelegate];
+    [self initProperties];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     [self clearRequestSenderDelegate];
+    [self initProperties];
 }
 
 - (void)clearRequestSenderDelegate {
     for (RequestSender *requestSender in self.requests) {
         requestSender.delegate = nil;
     }
-    [self initProperties];
+    self.requests = [NSMutableArray array];
 }
 /*
 #pragma mark - Navigation
@@ -153,16 +160,51 @@
         petCell = (PetListCell *)[Utilities getNibWithName:@"PetListCell"];
     }
     Pet *pet = [self.petResult.pets objectAtIndex:indexPath.row];
-    if (!pet.thumbNail) {
+    if (!pet.thumbNail && !self.isStartLoading) {
         [self startThumbNailDownload:pet forIndexPath:indexPath];
     } else {
         petCell.imageView.image = pet.thumbNail;
     }
-    petCell.name.text = [NSString stringWithFormat:@"名字：%@",pet.name];
+    petCell.name.text = [NSString stringWithFormat:@"名字：%@ / %@",pet.name, pet.type];
     petCell.age.text = [NSString stringWithFormat:@"年齡：%@",pet.age];
     petCell.gender.text = [NSString stringWithFormat:@"性別：%@",pet.sex];
     petCell.body.text = [NSString stringWithFormat:@"體型：%@",pet.build];
+    
+//    petCell.delegate = self;
+//    petCell.leftSwipeSettings.transition = MGSwipeTransitionBorder;
+//    petCell.leftExpansion.buttonIndex = 0;
+//    petCell.leftExpansion.fillOnTrigger = YES;
+//    petCell.leftExpansion.threshold = 3.5;
+//    petCell.leftButtons = [self createLeftButtonWithIndexPath:indexPath];
     return petCell;
+}
+
+-(NSArray *) createLeftButtonWithIndexPath:(NSIndexPath *)indexPath {
+    NSMutableArray * result = [NSMutableArray array];
+    UIColor *backgroundColor;
+    if ([self isMyFavoriteStoresByIndex:indexPath.row]) {
+        backgroundColor = kColorIsFavoriteStore;
+    } else {
+        backgroundColor = kColorNotFavoriteStore;
+    }
+    MGSwipeButton *leftButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"fav.png"] backgroundColor:backgroundColor padding:20];
+    [result addObject:leftButton];
+    return result;
+}
+
+- (BOOL)isMyFavoriteStoresByIndex:(NSInteger)index {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSMutableArray *favoriteAnimals = [defaults objectForKey:kFavoriteStoresKey];
+    NSString *acceptNum = [[self.petResult.pets objectAtIndex:index] acceptNum];
+    return [favoriteAnimals containsObject:acceptNum]?YES:NO;
+}
+
+#pragma mark - UITableViewDelegate
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    AnimalDetailScrollViewController *animalDetailScrollViewController = [[AnimalDetailScrollViewController alloc] initWithNibName:@"AnimalDetailScrollViewController" bundle:nil];
+    animalDetailScrollViewController.petResult = self.petResult;
+    animalDetailScrollViewController.selectedIndexPath = indexPath;
+    [self.navigationController pushViewController:animalDetailScrollViewController animated:YES];
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -177,7 +219,7 @@
     
     if (self.isStartLoading == NO) {
         if(y > h + reloadDistance) {
-            if (self.petResult.next && ![self.petResult.next isEqualToString:@""]) {
+            if (self.petResult.next && ![self.petResult.next isEqualToString:@""] && [self.petResult.next intValue] < [self.petResult.total intValue]) {
                 self.isStartLoading = YES;
                 [self getNextPage];
             }
@@ -192,14 +234,16 @@
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
-    if (!decelerate) {
+    if (!decelerate && !self.isStartLoading) {
         [self loadThumbNailForOnScreenRows];
     }
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    [self loadThumbNailForOnScreenRows];
+    if (!self.isStartLoading) {
+        [self loadThumbNailForOnScreenRows];
+    }
 }
 
 - (void)loadThumbNailForOnScreenRows {
@@ -214,7 +258,7 @@
 }
 
 #pragma mark - lazy loading
-- (void)startThumbNailDownload:(Pet *)pet forIndexPath:(NSIndexPath *)indexPath{
+- (void)startThumbNailDownload:(Pet *)pet forIndexPath:(NSIndexPath *)indexPath {
     RequestSender *request = [[RequestSender alloc] init];
     request.delegate = self;
     [request sendRequestForPetThumbNail:pet indexPath:indexPath];
@@ -236,35 +280,34 @@
     self.previousPage = petResult.previous;
     [self.tableView reloadData];
     if ([self.petResult.pets count]) {
-        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
     }
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     [Utilities stopLoading];
 }
 
 - (void)thumbNailBack:(UIImage *)image indexPath:(NSIndexPath *)indexPath {
-    Pet *pet = [self.petResult.pets objectAtIndex:indexPath.row];
-    pet.thumbNail = image;
-    PetListCell *cell = (PetListCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-    cell.thumbNail.image = image;
-}
-- (IBAction)clickFilter:(UIBarButtonItem *)sender {
-    //AdoptAnimalFilterViewController
+    if (self.petResult && [self.petResult.pets count]) {
+        Pet *pet = [self.petResult.pets objectAtIndex:indexPath.row];
+        pet.thumbNail = image;
+        PetListCell *cell = (PetListCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+        cell.thumbNail.image = image;
+    }
 }
 
 #pragma mark - UITabBarDelegate
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item {
     switch (item.tag) {
         case 0:
-            
+            [self sendDogRequest];
             break;
         case 1:
+            [self sendCatRequest];
             break;
         case 2:
+            [self sendOtherRequest];
             break;
         case 3:
-            break;
-        case 4:
             [self showFilter];
             break;
         default:
@@ -272,18 +315,81 @@
     }
 }
 
+- (void)sendDogRequest {
+    [self clearRequestSenderDelegate];
+    [self startLoading];
+    self.petFilters.type = kAdoptFilterTypeDog;
+    self.petFilters.offset = nil;
+    [self sendRequestWithFilters:self.petFilters];
+}
+
+- (void)sendCatRequest {
+    [self clearRequestSenderDelegate];
+    [self startLoading];
+    self.petFilters.type = kAdoptFilterTypeCat;
+    self.petFilters.offset = nil;
+    [self sendRequestWithFilters:self.petFilters];
+}
+
+- (void)sendOtherRequest {
+    [self clearRequestSenderDelegate];
+    [self startLoading];
+    self.petFilters.type = kAdoptFilterTypeOther;
+    self.petFilters.offset = nil;
+    [self sendRequestWithFilters:self.petFilters];
+}
+
+- (void)sendMyFavoriteRequest {
+    [self clearRequestSenderDelegate];
+    [self startLoading];
+}
+
 - (void)showFilter {
     AdoptAnimalFilterController *adoptAnimalFilterViewController = [[AdoptAnimalFilterController alloc] initWithPetFilters:self.petFilters andDelegate:self andFrame:self.view.frame];
+    adoptAnimalFilterViewController.petFilters = self.petFilters;
     [adoptAnimalFilterViewController showPickerView];
 }
 
 #pragma mark - AdoptAnimalFilterControllerDelegate
 - (void)clickSearchWithPetFilters:(PetFilters *)petFilters {
+    [self startLoading];
+    [self clearRequestSenderDelegate];
     self.petFilters.age = [self.petFilters.age isEqualToString:kAdoptFilterAll]?nil:self.petFilters.age;
     self.petFilters.type = [self.petFilters.type isEqualToString:kAdoptFilterAll]?nil:self.petFilters.type;
     self.petFilters.sex = [self.petFilters.sex isEqualToString:kAdoptFilterAll]?nil:self.petFilters.sex;
     self.petFilters.build = [self.petFilters.build isEqualToString:kAdoptFilterAll]?nil:self.petFilters.build;
+    self.petFilters.offset = nil;
     self.petResult.filters = self.petFilters;
+    [self clearRequestSenderDelegate];
     [self sendRequestWithFilters:self.petFilters];
+}
+
+#pragma mark - MGSwipeTableCellDelegate
+- (BOOL) swipeTableCell:(MGSwipeTableCell *) cell canSwipe:(MGSwipeDirection) direction {
+    if (direction == MGSwipeDirectionLeftToRight) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
+- (void) swipeTableCell:(MGSwipeTableCell *) cell didChangeSwipeState:(MGSwipeState) state gestureIsActive:(BOOL) gestureIsActive {
+    
+}
+
+- (BOOL) swipeTableCell:(MGSwipeTableCell *) cell tappedButtonAtIndex:(NSInteger) index direction:(MGSwipeDirection)direction fromExpansion:(BOOL) fromExpansion {
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    if (direction == MGSwipeDirectionLeftToRight) {
+        Pet *pet = [self.petResult.pets objectAtIndex:indexPath.row];
+        if ([self isMyFavoriteStoresByIndex:indexPath.row]) {
+            [Utilities removeFromMyFavoriteAnimal:pet];
+            [Utilities addHudViewTo:self withMessage:kRemoveFromFavorite];
+        } else {
+            [Utilities addToMyFavoriteAnimal:pet];
+            [Utilities addHudViewTo:self withMessage:kAddToFavorite];
+        }
+        [self.tableView reloadData];
+    }
+    return NO;
 }
 @end

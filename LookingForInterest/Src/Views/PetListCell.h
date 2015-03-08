@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MGSwipeTableCell/MGSwipeTableCell.h>
 
 #define kPetListCellIdentifier @"PetListCell"
 
-@interface PetListCell : UITableViewCell
+@interface PetListCell : MGSwipeTableCell
 @property (weak, nonatomic) IBOutlet UILabel *name;
 @property (weak, nonatomic) IBOutlet UILabel *age;
 @property (weak, nonatomic) IBOutlet UILabel *gender;

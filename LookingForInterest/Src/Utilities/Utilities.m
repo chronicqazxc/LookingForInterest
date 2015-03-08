@@ -187,6 +187,27 @@
     [defaults synchronize];
 }
 
++ (void)addToMyFavoriteAnimal:(Pet *)pet {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSArray *animals = [defaults objectForKey:kFavoriteAnimalsKey];
+    if (!animals) {
+        animals = [NSArray array];
+    }
+    NSMutableArray *favoriteAnimals = [NSMutableArray arrayWithArray:animals];
+    [favoriteAnimals addObject:pet.acceptNum];
+    [defaults setObject:favoriteAnimals forKey:kFavoriteAnimalsKey];
+    [defaults synchronize];
+}
+
++ (void)removeFromMyFavoriteAnimal:(Pet *)pet {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSArray *animals = [defaults objectForKey:kFavoriteAnimalsKey];
+    NSMutableArray *favoriteAnimals = [NSMutableArray arrayWithArray:animals];
+    [favoriteAnimals removeObject:pet.acceptNum];
+    [defaults setObject:favoriteAnimals forKey:kFavoriteAnimalsKey];
+    [defaults synchronize];
+}
+
 + (void)addHudViewTo:(UIViewController *)controller withMessage:(NSString *)message {
     HUDView *hudView = (HUDView *)[Utilities getNibWithName:@"HUDView"];
     hudView.frame = CGRectMake(0,0,CGRectGetWidth(controller.view.frame), CGRectGetHeight(controller.view.frame));

@@ -776,8 +776,7 @@
                                     <tabBarItem title="狗" id="x1R-Ef-Mxd"/>
                                     <tabBarItem tag="1" title="貓" id="qhB-AL-Xap"/>
                                     <tabBarItem tag="2" title="其他" id="ybF-3k-cjp"/>
-                                    <tabBarItem tag="3" title="我的最愛" id="0WA-6s-eSX"/>
-                                    <tabBarItem tag="4" systemItem="search" id="cUl-wE-SaM"/>
+                                    <tabBarItem tag="3" systemItem="search" id="cUl-wE-SaM"/>
                                 </items>
                                 <variation key="default">
                                     <mask key="constraints">
