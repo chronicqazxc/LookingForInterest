@@ -32,6 +32,7 @@
 + (BOOL)isMyFavoriteStore:(Store *)store;
 + (void)addToMyFavoriteStore:(Store *)store;
 + (void)removeFromMyFavoriteStore:(Store *)store;
++ (NSArray *)getMyFavoriteAnimals;
 + (void)addToMyFavoriteAnimal:(Pet *)pet;
 + (void)removeFromMyFavoriteAnimal:(Pet *)pet;
 + (void)addHudViewTo:(UIViewController *)controller withMessage:(NSString *)message;

@@ -65,6 +65,7 @@
 #define kAdoptFilterTypeDog @"犬"
 #define kAdoptFilterTypeCat @"貓"
 #define kAdoptFilterTypeOther @"其他"
+#define kAdoptFilterTypeMyFavorite @"我的最愛"
 #define kAdoptFilterGenderMale @"雄"
 #define kAdoptFilterGenderFemale @"雌"
 #define kAdoptFilterGenderUnknow @"未知"

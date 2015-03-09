@@ -188,12 +188,18 @@
     [defaults synchronize];
 }
 
-+ (void)addToMyFavoriteAnimal:(Pet *)pet {
++ (NSArray *)getMyFavoriteAnimals {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSArray *animals = [defaults objectForKey:kFavoriteAnimalsKey];
     if (!animals) {
         animals = [NSArray array];
     }
+    return animals;
+}
+
++ (void)addToMyFavoriteAnimal:(Pet *)pet {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSArray *animals = [Utilities getMyFavoriteAnimals];
     NSMutableArray *favoriteAnimals = [NSMutableArray arrayWithArray:animals];
     [favoriteAnimals addObject:pet.acceptNum];
     [defaults setObject:favoriteAnimals forKey:kFavoriteAnimalsKey];
@@ -202,7 +208,7 @@
 
 + (void)removeFromMyFavoriteAnimal:(Pet *)pet {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSArray *animals = [defaults objectForKey:kFavoriteAnimalsKey];
+    NSArray *animals = [Utilities getMyFavoriteAnimals];
     NSMutableArray *favoriteAnimals = [NSMutableArray arrayWithArray:animals];
     [favoriteAnimals removeObject:pet.acceptNum];
     [defaults setObject:favoriteAnimals forKey:kFavoriteAnimalsKey];
