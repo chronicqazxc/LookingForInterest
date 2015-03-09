@@ -10,8 +10,9 @@
 #import "AnimalDetailCollectionViewCell.h"
 #import "AnimalDetailScrollLayout.h"
 #import "FacebookController.h"
+#import <MessageUI/MessageUI.h>
 
-@interface AnimalDetailScrollViewController () <UICollectionViewDataSource, UICollectionViewDelegate, AnimalDetailCollectionViewCellDelegate, FacebookControllerDelegate>
+@interface AnimalDetailScrollViewController () <UICollectionViewDataSource, UICollectionViewDelegate, AnimalDetailCollectionViewCellDelegate, FacebookControllerDelegate, MFMailComposeViewControllerDelegate>
 @property (nonatomic) BOOL isInit;
 @property (nonatomic) NSInteger currentRow;
 @property (nonatomic) NSInteger previousRow;
@@ -118,14 +119,14 @@
 }
 
 #pragma mark - AnimalDetailCollectionViewCellDelegate
-- (void)callPhoneNumber:(NSString *)phoneNumber {
-    NSString *message = [NSString stringWithFormat:@"是否撥打：%@",phoneNumber];
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"撥打電話" message:message preferredStyle:UIAlertControllerStyleAlert];
+- (void)callPhoneNumber:(Pet *)pet {
+    NSString *message = pet.phone;
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:pet.resettlement message:message preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
         [alertController dismissViewControllerAnimated:YES completion:nil];
     }];
     UIAlertAction *callOutAction = [UIAlertAction actionWithTitle:@"撥打" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [Utilities callPhoneNumber:phoneNumber];
+        [Utilities callPhoneNumber:pet.phone];
     }];
     [alertController addAction:cancelAction];
     [alertController addAction:callOutAction];
@@ -141,11 +142,30 @@
 }
 
 - (void)publishToLine:(Pet *)pet {
+    UIAlertController *shareAlertController = [UIAlertController alertControllerWithTitle:@"分享至Line" message:@"選擇分享類別" preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertAction *shareImage = [UIAlertAction actionWithTitle:@"照片" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [Utilities startLoading];
+        NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:pet.imageName]];
+        UIImage *image = [UIImage imageWithData:imageData];
+        [Utilities stopLoading];
+        [Utilities shareToLineWithImage:image];
+    }];
+    UIAlertAction *shareContent = [UIAlertAction actionWithTitle:@"介紹" style:UIAlertActionStyleDefault handler: ^(UIAlertAction *action) {
+        [Utilities shareToLineWithContent:pet.note url:kAdoptAnimalsFacebookShareURL];
+    }];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        [shareAlertController dismissViewControllerAnimated:YES completion:nil];
+    }];
+    [shareAlertController addAction:shareImage];
+    [shareAlertController addAction:shareContent];
+    [shareAlertController addAction:cancelAction];
     
+    [self presentViewController:shareAlertController animated:YES completion:nil];
+
 }
 
-- (void)sendEmail:(NSString *)emailAddress {
-    
+- (void)sendEmail:(Pet *)pet {
+    [self showEmailWithTitle:@"" messageBody:@"" recipients: [NSArray arrayWithObject:pet.email]];
 }
 
 #pragma mark - FacebookControllerDelegate
@@ -154,6 +174,58 @@
 }
 
 - (void)publishSuccess:(NSString *)postID {
+    
+}
+
+#pragma mark - MFMailComposeViewController
+- (void)showEmailWithTitle:(NSString *)title messageBody:(NSString *)message recipients:(NSArray *)recipients {
+    NSString *emailTitle = title;
+    NSString *messageBody = message;
+    NSArray *toRecipents = recipients;
+    
+    MFMailComposeViewController *mc = [[MFMailComposeViewController alloc] init];
+    mc.mailComposeDelegate = self;
+    [mc setSubject:emailTitle];
+    [mc setMessageBody:messageBody isHTML:NO];
+    [mc setToRecipients:toRecipents];
+    
+    [self presentViewController:mc animated:YES completion:NULL];
+}
+
+#pragma mark - MFMailComposeViewControllerDelegate
+- (void) mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
+{
+    NSString *title = @"結果";
+    NSString *message = @"";
+    switch (result) {
+        case MFMailComposeResultCancelled:
+            NSLog(@"Mail cancelled");
+            message = @"取消寄信";
+            break;
+        case MFMailComposeResultSaved:
+            NSLog(@"Mail saved");
+            message = @"已儲存";
+            break;
+        case MFMailComposeResultSent:
+            NSLog(@"Mail sent");
+            message = @"已寄出";
+            break;
+        case MFMailComposeResultFailed:
+            NSLog(@"Mail sent failure: %@", [error localizedDescription]);
+            message = @"寄出失敗";
+            break;
+        default:
+            break;
+    }
+    
+    [controller dismissViewControllerAnimated:YES completion:^{
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *action = [UIAlertAction actionWithTitle:@"確定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [alertController dismissViewControllerAnimated:YES completion:nil];
+        }];
+        [alertController addAction:action];
+        [self presentViewController:alertController animated:YES completion:nil];
+    }];
     
 }
 @end

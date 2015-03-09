@@ -462,7 +462,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <items>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="jix-QA-8qJ"/>
-                                    <barButtonItem title="Share" id="68J-dG-BkU">
+                                    <barButtonItem title="Facebook" id="68J-dG-BkU">
                                         <connections>
                                             <action selector="facebookShare:" destination="gTV-IL-0wX" id="d4j-Kl-0ec"/>
                                         </connections>

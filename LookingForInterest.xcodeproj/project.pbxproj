@@ -22,6 +22,9 @@
 		B034D96A1A8903AA00360A6C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B034D9681A8903AA00360A6C /* Main.storyboard */; };
 		B034D96C1A8903AA00360A6C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B034D96B1A8903AA00360A6C /* Images.xcassets */; };
 		B034D96F1A8903AA00360A6C /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = B034D96D1A8903AA00360A6C /* LaunchScreen.xib */; };
+		B0391BDE1AADF83C0070C3CC /* Line40x40.png in Resources */ = {isa = PBXBuildFile; fileRef = B0391BDD1AADF83C0070C3CC /* Line40x40.png */; };
+		B0391BE01AADF8C50070C3CC /* Line30x30.png in Resources */ = {isa = PBXBuildFile; fileRef = B0391BDF1AADF8C50070C3CC /* Line30x30.png */; };
+		B0391BE21AADF9A60070C3CC /* Line20x20.png in Resources */ = {isa = PBXBuildFile; fileRef = B0391BE11AADF9A60070C3CC /* Line20x20.png */; };
 		B04F70171AA4406D007D9856 /* HUDView.m in Sources */ = {isa = PBXBuildFile; fileRef = B04F70161AA4406D007D9856 /* HUDView.m */; };
 		B04F70191AA44089007D9856 /* HUDView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B04F70181AA44089007D9856 /* HUDView.xib */; };
 		B04F701C1AA585CB007D9856 /* DialingButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B04F701B1AA585CB007D9856 /* DialingButton.m */; };
@@ -131,6 +134,10 @@
 		B034D9691A8903AA00360A6C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B034D96B1A8903AA00360A6C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		B034D96E1A8903AA00360A6C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		B0391BDB1AADDEF60070C3CC /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		B0391BDD1AADF83C0070C3CC /* Line40x40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Line40x40.png; path = Img/Line40x40.png; sourceTree = "<group>"; };
+		B0391BDF1AADF8C50070C3CC /* Line30x30.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Line30x30.png; path = Img/Line30x30.png; sourceTree = "<group>"; };
+		B0391BE11AADF9A60070C3CC /* Line20x20.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Line20x20.png; path = Img/Line20x20.png; sourceTree = "<group>"; };
 		B04F70131A9EFEFA007D9856 /* AnimalHospital.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimalHospital.pch; path = LookingForInterest/Src/AnimalHospital.pch; sourceTree = SOURCE_ROOT; };
 		B04F70141A9F0555007D9856 /* GoogleMapNavigation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GoogleMapNavigation.h; path = Src/GoogleMapNavigation.h; sourceTree = "<group>"; };
 		B04F70151AA4406D007D9856 /* HUDView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HUDView.h; path = Src/Views/HUDView.h; sourceTree = "<group>"; };
@@ -262,6 +269,7 @@
 		6481B35C53C0A6FBF51E0A0E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B0391BDB1AADDEF60070C3CC /* MessageUI.framework */,
 				B002A2F71AA02FE700808055 /* QuartzCore.framework */,
 				C1D1C794A2B62ED9A85DC3D8 /* libPods-LookingForInterest.a */,
 			);
@@ -534,6 +542,9 @@
 		B0F06B4E1A8A0E8800FBC90C /* Img */ = {
 			isa = PBXGroup;
 			children = (
+				B0391BE11AADF9A60070C3CC /* Line20x20.png */,
+				B0391BDF1AADF8C50070C3CC /* Line30x30.png */,
+				B0391BDD1AADF83C0070C3CC /* Line40x40.png */,
 				B0A320541AAD45AF0061384A /* Loading300x400.png */,
 				B0A320521AAD428A0061384A /* Loading100x100.png */,
 				B0F06B6B1A8B479F00FBC90C /* arrow-right@2x.png */,
@@ -646,9 +657,11 @@
 				B07804AC1AA9467900DE8AD0 /* PopUpPicker.xib in Resources */,
 				B0F06B621A8B252900FBC90C /* magnifier.png in Resources */,
 				B0F06B601A8B0FA200FBC90C /* OpenMapHeaderController.xib in Resources */,
+				B0391BE01AADF8C50070C3CC /* Line30x30.png in Resources */,
 				B0BF732A1A8A414500213C00 /* StoreCell.xib in Resources */,
 				B0BF73391A8A844000213C00 /* OpenMapCell.xib in Resources */,
 				B0BF730C1A8916A400213C00 /* Icon-76@2x.png in Resources */,
+				B0391BE21AADF9A60070C3CC /* Line20x20.png in Resources */,
 				B02861FD1AAAD90C001C50DB /* AnimalDetailScrollViewController.xib in Resources */,
 				B0BF73081A8916A400213C00 /* Icon-40@3x.png in Resources */,
 				B0BF730A1A8916A400213C00 /* Icon-60@3x.png in Resources */,
@@ -658,6 +671,7 @@
 				B0A320531AAD428A0061384A /* Loading100x100.png in Resources */,
 				B06E569E1A9DE2980030B6A4 /* AnimalHospitalViewController.xib in Resources */,
 				B04F70191AA44089007D9856 /* HUDView.xib in Resources */,
+				B0391BDE1AADF83C0070C3CC /* Line40x40.png in Resources */,
 				B0BF730D1A8916A400213C00 /* Icon-Small.png in Resources */,
 				B0F06B641A8B259F00FBC90C /* iconmonstr-magnifier-3-icon-256.png in Resources */,
 				B0BF73181A8A3FF500213C00 /* LoadingView.xib in Resources */,

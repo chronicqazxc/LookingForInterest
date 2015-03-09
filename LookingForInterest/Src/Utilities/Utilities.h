@@ -38,4 +38,6 @@
 + (AppDelegate *)appdelegate;
 + (void)callPhoneNumber:(NSString *)phoneNumber;
 + (UIView *)glossyView:(UIView *)view;
++ (void)shareToLineWithContent:(NSString *)content url:(NSString *)url;
++ (void)shareToLineWithImage:(UIImage *)image;
 @end

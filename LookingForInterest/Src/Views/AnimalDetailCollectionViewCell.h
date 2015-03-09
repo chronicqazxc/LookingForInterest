@@ -18,9 +18,9 @@
 
 @protocol AnimalDetailCollectionViewCellDelegate
 
-- (void)callPhoneNumber:(NSString *)phoneNumber;
+- (void)callPhoneNumber:(Pet *)pet;
 - (void)publishToFacebook:(Pet *)pet;
 - (void)publishToLine:(Pet *)pet;
-- (void)sendEmail:(NSString *)emailAddress;
+- (void)sendEmail:(Pet *)pet;
 
 @end

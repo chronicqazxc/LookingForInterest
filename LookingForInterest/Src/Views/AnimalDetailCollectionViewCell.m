@@ -122,13 +122,13 @@
 
 - (IBAction)callOut:(UIBarButtonItem *)sender {
     if (self.viewController && [self.viewController respondsToSelector:@selector(callPhoneNumber:)]) {
-        [self.viewController callPhoneNumber:self.pet.phone];
+        [self.viewController callPhoneNumber:self.pet];
     }
 }
 
 - (IBAction)sendEmail:(UIBarButtonItem *)sender {
     if (self.viewController && [self.viewController respondsToSelector:@selector(sendEmail:)]) {
-        [self.viewController sendEmail:self.pet.email];
+        [self.viewController sendEmail:self.pet];
     }
 }
 @end

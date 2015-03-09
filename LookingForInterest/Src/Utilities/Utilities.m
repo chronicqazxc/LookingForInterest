@@ -236,6 +236,41 @@
     return view;
 }
 
++ (void)shareToLineWithImage:(UIImage *)image{
+    NSString *urlString = @"line://msg/";
+    
+    UIPasteboard *pasteboard;
+    if ([[[UIDevice currentDevice] systemVersion] compare:@"7.0" options:NSNumericSearch] != NSOrderedAscending) {
+        pasteboard = [UIPasteboard generalPasteboard];
+    } else {
+        pasteboard = [UIPasteboard pasteboardWithUniqueName];
+    }
+    NSData *imageData = UIImagePNGRepresentation(image);
+    [pasteboard setData:imageData forPasteboardType:@"public.png"];
+    urlString = [NSString stringWithFormat:@"%@image/%@",urlString, pasteboard.name];
+    
+    NSURL *appURL = [NSURL URLWithString:urlString];
+    if ([[UIApplication sharedApplication] canOpenURL: appURL]) {
+        [[UIApplication sharedApplication] openURL: appURL];
+    } else {
+        NSURL *itunesURL = [NSURL URLWithString:@"itms-apps://itunes.apple.com/app/id443904275"];
+        [[UIApplication sharedApplication] openURL:itunesURL];
+    }
+}
+
++ (void)shareToLineWithContent:(NSString *)content url:(NSString *)url {
+    NSString *urlString = @"line://msg/";
+        NSString *key = [NSString stringWithFormat:@"%@%@",content,url];
+        key = [key stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        urlString = [NSString stringWithFormat:@"%@text/%@",urlString,key];
+    NSURL *appURL = [NSURL URLWithString:urlString];
+    if ([[UIApplication sharedApplication] canOpenURL: appURL]) {
+        [[UIApplication sharedApplication] openURL: appURL];
+    } else {
+        NSURL *itunesURL = [NSURL URLWithString:@"itms-apps://itunes.apple.com/app/id443904275"];
+        [[UIApplication sharedApplication] openURL:itunesURL];
+    }
+}
 //NSString* (^thousandSeparatorFormat)(NSNumber*) =
 //^(NSNumber *number) {
 //    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
