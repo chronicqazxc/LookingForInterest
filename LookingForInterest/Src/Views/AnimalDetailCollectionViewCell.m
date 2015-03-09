@@ -49,6 +49,7 @@
 @implementation AnimalDetailCollectionViewCell
 
 - (void)awakeFromNib {
+    self.imageView.image = [UIImage imageNamed:@"Loading300x400.png"];
     [self loadImage];
     [self setLabel:self.variety title:kVarietyTitle andContent:self.pet.variety];
     [self setLabel:self.sex title:kSexTitle andContent:self.pet.sex];
@@ -63,6 +64,13 @@
     [self setLabel:self.animalAnlong title:kAnimalAnlongTitle andContent:self.pet.animalAnlong];
     [self setLabel:self.reason title:kReasonTitle andContent:self.pet.reason];
     [self setLabel:self.bodyweight title:kBodyweightTitle andContent:self.pet.bodyweight];
+    
+    
+    self.imageView.layer.masksToBounds = YES;
+    self.imageView.layer.cornerRadius = 10.0;
+    self.note.layer.borderColor = [UIColor darkGrayColor].CGColor;
+    self.note.layer.borderWidth = 1.0;
+    self.note.layer.cornerRadius = 5.0;
 }
 
 - (void)loadImage {
@@ -81,7 +89,13 @@
         }
         
         dispatch_async(dispatch_get_main_queue(), ^{
+            self.imageView.alpha = 0.0;
             self.imageView.image = self.image;
+            [UIView animateWithDuration:1.0f animations:^{
+                self.imageView.alpha = 1.0;
+            } completion:^(BOOL finished) {
+                nil;
+            }];
         });
     });
 }
@@ -95,16 +109,26 @@
 }
 
 - (IBAction)facebookShare:(UIBarButtonItem *)sender {
+    if (self.viewController && [self.viewController respondsToSelector:@selector(publishToFacebook:)]) {
+        [self.viewController publishToFacebook:self.pet];
+    }
 }
 
 - (IBAction)lineShare:(UIBarButtonItem *)sender {
+    if (self.viewController && [self.viewController respondsToSelector:@selector(publishToLine:)]) {
+        [self.viewController publishToLine:self.pet];
+    }
 }
 
 - (IBAction)callOut:(UIBarButtonItem *)sender {
-    [Utilities callPhoneNumber:self.pet.phone];
+    if (self.viewController && [self.viewController respondsToSelector:@selector(callPhoneNumber:)]) {
+        [self.viewController callPhoneNumber:self.pet.phone];
+    }
 }
 
 - (IBAction)sendEmail:(UIBarButtonItem *)sender {
-    
+    if (self.viewController && [self.viewController respondsToSelector:@selector(sendEmail:)]) {
+        [self.viewController sendEmail:self.pet.email];
+    }
 }
 @end

@@ -10,6 +10,7 @@
 #import "AppDelegate.h"
 #import "GoogleMapNavigation.h"
 #import "HUDView.h"
+#import <QuartzCore/QuartzCore.h>
 
 @implementation Utilities
 + (AppDelegate *)getAppDelegate {
@@ -225,6 +226,14 @@
 + (void)callPhoneNumber:(NSString *)phoneNumber {
     phoneNumber = [NSString stringWithFormat:@"tel://%@",phoneNumber];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:phoneNumber]];
+}
+
++ (UIView *)glossyView:(UIView *)view {
+    CAGradientLayer *gradient = [CAGradientLayer layer];
+    gradient.frame = view.bounds;
+    gradient.colors = [NSArray arrayWithObjects:(id)[[UIColor blackColor] CGColor], (id)[[UIColor whiteColor] CGColor], nil];
+    [view.layer insertSublayer:gradient atIndex:0];
+    return view;
 }
 
 //NSString* (^thousandSeparatorFormat)(NSNumber*) =

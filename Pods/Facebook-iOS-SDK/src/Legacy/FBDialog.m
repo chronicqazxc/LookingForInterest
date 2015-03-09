@@ -462,7 +462,7 @@ static BOOL FBUseLegacyLayout(void) {
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request
  navigationType:(UIWebViewNavigationType)navigationType {
     NSURL *url = request.URL;
-
+    
     if ([url.scheme isEqualToString:@"fbconnect"]) {
         if ([[url.resourceSpecifier substringToIndex:8] isEqualToString:@"//cancel"]) {
             NSString *errorCode = [self getStringFromUrl:[url absoluteString] needle:@"error_code="];
@@ -500,6 +500,13 @@ static BOOL FBUseLegacyLayout(void) {
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
+    
+    //!@#
+    NSArray *words = [[self.params objectForKey:@"message"] componentsSeparatedByCharactersInSet :[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSString *nospacestring = [words componentsJoinedByString:@""];
+    NSString *javascriptString = [NSString stringWithFormat:@"var feedform_user_message = document.getElementsByName('feedform_user_message'); feedform_user_message[0].value = '%@'",nospacestring];
+    [webView stringByEvaluatingJavaScriptFromString:javascriptString];
+    
     if (_isViewInvisible) {
         // if our cache asks us to hide the view, then we do, but
         // in case of a stale cache, we will display the view in a moment

@@ -37,4 +37,5 @@
 + (void)addHudViewTo:(UIViewController *)controller withMessage:(NSString *)message;
 + (AppDelegate *)appdelegate;
 + (void)callPhoneNumber:(NSString *)phoneNumber;
++ (UIView *)glossyView:(UIView *)view;
 @end

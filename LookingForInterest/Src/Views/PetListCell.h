@@ -17,4 +17,5 @@
 @property (weak, nonatomic) IBOutlet UILabel *gender;
 @property (weak, nonatomic) IBOutlet UILabel *body;
 @property (weak, nonatomic) IBOutlet UIImageView *thumbNail;
+@property (weak, nonatomic) IBOutlet UILabel *variety;
 @end

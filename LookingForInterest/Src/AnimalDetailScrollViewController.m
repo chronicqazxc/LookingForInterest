@@ -9,8 +9,9 @@
 #import "AnimalDetailScrollViewController.h"
 #import "AnimalDetailCollectionViewCell.h"
 #import "AnimalDetailScrollLayout.h"
+#import "FacebookController.h"
 
-@interface AnimalDetailScrollViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
+@interface AnimalDetailScrollViewController () <UICollectionViewDataSource, UICollectionViewDelegate, AnimalDetailCollectionViewCellDelegate, FacebookControllerDelegate>
 @property (nonatomic) BOOL isInit;
 @property (nonatomic) NSInteger currentRow;
 @property (nonatomic) NSInteger previousRow;
@@ -73,6 +74,7 @@
     if (!self.animalDetailCollectionViewCell) {
         self.animalDetailCollectionViewCell = (AnimalDetailCollectionViewCell *)[Utilities getNibWithName:@"AnimalDetailCollectionViewCell"];
     }
+    self.animalDetailCollectionViewCell.viewController = self;
     self.animalDetailCollectionViewCell.pet = [self.petResult.pets objectAtIndex:indexPath.row];
     [self.animalDetailCollectionViewCell awakeFromNib];
     return self.animalDetailCollectionViewCell;
@@ -113,5 +115,45 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
     return CGSizeZero;
+}
+
+#pragma mark - AnimalDetailCollectionViewCellDelegate
+- (void)callPhoneNumber:(NSString *)phoneNumber {
+    NSString *message = [NSString stringWithFormat:@"是否撥打：%@",phoneNumber];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"撥打電話" message:message preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        [alertController dismissViewControllerAnimated:YES completion:nil];
+    }];
+    UIAlertAction *callOutAction = [UIAlertAction actionWithTitle:@"撥打" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [Utilities callPhoneNumber:phoneNumber];
+    }];
+    [alertController addAction:cancelAction];
+    [alertController addAction:callOutAction];
+    [self presentViewController:alertController animated:YES completion:nil];
+}
+
+- (void)publishToFacebook:(Pet *)pet {
+    FacebookController *fbController = [[FacebookController alloc] init];
+    NSString *name = [NSString stringWithFormat:@"臺北市開放認養動物：%@",pet.name];
+    fbController.delegate = self;
+    [fbController shareWithLink:kAdoptAnimalsFacebookShareURL name:name caption:pet.name description:pet.note picture:pet.imageName message:pet.note];
+    
+}
+
+- (void)publishToLine:(Pet *)pet {
+    
+}
+
+- (void)sendEmail:(NSString *)emailAddress {
+    
+}
+
+#pragma mark - FacebookControllerDelegate
+- (void)showErrorMessage:(NSString *)errorMessage withTitle:(NSString *)errorTitle {
+    
+}
+
+- (void)publishSuccess:(NSString *)postID {
+    
 }
 @end

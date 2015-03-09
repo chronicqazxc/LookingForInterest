@@ -10,8 +10,8 @@
 
 #define kGetDataError @"擷取資料失敗"
 #define kRequestError @"網路連線錯誤"
-#define kPetThumbNailHeigh 79
-#define kPetThumbNailWeigh 117
+#define kPetThumbNailHeigh 100
+#define kPetThumbNailWeigh 100
 
 @interface RequestSender() <NSURLConnectionDelegate>
 @property (strong, nonatomic) NSMutableArray *receivedDatas;

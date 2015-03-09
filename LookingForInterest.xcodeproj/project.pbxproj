@@ -35,6 +35,8 @@
 		B08572471AA4C18400F0F8FD /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B08572461AA4C18400F0F8FD /* MenuViewController.m */; };
 		B085724D1AA74FC700F0F8FD /* FacebookController.m in Sources */ = {isa = PBXBuildFile; fileRef = B085724C1AA74FC700F0F8FD /* FacebookController.m */; };
 		B0A320511AA98BEC0061384A /* AdoptAnimalFilterController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0A320501AA98BEC0061384A /* AdoptAnimalFilterController.m */; };
+		B0A320531AAD428A0061384A /* Loading100x100.png in Resources */ = {isa = PBXBuildFile; fileRef = B0A320521AAD428A0061384A /* Loading100x100.png */; };
+		B0A320551AAD45AF0061384A /* Loading300x400.png in Resources */ = {isa = PBXBuildFile; fileRef = B0A320541AAD45AF0061384A /* Loading300x400.png */; };
 		B0ACC90A1AA6F8520068A7D5 /* Pet.m in Sources */ = {isa = PBXBuildFile; fileRef = B0ACC9091AA6F8520068A7D5 /* Pet.m */; };
 		B0ACC90D1AA6F9FA0068A7D5 /* PetResult.m in Sources */ = {isa = PBXBuildFile; fileRef = B0ACC90C1AA6F9FA0068A7D5 /* PetResult.m */; };
 		B0ACC9111AA836A20068A7D5 /* PetListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B0ACC90F1AA836A20068A7D5 /* PetListCell.m */; };
@@ -155,6 +157,8 @@
 		B085724C1AA74FC700F0F8FD /* FacebookController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FacebookController.m; path = Src/Objects/FacebookController.m; sourceTree = "<group>"; };
 		B0A3204F1AA98BEC0061384A /* AdoptAnimalFilterController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AdoptAnimalFilterController.h; path = Src/AdoptAnimalFilterController.h; sourceTree = "<group>"; };
 		B0A320501AA98BEC0061384A /* AdoptAnimalFilterController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AdoptAnimalFilterController.m; path = Src/AdoptAnimalFilterController.m; sourceTree = "<group>"; };
+		B0A320521AAD428A0061384A /* Loading100x100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Loading100x100.png; path = Img/Loading100x100.png; sourceTree = "<group>"; };
+		B0A320541AAD45AF0061384A /* Loading300x400.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Loading300x400.png; path = Img/Loading300x400.png; sourceTree = "<group>"; };
 		B0ACC9081AA6F8520068A7D5 /* Pet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Pet.h; path = Src/Objects/Pet.h; sourceTree = "<group>"; };
 		B0ACC9091AA6F8520068A7D5 /* Pet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Pet.m; path = Src/Objects/Pet.m; sourceTree = "<group>"; };
 		B0ACC90B1AA6F9FA0068A7D5 /* PetResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PetResult.h; path = Src/Objects/PetResult.h; sourceTree = "<group>"; };
@@ -530,6 +534,8 @@
 		B0F06B4E1A8A0E8800FBC90C /* Img */ = {
 			isa = PBXGroup;
 			children = (
+				B0A320541AAD45AF0061384A /* Loading300x400.png */,
+				B0A320521AAD428A0061384A /* Loading100x100.png */,
 				B0F06B6B1A8B479F00FBC90C /* arrow-right@2x.png */,
 				B0F06B671A8B3DFA00FBC90C /* arrow-down@2x.png */,
 				B0F06B681A8B3DFA00FBC90C /* arrow-up@2x.png */,
@@ -646,8 +652,10 @@
 				B02861FD1AAAD90C001C50DB /* AnimalDetailScrollViewController.xib in Resources */,
 				B0BF73081A8916A400213C00 /* Icon-40@3x.png in Resources */,
 				B0BF730A1A8916A400213C00 /* Icon-60@3x.png in Resources */,
+				B0A320551AAD45AF0061384A /* Loading300x400.png in Resources */,
 				B0BF73301A8A4EE000213C00 /* menu@2x.png in Resources */,
 				B0BF732F1A8A4EE000213C00 /* fav@2x.png in Resources */,
+				B0A320531AAD428A0061384A /* Loading100x100.png in Resources */,
 				B06E569E1A9DE2980030B6A4 /* AnimalHospitalViewController.xib in Resources */,
 				B04F70191AA44089007D9856 /* HUDView.xib in Resources */,
 				B0BF730D1A8916A400213C00 /* Icon-Small.png in Resources */,

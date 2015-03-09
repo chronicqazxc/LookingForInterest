@@ -14,6 +14,8 @@
 #import <MGSwipeTableCell/MGSwipeTableCell.h>
 #import "AnimalDetailScrollViewController.h"
 
+#define AdoptAnimalTitle(type) [NSString stringWithFormat:@"領養%@",type]
+
 @interface AdoptAnimalViewController () <UITableViewDataSource, UITableViewDelegate, UITabBarDelegate, RequestSenderDelegate, AdoptAnimalFilterControllerDelegate, MGSwipeTableCellDelegate>
 @property (strong, nonatomic) PetResult *petResult;
 @property (strong, nonatomic) NSMutableArray *requests;
@@ -55,6 +57,19 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [self changeNavTitle];
+}
+
+- (void)changeNavTitle {
+    if ([self.petFilters.type isEqualToString:kAdoptFilterAll] || !self.petFilters.type || [self.petFilters.type isEqualToString:@""]) {
+        self.navigationItem.title = AdoptAnimalTitle(@"全部");
+    } else if ([self.petFilters.type isEqualToString:kAdoptFilterTypeDog]) {
+        self.navigationItem.title = AdoptAnimalTitle(kAdoptFilterTypeDog);
+    } else if ([self.petFilters.type isEqualToString:kAdoptFilterTypeCat]) {
+        self.navigationItem.title = AdoptAnimalTitle(kAdoptFilterTypeCat);
+    } else if ([self.petFilters.type isEqualToString:kAdoptFilterTypeOther]) {
+        self.navigationItem.title = AdoptAnimalTitle(kAdoptFilterTypeOther);
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -141,7 +156,7 @@
 
 #pragma mark - UITableViewDataSource
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 90.0;
+    return 113.0;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -154,21 +169,34 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    UINib *petCellNib = [UINib nibWithNibName:@"PetListCell" bundle:nil];
+    [tableView registerNib:petCellNib forCellReuseIdentifier:kPetListCellIdentifier];
+    
     PetListCell *petCell = [tableView dequeueReusableCellWithIdentifier:kPetListCellIdentifier];
     if (!petCell) {
         petCell = (PetListCell *)[Utilities getNibWithName:@"PetListCell"];
     }
     Pet *pet = [self.petResult.pets objectAtIndex:indexPath.row];
-    if (!pet.thumbNail && !self.isStartLoading) {
-        [self startThumbNailDownload:pet forIndexPath:indexPath];
-    } else {
-        petCell.imageView.image = pet.thumbNail;
-    }
-    petCell.name.text = [NSString stringWithFormat:@"名字：%@ / %@",pet.name, pet.type];
+
+    petCell.name.text = [NSString stringWithFormat:@"名字：%@（%@）",pet.name ,pet.type];
+    petCell.variety.text = [NSString stringWithFormat:@"品種：%@",pet.variety];
     petCell.age.text = [NSString stringWithFormat:@"年齡：%@",pet.age];
     petCell.gender.text = [NSString stringWithFormat:@"性別：%@",pet.sex];
     petCell.body.text = [NSString stringWithFormat:@"體型：%@",pet.build];
+    
+//    petCell.thumbNail = (UIImageView *)[Utilities glossyView:(UIView *)petCell.thumbNail];
+    petCell.thumbNail.layer.masksToBounds = YES;
+    petCell.thumbNail.layer.borderWidth = 1.0;
+    petCell.thumbNail.layer.cornerRadius = CGRectGetHeight(petCell.thumbNail.frame)/2.0;
+    if (!pet.thumbNail && !self.isStartLoading) {
+        petCell.thumbNail.image = [UIImage imageNamed:@"Loading100x100.png"];
+        [self startThumbNailDownload:pet forIndexPath:indexPath];
+        petCell.thumbNail.layer.borderColor = [UIColor colorWithWhite:0.0 alpha:0.7].CGColor;
+    } else {
+        petCell.thumbNail.image = pet.thumbNail;
+        petCell.thumbNail.layer.borderColor = [UIColor colorWithWhite:1.0 alpha:0.7].CGColor;
+    }
     
 //    petCell.delegate = self;
 //    petCell.leftSwipeSettings.transition = MGSwipeTransitionBorder;
@@ -292,6 +320,13 @@
         pet.thumbNail = image;
         PetListCell *cell = (PetListCell *)[self.tableView cellForRowAtIndexPath:indexPath];
         cell.thumbNail.image = image;
+        cell.thumbNail.layer.borderColor = [UIColor colorWithWhite:1.0 alpha:0.7].CGColor;
+        cell.thumbNail.alpha = 0.0;
+        [UIView animateWithDuration:1.0f animations:^{
+            cell.thumbNail.alpha = 1.0;
+        } completion:^(BOOL finished) {
+            nil;
+        }];
     }
 }
 
@@ -300,12 +335,15 @@
     switch (item.tag) {
         case 0:
             [self sendDogRequest];
+            [self changeNavTitle];
             break;
         case 1:
             [self sendCatRequest];
+            [self changeNavTitle];
             break;
         case 2:
             [self sendOtherRequest];
+            [self changeNavTitle];
             break;
         case 3:
             [self showFilter];
@@ -353,6 +391,7 @@
 #pragma mark - AdoptAnimalFilterControllerDelegate
 - (void)clickSearchWithPetFilters:(PetFilters *)petFilters {
     [self startLoading];
+    [self changeNavTitle];
     [self clearRequestSenderDelegate];
     self.petFilters.age = [self.petFilters.age isEqualToString:kAdoptFilterAll]?nil:self.petFilters.age;
     self.petFilters.type = [self.petFilters.type isEqualToString:kAdoptFilterAll]?nil:self.petFilters.type;

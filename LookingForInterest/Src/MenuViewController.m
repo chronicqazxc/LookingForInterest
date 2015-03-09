@@ -8,13 +8,17 @@
 
 #import "MenuViewController.h"
 #import "DialingButton.h"
+#import <FacebookSDK/FacebookSDK.h>
 
-@interface MenuViewController ()
+@interface MenuViewController () <FBLoginViewDelegate>
 @property (nonatomic) BOOL isInitial;
 @property (nonatomic) BOOL isViewDidAppear;
 @property (weak, nonatomic) IBOutlet DialingButton *adoptButton;
 @property (weak, nonatomic) IBOutlet DialingButton *animalHospitalButton;
 @property (weak, nonatomic) IBOutlet UIImageView *backgroundImageView;
+@property (weak, nonatomic) IBOutlet FBLoginView *loginView;
+@property (weak, nonatomic) IBOutlet FBProfilePictureView *profilePictureView;
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @end
 
 @implementation MenuViewController
@@ -29,8 +33,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.loginView.delegate = self;
+    self.loginView.readPermissions = @[@"public_profile", @"email", @"user_friends"];
     self.adoptButton.hidden = YES;
     self.animalHospitalButton.hidden = YES;
+    self.profilePictureView.hidden = YES;
+    self.nameLabel.text = @"";
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
         //Background Thread
         UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://i.ytimg.com/vi/usasigkvhDY/hqdefault.jpg"]]];
@@ -63,8 +71,14 @@
 - (void)initButtons {
     [self initCircleView:self.adoptButton];
     [self initCircleView:self.animalHospitalButton];
+    [self initCircleView:self.profilePictureView];
+    self.profilePictureView.layer.borderColor = [UIColor colorWithWhite:1.0 alpha:0.7].CGColor;
+    self.profilePictureView.layer.borderWidth = 1.0;
+    self.profilePictureView.layer.masksToBounds = YES;
+    
     self.adoptButton.hidden = NO;
     self.animalHospitalButton.hidden = NO;
+    self.profilePictureView.hidden = NO;
 }
 
 - (void)initCircleView:(UIView *)view {
@@ -82,4 +96,56 @@
 }
 */
 
+#pragma mark - FBLoginViewDelegate
+- (void)loginViewFetchedUserInfo:(FBLoginView *)loginView user:(id<FBGraphUser>)user {
+    self.profilePictureView.profileID = user.objectID;
+    self.nameLabel.text = user.name;
+}
+
+- (void)loginViewShowingLoggedOutUser:(FBLoginView *)loginView {
+    self.profilePictureView.profileID = nil;
+    self.nameLabel.text = @"";
+}
+
+- (void)loginView:(FBLoginView *)loginView handleError:(NSError *)error {
+    NSString *alertMessage, *alertTitle;
+    
+    // If the user performs an action outside of you app to recover,
+    // the SDK provides a message, you just need to surface it.
+    // This handles cases like Facebook password change or unverified Facebook accounts.
+    if ([FBErrorUtility shouldNotifyUserForError:error]) {
+        alertTitle = @"Facebook error";
+        alertMessage = [FBErrorUtility userMessageForError:error];
+        
+        // This code will handle session closures that happen outside of the app
+        // You can take a look at our error handling guide to know more about it
+        // https://developers.facebook.com/docs/ios/errors
+    } else if ([FBErrorUtility errorCategoryForError:error] == FBErrorCategoryAuthenticationReopenSession) {
+        alertTitle = @"Session Error";
+        alertMessage = @"Your current session is no longer valid. Please log in again.";
+        
+        // If the user has cancelled a login, we will do nothing.
+        // You can also choose to show the user a message if cancelling login will result in
+        // the user not being able to complete a task they had initiated in your app
+        // (like accessing FB-stored information or posting to Facebook)
+    } else if ([FBErrorUtility errorCategoryForError:error] == FBErrorCategoryUserCancelled) {
+        NSLog(@"user cancelled login");
+        
+        // For simplicity, this sample handles other errors with a generic message
+        // You can checkout our error handling guide for more detailed information
+        // https://developers.facebook.com/docs/ios/errors
+    } else {
+        alertTitle  = @"Something went wrong";
+        alertMessage = @"Please try again later.";
+        NSLog(@"Unexpected error:%@", error);
+    }
+    
+    if (alertMessage) {
+        [[[UIAlertView alloc] initWithTitle:alertTitle
+                                    message:alertMessage
+                                   delegate:nil
+                          cancelButtonTitle:@"OK"
+                          otherButtonTitles:nil] show];
+    }
+}
 @end

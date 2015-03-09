@@ -8,6 +8,16 @@
 
 #import <Foundation/Foundation.h>
 #import <FacebookSDK/FacebookSDK.h>
-@interface FacebookController : NSObject
 
+@protocol FacebookControllerDelegate;
+
+@interface FacebookController : NSObject
+@property (strong, nonatomic) UIViewController <FacebookControllerDelegate> *delegate;
+
+- (void)shareWithLink:(NSString *)link name:(NSString *)name caption:(NSString *)caption description:(NSString *)description picture:(NSString *)picture message:(NSString *)message;
+@end
+
+@protocol FacebookControllerDelegate
+- (void)showErrorMessage:(NSString *)errorMessage withTitle:(NSString *)errorTitle;
+- (void)publishSuccess:(NSString *)postID;
 @end

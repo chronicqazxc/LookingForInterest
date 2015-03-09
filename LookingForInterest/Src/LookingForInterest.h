@@ -39,6 +39,7 @@
 #define kAccessTokenKey @"access_token"
 #pragma mark -
 #pragma mark - Adopt animals URL
+#define kAdoptAnimalsFacebookShareURL @"http://www.tcapo.gov.taipei"
 #define kAdoptAnimalsInTPCURL @"http://210.65.114.15/api/action/datastore_search"
 #define kResourceIDKey @"resource_id"
 #define kResourceID @"c57f54e2-8ac3-4d30-bce0-637a8968796e"
