@@ -13,6 +13,7 @@
 #import <MGSwipeTableCell/MGSwipeTableCell.h>
 #import "AnimalDetailScrollViewController.h"
 #import "AnimalListTableViewCell.h"
+#import "GoTopButton.h"
 
 #define AdoptAnimalTitle(type) [NSString stringWithFormat:@"領養%@",type]
 
@@ -27,6 +28,11 @@
 @property (nonatomic) BOOL isStartLoading;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UITabBar *tabBar;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *previousPageIndicator;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *nextPageIndicator;
+@property (weak, nonatomic) IBOutlet GoTopButton *pageIndicator;
+@property (weak, nonatomic) IBOutlet UIView *previousPageView;
+@property (weak, nonatomic) IBOutlet UIView *nextPageView;
 @end
 
 @implementation AdoptAnimalViewController
@@ -39,6 +45,8 @@
     self.tableView.delegate = self;
     self.tabBar.delegate = self;
     self.checkButton.enabled = NO;
+    self.previousPageView.hidden = YES;
+    self.nextPageView.hidden = YES;
     [self initProperties];
 }
 
@@ -103,6 +111,7 @@
 }
 
 - (void)getNextPage {
+    [self.nextPageIndicator startAnimating];
     [self clearRequestSenderDelegate];
     [self startLoading];
 //    PetFilters *petFilters = [[PetFilters alloc] init];
@@ -113,6 +122,7 @@
 }
 
 - (void)getPreviousPage {
+    [self.previousPageIndicator startAnimating];
     [self clearRequestSenderDelegate];
     [self startLoading];
 //    PetFilters *petFilters = [[PetFilters alloc] init];
@@ -172,7 +182,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+
     UINib *petCellNib = [UINib nibWithNibName:@"AnimalListTableViewCell" bundle:nil];
     [tableView registerNib:petCellNib forCellReuseIdentifier:kPetListCellIdentifier];
     AnimalListTableViewCell *petCell = [tableView dequeueReusableCellWithIdentifier:kPetListCellIdentifier];
@@ -227,13 +237,17 @@
 
 #pragma mark - UIScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)aScrollView {
-        CGPoint offset = aScrollView.contentOffset;
-        CGRect bounds = aScrollView.bounds;
-        CGSize size = aScrollView.contentSize;
-        UIEdgeInsets inset = aScrollView.contentInset;
-        float y = offset.y + bounds.size.height - inset.bottom;
-        float h = size.height;
-        float reloadDistance = 90;
+    [UIView animateWithDuration:1.0 animations:^{
+        self.pageIndicator.alpha = 1.0;
+    } completion:nil];
+    
+    CGPoint offset = aScrollView.contentOffset;
+    CGRect bounds = aScrollView.bounds;
+    CGSize size = aScrollView.contentSize;
+    UIEdgeInsets inset = aScrollView.contentInset;
+    float y = offset.y + bounds.size.height - inset.bottom;
+    float h = size.height;
+    float reloadDistance = 90;
     
     if (self.isStartLoading == NO) {
         if(y > h + reloadDistance) {
@@ -259,9 +273,17 @@
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
+   [NSTimer scheduledTimerWithTimeInterval:0.8 target:self selector:@selector(hiddenPageIndicator:) userInfo:nil repeats:NO];
     if (!self.isStartLoading) {
         [self loadThumbNailForOnScreenRows];
     }
+}
+
+- (void)hiddenPageIndicator:(NSTimer *)timer {
+    [UIView animateWithDuration:1.0 animations:^{
+        self.pageIndicator.alpha = 0.0;
+    } completion:nil];
+    [timer invalidate];
 }
 
 - (void)loadThumbNailForOnScreenRows {
@@ -286,12 +308,18 @@
 #pragma mark - RequestSenderDelegate
 - (void)requestFaildWithMessage:(NSString *)message {
     [Utilities stopLoading];
+    [self.nextPageIndicator stopAnimating];
+    [self.previousPageIndicator stopAnimating];
     self.isStartLoading = NO;
     UIAlertController *alertController = [Utilities normalAlertWithTitle:@"錯誤" message:message withObj:nil andSEL:nil byCaller:self];
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
 - (void)petResultBack:(PetResult *)petResult {
+    [self.nextPageIndicator stopAnimating];
+    [self setPageIndicatorTitleByResult:petResult];
+    
+    [self.previousPageIndicator stopAnimating];
     self.isStartLoading = NO;
     self.petResult = petResult;
     self.nextPage = petResult.next;
@@ -302,6 +330,40 @@
     }
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     [Utilities stopLoading];
+}
+
+- (void)setPageIndicatorTitleByResult:(PetResult *)petResult {
+    NSString *totalPage = @"";
+    if ([petResult.total intValue]%20) {
+        NSInteger total = [petResult.total intValue]/20+1;
+        totalPage = [NSString stringWithFormat:@"%ld",total];
+    } else {
+        NSInteger total = [petResult.total intValue]/20;
+        totalPage = [NSString stringWithFormat:@"%ld",total];
+    }
+    NSString *currentPage = @"";
+    NSString *offset = [NSString stringWithFormat:@"%@",petResult.offset];
+    if ([offset isEqualToString:@""]) {
+        currentPage = @"1";
+    } else {
+        currentPage = [NSString stringWithFormat:@"%d",[offset intValue]/20+1];
+    }
+    NSLog(@"offset:%@",petResult.offset);
+    [self.pageIndicator setTitle:[NSString stringWithFormat:@"%@/%@",currentPage,totalPage] forState:UIControlStateNormal];
+    
+    if ([currentPage isEqualToString:@"1"] && [currentPage isEqualToString:totalPage]) {
+        self.previousPageView.hidden = YES;
+        self.nextPageView.hidden = YES;
+    } else if ([currentPage isEqualToString:@"1"] && ![currentPage isEqualToString:totalPage]) {
+        self.previousPageView.hidden = YES;
+        self.nextPageView.hidden = NO;
+    } else if (![currentPage isEqualToString:@"1"] && [currentPage isEqualToString:totalPage]) {
+        self.previousPageView.hidden = NO;
+        self.nextPageView.hidden = YES;
+    } else {
+        self.previousPageView.hidden = NO;
+        self.nextPageView.hidden = NO;
+    }
 }
 
 - (void)thumbNailBack:(UIImage *)image indexPath:(NSIndexPath *)indexPath {

@@ -14,8 +14,23 @@
 
 @implementation GoTopButton
 
-- (id)initWithFrame:(CGRect)frame
-{
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        [self setTitleColor:UIColorFromRGB(0x006666) forState:UIControlStateNormal];
+        [self setTitle:@"Top↑" forState:UIControlStateNormal];
+        self.backgroundColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.8];
+        self.layer.masksToBounds = YES;
+        self.layer.cornerRadius = 3.0;
+        self.hidden = NO;
+        self.alpha = 0.0;
+        self.conditionForShow = 0;
+        [self addTarget:self action:@selector(buttonClicked) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return self;
+}
+
+- (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
         CGRect rect = frame;
