@@ -188,7 +188,23 @@
     [defaults synchronize];
 }
 
-+ (NSArray *)getMyFavoriteAnimals {
++ (NSArray *)getMyFavoriteAnimalsDecoded {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSArray *animals = [defaults objectForKey:kFavoriteAnimalsKey];
+    if (!animals) {
+        animals = [NSArray array];
+    } else {
+        NSMutableArray *decodedAnimals = [NSMutableArray array];
+        for (NSData *encodedAnimal in animals) {
+            Pet *pet = [NSKeyedUnarchiver unarchiveObjectWithData:encodedAnimal];
+            [decodedAnimals addObject:pet];
+        }
+        animals = [NSArray arrayWithArray:decodedAnimals];
+    }
+    return animals;
+}
+
++ (NSArray *)getMyFavoriteAnimalsEncoded {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSArray *animals = [defaults objectForKey:kFavoriteAnimalsKey];
     if (!animals) {
@@ -199,19 +215,35 @@
 
 + (void)addToMyFavoriteAnimal:(Pet *)pet {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSArray *animals = [Utilities getMyFavoriteAnimals];
+    NSArray *animals = [Utilities getMyFavoriteAnimalsEncoded];
+    if (!animals) {
+        animals = [NSArray array];
+    }
+    
+    NSData *encodedAnimal = [NSKeyedArchiver archivedDataWithRootObject:pet];
+    
     NSMutableArray *favoriteAnimals = [NSMutableArray arrayWithArray:animals];
-    [favoriteAnimals addObject:pet.acceptNum];
+    [favoriteAnimals addObject:encodedAnimal];
     [defaults setObject:favoriteAnimals forKey:kFavoriteAnimalsKey];
     [defaults synchronize];
 }
 
 + (void)removeFromMyFavoriteAnimal:(Pet *)pet {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSArray *animals = [Utilities getMyFavoriteAnimals];
+    NSArray *animals = [Utilities getMyFavoriteAnimalsDecoded];
     NSMutableArray *favoriteAnimals = [NSMutableArray arrayWithArray:animals];
-    [favoriteAnimals removeObject:pet.acceptNum];
-    [defaults setObject:favoriteAnimals forKey:kFavoriteAnimalsKey];
+    for (Pet *animal in favoriteAnimals) {
+        if ([animal.acceptNum isEqualToString:pet.acceptNum]) {
+            [favoriteAnimals removeObject:animal];
+            break;
+        }
+    }
+    NSMutableArray *decodeAnimals = [NSMutableArray array];
+    for (Pet *animal in favoriteAnimals) {
+        NSData *encodedAnimal = [NSKeyedArchiver archivedDataWithRootObject:animal];
+        [decodeAnimals addObject:encodedAnimal];
+    }
+    [defaults setObject:decodeAnimals forKey:kFavoriteAnimalsKey];
     [defaults synchronize];
 }
 
@@ -277,6 +309,7 @@
         [[UIApplication sharedApplication] openURL:itunesURL];
     }
 }
+
 //NSString* (^thousandSeparatorFormat)(NSNumber*) =
 //^(NSNumber *number) {
 //    NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];

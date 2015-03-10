@@ -10,12 +10,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LookingForInterest/Src/AdoptAnimalViewController.m"
-            timestampString = "447619881.948684"
+            timestampString = "447669933.139972"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "273"
-            endingLineNumber = "273"
-            landmarkName = "-scrollViewDidScroll:"
+            startingLineNumber = "251"
+            endingLineNumber = "251"
+            landmarkName = "-scrollViewDidEndDragging:willDecelerate:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -26,12 +26,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LookingForInterest/Src/AdoptAnimalViewController.m"
-            timestampString = "447619881.948684"
+            timestampString = "447669933.139972"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "311"
-            endingLineNumber = "311"
-            landmarkName = "-startThumbNailDownload:forIndexPath:"
+            startingLineNumber = "289"
+            endingLineNumber = "289"
+            landmarkName = "-requestFaildWithMessage:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -42,27 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LookingForInterest/Src/AdoptAnimalViewController.m"
-            timestampString = "447619758.744333"
+            timestampString = "447669933.139972"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "167"
-            endingLineNumber = "167"
-            landmarkName = "-tableView:numberOfRowsInSection:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "LookingForInterest/Src/AdoptAnimalViewController.m"
-            timestampString = "447619881.948684"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "297"
-            endingLineNumber = "297"
+            startingLineNumber = "275"
+            endingLineNumber = "275"
             landmarkName = "-loadThumbNailForOnScreenRows"
             landmarkType = "5">
          </BreakpointContent>
@@ -74,12 +58,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LookingForInterest/Src/AdoptAnimalViewController.m"
-            timestampString = "447619881.948684"
+            timestampString = "447669933.139972"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "290"
-            endingLineNumber = "290"
-            landmarkName = "-scrollViewDidEndDecelerating:"
+            startingLineNumber = "268"
+            endingLineNumber = "268"
+            landmarkName = "-loadThumbNailForOnScreenRows"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -95,8 +79,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "63"
             endingLineNumber = "63"
-            landmarkName = "-startLoading"
-            landmarkType = "5">
+            landmarkName = "@implementation AppDelegate"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

@@ -7,15 +7,12 @@
 //
 
 #import "AdoptAnimalViewController.h"
-#import "PetListCell.h"
 #import "RequestSender.h"
 #import "AdoptAnimalFilterController.h"
 #import <MGSwipeTableCell/MGSwipeButton.h>
 #import <MGSwipeTableCell/MGSwipeTableCell.h>
 #import "AnimalDetailScrollViewController.h"
-
-#import "StoreCell.h"
-#define kStoreCellIdentifier @"StoreCell"
+#import "AnimalListTableViewCell.h"
 
 #define AdoptAnimalTitle(type) [NSString stringWithFormat:@"領養%@",type]
 
@@ -41,6 +38,7 @@
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     self.tabBar.delegate = self;
+    self.checkButton.enabled = NO;
     [self initProperties];
 }
 
@@ -175,12 +173,11 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    UINib *petCellNib = [UINib nibWithNibName:@"PetListCell" bundle:nil];
+    UINib *petCellNib = [UINib nibWithNibName:@"AnimalListTableViewCell" bundle:nil];
     [tableView registerNib:petCellNib forCellReuseIdentifier:kPetListCellIdentifier];
-    
-    PetListCell *petCell = [tableView dequeueReusableCellWithIdentifier:kPetListCellIdentifier];
+    AnimalListTableViewCell *petCell = [tableView dequeueReusableCellWithIdentifier:kPetListCellIdentifier];
     if (!petCell) {
-        petCell = (PetListCell *)[Utilities getNibWithName:@"PetListCell"];
+        petCell = (AnimalListTableViewCell *)[Utilities getNibWithName:kPetListCellIdentifier];
     }
     Pet *pet = [self.petResult.pets objectAtIndex:indexPath.row];
 
@@ -196,58 +193,32 @@
     if (!pet.thumbNail && !self.isStartLoading) {
         petCell.thumbNail.image = [UIImage imageNamed:@"Loading100x100.png"];
         [self startThumbNailDownload:pet forIndexPath:indexPath];
-        petCell.thumbNail.layer.borderColor = [UIColor colorWithWhite:0.0 alpha:0.7].CGColor;
+        petCell.thumbNail.layer.borderColor = [UIColor colorWithWhite:0.0 alpha:0.3].CGColor;
     } else {
         petCell.thumbNail.image = pet.thumbNail;
-        petCell.thumbNail.layer.borderColor = [UIColor colorWithWhite:1.0 alpha:0.7].CGColor;
+        petCell.thumbNail.layer.borderColor = [UIColor colorWithWhite:1.0 alpha:1.0].CGColor;
     }
     
     petCell.delegate = self;
-    petCell.leftSwipeSettings.transition = MGSwipeTransitionBorder;
-    petCell.leftExpansion.buttonIndex = 0;
-    petCell.leftExpansion.fillOnTrigger = YES;
-    petCell.leftExpansion.threshold = 3.5;
-    petCell.leftButtons = [self createLeftButtonWithIndexPath:indexPath];
-    petCell.rightButtons = nil;
     return petCell;
-    
-//    UINib *petCellNib = [UINib nibWithNibName:@"StoreCell" bundle:nil];
-//    [tableView registerNib:petCellNib forCellReuseIdentifier:kStoreCellIdentifier];
-//    StoreCell *storeCell = [tableView dequeueReusableCellWithIdentifier:kStoreCellIdentifier];
-//    if (!storeCell) {
-//        storeCell = (StoreCell *)[Utilities getNibWithName:kStoreCellIdentifier];
-//    }
-//    
-//    storeCell.leftSwipeSettings.transition = MGSwipeTransitionBorder;
-//    storeCell.leftExpansion.buttonIndex = 0;
-//    storeCell.leftExpansion.fillOnTrigger = YES;
-//    storeCell.leftExpansion.threshold = 3.5;
-//    storeCell.leftButtons = [self createLeftButtonWithIndexPath:indexPath];
-//    return storeCell;
-}
-
--(NSArray *)createLeftButtonWithIndexPath:(NSIndexPath *)indexPath {
-    NSMutableArray * result = [NSMutableArray array];
-    UIColor *backgroundColor;
-    if ([self isMyFavoriteAnimalByIndex:indexPath.row]) {
-        backgroundColor = kColorIsFavoriteStore;
-    } else {
-        backgroundColor = kColorNotFavoriteStore;
-    }
-    MGSwipeButton *leftButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"fav.png"] backgroundColor:backgroundColor padding:20];
-    [result addObject:leftButton];
-    return result;
 }
 
 - (BOOL)isMyFavoriteAnimalByIndex:(NSInteger)index {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSMutableArray *favoriteAnimals = [defaults objectForKey:kFavoriteAnimalsKey];
-    NSString *acceptNum = [[self.petResult.pets objectAtIndex:index] acceptNum];
-    return [favoriteAnimals containsObject:acceptNum]?YES:NO;
+    NSArray *animals = [Utilities getMyFavoriteAnimalsDecoded];
+    Pet *selectedAnimal = [self.petResult.pets objectAtIndex:index];
+    BOOL isMyFavorite = NO;
+    for (Pet *pet in animals) {
+        if ([pet.acceptNum isEqualToString:selectedAnimal.acceptNum]) {
+            isMyFavorite = YES;
+            break;
+        }
+    }
+    return isMyFavorite;
 }
 
 #pragma mark - UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];    
     AnimalDetailScrollViewController *animalDetailScrollViewController = [[AnimalDetailScrollViewController alloc] initWithNibName:@"AnimalDetailScrollViewController" bundle:nil];
     animalDetailScrollViewController.petResult = self.petResult;
     animalDetailScrollViewController.selectedIndexPath = indexPath;
@@ -337,9 +308,9 @@
     if (self.petResult && [self.petResult.pets count]) {
         Pet *pet = [self.petResult.pets objectAtIndex:indexPath.row];
         pet.thumbNail = image;
-        PetListCell *cell = (PetListCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+        AnimalListTableViewCell *cell = (AnimalListTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
         cell.thumbNail.image = image;
-        cell.thumbNail.layer.borderColor = [UIColor colorWithWhite:1.0 alpha:0.7].CGColor;
+        cell.thumbNail.layer.borderColor = [UIColor colorWithWhite:1.0 alpha:1.0].CGColor;
         cell.thumbNail.alpha = 0.0;
         [UIView animateWithDuration:1.0f animations:^{
             cell.thumbNail.alpha = 1.0;
@@ -355,21 +326,26 @@
         case 0:
             [self sendDogRequest];
             [self changeNavTitle];
+            self.checkButton.enabled = NO;
             break;
         case 1:
             [self sendCatRequest];
             [self changeNavTitle];
+            self.checkButton.enabled = NO;
             break;
         case 2:
             [self sendOtherRequest];
             [self changeNavTitle];
+            self.checkButton.enabled = NO;
             break;
         case 3:
             [self sendMyFavoriteRequest];
             [self changeNavTitle];
+            self.checkButton.enabled = YES;
             break;
         case 4:
             [self showFilter];
+            self.checkButton.enabled = NO;
             break;
         default:
             break;
@@ -402,7 +378,8 @@
 
 - (void)sendMyFavoriteRequest {
     [self clearRequestSenderDelegate];
-    self.petResult.pets = [NSMutableArray arrayWithArray:[Utilities getMyFavoriteAnimals]];
+    self.petFilters.type = kAdoptFilterTypeMyFavorite;
+    self.petResult.pets = [NSMutableArray arrayWithArray:[Utilities getMyFavoriteAnimalsDecoded]];
     [self.tableView reloadData];
 }
 
@@ -428,42 +405,58 @@
 }
 
 #pragma mark - MGSwipeTableCellDelegate
-- (BOOL) swipeTableCell:(MGSwipeTableCell *) cell canSwipe:(MGSwipeDirection) direction {
-    if (direction == MGSwipeDirectionLeftToRight) {
-        return YES;
+- (BOOL)swipeTableCell:(MGSwipeTableCell *)cell canSwipe:(MGSwipeDirection)direction {
+    return YES;
+}
+
+- (BOOL)swipeTableCell:(MGSwipeTableCell *)cell tappedButtonAtIndex:(NSInteger)index direction:(MGSwipeDirection)direction fromExpansion:(BOOL) fromExpansion {
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    Pet *pet = [self.petResult.pets objectAtIndex:indexPath.row];
+    if ([self isMyFavoriteAnimalByIndex:indexPath.row]) {
+        [Utilities removeFromMyFavoriteAnimal:pet];
+        [Utilities addHudViewTo:self withMessage:kRemoveFromFavorite];
     } else {
-        return YES;
+        [Utilities addToMyFavoriteAnimal:pet];
+        [Utilities addHudViewTo:self withMessage:kAddToFavorite];
     }
-}
-
-- (void) swipeTableCell:(MGSwipeTableCell *)cell didChangeSwipeState:(MGSwipeState) state gestureIsActive:(BOOL) gestureIsActive {
-    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-    if (state == MGSwipeStateSwippingLeftToRight) {
-        Pet *pet = [self.petResult.pets objectAtIndex:indexPath.row];
-        if ([self isMyFavoriteAnimalByIndex:indexPath.row]) {
-            [Utilities removeFromMyFavoriteAnimal:pet];
-            [Utilities addHudViewTo:self withMessage:kRemoveFromFavorite];
-        } else {
-            [Utilities addToMyFavoriteAnimal:pet];
-            [Utilities addHudViewTo:self withMessage:kAddToFavorite];
-        }
-        [self.tableView reloadData];
-    }
-}
-
-- (BOOL) swipeTableCell:(MGSwipeTableCell *) cell tappedButtonAtIndex:(NSInteger) index direction:(MGSwipeDirection)direction fromExpansion:(BOOL) fromExpansion {
-    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-    if (direction == MGSwipeDirectionLeftToRight) {
-        Pet *pet = [self.petResult.pets objectAtIndex:indexPath.row];
-        if ([self isMyFavoriteAnimalByIndex:indexPath.row]) {
-            [Utilities removeFromMyFavoriteAnimal:pet];
-            [Utilities addHudViewTo:self withMessage:kRemoveFromFavorite];
-        } else {
-            [Utilities addToMyFavoriteAnimal:pet];
-            [Utilities addHudViewTo:self withMessage:kAddToFavorite];
-        }
+    if ([self.petFilters.type isEqualToString:kAdoptFilterTypeMyFavorite]) {
+        [self sendMyFavoriteRequest];
+    } else {
         [self.tableView reloadData];
     }
     return NO;
+}
+
+-(NSArray*)swipeTableCell:(MGSwipeTableCell*)cell swipeButtonsForDirection:(MGSwipeDirection)direction swipeSettings:(MGSwipeSettings*)swipeSettings expansionSettings:(MGSwipeExpansionSettings*)expansionSettings {
+
+    swipeSettings.transition = MGSwipeTransitionBorder;
+    expansionSettings.buttonIndex = 0;
+    expansionSettings.fillOnTrigger = YES;
+    expansionSettings.threshold = 3.0;
+    
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    NSArray *buttons = [self createButtonsWithIndexPath:indexPath direction:direction];
+
+    return buttons;
+}
+
+-(NSArray *)createButtonsWithIndexPath:(NSIndexPath *)indexPath direction:(MGSwipeDirection)direction{
+    NSMutableArray * result = [NSMutableArray array];
+    UIColor *backgroundColor;
+    if ([self isMyFavoriteAnimalByIndex:indexPath.row]) {
+        backgroundColor = kColorIsFavoriteStore;
+    } else {
+        backgroundColor = kColorNotFavoriteStore;
+    }
+    
+    MGSwipeButton *button = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"fav.png"] backgroundColor:backgroundColor padding:10];
+    
+    [result addObject:button];
+    
+    return result;
+}
+
+- (IBAction)clickCheck:(UIBarButtonItem *)sender {
+    
 }
 @end

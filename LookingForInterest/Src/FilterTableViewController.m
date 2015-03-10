@@ -471,8 +471,9 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = nil;
     if ((self.filterType == FilterTypeMenu || self.filterType == SearchStores) && (indexPath.section == 0 && indexPath.row == 1)) {
-        MapViewCell *mapViewCell = nil;
-        mapViewCell = [tableView dequeueReusableCellWithIdentifier:kMapViewCellIdentifier];
+        UINib *mapViewCellNib = [UINib nibWithNibName:@"MapViewCell" bundle:nil];
+        [tableView registerNib:mapViewCellNib forCellReuseIdentifier:kMapViewCellIdentifier];
+        MapViewCell *mapViewCell = [tableView dequeueReusableCellWithIdentifier:kMapViewCellIdentifier];
         if (!mapViewCell) {
             mapViewCell = (MapViewCell *)[Utilities getNibWithName:kMapViewCellIdentifier];
         }
@@ -484,8 +485,9 @@
         }
         cell = mapViewCell;
     } else if (self.filterType == FilterTypeMenu && indexPath.section == 1) {
-        MenuCell *menuCell = nil;
-        menuCell = [tableView dequeueReusableCellWithIdentifier:kMenuCellIdentifier];
+        UINib *menuCellNib = [UINib nibWithNibName:@"MenuCell" bundle:nil];
+        [tableView registerNib:menuCellNib forCellReuseIdentifier:kMenuCellIdentifier];
+        MenuCell *menuCell = [tableView dequeueReusableCellWithIdentifier:kMenuCellIdentifier];
         if (!menuCell) {
             menuCell = (MenuCell *)[Utilities getNibWithName:kMenuCellIdentifier];
             menuCell.textField.delegate = self;
@@ -509,8 +511,9 @@
         menuCell.titleLabel.text = [NSString stringWithFormat:@"%@：",[self getTitleByIndexPath:indexPath andType:self.filterType]];
         cell = menuCell;
     } else if (self.filterType == SearchStores && indexPath.section == 1) {
-        StoreCell *storeCell = nil;
-        storeCell = [tableView dequeueReusableCellWithIdentifier:kStoreCellIdentifier];
+        UINib *storeCellNib = [UINib nibWithNibName:@"StoreCell" bundle:nil];
+        [tableView registerNib:storeCellNib forCellReuseIdentifier:kStoreCellIdentifier];
+        StoreCell *storeCell = [tableView dequeueReusableCellWithIdentifier:kStoreCellIdentifier];
         if (!storeCell) {
             storeCell = (StoreCell *)[Utilities getNibWithName:kStoreCellIdentifier];
         }
@@ -521,24 +524,10 @@
         storeCell.addressLabel.text = (indexPath.row < [self.stores count])?((Store *)[self.stores objectAtIndex:indexPath.row]).address:@"";
         
         storeCell.delegate = self;
-        
-        if ([self.stores count]) {
-            storeCell.rightSwipeSettings.transition = MGSwipeTransitionBorder;
-            storeCell.rightExpansion.buttonIndex = 0;
-            storeCell.rightExpansion.fillOnTrigger = YES;
-            storeCell.rightButtons = [self createRightButtons:2];
-            
-            storeCell.leftSwipeSettings.transition = MGSwipeTransitionBorder;
-            storeCell.leftExpansion.buttonIndex = 0;
-            storeCell.leftExpansion.fillOnTrigger = YES;
-            storeCell.leftExpansion.threshold = 3.5;
-            storeCell.leftButtons = [self createLeftButtonWithIndexPath:indexPath];
-        } else {
-            storeCell.rightButtons = nil;
-            storeCell.leftButtons = nil;
-        }
         cell = storeCell;
     } else if ((self.filterType == FilterTypeMenu || self.filterType == SearchStores) && indexPath.section == 0 && indexPath.row == 0) {
+        UINib *openMapCellNib = [UINib nibWithNibName:@"OpenMapCell" bundle:nil];
+        [tableView registerNib:openMapCellNib forCellReuseIdentifier:kOpenMapCellIdentifier];
         OpenMapCell *openMapCell = [tableView dequeueReusableCellWithIdentifier:kOpenMapCellIdentifier];
         if (!openMapCell) {
             openMapCell = (OpenMapCell *)[Utilities getNibWithName:kOpenMapCellIdentifier];
@@ -560,55 +549,6 @@
         cell.detailTextLabel.text = detail;
     }
     return cell;
-}
-
--(NSArray *) createLeftButtonWithIndexPath:(NSIndexPath *)indexPath {
-    NSMutableArray * result = [NSMutableArray array];
-//    UIColor * colors[3] = {[UIColor greenColor],
-//        [UIColor colorWithRed:0 green:0x99/255.0 blue:0xcc/255.0 alpha:1.0],
-//        [UIColor colorWithRed:0.59 green:0.29 blue:0.08 alpha:1.0]};
-//    UIImage * icons[3] = {[UIImage imageNamed:@"check.png"], [UIImage imageNamed:@"fav.png"], [UIImage imageNamed:@"menu.png"]};
-//    for (int i = 0; i < number; ++i)
-//    {
-//        MGSwipeButton * button = [MGSwipeButton buttonWithTitle:@"" icon:icons[i] backgroundColor:colors[i] padding:10 callback:^BOOL(MGSwipeTableCell * sender){
-//            NSLog(@"Convenience callback received (left).");
-//            return YES;
-//        }];
-//        [result addObject:button];
-//    }
-    
-    UIColor *backgroundColor;
-    if ([self isMyFavoriteStoresByIndex:indexPath.row]) {
-        backgroundColor = kColorIsFavoriteStore;
-    } else {
-        backgroundColor = kColorNotFavoriteStore;
-    }
-    MGSwipeButton *leftButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"fav.png"] backgroundColor:backgroundColor padding:20];
-    [result addObject:leftButton];
-    return result;
-}
-
-- (BOOL)isMyFavoriteStoresByIndex:(NSInteger)index {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSMutableArray *favoriteStores = [defaults objectForKey:kFavoriteStoresKey];
-    NSString *storeID = [[self.stores objectAtIndex:index] storeID];
-    return [favoriteStores containsObject:storeID]?YES:NO;
-}
-
--(NSArray *) createRightButtons: (int) number {
-    NSMutableArray * result = [NSMutableArray array];
-    NSString *titles[2] = {kCellNavigationTitle, kCellMoreTitle};
-    UIColor  *colors[2] = {[UIColor redColor], [UIColor lightGrayColor]};
-    for (int i = 0; i < number; ++i)
-    {
-//        MGSwipeButton * button = [MGSwipeButton buttonWithTitle:titles[i] backgroundColor:colors[i] callback:^BOOL(MGSwipeTableCell * sender){
-//            NSLog(@"Convenience callback received (right).");
-//            return YES;
-//        }];
-        MGSwipeButton *button = [MGSwipeButton buttonWithTitle:titles[i] backgroundColor:colors[i] padding:15];
-        [result addObject:button];
-    }
-    return result;
 }
 
 - (NSString *)getTitleByIndexPath:(NSIndexPath *)indexPath andType:(FilterType)type {
@@ -965,7 +905,76 @@
 }
 
 #pragma mark - MGSwipeTableCellDelegate
-- (BOOL) swipeTableCell:(MGSwipeTableCell *) cell canSwipe:(MGSwipeDirection) direction {
+-(NSArray*)swipeTableCell:(MGSwipeTableCell*)cell swipeButtonsForDirection:(MGSwipeDirection)direction swipeSettings:(MGSwipeSettings*)swipeSettings expansionSettings:(MGSwipeExpansionSettings*)expansionSettings {
+    NSArray *buttons = nil;
+    if ([self.stores count]) {
+        if (direction == MGSwipeDirectionRightToLeft) {
+            swipeSettings.transition = MGSwipeTransitionBorder;
+            expansionSettings.buttonIndex = 0;
+            expansionSettings.fillOnTrigger = YES;
+            buttons = [self createRightButtons:2];
+        } else {
+            swipeSettings.transition = MGSwipeTransitionBorder;
+            expansionSettings.buttonIndex = 0;
+            expansionSettings.fillOnTrigger = YES;
+            expansionSettings.threshold = 3.5;
+            NSIndexPath *indexPath = [self.filterTableView indexPathForCell:cell];
+            buttons = [self createLeftButtonWithIndexPath:indexPath];
+        }
+    }
+    return buttons;
+}
+
+- (BOOL)isMyFavoriteStoresByIndex:(NSInteger)index {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSMutableArray *favoriteStores = [defaults objectForKey:kFavoriteStoresKey];
+    NSString *storeID = [[self.stores objectAtIndex:index] storeID];
+    return [favoriteStores containsObject:storeID]?YES:NO;
+}
+
+-(NSArray *) createLeftButtonWithIndexPath:(NSIndexPath *)indexPath {
+    NSMutableArray * result = [NSMutableArray array];
+    //    UIColor * colors[3] = {[UIColor greenColor],
+    //        [UIColor colorWithRed:0 green:0x99/255.0 blue:0xcc/255.0 alpha:1.0],
+    //        [UIColor colorWithRed:0.59 green:0.29 blue:0.08 alpha:1.0]};
+    //    UIImage * icons[3] = {[UIImage imageNamed:@"check.png"], [UIImage imageNamed:@"fav.png"], [UIImage imageNamed:@"menu.png"]};
+    //    for (int i = 0; i < number; ++i)
+    //    {
+    //        MGSwipeButton * button = [MGSwipeButton buttonWithTitle:@"" icon:icons[i] backgroundColor:colors[i] padding:10 callback:^BOOL(MGSwipeTableCell * sender){
+    //            NSLog(@"Convenience callback received (left).");
+    //            return YES;
+    //        }];
+    //        [result addObject:button];
+    //    }
+    
+    UIColor *backgroundColor;
+    if ([self isMyFavoriteStoresByIndex:indexPath.row]) {
+        backgroundColor = kColorIsFavoriteStore;
+    } else {
+        backgroundColor = kColorNotFavoriteStore;
+    }
+    MGSwipeButton *leftButton = [MGSwipeButton buttonWithTitle:@"" icon:[UIImage imageNamed:@"fav.png"] backgroundColor:backgroundColor padding:20];
+    [result addObject:leftButton];
+    return result;
+}
+
+-(NSArray *) createRightButtons: (int) number {
+    NSMutableArray * result = [NSMutableArray array];
+    NSString *titles[2] = {kCellNavigationTitle, kCellMoreTitle};
+    UIColor  *colors[2] = {[UIColor redColor], [UIColor lightGrayColor]};
+    for (int i = 0; i < number; ++i)
+    {
+        //        MGSwipeButton * button = [MGSwipeButton buttonWithTitle:titles[i] backgroundColor:colors[i] callback:^BOOL(MGSwipeTableCell * sender){
+        //            NSLog(@"Convenience callback received (right).");
+        //            return YES;
+        //        }];
+        MGSwipeButton *button = [MGSwipeButton buttonWithTitle:titles[i] backgroundColor:colors[i] padding:15];
+        [result addObject:button];
+    }
+    return result;
+}
+
+- (BOOL)swipeTableCell:(MGSwipeTableCell *)cell canSwipe:(MGSwipeDirection)direction {
     if (direction == MGSwipeDirectionLeftToRight) {
         return YES;
     } else {
@@ -973,11 +982,7 @@
     }
 }
 
-- (void) swipeTableCell:(MGSwipeTableCell *) cell didChangeSwipeState:(MGSwipeState) state gestureIsActive:(BOOL) gestureIsActive {
-    
-}
-
-- (BOOL) swipeTableCell:(MGSwipeTableCell *) cell tappedButtonAtIndex:(NSInteger) index direction:(MGSwipeDirection)direction fromExpansion:(BOOL) fromExpansion {
+- (BOOL)swipeTableCell:(MGSwipeTableCell *)cell tappedButtonAtIndex:(NSInteger)index direction:(MGSwipeDirection)direction fromExpansion:(BOOL) fromExpansion {
     NSIndexPath *indexPath = [self.filterTableView indexPathForCell:cell];
     if (direction == MGSwipeDirectionLeftToRight) {
         Store *store = [self.stores objectAtIndex:indexPath.row];
@@ -1026,21 +1031,6 @@
         [self.delegate showOptionsWithStore:[self.stores objectAtIndex:indexPath.row]];   
     }
 }
-
-//- (NSArray *) swipeTableCell:(MGSwipeTableCell *) cell swipeButtonsForDirection:(MGSwipeDirection)direction
-//              swipeSettings:(MGSwipeSettings*) swipeSettings expansionSettings:(MGSwipeExpansionSettings*) expansionSettings {
-//    
-//    swipeSettings.transition = MGSwipeTransitionBorder;
-//    if (direction == MGSwipeDirectionRightToLeft) {
-//        expansionSettings.buttonIndex = 0;
-//        expansionSettings.fillOnTrigger = YES;
-//        return [self createRightButtons:2];
-//    } else {
-//        expansionSettings.buttonIndex = 0;
-//        expansionSettings.fillOnTrigger = NO;
-//        return [self createLeftButtons:0];
-//    }
-//}
 
 #pragma mark - change page
 - (void)scrollViewDidScroll:(UIScrollView *)aScrollView {

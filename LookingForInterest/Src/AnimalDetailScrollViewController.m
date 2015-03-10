@@ -195,7 +195,6 @@
 #pragma mark - MFMailComposeViewControllerDelegate
 - (void) mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
 {
-    NSString *title = @"結果";
     NSString *message = @"";
     switch (result) {
         case MFMailComposeResultCancelled:
@@ -219,12 +218,7 @@
     }
     
     [controller dismissViewControllerAnimated:YES completion:^{
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *action = [UIAlertAction actionWithTitle:@"確定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            [alertController dismissViewControllerAnimated:YES completion:nil];
-        }];
-        [alertController addAction:action];
-        [self presentViewController:alertController animated:YES completion:nil];
+        [Utilities addHudViewTo:self withMessage:message];
     }];
     
 }

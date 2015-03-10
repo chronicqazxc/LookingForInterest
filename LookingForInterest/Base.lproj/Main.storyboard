@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Cd6-4V-3Qa">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6724" systemVersion="14C1510" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Cd6-4V-3Qa">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6711"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
@@ -842,7 +842,7 @@
                                     <tabBarItem tag="1" title="貓" id="qhB-AL-Xap"/>
                                     <tabBarItem tag="2" title="其他" id="ybF-3k-cjp"/>
                                     <tabBarItem tag="3" title="我的最愛" id="nfW-Cz-6Nh"/>
-                                    <tabBarItem tag="4" systemItem="search" id="cUl-wE-SaM"/>
+                                    <tabBarItem tag="4" title="Filter" id="cUl-wE-SaM"/>
                                 </items>
                                 <variation key="default">
                                     <mask key="constraints">
@@ -907,8 +907,14 @@
                                 <segue destination="Cd6-4V-3Qa" kind="presentation" modalTransitionStyle="crossDissolve" id="T8p-5V-2Jd"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="uS7-qC-Wac">
+                            <connections>
+                                <action selector="clickCheck:" destination="UGt-tf-2F0" id="lqA-yB-dtb"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="checkButton" destination="uS7-qC-Wac" id="afi-MV-wKQ"/>
                         <outlet property="tabBar" destination="nGR-aS-U21" id="Hfo-mf-jNY"/>
                         <outlet property="tableView" destination="d9I-dT-n42" id="h9S-Xc-qXN"/>
                     </connections>
@@ -922,6 +928,6 @@
         <image name="iconmonstr-magnifier-3-icon-256.png" width="256" height="256"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Bss-qP-rJf"/>
+        <segue reference="T8p-5V-2Jd"/>
     </inferredMetricsTieBreakers>
 </document>

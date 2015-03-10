@@ -9,5 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface AdoptAnimalViewController : UIViewController
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *checkButton;
+- (IBAction)clickCheck:(UIBarButtonItem *)sender;
 
 @end
