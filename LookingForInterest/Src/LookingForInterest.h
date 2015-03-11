@@ -93,7 +93,8 @@ typedef enum filterType {
     FilterTypeMenuTypes,
     GetDefaultImages,
     AdoptAnimals,
-    PetThumbNail
+    PetThumbNail,
+    CheckFavoriteAnimals
 } FilterType;
 
 typedef NS_ENUM(NSInteger, Direction) {

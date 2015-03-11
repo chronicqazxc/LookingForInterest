@@ -20,6 +20,7 @@
 @interface Utilities : NSObject
 + (AppDelegate *)getAppDelegate;
 + (void)startLoading;
++ (void)startLoadingWithContent:(NSString *)content;
 + (void)stopLoading;
 + (CGSize)getScreenPixel;
 + (UIView *)getNibWithName:(NSString *)name;
@@ -34,6 +35,7 @@
 + (void)removeFromMyFavoriteStore:(Store *)store;
 + (NSArray *)getMyFavoriteAnimalsEncoded;
 + (NSArray *)getMyFavoriteAnimalsDecoded;
++ (BOOL)isMyFavoriteAnimalByPet:(Pet *)selectedPet;
 + (void)addToMyFavoriteAnimal:(Pet *)pet;
 + (void)removeFromMyFavoriteAnimal:(Pet *)pet;
 + (void)addHudViewTo:(UIViewController *)controller withMessage:(NSString *)message;

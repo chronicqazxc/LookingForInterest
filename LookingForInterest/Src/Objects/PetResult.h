@@ -16,6 +16,7 @@
 @property (strong, nonatomic) NSString *next;
 @property (strong, nonatomic) NSNumber *total;
 @property (strong, nonatomic) NSString *offset;
+@property (strong, nonatomic) NSNumber *limit;
 @property (strong, nonatomic) PetFilters *filters;
 @property (strong, nonatomic) NSMutableArray *pets;
 - (id)initWithResult:(NSDictionary *)result;

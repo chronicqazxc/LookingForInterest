@@ -12,4 +12,5 @@
 @property (strong, nonatomic) PetResult *petResult;
 @property (strong, nonatomic) NSIndexPath *selectedIndexPath;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (strong, nonatomic) PetFilters *petFilters;
 @end

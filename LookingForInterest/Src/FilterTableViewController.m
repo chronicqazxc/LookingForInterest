@@ -167,7 +167,7 @@
             [requestSender sendStoreRequestByMajorType:((FilterTableViewController *)self.notifyReceiver).menu.majorType minorType:((FilterTableViewController *)self.notifyReceiver).menu.minorType];
             [self.requestArr addObject:requestSender];
             self.appdelegate.viewController = self;
-            [Utilities startLoading];
+            [Utilities startLoadingWithContent:@"選擇醫院"];
             break;
         case FilterTypeRange:
             requestSender.delegate = self;
@@ -175,7 +175,7 @@
             [requestSender sendRangeRequest];
             [self.requestArr addObject:requestSender];
             self.appdelegate.viewController = self;
-            [Utilities startLoading];
+            [Utilities startLoadingWithContent:@"選擇範圍"];
             break;
         case FilterTypeCity:
             requestSender.delegate = self;
@@ -183,7 +183,7 @@
             [requestSender sendCityRequest];
             [self.requestArr addObject:requestSender];
             self.appdelegate.viewController = self;
-            [Utilities startLoading];            
+            [Utilities startLoadingWithContent:@"選擇城市"];
             break;
         case FilterTypeMenuTypes:
             requestSender.delegate = self;
@@ -191,7 +191,7 @@
             [requestSender sendMenutypesRequest];
             [self.requestArr addObject:requestSender];
             self.appdelegate.viewController = self;
-            [Utilities startLoading];            
+            [Utilities startLoadingWithContent:@"選擇搜尋依據"];
             break;
         default:
             break;
@@ -263,7 +263,7 @@
     return kStoryboardIdentifier;
 }
 
-- (void)search {
+- (void)searchWithContent:(NSString *)content {
     self.filterType = SearchStores;
 
 //    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -285,7 +285,11 @@
     [requestSender sendStoreRequestByMenuObj:self.menu andLocationCoordinate:currentLocation andPageController:self.pageController];
     [self.requestArr addObject:requestSender];
     self.appdelegate.viewController = self.delegate;
-    [Utilities startLoading];
+    if (content) {
+        [Utilities startLoadingWithContent:content];
+    } else {
+        [Utilities startLoading];
+    }
     
     self.selectedStoreIndexPath = nil;
 }
@@ -1056,7 +1060,9 @@
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    ((UIButton *)(self.storeHeader.goTopButton)).hidden = NO;
+    [UIView animateWithDuration:0.5 animations:^{
+        [(UIButton *)(self.storeHeader.goTopButton) setAlpha:1.0];
+    }];
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
@@ -1064,7 +1070,9 @@
 }
 
 - (void)hiddenPageIndicator:(NSTimer *)timer {
-    ((UIButton *)(self.storeHeader.goTopButton)).hidden = YES;
+    [UIView animateWithDuration:0.5 animations:^{
+        [(UIButton *)(self.storeHeader.goTopButton) setAlpha:0.0];
+    }];
     [timer invalidate];
 }
 
@@ -1075,7 +1083,7 @@
             self.isStartLoadingPage = YES;
             [self.delegate loadPreviousPage:self.pageController];
             self.pageController.currentPage--;
-            [self search];
+            [self searchWithContent:@"上一頁"];
         }
     }
 }
@@ -1087,7 +1095,7 @@
             self.isStartLoadingPage = YES;
             [self.delegate loadNextPage:self.pageController];
             self.pageController.currentPage++;
-            [self search];
+            [self searchWithContent:@"下一頁"];
         }
     }
 }

@@ -41,7 +41,8 @@
         self.backgroundColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.8];
         self.layer.masksToBounds = YES;
         self.layer.cornerRadius = 3.0;
-        self.hidden = YES;
+        self.hidden = NO;
+        self.alpha = 0.0;
         self.conditionForShow = 0;
         [self addTarget:self action:@selector(buttonClicked) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -109,9 +110,13 @@
 #pragma mark -
 - (void)showButtonWithNumber:(NSInteger)number {
     if (number >= self.conditionForShow) {
-        self.hidden = NO;
+        [UIView animateWithDuration:0.5 animations:^{
+            self.alpha = 1.0;
+        }];
     } else {
-        self.hidden = YES;
+        [UIView animateWithDuration:0.5 animations:^{
+            self.alpha = 0.0;
+        }];
     }
 }
 @end

@@ -27,7 +27,7 @@
 - (NSString *)getStoryboardID;
 - (void)sendAccessTokenRequest;
 - (void)sendInitRequest;
-- (void)search;
+- (void)searchWithContent:(NSString *)content;
 - (void)back;
 - (void)resetPage;
 - (BOOL)canDropMyMark;

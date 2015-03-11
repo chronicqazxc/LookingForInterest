@@ -37,6 +37,11 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self generateRightBarButtonByIndexPath:self.selectedIndexPath];
+}
+
 - (void)viewDidLayoutSubviews {
     if (!self.isInit) {
         ((AnimalDetailScrollLayout *)self.collectionView.collectionViewLayout).itemSize = CGSizeMake(CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame));
@@ -77,6 +82,7 @@
     }
     self.animalDetailCollectionViewCell.viewController = self;
     self.animalDetailCollectionViewCell.pet = [self.petResult.pets objectAtIndex:indexPath.row];
+    self.animalDetailCollectionViewCell.petResult = self.petResult;
     [self.animalDetailCollectionViewCell awakeFromNib];
     return self.animalDetailCollectionViewCell;
 }
@@ -88,9 +94,55 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didEndDisplayingCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
     NSArray *cells = [collectionView visibleCells];
+    AnimalDetailCollectionViewCell *visibleCell = (AnimalDetailCollectionViewCell *)cells.firstObject;
     if ([cells count]) {
-        self.navigationItem.title = ((AnimalDetailCollectionViewCell *)cells.firstObject).pet.name;
+        self.navigationItem.title = visibleCell.pet.name;
     }
+    
+    NSIndexPath *visibaleIndexPath = [self.collectionView indexPathForCell:visibleCell];
+    [self generateRightBarButtonByIndexPath:visibaleIndexPath];
+}
+
+- (void)generateRightBarButtonByIndexPath:(NSIndexPath *)indexPath {
+    Pet *pet = [self.petResult.pets objectAtIndex:indexPath.row];
+    UIBarButtonItem *barButtonItem = nil;
+    if ([Utilities isMyFavoriteAnimalByPet:pet]) {
+        barButtonItem = [self generateRemoveFavoriteButtonWithTag:indexPath.row];
+    } else {
+        barButtonItem = [self generateAddFavoriteButtonWithTag:indexPath.row];
+    }
+    [self.navigationItem setRightBarButtonItem:barButtonItem animated:YES];
+}
+
+- (UIBarButtonItem *)generateAddFavoriteButtonWithTag:(NSInteger)tag {
+    UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addMyFavoriteAnimal:)];
+    barButtonItem.tag = tag;
+    return barButtonItem;
+}
+
+- (UIBarButtonItem *)generateRemoveFavoriteButtonWithTag:(NSInteger)tag {
+    UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(removeMyFavoriteAnimal:)];
+    barButtonItem.tag = tag;
+    return barButtonItem;
+}
+
+- (void)removeMyFavoriteAnimal:(UIBarButtonItem *)buttonItem {
+    Pet *pet = [self.petResult.pets objectAtIndex:buttonItem.tag];
+    [Utilities removeFromMyFavoriteAnimal:pet];
+    [Utilities addHudViewTo:self withMessage:kRemoveFromFavorite];
+    UIBarButtonItem *newButton = [self generateAddFavoriteButtonWithTag:buttonItem.tag];
+    [self.navigationItem setRightBarButtonItem:newButton animated:YES];
+    if ([self.petFilters.type isEqualToString:kAdoptFilterTypeMyFavorite]) {
+        self.petResult.pets = [NSMutableArray arrayWithArray:[Utilities getMyFavoriteAnimalsDecoded]];
+    }
+}
+
+- (void)addMyFavoriteAnimal:(UIBarButtonItem *)buttonItem {
+    Pet *pet = [self.petResult.pets objectAtIndex:buttonItem.tag];
+    [Utilities addToMyFavoriteAnimal:pet];
+    [Utilities addHudViewTo:self withMessage:kAddToFavorite];
+    UIBarButtonItem *newButton = [self generateRemoveFavoriteButtonWithTag:buttonItem.tag];
+    [self.navigationItem setRightBarButtonItem:newButton animated:YES];
 }
 
 #pragma mark - UICollectionViewDelegateFlowLayout

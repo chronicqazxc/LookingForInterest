@@ -15,7 +15,7 @@
 #import "AnimalListTableViewCell.h"
 #import "GoTopButton.h"
 
-#define AdoptAnimalTitle(type) [NSString stringWithFormat:@"領養%@",type]
+#define AdoptAnimalTitle(type) [NSString stringWithFormat:@"觀看%@",type]
 
 @interface AdoptAnimalViewController () <UITableViewDataSource, UITableViewDelegate, UITabBarDelegate, RequestSenderDelegate, AdoptAnimalFilterControllerDelegate, MGSwipeTableCellDelegate>
 @property (strong, nonatomic) PetResult *petResult;
@@ -47,6 +47,8 @@
     self.checkButton.enabled = NO;
     self.previousPageView.hidden = YES;
     self.nextPageView.hidden = YES;
+    self.petFilters = [[PetFilters alloc] init];
+//    [self composeFilters];
     [self initProperties];
 }
 
@@ -57,16 +59,14 @@
 
 - (void)initProperties {
     self.requests = [NSMutableArray array];
-    self.petFilters = [[PetFilters alloc] init];
-    [self composeFilters];
     self.appDelegate = [Utilities getAppDelegate];
     self.isStartLoading = NO;
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self changeNavTitle];
+    [self.tableView reloadData];
 }
 
 - (void)changeNavTitle {
@@ -86,7 +86,7 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     if (!self.isSendInitRequest && ![self.petResult.pets count]) {
-        [self startLoading];
+        [self startLoadingWithContent:nil];
         [self sendInitRequest];
         self.isSendInitRequest = YES;
     }
@@ -99,9 +99,13 @@
     self.petFilters.build = nil;
 }
 
-- (void)startLoading {
+- (void)startLoadingWithContent:(NSString *)content {
     self.appDelegate.viewController = self;
-    [Utilities startLoading];
+    if (content) {
+        [Utilities startLoadingWithContent:content];
+    } else {
+        [Utilities startLoading];
+    }
 }
 
 - (void)sendInitRequest {
@@ -113,7 +117,7 @@
 - (void)getNextPage {
     [self.nextPageIndicator startAnimating];
     [self clearRequestSenderDelegate];
-    [self startLoading];
+    [self startLoadingWithContent:@"下一頁"];
 //    PetFilters *petFilters = [[PetFilters alloc] init];
 //    petFilters.offset = self.nextPage;
     self.petFilters.offset = self.nextPage;
@@ -124,7 +128,7 @@
 - (void)getPreviousPage {
     [self.previousPageIndicator startAnimating];
     [self clearRequestSenderDelegate];
-    [self startLoading];
+    [self startLoadingWithContent:@"上一頁"];
 //    PetFilters *petFilters = [[PetFilters alloc] init];
 //    petFilters.offset = self.previousPage;
     self.petFilters.offset = self.previousPage;
@@ -169,7 +173,7 @@
 
 #pragma mark - UITableViewDataSource
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 113.0;
+    return 103.0;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -218,7 +222,7 @@
     Pet *selectedAnimal = [self.petResult.pets objectAtIndex:index];
     BOOL isMyFavorite = NO;
     for (Pet *pet in animals) {
-        if ([pet.acceptNum isEqualToString:selectedAnimal.acceptNum]) {
+        if ([pet.petID isEqualToNumber:selectedAnimal.petID]) {
             isMyFavorite = YES;
             break;
         }
@@ -232,6 +236,7 @@
     AnimalDetailScrollViewController *animalDetailScrollViewController = [[AnimalDetailScrollViewController alloc] initWithNibName:@"AnimalDetailScrollViewController" bundle:nil];
     animalDetailScrollViewController.petResult = self.petResult;
     animalDetailScrollViewController.selectedIndexPath = indexPath;
+    animalDetailScrollViewController.petFilters = self.petFilters;
     [self.navigationController pushViewController:animalDetailScrollViewController animated:YES];
 }
 
@@ -256,7 +261,8 @@
                 [self getNextPage];
             }
         } else if (offset.y <= -90) {
-            if (self.petResult.previous && ![self.petResult.previous isEqualToString:@""]) {
+            if ((self.petResult.previous && ![self.petResult.previous isEqualToString:@""]) ||
+                [self.petResult.next isEqualToString:@"40"]) {
                 self.isStartLoading = YES;
                 [self getPreviousPage];
             }
@@ -334,12 +340,12 @@
 
 - (void)setPageIndicatorTitleByResult:(PetResult *)petResult {
     NSString *totalPage = @"";
-    if ([petResult.total intValue]%20) {
-        NSInteger total = [petResult.total intValue]/20+1;
-        totalPage = [NSString stringWithFormat:@"%ld",total];
+    if ([petResult.total intValue]%[petResult.limit integerValue]) {
+        NSInteger total = [petResult.total intValue]/[petResult.limit integerValue]+1;
+        totalPage = [NSString stringWithFormat:@"%d",(int)total];
     } else {
-        NSInteger total = [petResult.total intValue]/20;
-        totalPage = [NSString stringWithFormat:@"%ld",total];
+        NSInteger total = [petResult.total intValue]/[petResult.limit integerValue];
+        totalPage = [NSString stringWithFormat:@"%d",(int)total];
     }
     NSString *currentPage = @"";
     NSString *offset = [NSString stringWithFormat:@"%@",petResult.offset];
@@ -348,7 +354,7 @@
     } else {
         currentPage = [NSString stringWithFormat:@"%d",[offset intValue]/20+1];
     }
-    NSLog(@"offset:%@",petResult.offset);
+
     [self.pageIndicator setTitle:[NSString stringWithFormat:@"%@/%@",currentPage,totalPage] forState:UIControlStateNormal];
     
     if ([currentPage isEqualToString:@"1"] && [currentPage isEqualToString:totalPage]) {
@@ -369,17 +375,34 @@
 - (void)thumbNailBack:(UIImage *)image indexPath:(NSIndexPath *)indexPath {
     if (self.petResult && [self.petResult.pets count]) {
         Pet *pet = [self.petResult.pets objectAtIndex:indexPath.row];
-        pet.thumbNail = image;
-        AnimalListTableViewCell *cell = (AnimalListTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-        cell.thumbNail.image = image;
-        cell.thumbNail.layer.borderColor = [UIColor colorWithWhite:1.0 alpha:1.0].CGColor;
-        cell.thumbNail.alpha = 0.0;
-        [UIView animateWithDuration:1.0f animations:^{
-            cell.thumbNail.alpha = 1.0;
-        } completion:^(BOOL finished) {
-            nil;
-        }];
+        if (!pet.thumbNail) {
+            pet.thumbNail = image;
+            AnimalListTableViewCell *cell = (AnimalListTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+            cell.thumbNail.image = image;
+            cell.thumbNail.layer.borderColor = [UIColor colorWithWhite:1.0 alpha:1.0].CGColor;
+            cell.thumbNail.alpha = 0.0;
+            [UIView animateWithDuration:1.0f animations:^{
+                cell.thumbNail.alpha = 1.0;
+            } completion:^(BOOL finished) {
+                nil;
+            }];
+        }
     }
+}
+
+- (void)checkFavoriteAnimalsResultBack:(NSMutableArray *)results {
+    for (Pet *favoritePet in [Utilities getMyFavoriteAnimalsDecoded]) {
+        BOOL isFound = NO;
+        for (Pet *resultPet in results) {
+            if ([favoritePet.petID isEqualToNumber:resultPet.petID]) {
+                isFound = YES;
+            }
+        }
+        if (!isFound) {
+            [Utilities removeFromMyFavoriteAnimal:favoritePet];
+        }
+    }
+    [Utilities stopLoading];
 }
 
 #pragma mark - UITabBarDelegate
@@ -416,7 +439,8 @@
 
 - (void)sendDogRequest {
     [self clearRequestSenderDelegate];
-    [self startLoading];
+    [self startLoadingWithContent:@"讀取汪星人"];
+    self.petFilters = [[PetFilters alloc] init];
     self.petFilters.type = kAdoptFilterTypeDog;
     self.petFilters.offset = nil;
     [self sendRequestWithFilters:self.petFilters];
@@ -424,7 +448,8 @@
 
 - (void)sendCatRequest {
     [self clearRequestSenderDelegate];
-    [self startLoading];
+    [self startLoadingWithContent:@"讀取喵星人"];
+    self.petFilters = [[PetFilters alloc] init];
     self.petFilters.type = kAdoptFilterTypeCat;
     self.petFilters.offset = nil;
     [self sendRequestWithFilters:self.petFilters];
@@ -432,7 +457,8 @@
 
 - (void)sendOtherRequest {
     [self clearRequestSenderDelegate];
-    [self startLoading];
+    [self startLoadingWithContent:@"讀取其他動物"];
+    self.petFilters = [[PetFilters alloc] init];
     self.petFilters.type = kAdoptFilterTypeOther;
     self.petFilters.offset = nil;
     [self sendRequestWithFilters:self.petFilters];
@@ -440,8 +466,13 @@
 
 - (void)sendMyFavoriteRequest {
     [self clearRequestSenderDelegate];
+    self.petFilters = [[PetFilters alloc] init];
     self.petFilters.type = kAdoptFilterTypeMyFavorite;
     self.petResult.pets = [NSMutableArray arrayWithArray:[Utilities getMyFavoriteAnimalsDecoded]];
+    self.petResult.limit = [NSNumber numberWithInt:[self.petResult.pets count]];
+    self.petResult.total = [NSNumber numberWithInt:[self.petResult.pets count]];
+    self.petResult.offset = @"";
+    [self setPageIndicatorTitleByResult:self.petResult];
     [self.tableView reloadData];
 }
 
@@ -453,7 +484,7 @@
 
 #pragma mark - AdoptAnimalFilterControllerDelegate
 - (void)clickSearchWithPetFilters:(PetFilters *)petFilters {
-    [self startLoading];
+    [self startLoadingWithContent:@"讀取篩選資料"];
     [self changeNavTitle];
     [self clearRequestSenderDelegate];
     self.petFilters.age = [self.petFilters.age isEqualToString:kAdoptFilterAll]?nil:self.petFilters.age;
@@ -519,6 +550,10 @@
 }
 
 - (IBAction)clickCheck:(UIBarButtonItem *)sender {
-    
+    RequestSender *requestSender = [[RequestSender alloc] init];
+    requestSender.delegate = self;
+    [requestSender checkFavoriteAnimals:[Utilities getMyFavoriteAnimalsDecoded]];
+    [self.requests addObject:requestSender];
+    [Utilities startLoadingWithContent:@"更新我的最愛"];
 }
 @end

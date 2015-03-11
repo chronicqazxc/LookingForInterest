@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6724" systemVersion="14C1510" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6711"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -36,7 +36,7 @@
                                 </mask>
                             </variation>
                         </activityIndicatorView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ih5-vh-Q0f">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ih5-vh-Q0f">
                             <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -46,7 +46,7 @@
                     <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                     <constraints>
                         <constraint firstItem="Ih5-vh-Q0f" firstAttribute="leading" secondItem="xF9-Ww-Sp5" secondAttribute="leading" constant="36" id="3YJ-Cp-1v3">
-                            <variation key="heightClass=regular-widthClass=compact" constant="25"/>
+                            <variation key="heightClass=regular-widthClass=compact" constant="8"/>
                         </constraint>
                         <constraint firstAttribute="centerY" secondItem="Exw-xv-quL" secondAttribute="centerY" constant="25.5" id="7Rh-Nf-Tef">
                             <variation key="heightClass=regular-widthClass=compact" constant="15.5"/>
@@ -62,7 +62,7 @@
                             <variation key="heightClass=regular-widthClass=compact" constant="8"/>
                         </constraint>
                         <constraint firstAttribute="centerX" secondItem="Ih5-vh-Q0f" secondAttribute="centerX" id="Qfe-nG-LCi">
-                            <variation key="heightClass=regular-widthClass=compact" constant="-8"/>
+                            <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                         </constraint>
                         <constraint firstAttribute="height" constant="150" id="b5f-UX-ILP">
                             <variation key="heightClass=regular-widthClass=compact" constant="120"/>
@@ -160,6 +160,7 @@
             <connections>
                 <outlet property="backgroundView" destination="rNs-0h-WxN" id="njT-Ug-pw0"/>
                 <outlet property="indicatorView" destination="xF9-Ww-Sp5" id="0KL-sx-TUy"/>
+                <outlet property="loadingLabel" destination="Ih5-vh-Q0f" id="Yj0-cv-4H7"/>
             </connections>
             <point key="canvasLocation" x="352" y="95"/>
         </view>

@@ -62,9 +62,9 @@
         self.acceptNum = [decoder decodeObjectForKey:@"AcceptNum"];
         self.isSterilization = [decoder decodeObjectForKey:@"IsSterilization"];
         self.name = [decoder decodeObjectForKey:@"Name"];
-        self.variety = [decoder decodeObjectForKey:@"Name"];
-        self.age = [decoder decodeObjectForKey:@"Variety"];
-        self.childreAnlong = [decoder decodeObjectForKey:@"childreAnlong"];
+        self.variety = [decoder decodeObjectForKey:@"Variety"];
+        self.age = [decoder decodeObjectForKey:@"Age"];
+        self.childreAnlong = [decoder decodeObjectForKey:@"ChildreAnlong"];
         self.resettlement = [decoder decodeObjectForKey:@"Resettlement"];
         self.sex = [decoder decodeObjectForKey:@"Sex"];
         self.note = [decoder decodeObjectForKey:@"Note"];

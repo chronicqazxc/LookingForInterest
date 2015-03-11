@@ -76,6 +76,18 @@
     }
 }
 
+- (void)startLoadingWithContent:(NSString *)content {
+    [self stopLoading];
+    if (self.viewController) {
+        LoadingView *loadingView = (LoadingView *)[Utilities getNibWithName:@"LoadingView"];
+        loadingView.frame = CGRectMake(0,0,CGRectGetWidth(self.viewController.view.frame), CGRectGetHeight(self.viewController.view.frame));
+        loadingView.tag = kLoadingViewTag;
+        loadingView.loadingLabel.text = content;
+        [self.viewController.view addSubview:loadingView];
+        [loadingView presentWithDuration:1.0 speed:1.0 startOpacity:0.0 finishOpacity:0.8 completion:nil];
+    }
+}
+
 - (void)stopLoading {
     if (self.viewController) {
         for (UIView *view in [self.viewController.view subviews]) {

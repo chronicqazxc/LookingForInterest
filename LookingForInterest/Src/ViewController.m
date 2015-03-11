@@ -791,7 +791,7 @@
         self.searchViewIcon.hidden = NO;
         self.filterTableViewController.accessToken = self.accessToken;
         [self.filterTableViewController resetPage];
-        [self.filterTableViewController search];
+        [self.filterTableViewController searchWithContent:@"開始搜尋"];
     } else {
         self.searchViewTitle.text = kSearch;
         self.searchViewIcon.hidden = NO;

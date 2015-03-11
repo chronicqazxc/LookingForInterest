@@ -19,6 +19,7 @@
 @property (weak, nonatomic) IBOutlet FBLoginView *loginView;
 @property (weak, nonatomic) IBOutlet FBProfilePictureView *profilePictureView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @end
 
 @implementation MenuViewController
@@ -38,6 +39,8 @@
     self.adoptButton.hidden = YES;
     self.animalHospitalButton.hidden = YES;
     self.profilePictureView.hidden = YES;
+    self.titleLabel.alpha = 0.0;
+    self.loginView.alpha = 0.0;
     self.nameLabel.text = @"";
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
         //Background Thread
@@ -76,9 +79,32 @@
     self.profilePictureView.layer.borderWidth = 1.0;
     self.profilePictureView.layer.masksToBounds = YES;
     
+    self.titleLabel.alpha = 0.0;
+    self.loginView.alpha = 0.0;
+    
     self.adoptButton.hidden = NO;
     self.animalHospitalButton.hidden = NO;
     self.profilePictureView.hidden = NO;
+    
+    self.profilePictureView.center = self.view.center;
+    self.adoptButton.center = self.view.center;
+    self.animalHospitalButton.center = self.view.center;
+    
+    [UIView animateWithDuration:1.0 delay:0.1 options:UIViewAnimationOptionCurveEaseIn animations:^{
+        self.adoptButton.frame = CGRectOffset(self.adoptButton.frame, -100, 10);
+        self.animalHospitalButton.frame = CGRectOffset(self.animalHospitalButton.frame, 100, 10);
+        self.profilePictureView.frame = CGRectOffset(self.profilePictureView.frame, 0, -100);
+    } completion:^(BOOL finished) {
+        self.titleLabel.frame = CGRectMake(CGRectGetMinX(self.titleLabel.frame),
+                                           CGRectGetMinY(self.profilePictureView.frame)-50,
+                                           CGRectGetWidth(self.titleLabel.frame),
+                                           CGRectGetHeight(self.titleLabel.frame));
+//        self.loginView.frame = CGRectOffset(self.profilePictureView.frame, 0, 100);
+        [UIView animateWithDuration:1.0 animations:^{
+            self.titleLabel.alpha = 1.0;
+            self.loginView.alpha = 1.0;
+        }];
+    }];
 }
 
 - (void)initCircleView:(UIView *)view {

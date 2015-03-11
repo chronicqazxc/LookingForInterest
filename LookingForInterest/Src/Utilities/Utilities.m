@@ -22,6 +22,10 @@
     [[Utilities getAppDelegate] startLoading];
 }
 
++ (void)startLoadingWithContent:(NSString *)content {
+    [[Utilities getAppDelegate] startLoadingWithContent:content];
+}
+
 + (void)stopLoading {
     [[Utilities getAppDelegate] stopLoading];
 }
@@ -213,6 +217,18 @@
     return animals;
 }
 
++ (BOOL)isMyFavoriteAnimalByPet:(Pet *)selectedPet {
+    NSArray *animals = [Utilities getMyFavoriteAnimalsDecoded];
+    BOOL isMyFavorite = NO;
+    for (Pet *pet in animals) {
+        if ([pet.petID isEqualToNumber:selectedPet.petID]) {
+            isMyFavorite = YES;
+            break;
+        }
+    }
+    return isMyFavorite;
+}
+
 + (void)addToMyFavoriteAnimal:(Pet *)pet {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSArray *animals = [Utilities getMyFavoriteAnimalsEncoded];
@@ -233,7 +249,7 @@
     NSArray *animals = [Utilities getMyFavoriteAnimalsDecoded];
     NSMutableArray *favoriteAnimals = [NSMutableArray arrayWithArray:animals];
     for (Pet *animal in favoriteAnimals) {
-        if ([animal.acceptNum isEqualToString:pet.acceptNum]) {
+        if ([animal.petID isEqualToNumber:pet.petID]) {
             [favoriteAnimals removeObject:animal];
             break;
         }

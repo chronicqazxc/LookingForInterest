@@ -10,14 +10,17 @@
 
 #define kGetDataError @"擷取資料失敗"
 #define kRequestError @"網路連線錯誤"
-#define kPetThumbNailHeigh 100
-#define kPetThumbNailWeigh 100
+#define kPetThumbNailHeigh 120
+#define kPetThumbNailWeigh 120
 
 @interface RequestSender() <NSURLConnectionDelegate>
 @property (strong, nonatomic) NSMutableArray *receivedDatas;
 @property (nonatomic) FilterType type;
 #pragma mark - PetAdopt properties
 @property (strong, nonatomic) NSIndexPath *indexPath;
+@property (strong, nonatomic) NSMutableArray *checkFavoriteAnimalsArr;
+@property (strong, nonatomic) NSMutableArray *checkFavoriteAnimalsResult;
+@property (strong, nonatomic) NSMutableArray *connectionsArr;
 @end
 
 @implementation RequestSender
@@ -27,6 +30,7 @@
     self = [super init];
     if (self) {
         self.receivedDatas = [NSMutableArray array];
+        self.connectionsArr = [NSMutableArray array];
     }
     return self;
 }
@@ -147,7 +151,18 @@
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     NSError *error = nil;
     if (error == nil) {
-        [self.receivedDatas addObject:data];
+        if (self.type != CheckFavoriteAnimals) {
+            [self.receivedDatas addObject:data];
+        } else {
+            for (NSMutableDictionary *connectionDic in self.connectionsArr) {
+                NSURLConnection *connectionObj = [connectionDic objectForKey:@"connection"];
+                if (connectionObj == connection) {
+                    NSMutableArray *dataArr = [connectionDic objectForKey:@"data"];
+                    [dataArr addObject:data];
+                    break;
+                }
+            }
+        }
     }
 }
 
@@ -244,6 +259,16 @@
                     [self parseThumbNailData:[self appendDataFromDatas:self.receivedDatas]];
                 }
                 break;
+            case CheckFavoriteAnimals:
+                for (NSMutableDictionary *connectionDic in self.connectionsArr) {
+                    NSURLConnection *connectionObj = [connectionDic objectForKey:@"connection"];
+                    if (connectionObj == connection) {
+                        NSMutableArray *dataArr = [connectionDic objectForKey:@"data"];
+                        [self combineFavoriteAnimals:[self appendDataFromDatas:dataArr]];
+                        break;
+                    }
+                }
+                
             default:
                 break;
         }
@@ -415,6 +440,64 @@
     
     NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
     [connection start];
+}
+
+- (void)checkFavoriteAnimals:(NSArray *)animals {
+    self.type = CheckFavoriteAnimals;
+    self.checkFavoriteAnimalsResult = [NSMutableArray array];
+    self.checkFavoriteAnimalsArr = [NSMutableArray arrayWithArray:animals];
+    for (Pet* pet in animals) {
+        PetFilters *petFilters = [[PetFilters alloc] init];
+        petFilters.petID = pet.petID;
+        NSURL *url = [NSURL URLWithString:kAdoptAnimalsInTPCURL];
+        
+        NSMutableDictionary *dataDic = [NSMutableDictionary dictionary];
+        [dataDic setObject:kResourceID forKey:kResourceIDKey];
+        [dataDic setObject:kLimitValue forKey:kLimitKey];
+        
+        NSMutableDictionary *filters = [NSMutableDictionary dictionary];
+        if (petFilters.petID)[filters setObject:petFilters.petID forKey:@"_id"];
+        [dataDic setObject:filters forKey:@"filters"];
+        
+        NSError *error = nil;
+        NSData *postData = [NSJSONSerialization dataWithJSONObject:dataDic options:NSJSONWritingPrettyPrinted error:&error];
+        
+        NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[postData length]];
+        
+        NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
+        [urlRequest setValue:postLength forHTTPHeaderField:@"Content-Length"];
+        [urlRequest setHTTPMethod:@"POST"];
+        [urlRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+        [urlRequest setHTTPBody:postData];
+        NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
+        [connection start];
+        
+        NSMutableDictionary *connectionObj = [NSMutableDictionary dictionary];
+        [connectionObj setObject:connection forKey:@"connection"];
+        NSMutableArray *dataArr = [NSMutableArray array];
+        [connectionObj setObject:dataArr forKeyedSubscript:@"data"];
+        [self.connectionsArr addObject:connectionObj];
+    }
+}
+
+- (void)combineFavoriteAnimals:(NSData *)data {
+    NSError *error = nil;
+    NSDictionary *encodeStrings = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+    NSString *success = [NSString stringWithFormat:@"%@",[encodeStrings objectForKey:@"success"]];
+    if ([success isEqualToString:@"1"]) {
+        NSDictionary *result = [encodeStrings objectForKey:@"result"];
+        NSArray *records = [result objectForKey:@"records"];
+        for (NSDictionary *record in records) {
+            [self.checkFavoriteAnimalsResult addObject:[self parseRecord:record]];
+        }
+        if ([self.checkFavoriteAnimalsResult count] == [self.checkFavoriteAnimalsArr count]) {
+            if (self.delegate && [self.delegate respondsToSelector:@selector(checkFavoriteAnimalsResultBack:)]) {
+                [self.delegate checkFavoriteAnimalsResultBack:self.checkFavoriteAnimalsResult];
+            }
+        }
+    } else {
+        [self processErrorWithMessage:kGetDataError];
+    }
 }
 
 - (void)parsePetResultData:(NSData *)data {

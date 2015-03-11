@@ -7,6 +7,7 @@
 //
 
 #import "AnimalDetailCollectionViewCell.h"
+#import "GoTopButton.h"
 
 #define kVarietyTitle @"品種"
 #define kSexTitle @"性別"
@@ -40,6 +41,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *reason;
 @property (weak, nonatomic) IBOutlet UILabel *bodyweight;
 @property (strong, nonatomic) UIImage *image;
+@property (weak, nonatomic) IBOutlet GoTopButton *pageIndicator;
 - (IBAction)facebookShare:(UIBarButtonItem *)sender;
 - (IBAction)lineShare:(UIBarButtonItem *)sender;
 - (IBAction)callOut:(UIBarButtonItem *)sender;
@@ -65,12 +67,43 @@
     [self setLabel:self.reason title:kReasonTitle andContent:self.pet.reason];
     [self setLabel:self.bodyweight title:kBodyweightTitle andContent:self.pet.bodyweight];
     
-    
+    [self setPageIndicatorTitleByResult:self.petResult];
+    self.pageIndicator.alpha = 0.0;
+    [UIView animateWithDuration:1.0 animations:^{
+        self.pageIndicator.alpha = 1.0;
+    } completion:^(BOOL finished) {
+        if (finished) {
+            [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(hidePageIndicator:) userInfo:nil repeats:NO];
+        }
+    }];
+    [self.scrollView setContentOffset:CGPointMake(0.0, 0.0) animated:NO];
     self.imageView.layer.masksToBounds = YES;
     self.imageView.layer.cornerRadius = 10.0;
     self.note.layer.borderColor = [UIColor darkGrayColor].CGColor;
     self.note.layer.borderWidth = 1.0;
     self.note.layer.cornerRadius = 5.0;
+}
+
+- (void)setPageIndicatorTitleByResult:(PetResult *)petResult {
+    NSString *totalPage = @"";
+    NSString *currentPage = @"";
+    totalPage = [NSString stringWithFormat:@"%d",[petResult.pets count]];
+    NSInteger index = 0;
+    for (Pet *pet in petResult.pets) {
+        if ([self.pet.petID isEqualToNumber:pet.petID]) {
+            break;
+        }
+        index++;
+    }
+    currentPage = [NSString stringWithFormat:@"%d",++index];
+    [self.pageIndicator setTitle:[NSString stringWithFormat:@"%@/%@",currentPage,totalPage] forState:UIControlStateNormal];
+}
+
+- (void)hidePageIndicator:(NSTimer *)timer {
+    [UIView animateWithDuration:0.5 animations:^{
+        self.pageIndicator.alpha = 0.0;
+    }];
+    [timer invalidate];
 }
 
 - (void)loadImage {
@@ -79,18 +112,26 @@
         NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:self.pet.imageName]];
         self.image = [UIImage imageWithData:imageData];
 
-        if (self.image.size.width != kPetImageWeigh && self.image.size.height != kPetImageHeigh) {
-            CGSize itemSize = CGSizeMake(kPetImageWeigh, kPetImageHeigh);
-            UIGraphicsBeginImageContext(itemSize);
-            CGRect imageRect = CGRectMake(0.0, 0.0, itemSize.width, itemSize.height);
-            [self.image drawInRect:imageRect];
-            self.image = UIGraphicsGetImageFromCurrentImageContext();
-            UIGraphicsEndImageContext();
-        }
+//        if (self.image.size.width != kPetImageWeigh && self.image.size.height != kPetImageHeigh) {
+//            CGSize itemSize = CGSizeMake(kPetImageWeigh, kPetImageHeigh);
+//            UIGraphicsBeginImageContext(itemSize);
+//            CGRect imageRect = CGRectMake(0.0, 0.0, itemSize.width, itemSize.height);
+//            [self.image drawInRect:imageRect];
+//            self.image = UIGraphicsGetImageFromCurrentImageContext();
+//            UIGraphicsEndImageContext();
+//        }
         
         dispatch_async(dispatch_get_main_queue(), ^{
             self.imageView.alpha = 0.0;
             self.imageView.image = self.image;
+            self.imageView.contentMode = UIViewContentModeScaleAspectFit;
+            self.imageView.autoresizingMask =
+            ( UIViewAutoresizingFlexibleBottomMargin
+             | UIViewAutoresizingFlexibleHeight
+             | UIViewAutoresizingFlexibleLeftMargin
+             | UIViewAutoresizingFlexibleRightMargin
+             | UIViewAutoresizingFlexibleTopMargin
+             | UIViewAutoresizingFlexibleWidth );
             [UIView animateWithDuration:1.0f animations:^{
                 self.imageView.alpha = 1.0;
             } completion:^(BOOL finished) {
