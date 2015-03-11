@@ -16,6 +16,7 @@
 
 #pragma mark - properties and methods for animal hospital
 @property (strong, nonatomic) NSString *accessToken;
+- (void)reconnect:(NSURLConnection *)connection;
 - (void)getAccessToken;
 - (void)sendMenuRequest;
 - (void)sendMenuRequestWithType:(MenuSearchType)menuSearchType;
@@ -36,7 +37,7 @@
 
 @protocol RequestSenderDelegate <NSObject>
 @optional
-- (void)requestFaildWithMessage:(NSString *)message;
+- (void)requestFaildWithMessage:(NSString *)message connection:(NSURLConnection *)connection;
 #pragma mark - delegate for animal hospital
 - (void)accessTokenBack:(NSArray *)accessTokenData;
 - (void)initMenuBack:(NSArray *)menuData;

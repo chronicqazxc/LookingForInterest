@@ -41,6 +41,7 @@
     self.profilePictureView.hidden = YES;
     self.titleLabel.alpha = 0.0;
     self.loginView.alpha = 0.0;
+    self.nameLabel.alpha = 0.0;
     self.nameLabel.text = @"";
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
         //Background Thread
@@ -99,10 +100,14 @@
                                            CGRectGetMinY(self.profilePictureView.frame)-50,
                                            CGRectGetWidth(self.titleLabel.frame),
                                            CGRectGetHeight(self.titleLabel.frame));
-//        self.loginView.frame = CGRectOffset(self.profilePictureView.frame, 0, 100);
         [UIView animateWithDuration:1.0 animations:^{
             self.titleLabel.alpha = 1.0;
             self.loginView.alpha = 1.0;
+            self.nameLabel.alpha = 1.0;
+            self.nameLabel.frame = CGRectMake(CGRectGetMinX(self.nameLabel.frame),
+                                              CGRectGetMaxY(self.profilePictureView.frame)+5,
+                                              CGRectGetWidth(self.nameLabel.frame),
+                                              CGRectGetHeight(self.nameLabel.frame));
         }];
     }];
 }

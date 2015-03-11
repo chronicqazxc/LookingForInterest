@@ -580,4 +580,22 @@
     [self reloadImage:0 withImages:imagesArr];
     [Utilities stopLoading];
 }
+
+- (void)requestFaildWithMessage:(NSString *)message connection:(NSURLConnection *)connection{
+    [Utilities stopLoading];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"錯誤" message:message preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *reConnectAction = [UIAlertAction actionWithTitle:@"重新連線" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        RequestSender *requestSender = [[RequestSender alloc] init];
+        requestSender.delegate = self;
+        requestSender.accessToken = self.accessToken;
+        [requestSender reconnect:connection];
+        [self.requests addObject:requestSender];
+    }];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        [alertController dismissViewControllerAnimated:YES completion:nil];
+    }];
+    [alertController addAction:reConnectAction];
+    [alertController addAction:cancelAction];
+    [self presentViewController:alertController animated:YES completion:nil];
+}
 @end

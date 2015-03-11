@@ -690,7 +690,7 @@
                     [requestSender sendDetailRequestByStore:[self.stores objectAtIndex:indexPath.row]];
                     [self.requestArr addObject:requestSender];
                     self.appdelegate.viewController = self.delegate;
-                    [Utilities startLoading];
+                    [Utilities startLoadingWithContent:@"進入明細"];
                 }
             }
         }
@@ -853,6 +853,24 @@
     [Utilities stopLoading];
 }
 
+- (void)requestFaildWithMessage:(NSString *)message connection:(NSURLConnection *)connection{
+    [Utilities stopLoading];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"錯誤" message:message preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *reConnectAction = [UIAlertAction actionWithTitle:@"重新連線" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        RequestSender *requestSender = [[RequestSender alloc] init];
+        requestSender.delegate = self;
+        requestSender.accessToken = self.accessToken;
+        [requestSender reconnect:connection];
+        [self.requestArr addObject:requestSender];
+    }];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        [alertController dismissViewControllerAnimated:YES completion:nil];
+    }];
+    [alertController addAction:reConnectAction];
+    [alertController addAction:cancelAction];
+    [self.delegate presentViewController:alertController animated:YES completion:nil];
+}
+
 #pragma mark - Notify
 - (void)receiveSelectedMajorType:(NSNotification *)notification {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -905,7 +923,7 @@
     [requestSender sendMenuRequestWithType:menuType];
     [self.requestArr addObject:requestSender];
     self.appdelegate.viewController = self.delegate;
-    [Utilities startLoading];
+    [Utilities startLoadingWithContent:@"更新選單內容"];
 }
 
 #pragma mark - MGSwipeTableCellDelegate

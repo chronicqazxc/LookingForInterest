@@ -195,8 +195,8 @@
     }
     Pet *pet = [self.petResult.pets objectAtIndex:indexPath.row];
 
-    petCell.name.text = [NSString stringWithFormat:@"名字：%@（%@）",pet.name ,pet.type];
-    petCell.variety.text = [NSString stringWithFormat:@"品種：%@",pet.variety];
+    petCell.name.text = [NSString stringWithFormat:@"%@",pet.name];
+    petCell.variety.text = [NSString stringWithFormat:@"品種：%@（%@）",pet.variety ,pet.type];
     petCell.age.text = [NSString stringWithFormat:@"年齡：%@",pet.age];
     petCell.gender.text = [NSString stringWithFormat:@"性別：%@",pet.sex];
     petCell.body.text = [NSString stringWithFormat:@"體型：%@",pet.build];
@@ -312,12 +312,23 @@
 }
 
 #pragma mark - RequestSenderDelegate
-- (void)requestFaildWithMessage:(NSString *)message {
+- (void)requestFaildWithMessage:(NSString *)message connection:(NSURLConnection *)connection{
     [Utilities stopLoading];
     [self.nextPageIndicator stopAnimating];
     [self.previousPageIndicator stopAnimating];
     self.isStartLoading = NO;
-    UIAlertController *alertController = [Utilities normalAlertWithTitle:@"錯誤" message:message withObj:nil andSEL:nil byCaller:self];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"錯誤" message:message preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *reConnectAction = [UIAlertAction actionWithTitle:@"重新連線" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        RequestSender *requestSender = [[RequestSender alloc] init];
+        requestSender.delegate = self;
+        [requestSender reconnect:connection];
+        [self.requests addObject:requestSender];
+    }];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        [alertController dismissViewControllerAnimated:YES completion:nil];
+    }];
+    [alertController addAction:reConnectAction];
+    [alertController addAction:cancelAction];
     [self presentViewController:alertController animated:YES completion:nil];
 }
 

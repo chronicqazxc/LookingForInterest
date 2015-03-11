@@ -35,6 +35,10 @@
     return self;
 }
 
+- (void)reconnect:(NSURLConnection *)connection {
+    [connection start];
+}
+
 - (void)getAccessToken {
     self.type = GetAccessToken;
     [self sendRequestByParams:@{} andURL:[NSString stringWithFormat:@"%@%@",kLookingForInterestURL,kGetAccessToken]];    
@@ -177,7 +181,7 @@
     // The request has failed for some reason!
     // Check the error var
     NSLog(@"%@",error.description);
-    [self processErrorWithMessage:@"連線錯誤"];
+    [self processErrorWithMessage:@"連線錯誤" connection:connection];
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
@@ -496,7 +500,7 @@
             }
         }
     } else {
-        [self processErrorWithMessage:kGetDataError];
+//        [self processErrorWithMessage:kGetDataError];
     }
 }
 
@@ -519,7 +523,7 @@
             [self.delegate petResultBack:petResult];
         }
     } else {
-        [self processErrorWithMessage:kGetDataError];
+//        [self processErrorWithMessage:kGetDataError];
     }
 }
 
@@ -562,9 +566,9 @@
 }
 
 #pragma mark - process error
-- (void)processErrorWithMessage:(NSString *)message {
-    if (self.delegate && [self.delegate respondsToSelector:@selector(requestFaildWithMessage:)]) {
-        [self.delegate requestFaildWithMessage:message];
+- (void)processErrorWithMessage:(NSString *)message connection:(NSURLConnection *)connection{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(requestFaildWithMessage:connection:)]) {
+        [self.delegate requestFaildWithMessage:message connection:connection];
     }
 }
 @end
