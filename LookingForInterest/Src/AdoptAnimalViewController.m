@@ -33,6 +33,8 @@
 @property (weak, nonatomic) IBOutlet GoTopButton *pageIndicator;
 @property (weak, nonatomic) IBOutlet UIView *previousPageView;
 @property (weak, nonatomic) IBOutlet UIView *nextPageView;
+@property (weak, nonatomic) IBOutlet UILabel *nextPageInfoLabel;
+@property (weak, nonatomic) IBOutlet UILabel *previousPageInfoLabel;
 @end
 
 @implementation AdoptAnimalViewController
@@ -181,6 +183,8 @@
     NSInteger petsCount = [self.petResult.pets count];
     if (petsCount) {
         numberOfRows = petsCount;
+    } else {
+        numberOfRows = 1;
     }
     return numberOfRows;
 }
@@ -193,27 +197,39 @@
     if (!petCell) {
         petCell = (AnimalListTableViewCell *)[Utilities getNibWithName:kPetListCellIdentifier];
     }
-    Pet *pet = [self.petResult.pets objectAtIndex:indexPath.row];
 
-    petCell.name.text = [NSString stringWithFormat:@"%@",pet.name];
-    petCell.variety.text = [NSString stringWithFormat:@"品種：%@（%@）",pet.variety ,pet.type];
-    petCell.age.text = [NSString stringWithFormat:@"年齡：%@",pet.age];
-    petCell.gender.text = [NSString stringWithFormat:@"性別：%@",pet.sex];
-    petCell.body.text = [NSString stringWithFormat:@"體型：%@",pet.build];
-    
-    petCell.thumbNail.layer.masksToBounds = YES;
-    petCell.thumbNail.layer.borderWidth = 1.0;
-    petCell.thumbNail.layer.cornerRadius = CGRectGetHeight(petCell.thumbNail.frame)/2.0;
-    if (!pet.thumbNail && !self.isStartLoading) {
-        petCell.thumbNail.image = [UIImage imageNamed:@"Loading100x100.png"];
-        [self startThumbNailDownload:pet forIndexPath:indexPath];
-        petCell.thumbNail.layer.borderColor = [UIColor colorWithWhite:0.0 alpha:0.3].CGColor;
+    if ([self.petResult.pets count]) {
+        Pet *pet = [self.petResult.pets objectAtIndex:indexPath.row];
+        petCell.name.text = [NSString stringWithFormat:@"%@",pet.name];
+        petCell.variety.text = [NSString stringWithFormat:@"品種：%@（%@）",pet.variety ,pet.type];
+        petCell.age.text = [NSString stringWithFormat:@"年齡：%@",pet.age];
+        petCell.gender.text = [NSString stringWithFormat:@"性別：%@",pet.sex];
+        petCell.body.text = [NSString stringWithFormat:@"體型：%@",pet.build];
+        
+        petCell.thumbNail.layer.masksToBounds = YES;
+        petCell.thumbNail.layer.borderWidth = 1.0;
+        petCell.thumbNail.layer.cornerRadius = CGRectGetHeight(petCell.thumbNail.frame)/2.0;
+        if (!pet.thumbNail && !self.isStartLoading) {
+            petCell.thumbNail.image = [UIImage imageNamed:@"Loading100x100.png"];
+            [self startThumbNailDownload:pet forIndexPath:indexPath];
+            petCell.thumbNail.layer.borderColor = [UIColor colorWithWhite:0.0 alpha:0.3].CGColor;
+        } else {
+            petCell.thumbNail.image = pet.thumbNail;
+            petCell.thumbNail.layer.borderColor = [UIColor colorWithWhite:1.0 alpha:1.0].CGColor;
+        }
+        
+        petCell.delegate = self;
     } else {
-        petCell.thumbNail.image = pet.thumbNail;
-        petCell.thumbNail.layer.borderColor = [UIColor colorWithWhite:1.0 alpha:1.0].CGColor;
+        petCell.name.text = @"查無資料...";
+        petCell.variety.text = @"";
+        petCell.age.text = @"";
+        petCell.gender.text = @"";
+        petCell.body.text = @"";
+        petCell.thumbNail.layer.masksToBounds = YES;
+        petCell.thumbNail.layer.borderWidth = 1.0;
+        petCell.thumbNail.layer.cornerRadius = CGRectGetHeight(petCell.thumbNail.frame)/2.0;
+        petCell.thumbNail.image = [UIImage imageNamed:@"Loading100x100.png"];
     }
-    
-    petCell.delegate = self;
     return petCell;
 }
 
@@ -252,7 +268,7 @@
     UIEdgeInsets inset = aScrollView.contentInset;
     float y = offset.y + bounds.size.height - inset.bottom;
     float h = size.height;
-    float reloadDistance = 90;
+    float reloadDistance = 50;
     
     if (self.isStartLoading == NO) {
         if(y > h + reloadDistance) {
@@ -260,7 +276,7 @@
                 self.isStartLoading = YES;
                 [self getNextPage];
             }
-        } else if (offset.y <= -90) {
+        } else if (offset.y <= -50) {
             if ((self.petResult.previous && ![self.petResult.previous isEqualToString:@""]) ||
                 [self.petResult.next isEqualToString:@"40"]) {
                 self.isStartLoading = YES;
@@ -356,7 +372,11 @@
         totalPage = [NSString stringWithFormat:@"%d",(int)total];
     } else {
         NSInteger total = [petResult.total intValue]/[petResult.limit integerValue];
-        totalPage = [NSString stringWithFormat:@"%d",(int)total];
+        if (total == 0) {
+            totalPage = @"1";
+        } else {
+            totalPage = [NSString stringWithFormat:@"%d",(int)total];
+        }
     }
     NSString *currentPage = @"";
     NSString *offset = [NSString stringWithFormat:@"%@",petResult.offset];
