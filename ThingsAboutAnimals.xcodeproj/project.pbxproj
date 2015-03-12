@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8441E412FA271BBDE77D111F /* libPods-LookingForInterest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C1D1C794A2B62ED9A85DC3D8 /* libPods-LookingForInterest.a */; };
 		B002A2EB1A9885FA00808055 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B002A2E91A9885FA00808055 /* WebViewController.m */; };
 		B002A2EC1A9885FA00808055 /* WebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B002A2EA1A9885FA00808055 /* WebViewController.xib */; };
 		B002A2EF1A9CEFBA00808055 /* PageController.m in Sources */ = {isa = PBXBuildFile; fileRef = B002A2EE1A9CEFBA00808055 /* PageController.m */; };
@@ -30,7 +29,6 @@
 		B04F70171AA4406D007D9856 /* HUDView.m in Sources */ = {isa = PBXBuildFile; fileRef = B04F70161AA4406D007D9856 /* HUDView.m */; };
 		B04F70191AA44089007D9856 /* HUDView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B04F70181AA44089007D9856 /* HUDView.xib */; };
 		B04F701C1AA585CB007D9856 /* DialingButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B04F701B1AA585CB007D9856 /* DialingButton.m */; };
-		B04F702B1AA6DA32007D9856 /* LookingForInterest_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = B04F702A1AA6DA32007D9856 /* LookingForInterest_Tests.m */; };
 		B06E56991A9D64980030B6A4 /* GoTopButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B06E56981A9D64980030B6A4 /* GoTopButton.m */; };
 		B06E569D1A9DE2980030B6A4 /* AnimalHospitalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B06E569B1A9DE2980030B6A4 /* AnimalHospitalViewController.m */; };
 		B06E569E1A9DE2980030B6A4 /* AnimalHospitalViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B06E569C1A9DE2980030B6A4 /* AnimalHospitalViewController.xib */; };
@@ -45,6 +43,11 @@
 		B0ACC90A1AA6F8520068A7D5 /* Pet.m in Sources */ = {isa = PBXBuildFile; fileRef = B0ACC9091AA6F8520068A7D5 /* Pet.m */; };
 		B0ACC90D1AA6F9FA0068A7D5 /* PetResult.m in Sources */ = {isa = PBXBuildFile; fileRef = B0ACC90C1AA6F9FA0068A7D5 /* PetResult.m */; };
 		B0ACC9191AA84B1B0068A7D5 /* AdoptAnimalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0ACC9181AA84B1B0068A7D5 /* AdoptAnimalViewController.m */; };
+		B0B048E81AB16AEB000154B2 /* ThingsAboutAnimals_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = B0B048E71AB16AEB000154B2 /* ThingsAboutAnimals_Tests.m */; };
+		B0B048EF1AB172FB000154B2 /* CoverImage1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B0B048EE1AB172FB000154B2 /* CoverImage1.jpg */; };
+		B0B048F11AB1735E000154B2 /* CoverImage2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B0B048F01AB1735E000154B2 /* CoverImage2.jpg */; };
+		B0B048F31AB173F1000154B2 /* CoverImage3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B0B048F21AB173F1000154B2 /* CoverImage3.jpg */; };
+		B0B048F51AB1749A000154B2 /* CoverImage4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B0B048F41AB1749A000154B2 /* CoverImage4.jpg */; };
 		B0B230001AA7639E003FE4D7 /* PetFilters.m in Sources */ = {isa = PBXBuildFile; fileRef = B0B22FFF1AA7639E003FE4D7 /* PetFilters.m */; };
 		B0BF72DE1A8915C500213C00 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B0BF72DD1A8915C500213C00 /* main.m */; };
 		B0BF72E81A8915DD00213C00 /* MajorType.m in Sources */ = {isa = PBXBuildFile; fileRef = B0BF72E11A8915DD00213C00 /* MajorType.m */; };
@@ -94,23 +97,25 @@
 		B0F06B6C1A8B479F00FBC90C /* arrow-right@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0F06B6B1A8B479F00FBC90C /* arrow-right@2x.png */; };
 		B0F06B701A8B51E500FBC90C /* StoreTableHeaderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0F06B6E1A8B51E500FBC90C /* StoreTableHeaderViewController.m */; };
 		B0F06B711A8B51E500FBC90C /* StoreTableHeaderViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0F06B6F1A8B51E500FBC90C /* StoreTableHeaderViewController.xib */; };
+		FC4BF65D66AB946F55724AD7 /* libPods-ThingsAboutAnimals.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A9AD3B9BCAE0F32944C09EC2 /* libPods-ThingsAboutAnimals.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		B04F702C1AA6DA32007D9856 /* PBXContainerItemProxy */ = {
+		B0B048E91AB16AEB000154B2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B034D9531A8903A900360A6C /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = B034D95A1A8903A900360A6C;
-			remoteInfo = LookingForInterest;
+			remoteInfo = ThingsAboutAnimals;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		193908BC157B2A29F5014D23 /* Pods-ThingsAboutAnimals.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ThingsAboutAnimals.release.xcconfig"; path = "Pods/Target Support Files/Pods-ThingsAboutAnimals/Pods-ThingsAboutAnimals.release.xcconfig"; sourceTree = "<group>"; };
 		246B5FE3AC76C49E3CBBC7EB /* Pods-LookingForInterest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LookingForInterest.release.xcconfig"; path = "Pods/Target Support Files/Pods-LookingForInterest/Pods-LookingForInterest.release.xcconfig"; sourceTree = "<group>"; };
 		2F0C5FF2BC540D0F473CDAE6 /* Pods-LookingForInterest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LookingForInterest.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LookingForInterest/Pods-LookingForInterest.debug.xcconfig"; sourceTree = "<group>"; };
-		B002A2AE1A964C0B00808055 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B002A2AF1A964C0B00808055 /* LookingForInterest_Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LookingForInterest_Tests.m; sourceTree = "<group>"; };
+		8B5B7415EB81D51AA50E370A /* Pods-ThingsAboutAnimals.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ThingsAboutAnimals.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ThingsAboutAnimals/Pods-ThingsAboutAnimals.debug.xcconfig"; sourceTree = "<group>"; };
+		A9AD3B9BCAE0F32944C09EC2 /* libPods-ThingsAboutAnimals.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ThingsAboutAnimals.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B002A2E81A9885FA00808055 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WebViewController.h; path = Src/WebViewController.h; sourceTree = "<group>"; };
 		B002A2E91A9885FA00808055 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WebViewController.m; path = Src/WebViewController.m; sourceTree = "<group>"; };
 		B002A2EA1A9885FA00808055 /* WebViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WebViewController.xib; path = Src/WebViewController.xib; sourceTree = "<group>"; };
@@ -148,9 +153,6 @@
 		B04F70181AA44089007D9856 /* HUDView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HUDView.xib; path = Src/Views/HUDView.xib; sourceTree = "<group>"; };
 		B04F701A1AA585CB007D9856 /* DialingButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DialingButton.h; path = Src/Views/DialingButton.h; sourceTree = "<group>"; };
 		B04F701B1AA585CB007D9856 /* DialingButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DialingButton.m; path = Src/Views/DialingButton.m; sourceTree = "<group>"; };
-		B04F70261AA6DA32007D9856 /* LookingForInterest Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "LookingForInterest Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		B04F70291AA6DA32007D9856 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B04F702A1AA6DA32007D9856 /* LookingForInterest_Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LookingForInterest_Tests.m; sourceTree = "<group>"; };
 		B06E56971A9D64980030B6A4 /* GoTopButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GoTopButton.h; path = Src/Views/GoTopButton.h; sourceTree = "<group>"; };
 		B06E56981A9D64980030B6A4 /* GoTopButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GoTopButton.m; path = Src/Views/GoTopButton.m; sourceTree = "<group>"; };
 		B06E569A1A9DE2980030B6A4 /* AnimalHospitalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimalHospitalViewController.h; path = Src/Views/AnimalHospitalViewController.h; sourceTree = "<group>"; };
@@ -175,6 +177,13 @@
 		B0ACC90C1AA6F9FA0068A7D5 /* PetResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PetResult.m; path = Src/Objects/PetResult.m; sourceTree = "<group>"; };
 		B0ACC9171AA84B1B0068A7D5 /* AdoptAnimalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AdoptAnimalViewController.h; path = Src/AdoptAnimalViewController.h; sourceTree = "<group>"; };
 		B0ACC9181AA84B1B0068A7D5 /* AdoptAnimalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AdoptAnimalViewController.m; path = Src/AdoptAnimalViewController.m; sourceTree = "<group>"; };
+		B0B048E31AB16AEB000154B2 /* ThingsAboutAnimals Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ThingsAboutAnimals Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B0B048E61AB16AEB000154B2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B0B048E71AB16AEB000154B2 /* ThingsAboutAnimals_Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ThingsAboutAnimals_Tests.m; sourceTree = "<group>"; };
+		B0B048EE1AB172FB000154B2 /* CoverImage1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = CoverImage1.jpg; path = Img/CoverImage1.jpg; sourceTree = "<group>"; };
+		B0B048F01AB1735E000154B2 /* CoverImage2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = CoverImage2.jpg; path = Img/CoverImage2.jpg; sourceTree = "<group>"; };
+		B0B048F21AB173F1000154B2 /* CoverImage3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = CoverImage3.jpg; path = Img/CoverImage3.jpg; sourceTree = "<group>"; };
+		B0B048F41AB1749A000154B2 /* CoverImage4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = CoverImage4.jpg; path = Img/CoverImage4.jpg; sourceTree = "<group>"; };
 		B0B22FFE1AA7639E003FE4D7 /* PetFilters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PetFilters.h; path = Src/Objects/PetFilters.h; sourceTree = "<group>"; };
 		B0B22FFF1AA7639E003FE4D7 /* PetFilters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PetFilters.m; path = Src/Objects/PetFilters.m; sourceTree = "<group>"; };
 		B0BF72DD1A8915C500213C00 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Src/main.m; sourceTree = "<group>"; };
@@ -252,11 +261,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				B002A2F81AA02FE800808055 /* QuartzCore.framework in Frameworks */,
-				8441E412FA271BBDE77D111F /* libPods-LookingForInterest.a in Frameworks */,
+				FC4BF65D66AB946F55724AD7 /* libPods-ThingsAboutAnimals.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B04F70231AA6DA31007D9856 /* Frameworks */ = {
+		B0B048E01AB16AEB000154B2 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -272,6 +281,7 @@
 				B0391BDB1AADDEF60070C3CC /* MessageUI.framework */,
 				B002A2F71AA02FE700808055 /* QuartzCore.framework */,
 				C1D1C794A2B62ED9A85DC3D8 /* libPods-LookingForInterest.a */,
+				A9AD3B9BCAE0F32944C09EC2 /* libPods-ThingsAboutAnimals.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -281,25 +291,10 @@
 			children = (
 				2F0C5FF2BC540D0F473CDAE6 /* Pods-LookingForInterest.debug.xcconfig */,
 				246B5FE3AC76C49E3CBBC7EB /* Pods-LookingForInterest.release.xcconfig */,
+				8B5B7415EB81D51AA50E370A /* Pods-ThingsAboutAnimals.debug.xcconfig */,
+				193908BC157B2A29F5014D23 /* Pods-ThingsAboutAnimals.release.xcconfig */,
 			);
 			name = Pods;
-			sourceTree = "<group>";
-		};
-		B002A2AC1A964C0B00808055 /* LookingForInterest Tests */ = {
-			isa = PBXGroup;
-			children = (
-				B002A2AF1A964C0B00808055 /* LookingForInterest_Tests.m */,
-				B002A2AD1A964C0B00808055 /* Supporting Files */,
-			);
-			path = "LookingForInterest Tests";
-			sourceTree = "<group>";
-		};
-		B002A2AD1A964C0B00808055 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				B002A2AE1A964C0B00808055 /* Info.plist */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		B002A2F01A9E31D700808055 /* Scroll&ZoomingView */ = {
@@ -317,8 +312,7 @@
 			isa = PBXGroup;
 			children = (
 				B034D95D1A8903A900360A6C /* LookingForInterest */,
-				B002A2AC1A964C0B00808055 /* LookingForInterest Tests */,
-				B04F70271AA6DA32007D9856 /* LookingForInterest Tests */,
+				B0B048E41AB16AEB000154B2 /* ThingsAboutAnimals Tests */,
 				B034D95C1A8903A900360A6C /* Products */,
 				A9A5CC563E29FFAF51E0A5E8 /* Pods */,
 				6481B35C53C0A6FBF51E0A0E /* Frameworks */,
@@ -329,7 +323,7 @@
 			isa = PBXGroup;
 			children = (
 				B034D95B1A8903A900360A6C /* 寵物相關.app */,
-				B04F70261AA6DA32007D9856 /* LookingForInterest Tests.xctest */,
+				B0B048E31AB16AEB000154B2 /* ThingsAboutAnimals Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -366,23 +360,6 @@
 				B04F70131A9EFEFA007D9856 /* AnimalHospital.pch */,
 				B0BF72DD1A8915C500213C00 /* main.m */,
 				B034D95F1A8903A900360A6C /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		B04F70271AA6DA32007D9856 /* LookingForInterest Tests */ = {
-			isa = PBXGroup;
-			children = (
-				B04F702A1AA6DA32007D9856 /* LookingForInterest_Tests.m */,
-				B04F70281AA6DA32007D9856 /* Supporting Files */,
-			);
-			path = "LookingForInterest Tests";
-			sourceTree = "<group>";
-		};
-		B04F70281AA6DA32007D9856 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				B04F70291AA6DA32007D9856 /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -455,6 +432,23 @@
 				B02862001AAAEB40001C50DB /* AnimalDetailCollectionViewCell.xib */,
 			);
 			name = AdoptAnimal;
+			sourceTree = "<group>";
+		};
+		B0B048E41AB16AEB000154B2 /* ThingsAboutAnimals Tests */ = {
+			isa = PBXGroup;
+			children = (
+				B0B048E71AB16AEB000154B2 /* ThingsAboutAnimals_Tests.m */,
+				B0B048E51AB16AEB000154B2 /* Supporting Files */,
+			);
+			path = "ThingsAboutAnimals Tests";
+			sourceTree = "<group>";
+		};
+		B0B048E51AB16AEB000154B2 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B0B048E61AB16AEB000154B2 /* Info.plist */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		B0BF72DF1A8915CC00213C00 /* Objs */ = {
@@ -542,6 +536,10 @@
 		B0F06B4E1A8A0E8800FBC90C /* Img */ = {
 			isa = PBXGroup;
 			children = (
+				B0B048F41AB1749A000154B2 /* CoverImage4.jpg */,
+				B0B048F21AB173F1000154B2 /* CoverImage3.jpg */,
+				B0B048F01AB1735E000154B2 /* CoverImage2.jpg */,
+				B0B048EE1AB172FB000154B2 /* CoverImage1.jpg */,
 				B0391BE11AADF9A60070C3CC /* Line20x20.png */,
 				B0391BDF1AADF8C50070C3CC /* Line30x30.png */,
 				B0391BDD1AADF83C0070C3CC /* Line40x40.png */,
@@ -583,22 +581,22 @@
 			productReference = B034D95B1A8903A900360A6C /* 寵物相關.app */;
 			productType = "com.apple.product-type.application";
 		};
-		B04F70251AA6DA31007D9856 /* LookingForInterest Tests */ = {
+		B0B048E21AB16AEB000154B2 /* ThingsAboutAnimals Tests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B04F702E1AA6DA32007D9856 /* Build configuration list for PBXNativeTarget "LookingForInterest Tests" */;
+			buildConfigurationList = B0B048EB1AB16AEB000154B2 /* Build configuration list for PBXNativeTarget "ThingsAboutAnimals Tests" */;
 			buildPhases = (
-				B04F70221AA6DA31007D9856 /* Sources */,
-				B04F70231AA6DA31007D9856 /* Frameworks */,
-				B04F70241AA6DA31007D9856 /* Resources */,
+				B0B048DF1AB16AEB000154B2 /* Sources */,
+				B0B048E01AB16AEB000154B2 /* Frameworks */,
+				B0B048E11AB16AEB000154B2 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				B04F702D1AA6DA32007D9856 /* PBXTargetDependency */,
+				B0B048EA1AB16AEB000154B2 /* PBXTargetDependency */,
 			);
-			name = "LookingForInterest Tests";
-			productName = "LookingForInterest Tests";
-			productReference = B04F70261AA6DA32007D9856 /* LookingForInterest Tests.xctest */;
+			name = "ThingsAboutAnimals Tests";
+			productName = "ThingsAboutAnimals Tests";
+			productReference = B0B048E31AB16AEB000154B2 /* ThingsAboutAnimals Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -613,8 +611,8 @@
 					B034D95A1A8903A900360A6C = {
 						CreatedOnToolsVersion = 6.1.1;
 					};
-					B04F70251AA6DA31007D9856 = {
-						CreatedOnToolsVersion = 6.1.1;
+					B0B048E21AB16AEB000154B2 = {
+						CreatedOnToolsVersion = 6.2;
 						TestTargetID = B034D95A1A8903A900360A6C;
 					};
 				};
@@ -633,7 +631,7 @@
 			projectRoot = "";
 			targets = (
 				B034D95A1A8903A900360A6C /* ThingsAboutAnimals */,
-				B04F70251AA6DA31007D9856 /* LookingForInterest Tests */,
+				B0B048E21AB16AEB000154B2 /* ThingsAboutAnimals Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -646,6 +644,7 @@
 				B034D96A1A8903AA00360A6C /* Main.storyboard in Resources */,
 				B0F06B6A1A8B3DFA00FBC90C /* arrow-up@2x.png in Resources */,
 				B034D96F1A8903AA00360A6C /* LaunchScreen.xib in Resources */,
+				B0B048F31AB173F1000154B2 /* CoverImage3.jpg in Resources */,
 				B02862021AAAEB40001C50DB /* AnimalDetailCollectionViewCell.xib in Resources */,
 				B034D96C1A8903AA00360A6C /* Images.xcassets in Resources */,
 				B0F06B521A8A10E500FBC90C /* magnifier-4.png in Resources */,
@@ -654,6 +653,7 @@
 				B0BF73051A8916A400213C00 /* Contents.json in Resources */,
 				B0F06B711A8B51E500FBC90C /* StoreTableHeaderViewController.xib in Resources */,
 				B0BF730E1A8916A400213C00 /* Icon-Small@2x.png in Resources */,
+				B0B048EF1AB172FB000154B2 /* CoverImage1.jpg in Resources */,
 				B07804AC1AA9467900DE8AD0 /* PopUpPicker.xib in Resources */,
 				B0F06B621A8B252900FBC90C /* magnifier.png in Resources */,
 				B0F06B601A8B0FA200FBC90C /* OpenMapHeaderController.xib in Resources */,
@@ -671,6 +671,7 @@
 				B0BF732F1A8A4EE000213C00 /* fav@2x.png in Resources */,
 				B0A320531AAD428A0061384A /* Loading100x100.png in Resources */,
 				B06E569E1A9DE2980030B6A4 /* AnimalHospitalViewController.xib in Resources */,
+				B0B048F51AB1749A000154B2 /* CoverImage4.jpg in Resources */,
 				B04F70191AA44089007D9856 /* HUDView.xib in Resources */,
 				B0391BDE1AADF83C0070C3CC /* Line40x40.png in Resources */,
 				B0BF730D1A8916A400213C00 /* Icon-Small.png in Resources */,
@@ -687,11 +688,12 @@
 				B0BF730F1A8916A400213C00 /* Icon-Small@3x.png in Resources */,
 				B0F06B371A89B80500FBC90C /* MapViewCell.xib in Resources */,
 				B0BF73091A8916A400213C00 /* Icon-60@2x.png in Resources */,
+				B0B048F11AB1735E000154B2 /* CoverImage2.jpg in Resources */,
 				B0F06B571A8B089A00FBC90C /* OptionTableHeader.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B04F70241AA6DA31007D9856 /* Resources */ = {
+		B0B048E11AB16AEB000154B2 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -713,7 +715,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-LookingForInterest/Pods-LookingForInterest-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ThingsAboutAnimals/Pods-ThingsAboutAnimals-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		5E4B153C35EF91DCCA36ECD1 /* Check Pods Manifest.lock */ = {
@@ -780,21 +782,21 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B04F70221AA6DA31007D9856 /* Sources */ = {
+		B0B048DF1AB16AEB000154B2 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B04F702B1AA6DA32007D9856 /* LookingForInterest_Tests.m in Sources */,
+				B0B048E81AB16AEB000154B2 /* ThingsAboutAnimals_Tests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		B04F702D1AA6DA32007D9856 /* PBXTargetDependency */ = {
+		B0B048EA1AB16AEB000154B2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = B034D95A1A8903A900360A6C /* ThingsAboutAnimals */;
-			targetProxy = B04F702C1AA6DA32007D9856 /* PBXContainerItemProxy */;
+			targetProxy = B0B048E91AB16AEB000154B2 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -896,7 +898,7 @@
 		};
 		B034D97F1A8903AA00360A6C /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2F0C5FF2BC540D0F473CDAE6 /* Pods-LookingForInterest.debug.xcconfig */;
+			baseConfigurationReference = 8B5B7415EB81D51AA50E370A /* Pods-ThingsAboutAnimals.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -909,7 +911,7 @@
 		};
 		B034D9801A8903AA00360A6C /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 246B5FE3AC76C49E3CBBC7EB /* Pods-LookingForInterest.release.xcconfig */;
+			baseConfigurationReference = 193908BC157B2A29F5014D23 /* Pods-ThingsAboutAnimals.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -920,7 +922,7 @@
 			};
 			name = Release;
 		};
-		B04F702F1AA6DA32007D9856 /* Debug */ = {
+		B0B048EC1AB16AEB000154B2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -932,25 +934,28 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = "LookingForInterest Tests/Info.plist";
+				INFOPLIST_FILE = "ThingsAboutAnimals Tests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/寵物相關的.app/寵物相關的";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/寵物相關.app/寵物相關";
 			};
 			name = Debug;
 		};
-		B04F70301AA6DA32007D9856 /* Release */ = {
+		B0B048ED1AB16AEB000154B2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = "LookingForInterest Tests/Info.plist";
+				INFOPLIST_FILE = "ThingsAboutAnimals Tests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/寵物相關的.app/寵物相關的";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/寵物相關.app/寵物相關";
 			};
 			name = Release;
 		};
@@ -964,7 +969,7 @@
 				B034D97D1A8903AA00360A6C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		B034D97E1A8903AA00360A6C /* Build configuration list for PBXNativeTarget "ThingsAboutAnimals" */ = {
 			isa = XCConfigurationList;
@@ -973,16 +978,15 @@
 				B034D9801A8903AA00360A6C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
-		B04F702E1AA6DA32007D9856 /* Build configuration list for PBXNativeTarget "LookingForInterest Tests" */ = {
+		B0B048EB1AB16AEB000154B2 /* Build configuration list for PBXNativeTarget "ThingsAboutAnimals Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				B04F702F1AA6DA32007D9856 /* Debug */,
-				B04F70301AA6DA32007D9856 /* Release */,
+				B0B048EC1AB16AEB000154B2 /* Debug */,
+				B0B048ED1AB16AEB000154B2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

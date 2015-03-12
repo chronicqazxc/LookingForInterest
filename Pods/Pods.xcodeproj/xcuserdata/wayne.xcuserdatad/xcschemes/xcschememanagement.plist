@@ -4,65 +4,77 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>Pods-LookingForInterest-Bolts.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-			<key>orderHint</key>
-			<integer>2</integer>
-		</dict>
-		<key>Pods-LookingForInterest-Facebook-iOS-SDK.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-			<key>orderHint</key>
-			<integer>3</integer>
-		</dict>
-		<key>Pods-LookingForInterest-Google-Maps-iOS-SDK.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-			<key>orderHint</key>
-			<integer>4</integer>
-		</dict>
-		<key>Pods-LookingForInterest-MGSwipeTableCell.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-			<key>orderHint</key>
-			<integer>5</integer>
-		</dict>
-		<key>Pods-LookingForInterest.xcscheme</key>
+		<key>Pods-ThingsAboutAnimals-Bolts.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
 			<integer>1</integer>
 		</dict>
+		<key>Pods-ThingsAboutAnimals-Facebook-iOS-SDK.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
+		<key>Pods-ThingsAboutAnimals-Google-Maps-iOS-SDK.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
+		<key>Pods-ThingsAboutAnimals-MGSwipeTableCell.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>5</integer>
+		</dict>
+		<key>Pods-ThingsAboutAnimals-MarqueeLabel.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>4</integer>
+		</dict>
+		<key>Pods-ThingsAboutAnimals.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>0</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>1E59E2E74B9AE16E4451DA9B</key>
+		<key>23291209A6F0A34D0A5113B3</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>4EBEEC59C8831F904F04E27E</key>
+		<key>3FA989A6A971FBB8A53F2256</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>7EEE95F444348F07280698B5</key>
+		<key>5D62ABE57E7D280678C3FD15</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>86656EC2E4906BA235A4C89B</key>
+		<key>EFA28D8A3AA995FAF5256CD8</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>E050DA7B31954A286064C8AA</key>
+		<key>F3AE78D0C15D953C9471DEB1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>FCCEEAD7A2D4A173A34FDAE2</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -168,7 +168,7 @@
     } else {
         alertTitle  = @"Something went wrong";
         alertMessage = @"Please try again later.";
-        NSLog(@"Unexpected error:%@", error);
+        NSLog(@"Unexpted error:%@", error);
     }
     
     if (alertMessage) {

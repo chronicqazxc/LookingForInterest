@@ -25,7 +25,7 @@
 #define kPetImageWeigh CGRectGetWidth(self.frame)
 #define kPetImageHeigh 400
 
-@interface AnimalDetailCollectionViewCell()
+@interface AnimalDetailCollectionViewCell() <UIScrollViewDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UILabel *variety;
 @property (weak, nonatomic) IBOutlet UILabel *sex;
@@ -42,6 +42,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *bodyweight;
 @property (strong, nonatomic) UIImage *image;
 @property (weak, nonatomic) IBOutlet GoTopButton *pageIndicator;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageHeightConstraints;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageVerticalConstraints;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *buttomVerticalConstraints;
 - (IBAction)facebookShare:(UIBarButtonItem *)sender;
 - (IBAction)lineShare:(UIBarButtonItem *)sender;
 - (IBAction)callOut:(UIBarButtonItem *)sender;
@@ -51,21 +54,40 @@
 @implementation AnimalDetailCollectionViewCell
 
 - (void)awakeFromNib {
+    self.imageHeightConstraints.constant = CGRectGetHeight(self.frame)-44;
+    /*
+320 x 568	375 x 667	414 x 736	1024x768	1024x768
+     */
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    if (screenRect.size.height < 568) {
+        self.imageVerticalConstraints.constant = 50.0;
+        self.buttomVerticalConstraints.constant = 50.0;
+    } else if (screenRect.size.height >= 568 && screenRect.size.height < 667) {
+        self.imageVerticalConstraints.constant = 50.0;
+        self.buttomVerticalConstraints.constant = 60.0;
+    } else if (screenRect.size.height >= 667 && screenRect.size.height < 768) {
+        self.imageVerticalConstraints.constant = 50.0;
+        self.buttomVerticalConstraints.constant = 100.0;
+    } else if (screenRect.size.height > 768) {
+        self.imageVerticalConstraints.constant = 90.0;
+        self.buttomVerticalConstraints.constant = 200.0;
+    }
+    [self updateConstraints];
     self.imageView.image = [UIImage imageNamed:@"Loading300x400.png"];
     [self loadImage];
-    [self setLabel:self.variety title:kVarietyTitle andContent:self.pet.variety];
-    [self setLabel:self.sex title:kSexTitle andContent:self.pet.sex];
-    [self setLabel:self.isSterilization title:kIsSterilizationTitle andContent:self.pet.isSterilization];
-    [self setLabel:self.hairType title:kHairTypeTitle andContent:self.pet.hairType];
-    [self setLabel:self.age title:kAgeTitle andContent:self.pet.age];
+    [self setLabel:self.variety title:@"" andContent:self.pet.variety];
+    [self setLabel:self.sex title:@"" andContent:self.pet.sex];
+    [self setLabel:self.isSterilization title:@"" andContent:self.pet.isSterilization];
+    [self setLabel:self.hairType title:@"" andContent:self.pet.hairType];
+    [self setLabel:self.age title:@"" andContent:self.pet.age];
     [self setTextView:self.note title:kNoteTitle andContent:self.pet.note];
-    [self setLabel:self.resettlement title:kResettlementTitle andContent:self.pet.resettlement];
-    [self setLabel:self.phone title:kPhoneTitle andContent:self.pet.phone];
-    [self setLabel:self.email title:kEmailTitle andContent:self.pet.email];
-    [self setLabel:self.childreAnlong title:kChildreAnlongTitle andContent:self.pet.childreAnlong];
-    [self setLabel:self.animalAnlong title:kAnimalAnlongTitle andContent:self.pet.animalAnlong];
-    [self setLabel:self.reason title:kReasonTitle andContent:self.pet.reason];
-    [self setLabel:self.bodyweight title:kBodyweightTitle andContent:self.pet.bodyweight];
+    [self setLabel:self.resettlement title:@"" andContent:self.pet.resettlement];
+    [self setLabel:self.phone title:@"" andContent:self.pet.phone];
+    [self setLabel:self.email title:@"" andContent:self.pet.email];
+    [self setLabel:self.childreAnlong title:@"" andContent:self.pet.childreAnlong];
+    [self setLabel:self.animalAnlong title:@"" andContent:self.pet.animalAnlong];
+    [self setLabel:self.reason title:@"" andContent:self.pet.reason];
+    [self setLabel:self.bodyweight title:@"" andContent:self.pet.bodyweight];
     
     [self setPageIndicatorTitleByResult:self.petResult];
     self.pageIndicator.alpha = 0.0;
@@ -87,7 +109,7 @@
 - (void)setPageIndicatorTitleByResult:(PetResult *)petResult {
     NSString *totalPage = @"";
     NSString *currentPage = @"";
-    totalPage = [NSString stringWithFormat:@"%d",[petResult.pets count]];
+    totalPage = [NSString stringWithFormat:@"%d",(int)[petResult.pets count]];
     NSInteger index = 0;
     for (Pet *pet in petResult.pets) {
         if ([self.pet.petID isEqualToNumber:pet.petID]) {
@@ -95,7 +117,7 @@
         }
         index++;
     }
-    currentPage = [NSString stringWithFormat:@"%d",++index];
+    currentPage = [NSString stringWithFormat:@"%d",(int)++index];
     [self.pageIndicator setTitle:[NSString stringWithFormat:@"%@/%@",currentPage,totalPage] forState:UIControlStateNormal];
 }
 
@@ -111,16 +133,6 @@
     dispatch_async(myQueue, ^{
         NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:self.pet.imageName]];
         self.image = [UIImage imageWithData:imageData];
-
-//        if (self.image.size.width != kPetImageWeigh && self.image.size.height != kPetImageHeigh) {
-//            CGSize itemSize = CGSizeMake(kPetImageWeigh, kPetImageHeigh);
-//            UIGraphicsBeginImageContext(itemSize);
-//            CGRect imageRect = CGRectMake(0.0, 0.0, itemSize.width, itemSize.height);
-//            [self.image drawInRect:imageRect];
-//            self.image = UIGraphicsGetImageFromCurrentImageContext();
-//            UIGraphicsEndImageContext();
-//        }
-        
         dispatch_async(dispatch_get_main_queue(), ^{
             self.imageView.alpha = 0.0;
             self.imageView.image = self.image;
@@ -135,14 +147,14 @@
             [UIView animateWithDuration:1.0f animations:^{
                 self.imageView.alpha = 1.0;
             } completion:^(BOOL finished) {
-                nil;
+
             }];
         });
     });
 }
 
 - (void)setLabel:(UILabel *)label title:(NSString *)title andContent:(NSString *)content {
-    label.text = [NSString stringWithFormat:@"%@：%@", title, content?content:@""];
+    label.text = [NSString stringWithFormat:@"%@%@", title, content?content:@""];
 }
 
 - (void)setTextView:(UITextView *)textView title:(NSString *)title andContent:(NSString *)content {
@@ -171,5 +183,10 @@
     if (self.viewController && [self.viewController respondsToSelector:@selector(sendEmail:)]) {
         [self.viewController sendEmail:self.pet];
     }
+}
+
+#pragma mark - UIScrollViewDelegate
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    
 }
 @end

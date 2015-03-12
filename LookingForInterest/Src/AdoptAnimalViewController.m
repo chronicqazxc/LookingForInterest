@@ -480,8 +480,8 @@
     self.petFilters = [[PetFilters alloc] init];
     self.petFilters.type = kAdoptFilterTypeMyFavorite;
     self.petResult.pets = [NSMutableArray arrayWithArray:[Utilities getMyFavoriteAnimalsDecoded]];
-    self.petResult.limit = [NSNumber numberWithInt:[self.petResult.pets count]];
-    self.petResult.total = [NSNumber numberWithInt:[self.petResult.pets count]];
+    self.petResult.limit = [NSNumber numberWithInt:(int)[self.petResult.pets count]];
+    self.petResult.total = [NSNumber numberWithInt:(int)[self.petResult.pets count]];
     self.petResult.offset = @"";
     [self setPageIndicatorTitleByResult:self.petResult];
     [self.tableView reloadData];

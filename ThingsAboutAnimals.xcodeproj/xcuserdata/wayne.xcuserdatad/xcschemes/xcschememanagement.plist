@@ -3,7 +3,13 @@
 <plist version="1.0">
 <dict>
 	<key>SchemeUserState</key>
-	<dict/>
+	<dict>
+		<key>ThingsAboutAnimals.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>6</integer>
+		</dict>
+	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>B002A29A1A964BA700808055</key>
@@ -27,6 +33,11 @@
 			<true/>
 		</dict>
 		<key>B04F70251AA6DA31007D9856</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B0B048E21AB16AEB000154B2</key>
 		<dict>
 			<key>primary</key>
 			<true/>
