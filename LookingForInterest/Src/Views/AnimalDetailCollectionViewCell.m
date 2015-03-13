@@ -49,6 +49,10 @@
 - (IBAction)lineShare:(UIBarButtonItem *)sender;
 - (IBAction)callOut:(UIBarButtonItem *)sender;
 - (IBAction)sendEmail:(UIBarButtonItem *)sender;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *facebookButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *lineButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *callButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *mailButton;
 @end
 
 @implementation AnimalDetailCollectionViewCell
@@ -104,6 +108,10 @@
     self.note.layer.borderColor = [UIColor darkGrayColor].CGColor;
     self.note.layer.borderWidth = 1.0;
     self.note.layer.cornerRadius = 5.0;
+    self.facebookButton.tintColor = UIColorFromRGB(0x3b5998);
+    self.lineButton.tintColor = UIColorFromRGB(0x19BD03);
+    self.callButton.tintColor = [UIColor blackColor];
+    self.mailButton.tintColor = [UIColor redColor];
 }
 
 - (void)setPageIndicatorTitleByResult:(PetResult *)petResult {

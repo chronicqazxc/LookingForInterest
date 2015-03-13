@@ -481,7 +481,14 @@
     }
 }
 
+- (void)setNavTitleAndTabBarColor:(UIColor *)color {
+    self.tabBar.tintColor = color;
+//    self.navigationController.navigationBar.tintColor = color;
+//    self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName: color};
+}
+
 - (void)sendDogRequest {
+    [self setNavTitleAndTabBarColor:[UIColor blueColor]];
     [self clearRequestSenderDelegate];
     [self startLoadingWithContent:@"讀取汪星人"];
     self.petFilters = [[PetFilters alloc] init];
@@ -491,6 +498,7 @@
 }
 
 - (void)sendCatRequest {
+    [self setNavTitleAndTabBarColor:UIColorFromRGB(0xE68A00)];
     [self clearRequestSenderDelegate];
     [self startLoadingWithContent:@"讀取喵星人"];
     self.petFilters = [[PetFilters alloc] init];
@@ -500,6 +508,7 @@
 }
 
 - (void)sendOtherRequest {
+    [self setNavTitleAndTabBarColor:UIColorFromRGB(0x009933)];
     [self clearRequestSenderDelegate];
     [self startLoadingWithContent:@"讀取其他動物"];
     self.petFilters = [[PetFilters alloc] init];
@@ -509,6 +518,7 @@
 }
 
 - (void)sendMyFavoriteRequest {
+    [self setNavTitleAndTabBarColor:[UIColor redColor]];
     [self clearRequestSenderDelegate];
     self.petFilters = [[PetFilters alloc] init];
     self.petFilters.type = kAdoptFilterTypeMyFavorite;
@@ -521,6 +531,7 @@
 }
 
 - (void)showFilter {
+    [self setNavTitleAndTabBarColor:[UIColor purpleColor]];
     AdoptAnimalFilterController *adoptAnimalFilterViewController = [[AdoptAnimalFilterController alloc] initWithPetFilters:self.petFilters andDelegate:self andFrame:self.view.frame];
     adoptAnimalFilterViewController.petFilters = self.petFilters;
     [adoptAnimalFilterViewController showPickerView];

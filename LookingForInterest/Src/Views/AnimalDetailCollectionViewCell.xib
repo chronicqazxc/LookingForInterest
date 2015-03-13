@@ -741,13 +741,17 @@
                 <outlet property="animalAnlong" destination="6sB-KX-5O2" id="cUB-fe-i8p"/>
                 <outlet property="bodyweight" destination="S73-YI-htG" id="Exg-m0-5AI"/>
                 <outlet property="buttomVerticalConstraints" destination="3kp-S6-lxJ" id="hVK-ce-JHl"/>
+                <outlet property="callButton" destination="qF4-89-YCD" id="eJI-ra-whg"/>
                 <outlet property="childreAnlong" destination="AaU-A0-9ss" id="5q9-cy-Ccd"/>
                 <outlet property="email" destination="pEJ-Pv-K6i" id="O79-EC-MJw"/>
+                <outlet property="facebookButton" destination="68J-dG-BkU" id="aFG-qp-ob0"/>
                 <outlet property="hairType" destination="CCD-4J-CSS" id="gFx-tn-HeZ"/>
                 <outlet property="imageHeightConstraints" destination="Occ-D4-4KT" id="2rF-VV-syc"/>
                 <outlet property="imageVerticalConstraints" destination="CUS-qH-sa5" id="zoB-Sm-uNN"/>
                 <outlet property="imageView" destination="ePg-0g-K1y" id="2zE-N2-Y35"/>
                 <outlet property="isSterilization" destination="GQl-6v-8Dp" id="MBj-mG-4pC"/>
+                <outlet property="lineButton" destination="HKA-BC-yVe" id="JXx-na-XbM"/>
+                <outlet property="mailButton" destination="3TW-Hx-23P" id="3ci-XB-z9D"/>
                 <outlet property="note" destination="O2V-Rj-KeC" id="0IB-Mf-0I3"/>
                 <outlet property="pageIndicator" destination="2bn-GZ-Zem" id="CNU-gp-rSA"/>
                 <outlet property="phone" destination="JPX-WQ-RWW" id="w7x-q9-YsZ"/>
@@ -762,8 +766,8 @@
     </objects>
     <resources>
         <image name="FB-f-Logo__white_29.png" width="29" height="29"/>
-        <image name="Line20x20.png" width="29" height="29"/>
+        <image name="Line20x20.png" width="40" height="40"/>
         <image name="call.png" width="40" height="40"/>
-        <image name="mail.png" width="40" height="40"/>
+        <image name="mail.png" width="50" height="50"/>
     </resources>
 </document>

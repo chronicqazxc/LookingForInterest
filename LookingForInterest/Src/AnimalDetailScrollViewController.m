@@ -115,13 +115,15 @@
 }
 
 - (UIBarButtonItem *)generateAddFavoriteButtonWithTag:(NSInteger)tag {
-    UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addMyFavoriteAnimal:)];
+    UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"add_fav.png"] style:UIBarButtonItemStylePlain target:self action:@selector(addMyFavoriteAnimal:)];
+    barButtonItem.tintColor = [UIColor redColor];
     barButtonItem.tag = tag;
     return barButtonItem;
 }
 
 - (UIBarButtonItem *)generateRemoveFavoriteButtonWithTag:(NSInteger)tag {
-    UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(removeMyFavoriteAnimal:)];
+    UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"remove_fav.png"] style:UIBarButtonItemStylePlain target:self action:@selector(removeMyFavoriteAnimal:)];
+    barButtonItem.tintColor = [UIColor redColor];    
     barButtonItem.tag = tag;
     return barButtonItem;
 }
