@@ -40,7 +40,7 @@
                                     </mask>
                                 </variation>
                             </button>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3kZ-J1-bRs">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3kZ-J1-bRs">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ePg-0g-K1y">
@@ -664,25 +664,25 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <items>
                             <barButtonItem style="plain" systemItem="flexibleSpace" id="jix-QA-8qJ"/>
-                            <barButtonItem title="Facebook" id="68J-dG-BkU">
+                            <barButtonItem image="FB-f-Logo__white_29.png" id="68J-dG-BkU">
                                 <connections>
                                     <action selector="facebookShare:" destination="gTV-IL-0wX" id="d4j-Kl-0ec"/>
                                 </connections>
                             </barButtonItem>
                             <barButtonItem style="plain" systemItem="flexibleSpace" id="jXP-By-Tpr"/>
-                            <barButtonItem title="Line" id="HKA-BC-yVe">
+                            <barButtonItem image="Line20x20.png" id="HKA-BC-yVe">
                                 <connections>
                                     <action selector="lineShare:" destination="gTV-IL-0wX" id="gmW-1z-a0F"/>
                                 </connections>
                             </barButtonItem>
                             <barButtonItem style="plain" systemItem="flexibleSpace" id="gpE-ll-Z1Y"/>
-                            <barButtonItem title="Call" id="qF4-89-YCD">
+                            <barButtonItem image="call.png" id="qF4-89-YCD">
                                 <connections>
                                     <action selector="callOut:" destination="gTV-IL-0wX" id="JrM-gc-WnH"/>
                                 </connections>
                             </barButtonItem>
                             <barButtonItem style="plain" systemItem="flexibleSpace" id="31g-fI-dAD"/>
-                            <barButtonItem title="e-mail" id="3TW-Hx-23P">
+                            <barButtonItem image="mail.png" id="3TW-Hx-23P">
                                 <connections>
                                     <action selector="sendEmail:" destination="gTV-IL-0wX" id="2Go-ZM-lna"/>
                                 </connections>
@@ -760,4 +760,10 @@
             <point key="canvasLocation" x="272" y="623.5"/>
         </collectionViewCell>
     </objects>
+    <resources>
+        <image name="FB-f-Logo__white_29.png" width="29" height="29"/>
+        <image name="Line20x20.png" width="29" height="29"/>
+        <image name="call.png" width="40" height="40"/>
+        <image name="mail.png" width="40" height="40"/>
+    </resources>
 </document>

@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface LoadingView : UIView
+@property (weak, nonatomic) IBOutlet UIView *backgroundView;
 @property (weak, nonatomic) IBOutlet UIView *indicatorView;
 @property (weak, nonatomic) IBOutlet UILabel *loadingLabel;
 - (void)presentWithDuration:(CGFloat)duration speed:(CGFloat)speed startOpacity:(CGFloat)startOpacity finishOpacity:(CGFloat)finishOpacity completion:(void (^)(void))completion;

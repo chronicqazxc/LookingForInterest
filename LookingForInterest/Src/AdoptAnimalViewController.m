@@ -120,8 +120,6 @@
     [self.nextPageIndicator startAnimating];
     [self clearRequestSenderDelegate];
     [self startLoadingWithContent:@"下一頁"];
-//    PetFilters *petFilters = [[PetFilters alloc] init];
-//    petFilters.offset = self.nextPage;
     self.petFilters.offset = self.nextPage;
     self.petResult.filters = self.petFilters;
     [self sendRequestWithFilters:self.petFilters];
@@ -190,7 +188,6 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-
     UINib *petCellNib = [UINib nibWithNibName:@"AnimalListTableViewCell" bundle:nil];
     [tableView registerNib:petCellNib forCellReuseIdentifier:kPetListCellIdentifier];
     AnimalListTableViewCell *petCell = [tableView dequeueReusableCellWithIdentifier:kPetListCellIdentifier];
@@ -199,6 +196,8 @@
     }
 
     if ([self.petResult.pets count]) {
+        tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+        
         Pet *pet = [self.petResult.pets objectAtIndex:indexPath.row];
         petCell.name.text = [NSString stringWithFormat:@"%@",pet.name];
         petCell.variety.text = [NSString stringWithFormat:@"品種：%@（%@）",pet.variety ,pet.type];
@@ -206,9 +205,6 @@
         petCell.gender.text = [NSString stringWithFormat:@"性別：%@",pet.sex];
         petCell.body.text = [NSString stringWithFormat:@"體型：%@",pet.build];
         
-        petCell.thumbNail.layer.masksToBounds = YES;
-        petCell.thumbNail.layer.borderWidth = 1.0;
-        petCell.thumbNail.layer.cornerRadius = CGRectGetHeight(petCell.thumbNail.frame)/2.0;
         if (!pet.thumbNail && !self.isStartLoading) {
             petCell.thumbNail.image = [UIImage imageNamed:@"Loading100x100.png"];
             [self startThumbNailDownload:pet forIndexPath:indexPath];
@@ -220,15 +216,13 @@
         
         petCell.delegate = self;
     } else {
-        petCell.name.text = @"查無資料...";
-        petCell.variety.text = @"";
-        petCell.age.text = @"";
-        petCell.gender.text = @"";
-        petCell.body.text = @"";
-        petCell.thumbNail.layer.masksToBounds = YES;
-        petCell.thumbNail.layer.borderWidth = 1.0;
-        petCell.thumbNail.layer.cornerRadius = CGRectGetHeight(petCell.thumbNail.frame)/2.0;
-        petCell.thumbNail.image = [UIImage imageNamed:@"Loading100x100.png"];
+        tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+        if (!cell) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+        }
+        cell.textLabel.text = @"查無資料...";
+        return cell;
     }
     return petCell;
 }
@@ -248,7 +242,8 @@
 
 #pragma mark - UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [tableView deselectRowAtIndexPath:indexPath animated:NO];    
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    if (![self.petResult.pets count]) return;
     AnimalDetailScrollViewController *animalDetailScrollViewController = [[AnimalDetailScrollViewController alloc] initWithNibName:@"AnimalDetailScrollViewController" bundle:nil];
     animalDetailScrollViewController.petResult = self.petResult;
     animalDetailScrollViewController.selectedIndexPath = indexPath;
@@ -271,16 +266,16 @@
     float reloadDistance = 50;
     
     if (self.isStartLoading == NO) {
-        if(y > h + reloadDistance) {
-            if (self.petResult.next && ![self.petResult.next isEqualToString:@""] && [self.petResult.next intValue] < [self.petResult.total intValue]) {
-                self.isStartLoading = YES;
-                [self getNextPage];
-            }
-        } else if (offset.y <= -50) {
+        if (offset.y <= -50) {
             if ((self.petResult.previous && ![self.petResult.previous isEqualToString:@""]) ||
                 [self.petResult.next isEqualToString:@"40"]) {
                 self.isStartLoading = YES;
                 [self getPreviousPage];
+            }
+        } else if (y > h + reloadDistance) {
+            if (self.petResult.next && ![self.petResult.next isEqualToString:@""] && [self.petResult.next intValue] < [self.petResult.total intValue]) {
+                self.isStartLoading = YES;
+                [self getNextPage];
             }
         }
     }
@@ -291,11 +286,14 @@
     if (!decelerate && !self.isStartLoading) {
         [self loadThumbNailForOnScreenRows];
     }
+    if (!decelerate) {
+        [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(hiddenPageIndicator:) userInfo:nil repeats:NO];
+    }
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-   [NSTimer scheduledTimerWithTimeInterval:0.8 target:self selector:@selector(hiddenPageIndicator:) userInfo:nil repeats:NO];
+   [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(hiddenPageIndicator:) userInfo:nil repeats:NO];
     if (!self.isStartLoading) {
         [self loadThumbNailForOnScreenRows];
     }
@@ -329,6 +327,7 @@
 
 #pragma mark - RequestSenderDelegate
 - (void)requestFaildWithMessage:(NSString *)message connection:(NSURLConnection *)connection{
+    self.appDelegate.viewController = self;
     [Utilities stopLoading];
     [self.nextPageIndicator stopAnimating];
     [self.previousPageIndicator stopAnimating];
@@ -357,12 +356,20 @@
     self.petResult = petResult;
     self.nextPage = petResult.next;
     self.previousPage = petResult.previous;
+    
     [self.tableView reloadData];
+    
     if ([self.petResult.pets count]) {
-        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+        [self scrollToTop];
     }
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    
+    self.appDelegate.viewController = self;
     [Utilities stopLoading];
+
+}
+
+- (void)scrollToTop {
+    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
 }
 
 - (void)setPageIndicatorTitleByResult:(PetResult *)petResult {
@@ -386,7 +393,7 @@
         currentPage = [NSString stringWithFormat:@"%d",[offset intValue]/20+1];
     }
 
-    [self.pageIndicator setTitle:[NSString stringWithFormat:@"%@/%@",currentPage,totalPage] forState:UIControlStateNormal];
+    [self.pageIndicator setTitle:[NSString stringWithFormat:@"%@/%@頁",currentPage,totalPage] forState:UIControlStateNormal];
     
     if ([currentPage isEqualToString:@"1"] && [currentPage isEqualToString:totalPage]) {
         self.previousPageView.hidden = YES;
@@ -433,6 +440,7 @@
             [Utilities removeFromMyFavoriteAnimal:favoritePet];
         }
     }
+    self.appDelegate.viewController = self;
     [Utilities stopLoading];
 }
 
@@ -441,6 +449,7 @@
     switch (item.tag) {
         case 0:
             [self sendDogRequest];
+            
             [self changeNavTitle];
             self.checkButton.enabled = NO;
             break;
@@ -457,7 +466,11 @@
         case 3:
             [self sendMyFavoriteRequest];
             [self changeNavTitle];
-            self.checkButton.enabled = YES;
+            if ([self.petResult.pets count]) {
+                self.checkButton.enabled = YES;
+            } else {
+                self.checkButton.enabled = NO;
+            }
             break;
         case 4:
             [self showFilter];

@@ -9,9 +9,18 @@
 #import "AnimalListTableViewCell.h"
 
 @implementation AnimalListTableViewCell
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        
+    }
+    return self;
+}
 
 - (void)awakeFromNib {
-    // Initialization code
+    self.thumbNail.layer.masksToBounds = YES;
+    self.thumbNail.layer.borderWidth = 1.0;
+    self.thumbNail.layer.cornerRadius = CGRectGetHeight(self.thumbNail.frame)/2.0;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

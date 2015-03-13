@@ -9,7 +9,6 @@
 #import "LoadingView.h"
 
 @interface LoadingView()
-@property (weak, nonatomic) IBOutlet UIView *backgroundView;
 
 @end
 

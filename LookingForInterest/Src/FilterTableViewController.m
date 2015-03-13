@@ -1063,15 +1063,15 @@
         UIEdgeInsets inset = aScrollView.contentInset;
         float y = offset.y + bounds.size.height - inset.bottom;
         float h = size.height;
-        float reloadDistance = 90;
+        float reloadDistance = 60;
         
-        if(y > h + reloadDistance) {
-            if (self.pageController.currentPage < self.pageController.totalPage) {
-                [self getNextPage];
-            }
-        } else if (offset.y <= -90) {
+        if (offset.y <= -60) {
             if (self.pageController.currentPage > 1) {
                 [self previousPage];
+            }
+        } else if (y > h + reloadDistance) {
+            if (self.pageController.currentPage < self.pageController.totalPage) {
+                [self getNextPage];
             }
         }
     }
@@ -1085,6 +1085,12 @@
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(hiddenPageIndicator:) userInfo:nil repeats:NO];
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    if (!decelerate) {
+        [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(hiddenPageIndicator:) userInfo:nil repeats:NO];
+    }
 }
 
 - (void)hiddenPageIndicator:(NSTimer *)timer {
