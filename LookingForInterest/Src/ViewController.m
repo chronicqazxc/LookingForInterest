@@ -33,7 +33,7 @@
 #define kCallActionTitle @"撥打電話"
 #define kRateActionTitle @"我要評分"
 #define kRateActionStreetView @"瀏覽街景"
-#define kPicturesActionTitle @"瀏覽店家圖片"
+#define kPicturesActionTitle @"網路搜尋店家圖片"
 #define kNavigateActionTitle @"導航"
 #define kCloseActionTitle @"關閉"
 
@@ -660,16 +660,16 @@
 - (void)showOptionsWithStore:(Store *)store {
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:kOptionsTitle(store.name) message:kOptionMessage(@"你可以") preferredStyle:UIAlertControllerStyleActionSheet];
     
-    UIAlertAction *callAction = [UIAlertAction actionWithTitle:kCallActionTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        if ((NSNull *)store.phoneNumber == [NSNull null] ||
-            !store.phoneNumber ||
-            [store.phoneNumber isEqualToString:@""]) {
-            UIAlertController *alert = [Utilities normalAlertWithTitle:kNoPhoneNumberAlertTitle message:kNoPhoneNumberAlertMessage withObj:store andSEL:@selector(surfWebWithStore:) byCaller:self];
-            [self presentViewController:alert animated:YES completion:^{
-                NSLog(@"click ok!");
-            }];
-        }
-    }];
+//    UIAlertAction *callAction = [UIAlertAction actionWithTitle:kCallActionTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+//        if ((NSNull *)store.phoneNumber == [NSNull null] ||
+//            !store.phoneNumber ||
+//            [store.phoneNumber isEqualToString:@""]) {
+//            UIAlertController *alert = [Utilities normalAlertWithTitle:kNoPhoneNumberAlertTitle message:kNoPhoneNumberAlertMessage withObj:store andSEL:@selector(surfWebWithStore:) byCaller:self];
+//            [self presentViewController:alert animated:YES completion:^{
+//                NSLog(@"click ok!");
+//            }];
+//        }
+//    }];
     
     UIAlertAction *webSiteAction = [UIAlertAction actionWithTitle:kWebSiteActionTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         NSLog(@"web site");
@@ -720,11 +720,11 @@
         NSLog(@"close");
     }];
     
-    [alertController addAction:callAction];
-    [alertController addAction:webSiteAction];
-    [alertController addAction:streetViewAction];
-    [alertController addAction:pictureAction];
+    //    [alertController addAction:callAction];
     [alertController addAction:navigateAction];
+    [alertController addAction:streetViewAction];
+    [alertController addAction:webSiteAction];
+    [alertController addAction:pictureAction];
     [alertController addAction:closeAction];
     
     [self presentViewController:alertController animated:YES completion:nil];

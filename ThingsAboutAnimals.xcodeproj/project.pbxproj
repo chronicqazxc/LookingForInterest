@@ -934,6 +934,7 @@
 			baseConfigurationReference = 193908BC157B2A29F5014D23 /* Pods-ThingsAboutAnimals.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Yu Han Hsiao";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = LookingForInterest/Src/AnimalHospital.pch;
 				INFOPLIST_FILE = LookingForInterest/Info.plist;

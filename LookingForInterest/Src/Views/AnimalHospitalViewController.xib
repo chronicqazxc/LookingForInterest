@@ -12,6 +12,7 @@
                 <outlet property="addressLabel" destination="tnS-o1-bff" id="VF9-AZ-eQP"/>
                 <outlet property="directionModeSwitch" destination="dmp-3C-ner" id="jIq-Hb-Nes"/>
                 <outlet property="favoriteButton" destination="ohL-hd-Yxk" id="qYo-yY-Z0v"/>
+                <outlet property="findImageButton" destination="AKr-7F-L0L" id="bAi-DA-N2J"/>
                 <outlet property="imageScrollContainer" destination="m8i-aa-74G" id="EZd-xz-7xH"/>
                 <outlet property="infoLabel1" destination="cto-Je-A6c" id="tLs-Ve-QeD"/>
                 <outlet property="infoLabel2" destination="6aA-aw-q49" id="UkZ-2x-Eam"/>
@@ -24,7 +25,7 @@
                 <outlet property="mapContainer" destination="S0m-zp-AiM" id="oH3-Qn-IWF"/>
                 <outlet property="mapModeSwitch" destination="beL-PU-Vrb" id="id1-kc-Icz"/>
                 <outlet property="navigationButton" destination="sMp-lN-InT" id="Vzn-3A-KPM"/>
-                <outlet property="phoneCallButton" destination="AKr-7F-L0L" id="LU5-UE-HOI"/>
+                <outlet property="noteLabel" destination="dAl-c4-Aw6" id="8lM-Du-8BC"/>
                 <outlet property="scrollView" destination="UsF-yw-oCQ" id="YLM-Mh-Ny6"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -64,39 +65,75 @@
                                                 <action selector="switchDirectionMode:" destination="-1" eventType="valueChanged" id="Hox-cl-OHi"/>
                                             </connections>
                                         </segmentedControl>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="街景功能：長按出現大頭針，可拖曳移動，即可使用街景顯示指定地點" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dAl-c4-Aw6" customClass="MarqueeLabel">
+                                            <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="21" id="vQx-Db-N3h"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.2156862745" green="0.50196078430000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="vQx-Db-N3h"/>
+                                                </mask>
+                                            </variation>
+                                            <variation key="heightClass=regular-widthClass=compact">
+                                                <mask key="constraints">
+                                                    <include reference="vQx-Db-N3h"/>
+                                                </mask>
+                                            </variation>
+                                        </label>
                                     </subviews>
                                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="300" id="DdT-oY-Nr1"/>
+                                        <constraint firstItem="dAl-c4-Aw6" firstAttribute="top" secondItem="dmp-3C-ner" secondAttribute="bottom" constant="8" id="IBv-LF-Ftk"/>
+                                        <constraint firstItem="dAl-c4-Aw6" firstAttribute="leading" secondItem="S0m-zp-AiM" secondAttribute="leading" constant="8" id="LH8-Ab-WCg"/>
                                         <constraint firstAttribute="bottom" secondItem="beL-PU-Vrb" secondAttribute="bottom" constant="30" id="P9X-jb-MMi"/>
                                         <constraint firstItem="dmp-3C-ner" firstAttribute="top" secondItem="S0m-zp-AiM" secondAttribute="top" constant="5" id="QQM-U4-GFd"/>
+                                        <constraint firstItem="dAl-c4-Aw6" firstAttribute="top" secondItem="S0m-zp-AiM" secondAttribute="top" constant="8" id="dOq-n6-pgD"/>
                                         <constraint firstItem="beL-PU-Vrb" firstAttribute="leading" secondItem="dmp-3C-ner" secondAttribute="leading" id="gLD-BP-2dr"/>
+                                        <constraint firstAttribute="trailing" secondItem="dAl-c4-Aw6" secondAttribute="trailing" constant="8" id="gye-W3-BmC"/>
                                         <constraint firstItem="dmp-3C-ner" firstAttribute="leading" secondItem="S0m-zp-AiM" secondAttribute="leading" constant="5" id="ric-4A-QMy"/>
+                                        <constraint firstItem="dmp-3C-ner" firstAttribute="top" secondItem="dAl-c4-Aw6" secondAttribute="bottom" constant="8" id="wg3-9B-MEK"/>
                                     </constraints>
                                     <variation key="default">
                                         <mask key="subviews">
                                             <exclude reference="beL-PU-Vrb"/>
                                             <exclude reference="dmp-3C-ner"/>
+                                            <exclude reference="dAl-c4-Aw6"/>
                                         </mask>
                                         <mask key="constraints">
                                             <exclude reference="DdT-oY-Nr1"/>
-                                            <exclude reference="P9X-jb-MMi"/>
-                                            <exclude reference="gLD-BP-2dr"/>
+                                            <exclude reference="IBv-LF-Ftk"/>
+                                            <exclude reference="LH8-Ab-WCg"/>
+                                            <exclude reference="dOq-n6-pgD"/>
+                                            <exclude reference="gye-W3-BmC"/>
                                             <exclude reference="QQM-U4-GFd"/>
                                             <exclude reference="ric-4A-QMy"/>
+                                            <exclude reference="wg3-9B-MEK"/>
+                                            <exclude reference="P9X-jb-MMi"/>
+                                            <exclude reference="gLD-BP-2dr"/>
                                         </mask>
                                     </variation>
                                     <variation key="heightClass=regular-widthClass=compact">
                                         <mask key="subviews">
                                             <include reference="beL-PU-Vrb"/>
                                             <include reference="dmp-3C-ner"/>
+                                            <include reference="dAl-c4-Aw6"/>
                                         </mask>
                                         <mask key="constraints">
                                             <include reference="DdT-oY-Nr1"/>
+                                            <exclude reference="IBv-LF-Ftk"/>
+                                            <include reference="LH8-Ab-WCg"/>
+                                            <include reference="dOq-n6-pgD"/>
+                                            <include reference="gye-W3-BmC"/>
+                                            <exclude reference="QQM-U4-GFd"/>
+                                            <include reference="ric-4A-QMy"/>
+                                            <include reference="wg3-9B-MEK"/>
                                             <include reference="P9X-jb-MMi"/>
                                             <include reference="gLD-BP-2dr"/>
-                                            <include reference="QQM-U4-GFd"/>
-                                            <include reference="ric-4A-QMy"/>
                                         </mask>
                                     </variation>
                                 </view>
@@ -110,20 +147,20 @@
                                         <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     </state>
                                     <connections>
-                                        <action selector="surfWeb:" destination="-1" eventType="touchUpInside" id="1c3-r4-6Cb"/>
+                                        <action selector="surfWebBySender:" destination="-1" eventType="touchUpInside" id="xHu-jk-jCU"/>
                                     </connections>
                                 </button>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AKr-7F-L0L" customClass="DialingButton">
+                                <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AKr-7F-L0L" customClass="DialingButton">
                                     <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                     <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                    <state key="normal" title="撥打電話">
+                                    <state key="normal" title="網路查圖片">
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
                                     <state key="highlighted">
                                         <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     </state>
                                     <connections>
-                                        <action selector="callOut:" destination="-1" eventType="touchUpInside" id="l9n-kf-UVf"/>
+                                        <action selector="surfWebBySender:" destination="-1" eventType="touchUpInside" id="E7c-Tg-8Lx"/>
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sMp-lN-InT" customClass="DialingButton">
@@ -343,7 +380,9 @@
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tnS-o1-bff" customClass="MarqueeLabel">
                                     <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="50" id="f7N-vJ-xeJ"/>
+                                        <constraint firstAttribute="height" constant="50" id="f7N-vJ-xeJ">
+                                            <variation key="heightClass=regular-widthClass=compact" constant="21"/>
+                                        </constraint>
                                     </constraints>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -661,7 +700,7 @@
                     <include reference="vpf-Va-God"/>
                 </mask>
             </variation>
-            <point key="canvasLocation" x="185" y="1989.5"/>
+            <point key="canvasLocation" x="185" y="1989"/>
         </view>
     </objects>
 </document>

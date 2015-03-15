@@ -15,6 +15,7 @@
 #import "WebViewController.h"
 #import "RequestSender.h"
 #import "DialingButton.h"
+#import "MarqueeLabel.h"
 
 #define kScrollViewMaxScale 0.7
 #define kScrollViewMinScale 0.3
@@ -38,6 +39,7 @@
 @property (weak, nonatomic) IBOutlet UISegmentedControl *mapModeSwitch;
 - (IBAction)switchDirectionMode:(UISegmentedControl *)sender;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *directionModeSwitch;
+@property (weak, nonatomic) IBOutlet MarqueeLabel *noteLabel;
 
 @property (nonatomic) CGRect imageScrollFrame;
 @property (nonatomic) BOOL isInitail;
@@ -55,14 +57,13 @@
 @property (strong, nonatomic) NSMutableString *htmlString;
 
 @property (weak, nonatomic) IBOutlet DialingButton *favoriteButton;
-@property (weak, nonatomic) IBOutlet DialingButton *phoneCallButton;
 @property (weak, nonatomic) IBOutlet DialingButton *navigationButton;
 @property (weak, nonatomic) IBOutlet DialingButton *internetButton;
+@property (weak, nonatomic) IBOutlet DialingButton *findImageButton;
 
 - (IBAction)clickFavorite:(DialingButton *)sender;
-- (IBAction)callOut:(DialingButton *)sender;
 - (IBAction)navigate:(DialingButton *)sender;
-- (IBAction)surfWeb:(DialingButton *)sender;
+- (IBAction)surfWebBySender:(DialingButton *)sender;
 
 @property (strong, nonatomic) UIImageView *catImageView;
 @property (strong, nonatomic) UIImageView *dogImageView;
@@ -87,11 +88,12 @@
     [super viewDidLoad];
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.favoriteButton.hidden = YES;
-    self.phoneCallButton.hidden = YES;
     self.navigationButton.hidden = YES;
     self.internetButton.hidden = YES;
+    self.findImageButton.hidden = YES;
     self.mapModeSwitch.hidden = YES;
     self.directionModeSwitch.hidden = YES;
+    self.noteLabel.hidden = YES;
     self.catImageView = nil;
     self.dogImageView = nil;
     self.animalsImageView = nil;
@@ -143,11 +145,12 @@
         
         self.addressLabel.hidden = NO;
         self.favoriteButton.hidden = NO;
-        self.phoneCallButton.hidden = NO;
         self.navigationButton.hidden = NO;
         self.internetButton.hidden = NO;
         self.mapModeSwitch.hidden = NO;
         self.directionModeSwitch.hidden = NO;
+        self.findImageButton.hidden = NO;
+        self.noteLabel.hidden = NO;
         
         self.imageScrollFrame = self.imageScrollContainer.frame;
         self.mapContainerFrame = self.mapContainer.frame;
@@ -180,6 +183,7 @@
         
         [self.mapContainer bringSubviewToFront:self.mapModeSwitch];
         [self.mapContainer bringSubviewToFront:self.directionModeSwitch];
+        [self.mapContainer bringSubviewToFront:self.noteLabel];
         
         self.isInitail = YES;
     }
@@ -197,9 +201,9 @@
 
 - (void)initButtons {
     [self initDialingButton:self.favoriteButton];
-    [self initDialingButton:self.phoneCallButton];
     [self initDialingButton:self.navigationButton];
     [self initDialingButton:self.internetButton];
+    [self initDialingButton:self.findImageButton];
     
     if ([Utilities isMyFavoriteStore:self.store]) {
         self.favoriteButton.borderColor = kColorIsFavoriteStore;
@@ -390,6 +394,7 @@
             [self.mapContainer addSubview:self.googleMap];
             [self.mapContainer bringSubviewToFront:self.mapModeSwitch];
             [self.mapContainer bringSubviewToFront:self.directionModeSwitch];
+            [self.mapContainer bringSubviewToFront:self.noteLabel];
             self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.scrollView.frame), kScrollViewContentHeight);
             break;
         case 1:
@@ -528,22 +533,10 @@
     }
 }
 
-- (IBAction)callOut:(UIButton *)sender {
-    
-    if ((NSNull *)self.store.phoneNumber == [NSNull null] ||
-        !self.store.phoneNumber ||
-        [self.store.phoneNumber isEqualToString:@""]) {
-            UIAlertController *alert = [Utilities normalAlertWithTitle:kNoPhoneNumberAlertTitle message:kNoPhoneNumberAlertMessage withObj:self.store andSEL:@selector(surfWebWithStore:) byCaller:self];
-            [self presentViewController:alert animated:YES completion:^{
-                nil;
-        }];
-    }
-}
-
-- (void)surfWebWithStore:(Store *)store {
+- (void)surfWebWithStore:(Store *)store type:(SearchType)type{
     WebViewController *webViewController = [[WebViewController alloc] initWithNibName:@"WebViewController" bundle:nil];
     webViewController.keyword = store.name;
-    webViewController.searchType = SearchWeb;
+    webViewController.searchType = type;
     [self.navigationController pushViewController:webViewController animated:YES];
 }
 
@@ -566,8 +559,12 @@
     [Utilities launchNavigateWithStore:self.store startLocation:self.start andDirectionsMode:directionMode];
 }
 
-- (IBAction)surfWeb:(UIButton *)sender {
-    [self surfWebWithStore:self.store];
+- (IBAction)surfWebBySender:(DialingButton *)sender{
+    if (sender.tag == 0) {
+        [self surfWebWithStore:self.store type:SearchWeb];
+    } else {
+        [self surfWebWithStore:self.store type:SearchImage];
+    }
 }
 
 #pragma mark - RequestSenderDelegate

@@ -190,8 +190,10 @@
 - (void)publishToFacebook:(Pet *)pet {
     FacebookController *fbController = [[FacebookController alloc] init];
     NSString *name = [NSString stringWithFormat:@"臺北市開放認養動物：%@",pet.name];
+    NSString *caption = [NSString stringWithFormat:@"%@/%@/%@",pet.age,pet.sex,pet.resettlement];
+    NSString *description = [NSString stringWithFormat:@"%@/%@",pet.phone,pet.email];
     fbController.delegate = self;
-    [fbController shareWithLink:kAdoptAnimalsFacebookShareURL name:name caption:pet.name description:pet.note picture:pet.imageName message:pet.note];
+    [fbController shareWithLink:kAdoptAnimalsFacebookShareURL name:name caption:caption description:description picture:pet.imageName message:pet.note];
     
 }
 
@@ -205,7 +207,7 @@
         [Utilities shareToLineWithImage:image];
     }];
     UIAlertAction *shareContent = [UIAlertAction actionWithTitle:@"介紹" style:UIAlertActionStyleDefault handler: ^(UIAlertAction *action) {
-        [Utilities shareToLineWithContent:pet.note url:kAdoptAnimalsFacebookShareURL];
+        [Utilities shareToLineWithContent:[self composeLineContent:pet] url:kAdoptAnimalsFacebookShareURL];
     }];
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
         [shareAlertController dismissViewControllerAnimated:YES completion:nil];
@@ -215,7 +217,11 @@
     [shareAlertController addAction:cancelAction];
     
     [self presentViewController:shareAlertController animated:YES completion:nil];
+}
 
+- (NSString *)composeLineContent:(Pet *)pet {
+    NSString *content = [NSString stringWithFormat:@"照片:%@\n名字:%@(%@)\n年齡:%@\n位置:%@\nPhone:%@\nEmail:%@\n介紹:%@",pet.imageName,pet.name,pet.sex,pet.age,pet.resettlement,pet.phone,pet.email,pet.note];
+    return content;
 }
 
 - (void)sendEmail:(Pet *)pet {
@@ -224,11 +230,11 @@
 
 #pragma mark - FacebookControllerDelegate
 - (void)showErrorMessage:(NSString *)errorMessage withTitle:(NSString *)errorTitle {
-    
+    [Utilities addHudViewTo:self withMessage:@"發布失敗"];
 }
 
 - (void)publishSuccess:(NSString *)postID {
-    
+    [Utilities addHudViewTo:self withMessage:@"發布成功"];
 }
 
 #pragma mark - MFMailComposeViewController
