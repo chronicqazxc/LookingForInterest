@@ -10,12 +10,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "LookingForInterest/Src/AdoptAnimalViewController.m"
-            timestampString = "447877803.6988"
+            timestampString = "448374873.564137"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "313"
-            endingLineNumber = "313"
-            landmarkName = "-loadThumbNailForOnScreenRows"
+            startingLineNumber = "320"
+            endingLineNumber = "320"
+            landmarkName = "-scrollViewDidEndDragging:willDecelerate:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

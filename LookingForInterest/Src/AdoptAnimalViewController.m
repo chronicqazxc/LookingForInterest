@@ -65,6 +65,13 @@
     self.petFilters = [[PetFilters alloc] init];
 //    [self composeFilters];
     [self initProperties];
+    
+    self.navigationItem.leftBarButtonItem.title = @"首頁";
+    NSDictionary *attributeDic2 = [NSDictionary dictionaryWithObjectsAndKeys:
+                                   [UIColor whiteColor], NSForegroundColorAttributeName,
+                                   [UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:15.0], NSFontAttributeName, nil];
+    [self.navigationItem.leftBarButtonItem setTitleTextAttributes:attributeDic2 forState:UIControlStateNormal];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -96,17 +103,17 @@
     if ([self.petFilters.type isEqualToString:kAdoptFilterAll] || !self.petFilters.type || [self.petFilters.type isEqualToString:@""]) {
         self.navigationItem.title = kAdoptAnimalTitle(@"全部");
     } else if ([self.petFilters.type isEqualToString:kAdoptFilterTypeDog]) {
-//        self.navigationItem.title = AdoptAnimalTitle(kAdoptFilterTypeDog);
-        self.navigationController.navigationBar.topItem.title = kAdoptAnimalTitle(kAdoptFilterTypeDog);
+        self.navigationItem.title = kAdoptAnimalTitle(kAdoptFilterTypeDog);
+        //        self.navigationController.navigationBar.topItem.title = kAdoptAnimalTitle(kAdoptFilterTypeDog);
     } else if ([self.petFilters.type isEqualToString:kAdoptFilterTypeCat]) {
-        //        self.navigationItem.title = AdoptAnimalTitle(kAdoptFilterTypeCat);
-        self.navigationController.navigationBar.topItem.title = kAdoptAnimalTitle(kAdoptFilterTypeCat);
+        self.navigationItem.title = kAdoptAnimalTitle(kAdoptFilterTypeCat);
+        //        self.navigationController.navigationBar.topItem.title = kAdoptAnimalTitle(kAdoptFilterTypeCat);
     } else if ([self.petFilters.type isEqualToString:kAdoptFilterTypeOther]) {
-        //        self.navigationItem.title = AdoptAnimalTitle(kAdoptFilterTypeOther);
-        self.navigationController.navigationBar.topItem.title = kAdoptAnimalTitle(kAdoptFilterTypeOther);
+        self.navigationItem.title = kAdoptAnimalTitle(kAdoptFilterTypeOther);
+        //        self.navigationController.navigationBar.topItem.title = kAdoptAnimalTitle(kAdoptFilterTypeOther);
     } else if ([self.petFilters.type isEqualToString:kAdoptFilterTypeMyFavorite]) {
-        //        self.navigationItem.title = AdoptAnimalTitle(kAdoptFilterTypeMyFavorite);
-        self.navigationController.navigationBar.topItem.title = kAdoptAnimalTitle(kAdoptFilterTypeMyFavorite);
+        self.navigationItem.title = kAdoptAnimalTitle(kAdoptFilterTypeMyFavorite);
+        //        self.navigationController.navigationBar.topItem.title = kAdoptAnimalTitle(kAdoptFilterTypeMyFavorite);
     }
 }
 
@@ -473,22 +480,25 @@
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item {
     switch (item.tag) {
         case 0:
+            [self setNavTitleAndTabBarColor:UIColorFromRGB(kNavigationColorDogFirst) secondColor:UIColorFromRGB(kNavigationColorDogSecond)];
             [self sendDogRequest];
-            
             [self changeNavTitle];
             self.checkButton.enabled = NO;
             break;
         case 1:
+            [self setNavTitleAndTabBarColor:UIColorFromRGB(kNavigationColorCatFirst) secondColor:UIColorFromRGB(kNavigationColorCatSecond)];
             [self sendCatRequest];
             [self changeNavTitle];
             self.checkButton.enabled = NO;
             break;
         case 2:
+            [self setNavTitleAndTabBarColor:UIColorFromRGB(kNavigationColorOtherFirst) secondColor:UIColorFromRGB(kNavigationColorOtherSecond)];
             [self sendOtherRequest];
             [self changeNavTitle];
             self.checkButton.enabled = NO;
             break;
         case 3:
+            [self setNavTitleAndTabBarColor:UIColorFromRGB(kNavigationColorMyFavoriteFirst) secondColor:UIColorFromRGB(kNavigationColorMyFavoriteSecond)];
             [self sendMyFavoriteRequest];
             [self changeNavTitle];
             if ([self.petResult.pets count]) {
@@ -498,6 +508,7 @@
             }
             break;
         case 4:
+            [self setNavTitleAndTabBarColor:UIColorFromRGB(kNavigationColorFilterFirst) secondColor:UIColorFromRGB(kNavigationColorFilterSecond)];
             [self showFilter];
             self.checkButton.enabled = NO;
             break;
@@ -531,7 +542,23 @@
         [self.navigationController.navigationBar setBackgroundImage:img forBarMetrics:UIBarMetricsDefault];
         
         self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-        self.navigationController.navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName: [UIColor whiteColor]};
+        
+        NSShadow *shadow = [[NSShadow alloc] init];
+        shadow.shadowColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.8];
+        shadow.shadowOffset = CGSizeMake(0, 1);
+        NSDictionary *attributeDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                                      [UIColor whiteColor], NSForegroundColorAttributeName,
+                                      shadow, NSShadowAttributeName,
+                                      [UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:21.0], NSFontAttributeName, nil];
+        [self.navigationController.navigationBar setTitleTextAttributes:attributeDic];
+        UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:nil action:nil];
+        
+        NSDictionary *attributeDic2 = [NSDictionary dictionaryWithObjectsAndKeys:
+                                      [UIColor whiteColor], NSForegroundColorAttributeName,
+                                      [UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:15.0], NSFontAttributeName, nil];
+        [self.navigationController.navigationBar setTitleTextAttributes:attributeDic];
+        [backButton setTitleTextAttributes:attributeDic2 forState:UIControlStateNormal];
+        self.navigationItem.backBarButtonItem = backButton;
     } else {
         self.gradientLayer.colors = colors;
         UIImage *img = [Utilities imageWithView:self.navigationBackgroundView];
@@ -540,8 +567,6 @@
 }
 
 - (void)sendDogRequest {
-    [self setNavTitleAndTabBarColor:UIColorFromRGB(kNavigationColorDogFirst) secondColor:UIColorFromRGB(kNavigationColorDogSecond)];
-
     [self clearRequestSenderDelegate];
     [self startLoadingWithContent:@"讀取汪星人"];
     self.petFilters = [[PetFilters alloc] init];
@@ -551,8 +576,6 @@
 }
 
 - (void)sendCatRequest {
-    [self setNavTitleAndTabBarColor:UIColorFromRGB(kNavigationColorCatFirst) secondColor:UIColorFromRGB(kNavigationColorCatSecond)];
-
     [self clearRequestSenderDelegate];
     [self startLoadingWithContent:@"讀取喵星人"];
     self.petFilters = [[PetFilters alloc] init];
@@ -562,8 +585,6 @@
 }
 
 - (void)sendOtherRequest {
-    [self setNavTitleAndTabBarColor:UIColorFromRGB(kNavigationColorOtherFirst) secondColor:UIColorFromRGB(kNavigationColorOtherSecond)];
-
     [self clearRequestSenderDelegate];
     [self startLoadingWithContent:@"讀取其他動物"];
     self.petFilters = [[PetFilters alloc] init];
@@ -573,8 +594,6 @@
 }
 
 - (void)sendMyFavoriteRequest {
-    [self setNavTitleAndTabBarColor:UIColorFromRGB(kNavigationColorMyFavoriteFirst) secondColor:UIColorFromRGB(kNavigationColorMyFavoriteSecond)];
-
     [self clearRequestSenderDelegate];
     self.petFilters = [[PetFilters alloc] init];
     self.petFilters.type = kAdoptFilterTypeMyFavorite;
@@ -588,8 +607,6 @@
 }
 
 - (void)showFilter {
-    [self setNavTitleAndTabBarColor:UIColorFromRGB(kNavigationColorFilterFirst) secondColor:UIColorFromRGB(kNavigationColorFilterSecond)];
-
     AdoptAnimalFilterController *adoptAnimalFilterViewController = [[AdoptAnimalFilterController alloc] initWithPetFilters:self.petFilters andDelegate:self andFrame:self.view.frame];
     adoptAnimalFilterViewController.petFilters = self.petFilters;
     [adoptAnimalFilterViewController showPickerView];

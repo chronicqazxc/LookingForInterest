@@ -115,6 +115,22 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    NSDictionary *attributeDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                                   [UIColor darkTextColor], NSForegroundColorAttributeName,
+                                   [UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:21.0], NSFontAttributeName, nil];
+    [self.navigationController.navigationBar setTitleTextAttributes:attributeDic];
+    
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:nil action:nil];
+    NSDictionary *attributeDic2 = [NSDictionary dictionaryWithObjectsAndKeys:
+                                   [UIColor darkTextColor], NSForegroundColorAttributeName,
+                                   [UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:15.0], NSFontAttributeName, nil];
+    [backButton setTitleTextAttributes:attributeDic2 forState:UIControlStateNormal];
+    self.navigationItem.backBarButtonItem = backButton;
+    self.navigationController.navigationBar.tintColor = [UIColor darkTextColor];
+    
+    self.navigationItem.leftBarButtonItem.title = @"首頁";
+    [self.navigationItem.leftBarButtonItem setTitleTextAttributes:attributeDic2 forState:UIControlStateNormal];
+    
     self.locationManager = [[CLLocationManager alloc] init];
     self.locationManager.delegate = self;
     [self.locationManager requestWhenInUseAuthorization];
@@ -131,6 +147,19 @@
     self.nextPageView.hidden = YES;
     self.mirrorMagnifierImage = [Utilities rotateImage:[UIImage imageNamed:kMagnifierImg] toDirection:DirectionMirror withScale:1.0];
     self.searchViewIcon.image = self.mirrorMagnifierImage;
+}
+
+- (void)setNaviTitleButtonWithString:(NSString *)string {
+    NSMutableParagraphStyle *style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+    [style setAlignment:NSTextAlignmentCenter];
+    
+    NSDictionary *attributeDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                                  [UIColor darkTextColor], NSForegroundColorAttributeName,
+                                  [UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:21.0], NSFontAttributeName, nil];
+    
+    NSMutableAttributedString *attString = [[NSMutableAttributedString alloc] init];
+    [attString appendAttributedString:[[NSAttributedString alloc] initWithString:string attributes:attributeDic]];
+    [self.navigationButton setAttributedTitle:attString forState:UIControlStateNormal];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -158,11 +187,13 @@
 }
 
 - (void)setOriginalTitle {
-    [self.navigationButton setTitle:kFormattedTitle(kTitleCurrentPosition) forState:UIControlStateNormal];
+//    [self.navigationButton setTitle:kFormattedTitle(kTitleCurrentPosition) forState:UIControlStateNormal];
+    [self setNaviTitleButtonWithString:kFormattedTitle(kTitleCurrentPosition)];
 }
 
 - (void)setFormattedTitle:(NSString *)title {
-    [self.navigationButton setTitle:kFormattedTitle(title) forState:UIControlStateNormal];
+//    [self.navigationButton setTitle:kFormattedTitle(title) forState:UIControlStateNormal];
+    [self setNaviTitleButtonWithString:kFormattedTitle(title)];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
