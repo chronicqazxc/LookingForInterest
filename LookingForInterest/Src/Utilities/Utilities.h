@@ -44,4 +44,5 @@
 + (UIView *)glossyView:(UIView *)view;
 + (void)shareToLineWithContent:(NSString *)content url:(NSString *)url;
 + (void)shareToLineWithImage:(UIImage *)image;
++ (UIImage *)imageWithView:(UIView *)view;
 @end

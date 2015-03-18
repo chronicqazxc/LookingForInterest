@@ -17,6 +17,7 @@
 @property (nonatomic) NSInteger currentRow;
 @property (nonatomic) NSInteger previousRow;
 @property (strong, nonatomic) AnimalDetailCollectionViewCell *animalDetailCollectionViewCell;
+@property (strong, nonatomic) NSMutableArray *tempPets;
 @end
 
 @implementation AnimalDetailScrollViewController
@@ -30,6 +31,7 @@
     self.currentRow = 0;
     self.previousRow = 0;
     self.isInit = NO;
+    self.tempPets = [NSMutableArray arrayWithArray:self.petResult.pets];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -115,21 +117,23 @@
 }
 
 - (UIBarButtonItem *)generateAddFavoriteButtonWithTag:(NSInteger)tag {
-    UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"add_fav.png"] style:UIBarButtonItemStylePlain target:self action:@selector(addMyFavoriteAnimal:)];
-    barButtonItem.tintColor = [UIColor redColor];
+    UIImage *image = [UIImage imageNamed:@"add_fav.png"];
+    UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(addMyFavoriteAnimal:)];
+    barButtonItem.tintColor = [UIColor whiteColor];
     barButtonItem.tag = tag;
     return barButtonItem;
 }
 
 - (UIBarButtonItem *)generateRemoveFavoriteButtonWithTag:(NSInteger)tag {
-    UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"remove_fav.png"] style:UIBarButtonItemStylePlain target:self action:@selector(removeMyFavoriteAnimal:)];
-    barButtonItem.tintColor = [UIColor redColor];    
+    UIImage *image = [UIImage imageNamed:@"remove_fav.png"];
+    UIBarButtonItem *barButtonItem = [[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(removeMyFavoriteAnimal:)];
+    barButtonItem.tintColor = [UIColor whiteColor];
     barButtonItem.tag = tag;
     return barButtonItem;
 }
 
 - (void)removeMyFavoriteAnimal:(UIBarButtonItem *)buttonItem {
-    Pet *pet = [self.petResult.pets objectAtIndex:buttonItem.tag];
+    Pet *pet = [self.tempPets objectAtIndex:buttonItem.tag];
     [Utilities removeFromMyFavoriteAnimal:pet];
     [Utilities addHudViewTo:self withMessage:kRemoveFromFavorite];
     UIBarButtonItem *newButton = [self generateAddFavoriteButtonWithTag:buttonItem.tag];
@@ -140,11 +144,14 @@
 }
 
 - (void)addMyFavoriteAnimal:(UIBarButtonItem *)buttonItem {
-    Pet *pet = [self.petResult.pets objectAtIndex:buttonItem.tag];
+    Pet *pet = [self.tempPets objectAtIndex:buttonItem.tag];
     [Utilities addToMyFavoriteAnimal:pet];
     [Utilities addHudViewTo:self withMessage:kAddToFavorite];
     UIBarButtonItem *newButton = [self generateRemoveFavoriteButtonWithTag:buttonItem.tag];
     [self.navigationItem setRightBarButtonItem:newButton animated:YES];
+    if ([self.petFilters.type isEqualToString:kAdoptFilterTypeMyFavorite]) {
+        self.petResult.pets = [NSMutableArray arrayWithArray:[Utilities getMyFavoriteAnimalsDecoded]];
+    }
 }
 
 #pragma mark - UICollectionViewDelegateFlowLayout
