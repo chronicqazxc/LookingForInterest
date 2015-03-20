@@ -556,7 +556,7 @@
             directionMode = kDirectionsModeDriving;
             break;
     }
-    [Utilities launchNavigateWithStore:self.store startLocation:self.start andDirectionsMode:directionMode];
+    [Utilities launchNavigateWithStore:self.store startLocation:self.start andDirectionsMode:directionMode controller:self];
 }
 
 - (IBAction)surfWebBySender:(DialingButton *)sender{

@@ -28,7 +28,7 @@
 + (UIImage *)rotateImage:(UIImage *)originImage toDirection:(NSInteger)direction withScale:(CGFloat)scale;
 + (NSMutableArray *)decodePolyLine:(NSMutableString *)encoded;
 + (UIAlertController *)normalAlertWithTitle:(NSString *)title message:(NSString *)message withObj:(id)obj andSEL:(SEL)selector byCaller:(UIViewController *)caller;
-+ (void)launchNavigateWithStore:(Store *)store startLocation:(CLLocationCoordinate2D)startLocation andDirectionsMode:(NSString *)directionsMode;
++ (void)launchNavigateWithStore:(Store *)store startLocation:(CLLocationCoordinate2D)startLocation andDirectionsMode:(NSString *)directionsMode controller:(UIViewController *)controller;
 + (NSArray *)getMyFavoriteStores;
 + (BOOL)isMyFavoriteStore:(Store *)store;
 + (void)addToMyFavoriteStore:(Store *)store;

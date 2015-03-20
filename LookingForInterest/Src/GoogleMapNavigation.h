@@ -17,6 +17,8 @@
 
 #define kPolylineURLString(startLatitude, startLongitude, endLatitude, endLongitude, mode) [NSString stringWithFormat:@"http://maps.googleapis.com/maps/api/directions/json?origin=%@,%@&destination=%@,%@&mode=%@", startLatitude, startLongitude, endLatitude, endLongitude, mode]
 
+#define kGoogleMapsAppURL @"itms://itunes.apple.com/en/app/google-maps/id585027354?mt=8"
+
 #define kDirectionsModeDrivingTitle @"開車"
 #define kDirectionsModeTransitTitle @"大眾交通工具"
 #define kDirectionsModeBicyclingTitle @"腳踏車"

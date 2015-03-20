@@ -149,13 +149,37 @@
     return alertController;
 }
 
-+ (void)launchNavigateWithStore:(Store *)store startLocation:(CLLocationCoordinate2D)startLocation andDirectionsMode:(NSString *)directionsMode{
++ (void)launchNavigateWithStore:(Store *)store startLocation:(CLLocationCoordinate2D)startLocation andDirectionsMode:(NSString *)directionsMode controller:(UIViewController *)controller {
     [[UIApplication sharedApplication] canOpenURL: [NSURL URLWithString:kGoogleMapType]];
+    
+    NSString *message = @"";
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"" message:message preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"否" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        [alertController dismissViewControllerAnimated:YES completion:nil];
+    }];
+    UIAlertAction *confirmAction = nil;
+    
     if ([[UIApplication sharedApplication] canOpenURL: [NSURL URLWithString:kGoogleMapType]]) {
-        [[UIApplication sharedApplication] openURL: [NSURL URLWithString:kNavigateURLString(startLocation.latitude, startLocation.longitude, [store.latitude doubleValue], [store.longitude doubleValue], startLocation.latitude, startLocation.longitude, directionsMode,6)]];
+        
+        message = @"本功能將使用GoogleMaps導航，是否開啟GoogleMaps?";
+        confirmAction = [UIAlertAction actionWithTitle:@"是" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [[UIApplication sharedApplication] openURL: [NSURL URLWithString:kNavigateURLString(startLocation.latitude, startLocation.longitude, [store.latitude doubleValue], [store.longitude doubleValue], startLocation.latitude, startLocation.longitude, directionsMode,6)]];
+        }];
     } else {
-        NSLog(@"Can't use comgooglemaps://");
+        message = @"您未安裝GoogleMaps，是否連結至AppStore下載?";
+        cancelAction = [UIAlertAction actionWithTitle:@"否" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+            [alertController dismissViewControllerAnimated:YES completion:nil];
+        }];
+        confirmAction = [UIAlertAction actionWithTitle:@"是" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            NSString *googleMapsiTunesLink = kGoogleMapsAppURL;
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:googleMapsiTunesLink]];
+        }];
     }
+    alertController.message = message;
+    [alertController addAction:cancelAction];
+    [alertController addAction:confirmAction];
+    [controller presentViewController:alertController animated:YES completion:nil];
 }
 
 + (NSArray *)getMyFavoriteStores {

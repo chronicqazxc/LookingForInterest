@@ -800,7 +800,7 @@
     } else {
         location = self.currentLocation;
     }
-    [Utilities launchNavigateWithStore:store startLocation:location andDirectionsMode:directionsMode];
+    [Utilities launchNavigateWithStore:store startLocation:location andDirectionsMode:directionsMode controller:self];
 }
 
 - (void)loadPreviousPage:(PageController *)pageController {
