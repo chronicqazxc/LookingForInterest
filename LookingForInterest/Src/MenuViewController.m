@@ -9,8 +9,9 @@
 #import "MenuViewController.h"
 #import "DialingButton.h"
 #import <FacebookSDK/FacebookSDK.h>
+#import "ManulMenuViewController.h"
 
-@interface MenuViewController () <FBLoginViewDelegate>
+@interface MenuViewController () <FBLoginViewDelegate, ManulViewControllerDelegate>
 @property (nonatomic) BOOL isInitial;
 @property (nonatomic) BOOL isViewDidAppear;
 @property (weak, nonatomic) IBOutlet DialingButton *adoptButton;
@@ -20,6 +21,8 @@
 @property (weak, nonatomic) IBOutlet FBProfilePictureView *profilePictureView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (strong, nonatomic) ManulMenuViewController *manulMenuViewController;
+@property (nonatomic) BOOL hadShowManul;
 @end
 
 @implementation MenuViewController
@@ -28,6 +31,7 @@
     if (self) {
         self.isInitial = NO;
         self.isViewDidAppear = NO;
+        self.hadShowManul = NO;
     }
     return self;
 }
@@ -45,12 +49,14 @@
     self.nameLabel.text = @"";
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
         //Background Thread
-        UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://i.ytimg.com/vi/usasigkvhDY/hqdefault.jpg"]]];
+//        UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://i.ytimg.com/vi/usasigkvhDY/hqdefault.jpg"]]];
+        UIImage *image = [UIImage imageNamed:@"blur_background.JPG"];
         dispatch_async(dispatch_get_main_queue(), ^(void){
             //Run UI Updates
             self.backgroundImageView.image = image;
         });
     });
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -62,6 +68,14 @@
     [super viewDidAppear:animated];
     self.isViewDidAppear = YES;
     [self viewDidLayoutSubviews];
+    
+    if (![Utilities getNeverShowManulMenuWithKey:kManulMenuKey]) {
+        if (!self.hadShowManul) {
+            self.manulMenuViewController = [[ManulMenuViewController alloc] initWithNibName:@"ManulViewController" bundle:nil];
+            self.manulMenuViewController.delegate = self;
+            [self presentViewController:self.manulMenuViewController animated:YES completion:nil];
+        }
+    }
 }
 
 - (void)viewDidLayoutSubviews {
@@ -177,6 +191,15 @@
                                    delegate:nil
                           cancelButtonTitle:@"OK"
                           otherButtonTitles:nil] show];
+    }
+}
+
+#pragma mark - ManulViewControllerDelegate
+- (void)manulConfirmClicked {
+    [self.manulMenuViewController dismissViewControllerAnimated:YES completion:nil];
+    self.hadShowManul = YES;
+    if (self.manulMenuViewController.neverShowSwitch.on) {
+        [Utilities setNeverShowManulMenuWithKey:kManulMenuKey];
     }
 }
 @end

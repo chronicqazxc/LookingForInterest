@@ -27,6 +27,18 @@
 		B04F70171AA4406D007D9856 /* HUDView.m in Sources */ = {isa = PBXBuildFile; fileRef = B04F70161AA4406D007D9856 /* HUDView.m */; };
 		B04F70191AA44089007D9856 /* HUDView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B04F70181AA44089007D9856 /* HUDView.xib */; };
 		B04F701C1AA585CB007D9856 /* DialingButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B04F701B1AA585CB007D9856 /* DialingButton.m */; };
+		B06449181ABD484100B6F7A5 /* blur_background.JPG in Resources */ = {isa = PBXBuildFile; fileRef = B06449171ABD484100B6F7A5 /* blur_background.JPG */; };
+		B064491F1ABD62C400B6F7A5 /* manul_adopt_detail.png in Resources */ = {isa = PBXBuildFile; fileRef = B064491A1ABD62C400B6F7A5 /* manul_adopt_detail.png */; };
+		B06449201ABD62C400B6F7A5 /* manul_adopt_list.png in Resources */ = {isa = PBXBuildFile; fileRef = B064491B1ABD62C400B6F7A5 /* manul_adopt_list.png */; };
+		B06449211ABD62C400B6F7A5 /* manul_hospital_list.png in Resources */ = {isa = PBXBuildFile; fileRef = B064491C1ABD62C400B6F7A5 /* manul_hospital_list.png */; };
+		B06449221ABD62C400B6F7A5 /* manul_hospital_menu.png in Resources */ = {isa = PBXBuildFile; fileRef = B064491D1ABD62C400B6F7A5 /* manul_hospital_menu.png */; };
+		B06449231ABD62C400B6F7A5 /* manul_menu.png in Resources */ = {isa = PBXBuildFile; fileRef = B064491E1ABD62C400B6F7A5 /* manul_menu.png */; };
+		B06449281ABD634500B6F7A5 /* ManulViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B06449261ABD634500B6F7A5 /* ManulViewController.m */; };
+		B06449291ABD634500B6F7A5 /* ManulViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B06449271ABD634500B6F7A5 /* ManulViewController.xib */; };
+		B064492C1ABD66B600B6F7A5 /* ManulMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B064492B1ABD66B600B6F7A5 /* ManulMenuViewController.m */; };
+		B064492F1ABD6FCE00B6F7A5 /* ManulAdoptListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B064492E1ABD6FCE00B6F7A5 /* ManulAdoptListViewController.m */; };
+		B06449321ABD702500B6F7A5 /* ManulAdoptDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B06449311ABD702500B6F7A5 /* ManulAdoptDetailViewController.m */; };
+		B06449351ABD706600B6F7A5 /* ManulHospitalMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B06449341ABD706600B6F7A5 /* ManulHospitalMenuViewController.m */; };
 		B06E56991A9D64980030B6A4 /* GoTopButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B06E56981A9D64980030B6A4 /* GoTopButton.m */; };
 		B06E569D1A9DE2980030B6A4 /* AnimalHospitalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B06E569B1A9DE2980030B6A4 /* AnimalHospitalViewController.m */; };
 		B06E569E1A9DE2980030B6A4 /* AnimalHospitalViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B06E569C1A9DE2980030B6A4 /* AnimalHospitalViewController.xib */; };
@@ -156,6 +168,23 @@
 		B04F70181AA44089007D9856 /* HUDView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HUDView.xib; path = Src/Views/HUDView.xib; sourceTree = "<group>"; };
 		B04F701A1AA585CB007D9856 /* DialingButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DialingButton.h; path = Src/Views/DialingButton.h; sourceTree = "<group>"; };
 		B04F701B1AA585CB007D9856 /* DialingButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DialingButton.m; path = Src/Views/DialingButton.m; sourceTree = "<group>"; };
+		B06449171ABD484100B6F7A5 /* blur_background.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = blur_background.JPG; path = Img/blur_background.JPG; sourceTree = "<group>"; };
+		B064491A1ABD62C400B6F7A5 /* manul_adopt_detail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = manul_adopt_detail.png; path = Img/manul/manul_adopt_detail.png; sourceTree = "<group>"; };
+		B064491B1ABD62C400B6F7A5 /* manul_adopt_list.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = manul_adopt_list.png; path = Img/manul/manul_adopt_list.png; sourceTree = "<group>"; };
+		B064491C1ABD62C400B6F7A5 /* manul_hospital_list.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = manul_hospital_list.png; path = Img/manul/manul_hospital_list.png; sourceTree = "<group>"; };
+		B064491D1ABD62C400B6F7A5 /* manul_hospital_menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = manul_hospital_menu.png; path = Img/manul/manul_hospital_menu.png; sourceTree = "<group>"; };
+		B064491E1ABD62C400B6F7A5 /* manul_menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = manul_menu.png; path = Img/manul/manul_menu.png; sourceTree = "<group>"; };
+		B06449251ABD634500B6F7A5 /* ManulViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ManulViewController.h; path = Src/Manul/ManulViewController.h; sourceTree = "<group>"; };
+		B06449261ABD634500B6F7A5 /* ManulViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ManulViewController.m; path = Src/Manul/ManulViewController.m; sourceTree = "<group>"; };
+		B06449271ABD634500B6F7A5 /* ManulViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ManulViewController.xib; path = Src/Manul/ManulViewController.xib; sourceTree = "<group>"; };
+		B064492A1ABD66B600B6F7A5 /* ManulMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ManulMenuViewController.h; path = Src/Manul/ManulMenuViewController.h; sourceTree = "<group>"; };
+		B064492B1ABD66B600B6F7A5 /* ManulMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ManulMenuViewController.m; path = Src/Manul/ManulMenuViewController.m; sourceTree = "<group>"; };
+		B064492D1ABD6FCE00B6F7A5 /* ManulAdoptListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ManulAdoptListViewController.h; path = Src/Manul/ManulAdoptListViewController.h; sourceTree = "<group>"; };
+		B064492E1ABD6FCE00B6F7A5 /* ManulAdoptListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ManulAdoptListViewController.m; path = Src/Manul/ManulAdoptListViewController.m; sourceTree = "<group>"; };
+		B06449301ABD702500B6F7A5 /* ManulAdoptDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ManulAdoptDetailViewController.h; path = Src/Manul/ManulAdoptDetailViewController.h; sourceTree = "<group>"; };
+		B06449311ABD702500B6F7A5 /* ManulAdoptDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ManulAdoptDetailViewController.m; path = Src/Manul/ManulAdoptDetailViewController.m; sourceTree = "<group>"; };
+		B06449331ABD706600B6F7A5 /* ManulHospitalMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ManulHospitalMenuViewController.h; path = Src/Manul/ManulHospitalMenuViewController.h; sourceTree = "<group>"; };
+		B06449341ABD706600B6F7A5 /* ManulHospitalMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ManulHospitalMenuViewController.m; path = Src/Manul/ManulHospitalMenuViewController.m; sourceTree = "<group>"; };
 		B06E56971A9D64980030B6A4 /* GoTopButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GoTopButton.h; path = Src/Views/GoTopButton.h; sourceTree = "<group>"; };
 		B06E56981A9D64980030B6A4 /* GoTopButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GoTopButton.m; path = Src/Views/GoTopButton.m; sourceTree = "<group>"; };
 		B06E569A1A9DE2980030B6A4 /* AnimalHospitalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimalHospitalViewController.h; path = Src/Views/AnimalHospitalViewController.h; sourceTree = "<group>"; };
@@ -321,7 +350,7 @@
 		B034D9521A8903A900360A6C = {
 			isa = PBXGroup;
 			children = (
-				B034D95D1A8903A900360A6C /* LookingForInterest */,
+				B034D95D1A8903A900360A6C /* ThingsAboutAnimals */,
 				B0B048E41AB16AEB000154B2 /* ThingsAboutAnimals Tests */,
 				B034D95C1A8903A900360A6C /* Products */,
 				A9A5CC563E29FFAF51E0A5E8 /* Pods */,
@@ -338,9 +367,10 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		B034D95D1A8903A900360A6C /* LookingForInterest */ = {
+		B034D95D1A8903A900360A6C /* ThingsAboutAnimals */ = {
 			isa = PBXGroup;
 			children = (
+				B06449241ABD630000B6F7A5 /* Manul */,
 				B0BF73131A8A3FA400213C00 /* Views */,
 				B0F06B3B1A89F30500FBC90C /* Utilities */,
 				B0BF72DF1A8915CC00213C00 /* Objs */,
@@ -358,6 +388,7 @@
 				B034D96D1A8903AA00360A6C /* LaunchScreen.xib */,
 				B034D95E1A8903A900360A6C /* Supporting Files */,
 			);
+			name = ThingsAboutAnimals;
 			path = LookingForInterest;
 			sourceTree = "<group>";
 		};
@@ -372,6 +403,36 @@
 				B034D95F1A8903A900360A6C /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B06449191ABD62B700B6F7A5 /* manul */ = {
+			isa = PBXGroup;
+			children = (
+				B064491A1ABD62C400B6F7A5 /* manul_adopt_detail.png */,
+				B064491B1ABD62C400B6F7A5 /* manul_adopt_list.png */,
+				B064491C1ABD62C400B6F7A5 /* manul_hospital_list.png */,
+				B064491D1ABD62C400B6F7A5 /* manul_hospital_menu.png */,
+				B064491E1ABD62C400B6F7A5 /* manul_menu.png */,
+			);
+			name = manul;
+			sourceTree = "<group>";
+		};
+		B06449241ABD630000B6F7A5 /* Manul */ = {
+			isa = PBXGroup;
+			children = (
+				B06449251ABD634500B6F7A5 /* ManulViewController.h */,
+				B06449261ABD634500B6F7A5 /* ManulViewController.m */,
+				B06449271ABD634500B6F7A5 /* ManulViewController.xib */,
+				B064492A1ABD66B600B6F7A5 /* ManulMenuViewController.h */,
+				B064492B1ABD66B600B6F7A5 /* ManulMenuViewController.m */,
+				B064492D1ABD6FCE00B6F7A5 /* ManulAdoptListViewController.h */,
+				B064492E1ABD6FCE00B6F7A5 /* ManulAdoptListViewController.m */,
+				B06449301ABD702500B6F7A5 /* ManulAdoptDetailViewController.h */,
+				B06449311ABD702500B6F7A5 /* ManulAdoptDetailViewController.m */,
+				B06449331ABD706600B6F7A5 /* ManulHospitalMenuViewController.h */,
+				B06449341ABD706600B6F7A5 /* ManulHospitalMenuViewController.m */,
+			);
+			name = Manul;
 			sourceTree = "<group>";
 		};
 		B0ACC9131AA849670068A7D5 /* AnimalHospital */ = {
@@ -546,6 +607,8 @@
 		B0F06B4E1A8A0E8800FBC90C /* Img */ = {
 			isa = PBXGroup;
 			children = (
+				B06449191ABD62B700B6F7A5 /* manul */,
+				B06449171ABD484100B6F7A5 /* blur_background.JPG */,
 				B0B8660B1AB368FE0039BFB5 /* add_fav.png */,
 				B0B8660C1AB368FE0039BFB5 /* remove_fav.png */,
 				B0B049041AB304F0000154B2 /* mail.png */,
@@ -625,6 +688,7 @@
 				TargetAttributes = {
 					B034D95A1A8903A900360A6C = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = 94MBHXKUB6;
 					};
 					B0B048E21AB16AEB000154B2 = {
 						CreatedOnToolsVersion = 6.2;
@@ -669,6 +733,7 @@
 				B0BF730E1A8916A400213C00 /* Icon-Small@2x.png in Resources */,
 				B0B048FE1AB2F1EF000154B2 /* magnifier_icon.png in Resources */,
 				B07804AC1AA9467900DE8AD0 /* PopUpPicker.xib in Resources */,
+				B06449221ABD62C400B6F7A5 /* manul_hospital_menu.png in Resources */,
 				B0F06B621A8B252900FBC90C /* magnifier.png in Resources */,
 				B0F06B601A8B0FA200FBC90C /* OpenMapHeaderController.xib in Resources */,
 				B03B256D1AAEA6B6001C5928 /* AnimalListTableViewCell.xib in Resources */,
@@ -679,10 +744,14 @@
 				B02861FD1AAAD90C001C50DB /* AnimalDetailScrollViewController.xib in Resources */,
 				B0B048FF1AB2F1EF000154B2 /* my_favorite_icon.png in Resources */,
 				B0B049051AB304F0000154B2 /* mail.png in Resources */,
+				B06449201ABD62C400B6F7A5 /* manul_adopt_list.png in Resources */,
 				B0BF73081A8916A400213C00 /* Icon-40@3x.png in Resources */,
+				B06449291ABD634500B6F7A5 /* ManulViewController.xib in Resources */,
+				B06449211ABD62C400B6F7A5 /* manul_hospital_list.png in Resources */,
 				B0BF730A1A8916A400213C00 /* Icon-60@3x.png in Resources */,
 				B0A320551AAD45AF0061384A /* Loading300x400.png in Resources */,
 				B0BF73301A8A4EE000213C00 /* menu@2x.png in Resources */,
+				B06449231ABD62C400B6F7A5 /* manul_menu.png in Resources */,
 				B0B049011AB3002A000154B2 /* FB-f-Logo__white_29.png in Resources */,
 				B0BF732F1A8A4EE000213C00 /* fav@2x.png in Resources */,
 				B0A320531AAD428A0061384A /* Loading100x100.png in Resources */,
@@ -702,6 +771,8 @@
 				B0BF732E1A8A4EE000213C00 /* check@2x.png in Resources */,
 				B0BF73061A8916A400213C00 /* Icon-40.png in Resources */,
 				B0F06B581A8B089A00FBC90C /* StoreTableHeader.xib in Resources */,
+				B06449181ABD484100B6F7A5 /* blur_background.JPG in Resources */,
+				B064491F1ABD62C400B6F7A5 /* manul_adopt_detail.png in Resources */,
 				B002A2EC1A9885FA00808055 /* WebViewController.xib in Resources */,
 				B0BF730F1A8916A400213C00 /* Icon-Small@3x.png in Resources */,
 				B0F06B371A89B80500FBC90C /* MapViewCell.xib in Resources */,
@@ -763,6 +834,7 @@
 				B002A2EF1A9CEFBA00808055 /* PageController.m in Sources */,
 				B08572471AA4C18400F0F8FD /* MenuViewController.m in Sources */,
 				B04F701C1AA585CB007D9856 /* DialingButton.m in Sources */,
+				B064492F1ABD6FCE00B6F7A5 /* ManulAdoptListViewController.m in Sources */,
 				B0BF72F81A8915ED00213C00 /* ViewController.m in Sources */,
 				B02862011AAAEB40001C50DB /* AnimalDetailCollectionViewCell.m in Sources */,
 				B0BF72DE1A8915C500213C00 /* main.m in Sources */,
@@ -771,6 +843,7 @@
 				B06E56991A9D64980030B6A4 /* GoTopButton.m in Sources */,
 				B085724D1AA74FC700F0F8FD /* FacebookController.m in Sources */,
 				B02862051AAAF2F6001C50DB /* AnimalDetailScrollLayout.m in Sources */,
+				B06449321ABD702500B6F7A5 /* ManulAdoptDetailViewController.m in Sources */,
 				B0B230001AA7639E003FE4D7 /* PetFilters.m in Sources */,
 				B0BF72F61A8915ED00213C00 /* FilterTableViewController.m in Sources */,
 				B06E56A11A9DE2BD0030B6A4 /* Detail.m in Sources */,
@@ -797,8 +870,11 @@
 				B0BF73171A8A3FF500213C00 /* LoadingView.m in Sources */,
 				B0BF73291A8A414500213C00 /* StoreCell.m in Sources */,
 				B0ACC9191AA84B1B0068A7D5 /* AdoptAnimalViewController.m in Sources */,
+				B06449281ABD634500B6F7A5 /* ManulViewController.m in Sources */,
 				B0BF72EB1A8915DD00213C00 /* Store.m in Sources */,
 				B0BF72E91A8915DD00213C00 /* Menu.m in Sources */,
+				B064492C1ABD66B600B6F7A5 /* ManulMenuViewController.m in Sources */,
+				B06449351ABD706600B6F7A5 /* ManulHospitalMenuViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -921,11 +997,13 @@
 			baseConfigurationReference = 8B5B7415EB81D51AA50E370A /* Pods-ThingsAboutAnimals.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Yu Han Hsiao (HRA56ATZ53)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = LookingForInterest/Src/AnimalHospital.pch;
 				INFOPLIST_FILE = LookingForInterest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "寵物相關";
+				PROVISIONING_PROFILE = "b21a1eb8-38fe-4d1d-92cb-02c0143a53af";
 			};
 			name = Debug;
 		};
@@ -934,12 +1012,13 @@
 			baseConfigurationReference = 193908BC157B2A29F5014D23 /* Pods-ThingsAboutAnimals.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Yu Han Hsiao";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = LookingForInterest/Src/AnimalHospital.pch;
 				INFOPLIST_FILE = LookingForInterest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "寵物相關";
+				PROVISIONING_PROFILE = "b21a1eb8-38fe-4d1d-92cb-02c0143a53af";
 			};
 			name = Release;
 		};

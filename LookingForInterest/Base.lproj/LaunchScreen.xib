@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1510" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
     </dependencies>
@@ -7,20 +7,28 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB">
-            <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CoverImage4.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="Xuy-HB-DNu">
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="blur_background.JPG" translatesAutoresizingMaskIntoConstraints="NO" id="Xuy-HB-DNu">
                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                 </imageView>
+                <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dTZ-od-5Q9">
+                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="c5Y-86-Rzo">
+                        <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    </view>
+                    <blurEffect style="dark"/>
+                </visualEffectView>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  Copyright (c) 2015 Wayne. All rights reserved." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="8ie-xW-0ye">
-                    <rect key="frame" x="20" y="439" width="441" height="21"/>
+                    <rect key="frame" x="20" y="559" width="561" height="20.5"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="動物相關" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="kId-c2-rCX">
-                    <rect key="frame" x="20" y="100" width="441" height="43"/>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="動物相關" textAlignment="center" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="kId-c2-rCX">
+                    <rect key="frame" x="20" y="100" width="561" height="43"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="43" id="I2o-dR-XFi"/>
                         <constraint firstAttribute="height" constant="45" id="ZWx-ad-JZo"/>
@@ -50,11 +58,17 @@
                 </constraint>
                 <constraint firstAttribute="bottom" secondItem="8ie-xW-0ye" secondAttribute="bottom" constant="20" id="Kzo-t9-V3l"/>
                 <constraint firstItem="8ie-xW-0ye" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" symbolic="YES" id="MfP-vx-nX0"/>
+                <constraint firstAttribute="bottom" secondItem="dTZ-od-5Q9" secondAttribute="bottom" constant="336" id="P28-gY-Hcb">
+                    <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                </constraint>
                 <constraint firstItem="kId-c2-rCX" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="Syd-YE-ak8"/>
                 <constraint firstAttribute="trailing" secondItem="Xuy-HB-DNu" secondAttribute="trailing" id="TdV-95-z9U"/>
                 <constraint firstItem="kId-c2-rCX" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="290" id="TrM-6d-kvq"/>
                 <constraint firstAttribute="centerX" secondItem="8ie-xW-0ye" secondAttribute="centerX" id="ZEH-qu-HZ9"/>
                 <constraint firstAttribute="bottom" secondItem="8ie-xW-0ye" secondAttribute="bottom" constant="20" id="abP-xJ-oWZ"/>
+                <constraint firstItem="dTZ-od-5Q9" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="336" id="d6a-wG-72e">
+                    <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                </constraint>
                 <constraint firstItem="8ie-xW-0ye" firstAttribute="leading" secondItem="kId-c2-rCX" secondAttribute="leading" id="ekq-cF-csk"/>
                 <constraint firstItem="Xuy-HB-DNu" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="fg9-ga-kjH"/>
                 <constraint firstItem="kId-c2-rCX" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" symbolic="YES" id="fvb-Df-36g"/>
@@ -62,11 +76,18 @@
                 <constraint firstItem="kId-c2-rCX" firstAttribute="trailing" secondItem="8ie-xW-0ye" secondAttribute="trailing" id="lpA-JC-DvH"/>
                 <constraint firstAttribute="bottom" secondItem="Xuy-HB-DNu" secondAttribute="bottom" id="qSD-xz-k0x"/>
                 <constraint firstItem="Xuy-HB-DNu" firstAttribute="centerX" secondItem="8ie-xW-0ye" secondAttribute="centerX" id="r5d-Wn-iwv"/>
+                <constraint firstItem="dTZ-od-5Q9" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="80" id="tk8-dT-MPy">
+                    <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                </constraint>
+                <constraint firstAttribute="trailing" secondItem="dTZ-od-5Q9" secondAttribute="trailing" constant="80" id="ze1-Yf-WTy">
+                    <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                </constraint>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <variation key="default">
                 <mask key="subviews">
                     <exclude reference="Xuy-HB-DNu"/>
+                    <exclude reference="dTZ-od-5Q9"/>
                 </mask>
                 <mask key="constraints">
                     <exclude reference="TdV-95-z9U"/>
@@ -78,6 +99,10 @@
                     <exclude reference="Syd-YE-ak8"/>
                     <exclude reference="TrM-6d-kvq"/>
                     <exclude reference="lpA-JC-DvH"/>
+                    <exclude reference="P28-gY-Hcb"/>
+                    <exclude reference="d6a-wG-72e"/>
+                    <exclude reference="tk8-dT-MPy"/>
+                    <exclude reference="ze1-Yf-WTy"/>
                     <exclude reference="abP-xJ-oWZ"/>
                     <exclude reference="ekq-cF-csk"/>
                 </mask>
@@ -85,6 +110,7 @@
             <variation key="heightClass=regular-widthClass=compact">
                 <mask key="subviews">
                     <include reference="Xuy-HB-DNu"/>
+                    <include reference="dTZ-od-5Q9"/>
                 </mask>
                 <mask key="constraints">
                     <include reference="TdV-95-z9U"/>
@@ -98,6 +124,10 @@
                     <exclude reference="TrM-6d-kvq"/>
                     <exclude reference="fvb-Df-36g"/>
                     <include reference="lpA-JC-DvH"/>
+                    <include reference="P28-gY-Hcb"/>
+                    <include reference="d6a-wG-72e"/>
+                    <include reference="tk8-dT-MPy"/>
+                    <include reference="ze1-Yf-WTy"/>
                     <exclude reference="Kzo-t9-V3l"/>
                     <exclude reference="MfP-vx-nX0"/>
                     <exclude reference="ZEH-qu-HZ9"/>
@@ -109,6 +139,6 @@
         </view>
     </objects>
     <resources>
-        <image name="CoverImage4.jpg" width="640" height="1136"/>
+        <image name="blur_background.JPG" width="2448" height="3264"/>
     </resources>
 </document>

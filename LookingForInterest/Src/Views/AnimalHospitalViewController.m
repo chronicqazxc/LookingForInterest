@@ -19,7 +19,7 @@
 
 #define kScrollViewMaxScale 0.7
 #define kScrollViewMinScale 0.3
-#define kScrollViewContentHeight 1111
+#define kScrollViewContentHeight 909
 
 @interface AnimalHospitalViewController () <FullScreenScrollViewDelegate, EndlessScrollGeneratorDelegate, UIScrollViewDelegate, GMSMapViewDelegate, GMSPanoramaViewDelegate, RequestSenderDelegate>
 @property (weak, nonatomic) IBOutlet UIView *mainContainer;
@@ -72,6 +72,8 @@
 @property (strong, nonatomic) NSMutableArray *requests;
 
 @property (strong, nonatomic) AppDelegate *appdelegate;
+
+@property (nonatomic) BOOL hadShowManul;
 @end
 
 @implementation AnimalHospitalViewController
@@ -101,6 +103,8 @@
     self.appdelegate = [Utilities appdelegate];
     self.addressLabel.text = [NSString stringWithFormat:@"地址：%@",self.store.address];
     self.addressLabel.hidden = YES;
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -139,7 +143,7 @@
     [super viewDidLayoutSubviews];
     
     if (self.isViewDidAppear && !self.isInitail) {
-        [self getDefaultImages];
+//        [self getDefaultImages];
         
         [self initButtons];
         

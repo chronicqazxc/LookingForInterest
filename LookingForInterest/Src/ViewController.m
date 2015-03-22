@@ -14,6 +14,7 @@
 #import "GoogleMapNavigation.h"
 #import <CoreLocation/CoreLocation.h>
 #import "RequestSender.h"
+#import "ManulHospitalMenuViewController.h"
 
 #define kMagnifierImg @"iconmonstr-magnifier-3-icon-256.png"
 #define kLeftArrowImg @"arrow-left@2x.png"
@@ -44,7 +45,7 @@
 // navigate
 // close
 
-@interface ViewController () <CLLocationManagerDelegate, GMSMapViewDelegate, FilterTableViewControllerDelegate>
+@interface ViewController () <CLLocationManagerDelegate, GMSMapViewDelegate, FilterTableViewControllerDelegate, ManulViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIView *mapView;
 @property (nonatomic) CGSize mapViewSize;
 @property (strong, nonatomic) CLLocationManager *locationManager;
@@ -74,6 +75,9 @@
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *previousPageIndicator;
 @property (weak, nonatomic) IBOutlet UIView *nextPageView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *nextPageIndicator;
+
+@property (strong, nonatomic) ManulHospitalMenuViewController *manulHospitalMenuViewController;
+@property (nonatomic) BOOL hadShowManul;
 @end
 
 @implementation ViewController
@@ -198,7 +202,23 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    if (!self.isSendForMenu) {
+    
+    if (![Utilities getNeverShowManulMenuWithKey:kManulHospitalMenuKey]) {
+        if (!self.hadShowManul) {
+            self.manulHospitalMenuViewController = [[ManulHospitalMenuViewController alloc] initWithNibName:@"ManulViewController" bundle:nil];
+            self.manulHospitalMenuViewController.delegate = self;
+            [self presentViewController:self.manulHospitalMenuViewController animated:YES completion:nil];
+        } else if (!self.isSendForMenu) {
+            self.filterTableViewController = [[FilterTableViewController alloc] init];
+            self.filterTableViewController.delegate = self;
+            self.filterTableViewController.filterType = FilterTypeMenu;
+            self.filterTableViewController.filterTableView = self.filterTableView;
+            self.filterTableView.dataSource = self.filterTableViewController;
+            self.filterTableView.delegate = self.filterTableViewController;
+            [self.filterTableViewController sendAccessTokenRequest];
+            self.isSendForMenu = YES;
+        }
+    } else if (!self.isSendForMenu) {
         self.filterTableViewController = [[FilterTableViewController alloc] init];
         self.filterTableViewController.delegate = self;
         self.filterTableViewController.filterType = FilterTypeMenu;
@@ -837,5 +857,14 @@
 }
 - (IBAction)clickNavigationTitle:(UIButton *)sender {
     [self.filterTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+}
+
+#pragma mark - ManulViewControllerDelegate
+- (void)manulConfirmClicked {
+    [self.manulHospitalMenuViewController dismissViewControllerAnimated:YES completion:nil];
+    self.hadShowManul = YES;
+    if (self.manulHospitalMenuViewController.neverShowSwitch.on) {
+        [Utilities setNeverShowManulMenuWithKey:kManulHospitalMenuKey];
+    }
 }
 @end

@@ -15,6 +15,7 @@
 #import "AnimalDetailScrollViewController.h"
 #import "AnimalListTableViewCell.h"
 #import "GoTopButton.h"
+#import "ManulAdoptListViewController.h"
 
 #define kAdoptAnimalTitle(type) [NSString stringWithFormat:@"觀看%@",type]
 #define kNavigationColorDogFirst 0xb2b2ff
@@ -28,7 +29,7 @@
 #define kNavigationColorFilterFirst 0xcc99ff
 #define kNavigationColorFilterSecond 0x690099
 
-@interface AdoptAnimalViewController () <UITableViewDataSource, UITableViewDelegate, UITabBarDelegate, RequestSenderDelegate, AdoptAnimalFilterControllerDelegate, MGSwipeTableCellDelegate>
+@interface AdoptAnimalViewController () <UITableViewDataSource, UITableViewDelegate, UITabBarDelegate, RequestSenderDelegate, AdoptAnimalFilterControllerDelegate, MGSwipeTableCellDelegate, ManulViewControllerDelegate>
 @property (strong, nonatomic) PetResult *petResult;
 @property (strong, nonatomic) NSMutableArray *requests;
 @property (strong, nonatomic) PetFilters *petFilters;
@@ -48,6 +49,8 @@
 @property (strong, nonatomic) CAGradientLayer *gradientLayer;
 @property (strong, nonatomic) UIColor *currentFirstColor;
 @property (strong, nonatomic) UIColor *currentSecondColor;
+@property (strong, nonatomic) ManulAdoptListViewController *manulAdoptListViewController;
+@property (nonatomic) BOOL hadShowManul;
 @end
 
 @implementation AdoptAnimalViewController
@@ -119,10 +122,24 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    if (!self.isSendInitRequest && ![self.petResult.pets count]) {
+    if (![Utilities getNeverShowManulMenuWithKey:kManulAdoptListKey]) {
+        if (!self.hadShowManul) {
+            self.manulAdoptListViewController = [[ManulAdoptListViewController alloc] initWithNibName:@"ManulViewController" bundle:nil];
+            self.manulAdoptListViewController.delegate = self;
+            [self presentViewController:self.manulAdoptListViewController animated:YES completion:nil];
+        } else if (!self.isSendInitRequest && ![self.petResult.pets count]) {
+            [self startLoadingWithContent:nil];
+            [self sendInitRequest];
+            self.isSendInitRequest = YES;
+        } else {
+            [self.tableView reloadData];
+        }
+    } else if (!self.isSendInitRequest && ![self.petResult.pets count]) {
         [self startLoadingWithContent:nil];
         [self sendInitRequest];
         self.isSendInitRequest = YES;
+    } else {
+        [self.tableView reloadData];
     }
 }
 
@@ -238,7 +255,16 @@
         petCell.body.text = [NSString stringWithFormat:@"體型：%@",pet.build];
         
         if (!pet.thumbNail && !self.isStartLoading) {
-            petCell.thumbNail.image = [UIImage imageNamed:@"Loading100x100.png"];
+            if ([pet.type isEqualToString:kAdoptFilterTypeDog]) {
+                petCell.thumbNail.image = [UIImage imageNamed:@"dog_icon.png"];
+            } else if ([pet.type isEqualToString:kAdoptFilterTypeCat]) {
+                petCell.thumbNail.image = [UIImage imageNamed:@"cat_icon.png"];
+            } else if ([pet.type isEqualToString:kAdoptFilterTypeOther]) {
+                petCell.thumbNail.image = [UIImage imageNamed:@"rabbit_icon.png"];
+            } else {
+                petCell.thumbNail.image = [UIImage imageNamed:@"Loading100x100.png"];
+            }
+            
             [self startThumbNailDownload:pet forIndexPath:indexPath];
             petCell.thumbNail.layer.borderColor = [UIColor colorWithWhite:0.0 alpha:0.3].CGColor;
         } else {
@@ -685,5 +711,14 @@
     [requestSender checkFavoriteAnimals:[Utilities getMyFavoriteAnimalsDecoded]];
     [self.requests addObject:requestSender];
     [Utilities startLoadingWithContent:@"更新我的最愛"];
+}
+
+#pragma mark - ManulViewControllerDelegate
+- (void)manulConfirmClicked {
+    [self.manulAdoptListViewController dismissViewControllerAnimated:YES completion:nil];
+    self.hadShowManul = YES;
+    if (self.manulAdoptListViewController.neverShowSwitch.on) {
+        [Utilities setNeverShowManulMenuWithKey:kManulAdoptListKey];
+    }
 }
 @end

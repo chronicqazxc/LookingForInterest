@@ -45,4 +45,6 @@
 + (void)shareToLineWithContent:(NSString *)content url:(NSString *)url;
 + (void)shareToLineWithImage:(UIImage *)image;
 + (UIImage *)imageWithView:(UIView *)view;
++ (BOOL)getNeverShowManulMenuWithKey:(NSString *)key;
++ (void)setNeverShowManulMenuWithKey:(NSString *)key;
 @end

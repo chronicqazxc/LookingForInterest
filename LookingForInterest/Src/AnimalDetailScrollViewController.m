@@ -11,13 +11,16 @@
 #import "AnimalDetailScrollLayout.h"
 #import "FacebookController.h"
 #import <MessageUI/MessageUI.h>
+#import "ManulAdoptDetailViewController.h"
 
-@interface AnimalDetailScrollViewController () <UICollectionViewDataSource, UICollectionViewDelegate, AnimalDetailCollectionViewCellDelegate, FacebookControllerDelegate, MFMailComposeViewControllerDelegate>
+@interface AnimalDetailScrollViewController () <UICollectionViewDataSource, UICollectionViewDelegate, AnimalDetailCollectionViewCellDelegate, FacebookControllerDelegate, MFMailComposeViewControllerDelegate, ManulViewControllerDelegate>
 @property (nonatomic) BOOL isInit;
 @property (nonatomic) NSInteger currentRow;
 @property (nonatomic) NSInteger previousRow;
 @property (strong, nonatomic) AnimalDetailCollectionViewCell *animalDetailCollectionViewCell;
 @property (strong, nonatomic) NSMutableArray *tempPets;
+@property (strong, nonatomic) ManulAdoptDetailViewController *manulAdoptDetailViewController;
+@property (nonatomic) BOOL hadShowManul;
 @end
 
 @implementation AnimalDetailScrollViewController
@@ -42,6 +45,17 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self generateRightBarButtonByIndexPath:self.selectedIndexPath];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    if (![Utilities getNeverShowManulMenuWithKey:kManulAdoptDetailKey]) {
+        if (!self.hadShowManul) {
+            self.manulAdoptDetailViewController = [[ManulAdoptDetailViewController alloc] initWithNibName:@"ManulViewController" bundle:nil];
+            self.manulAdoptDetailViewController.delegate = self;
+            [self presentViewController:self.manulAdoptDetailViewController animated:YES completion:nil];
+        }
+    }
 }
 
 - (void)viewDidLayoutSubviews {
@@ -288,5 +302,14 @@
         [Utilities addHudViewTo:self withMessage:message];
     }];
     
+}
+
+#pragma mark - ManulViewControllerDelegate
+- (void)manulConfirmClicked {
+    [self.manulAdoptDetailViewController dismissViewControllerAnimated:YES completion:nil];
+    self.hadShowManul = YES;
+    if (self.manulAdoptDetailViewController.neverShowSwitch.on) {
+        [Utilities setNeverShowManulMenuWithKey:kManulAdoptDetailKey];
+    }
 }
 @end

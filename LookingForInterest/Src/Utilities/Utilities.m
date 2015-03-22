@@ -372,4 +372,21 @@
 //};
 //NSNumber *amountNumber = [NSNumber numberWithInteger:[self.barcodeData.totAmt integerValue]];
 //self.payFullPriceLabel.text = [NSString stringWithFormat:@"$%@",thousandSeparatorFormat(amountNumber)];
+
++ (BOOL)getNeverShowManulMenuWithKey:(NSString *)key {
+    BOOL result = NO;
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if ([defaults objectForKey:key]) {
+        result = YES;
+    } else {
+        result = NO;
+    }
+    return result;
+}
+
++ (void)setNeverShowManulMenuWithKey:(NSString *)key {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:@"1" forKey:key];
+    [defaults synchronize];
+}
 @end
