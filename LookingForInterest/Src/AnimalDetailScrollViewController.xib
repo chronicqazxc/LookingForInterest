@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1510" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
     </dependencies>
@@ -19,34 +19,55 @@
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <collectionViewLayout key="collectionViewLayout" id="pBw-wQ-6qw" customClass="AnimalDetailScrollLayout"/>
                 </collectionView>
+                <adBannerView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="hv0-bZ-uti">
+                    <rect key="frame" x="0.0" y="-50" width="320" height="50"/>
+                </adBannerView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="MJs-Ye-TPc" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="2kP-tl-s6O"/>
                 <constraint firstItem="MJs-Ye-TPc" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="4Vp-Fi-spg"/>
+                <constraint firstItem="hv0-bZ-uti" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="8Nr-Zp-fzw"/>
                 <constraint firstAttribute="bottom" secondItem="MJs-Ye-TPc" secondAttribute="bottom" id="DOI-Dh-lSn"/>
+                <constraint firstItem="hv0-bZ-uti" firstAttribute="top" secondItem="MJs-Ye-TPc" secondAttribute="bottom" constant="-32" id="gzU-fX-dEp">
+                    <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                </constraint>
                 <constraint firstAttribute="trailing" secondItem="MJs-Ye-TPc" secondAttribute="trailing" id="r1d-XZ-h58"/>
+                <constraint firstAttribute="bottom" secondItem="hv0-bZ-uti" secondAttribute="bottom" constant="375" id="yFr-Zf-T6I">
+                    <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                </constraint>
+                <constraint firstAttribute="trailing" secondItem="hv0-bZ-uti" secondAttribute="trailing" id="zy6-uD-k70"/>
             </constraints>
             <variation key="default">
                 <mask key="subviews">
                     <exclude reference="MJs-Ye-TPc"/>
+                    <exclude reference="hv0-bZ-uti"/>
                 </mask>
                 <mask key="constraints">
                     <exclude reference="2kP-tl-s6O"/>
                     <exclude reference="4Vp-Fi-spg"/>
                     <exclude reference="DOI-Dh-lSn"/>
                     <exclude reference="r1d-XZ-h58"/>
+                    <exclude reference="8Nr-Zp-fzw"/>
+                    <exclude reference="gzU-fX-dEp"/>
+                    <exclude reference="yFr-Zf-T6I"/>
+                    <exclude reference="zy6-uD-k70"/>
                 </mask>
             </variation>
             <variation key="heightClass=regular-widthClass=compact">
                 <mask key="subviews">
                     <include reference="MJs-Ye-TPc"/>
+                    <include reference="hv0-bZ-uti"/>
                 </mask>
                 <mask key="constraints">
                     <include reference="2kP-tl-s6O"/>
                     <include reference="4Vp-Fi-spg"/>
-                    <include reference="DOI-Dh-lSn"/>
+                    <exclude reference="DOI-Dh-lSn"/>
                     <include reference="r1d-XZ-h58"/>
+                    <include reference="8Nr-Zp-fzw"/>
+                    <include reference="gzU-fX-dEp"/>
+                    <include reference="yFr-Zf-T6I"/>
+                    <include reference="zy6-uD-k70"/>
                 </mask>
             </variation>
             <point key="canvasLocation" x="52" y="180"/>

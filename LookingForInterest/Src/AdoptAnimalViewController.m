@@ -51,6 +51,7 @@
 @property (strong, nonatomic) UIColor *currentSecondColor;
 @property (strong, nonatomic) ManulAdoptListViewController *manulAdoptListViewController;
 @property (nonatomic) BOOL hadShowManul;
+@property (nonatomic) BOOL hadShowDataSource;
 @end
 
 @implementation AdoptAnimalViewController
@@ -65,6 +66,8 @@
     self.checkButton.enabled = NO;
     self.previousPageView.hidden = YES;
     self.nextPageView.hidden = YES;
+    self.hadShowManul = NO;
+    self.hadShowDataSource = NO;
     self.petFilters = [[PetFilters alloc] init];
 //    [self composeFilters];
     [self initProperties];
@@ -135,12 +138,25 @@
             [self.tableView reloadData];
         }
     } else if (!self.isSendInitRequest && ![self.petResult.pets count]) {
+        if (!self.hadShowDataSource) {
+            [self showDataSource];
+        }
         [self startLoadingWithContent:nil];
         [self sendInitRequest];
         self.isSendInitRequest = YES;
     } else {
         [self.tableView reloadData];
     }
+}
+
+- (void)showDataSource {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"臺北市開放認養動物" message:@"資料來源:臺北市政府資料開放平台" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *action = [UIAlertAction actionWithTitle:@"確定" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        [alertController dismissViewControllerAnimated:YES completion:nil];
+    }];
+    [alertController addAction:action];
+    [self presentViewController:alertController animated:YES completion:nil];
+    self.hadShowDataSource = YES;
 }
 
 - (void)composeFilters {

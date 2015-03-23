@@ -38,6 +38,7 @@
 
 @protocol FilterTableViewControllerDelegate <NSObject>
 - (void)setAccessTokenValue:(NSString *)accessToken;
+- (void)setAccessTokenAndVersion:(NSMutableDictionary *)dic;
 - (void)tableBeTapIn:(NSIndexPath *)indexPath withMenuSearchType:(MenuSearchType)menuSearchType;
 - (void)storeBeTapIn:(NSIndexPath *)indexPath withDetail:(Detail *)detail;
 - (CLLocationCoordinate2D)sendLocationBackwithMenuSearchType:(MenuSearchType)menuSearchType;

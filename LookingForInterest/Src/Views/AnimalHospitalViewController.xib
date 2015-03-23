@@ -670,12 +670,23 @@
                         </mask>
                     </variation>
                 </view>
+                <adBannerView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="RVC-tg-RG4">
+                    <rect key="frame" x="0.0" y="-50" width="320" height="50"/>
+                </adBannerView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="q1N-hz-5w3" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="DJt-rG-hjt"/>
+                <constraint firstAttribute="trailing" secondItem="RVC-tg-RG4" secondAttribute="trailing" id="Dvh-a3-PxX"/>
+                <constraint firstItem="RVC-tg-RG4" firstAttribute="top" secondItem="q1N-hz-5w3" secondAttribute="bottom" constant="-32" id="Fdn-jo-mu4">
+                    <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                </constraint>
                 <constraint firstAttribute="trailing" secondItem="q1N-hz-5w3" secondAttribute="trailing" id="JaJ-UB-yTr"/>
+                <constraint firstItem="RVC-tg-RG4" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="V3T-3J-bpa"/>
                 <constraint firstAttribute="bottom" secondItem="q1N-hz-5w3" secondAttribute="bottom" id="YLE-6K-AeL"/>
+                <constraint firstAttribute="bottom" secondItem="RVC-tg-RG4" secondAttribute="bottom" constant="434" id="v7q-JG-vXz">
+                    <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                </constraint>
                 <constraint firstItem="q1N-hz-5w3" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="vpf-Va-God"/>
             </constraints>
             <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
@@ -683,26 +694,36 @@
             <variation key="default">
                 <mask key="subviews">
                     <exclude reference="q1N-hz-5w3"/>
+                    <exclude reference="RVC-tg-RG4"/>
                 </mask>
                 <mask key="constraints">
                     <exclude reference="DJt-rG-hjt"/>
                     <exclude reference="JaJ-UB-yTr"/>
                     <exclude reference="YLE-6K-AeL"/>
                     <exclude reference="vpf-Va-God"/>
+                    <exclude reference="Dvh-a3-PxX"/>
+                    <exclude reference="Fdn-jo-mu4"/>
+                    <exclude reference="V3T-3J-bpa"/>
+                    <exclude reference="v7q-JG-vXz"/>
                 </mask>
             </variation>
             <variation key="heightClass=regular-widthClass=compact">
                 <mask key="subviews">
                     <include reference="q1N-hz-5w3"/>
+                    <include reference="RVC-tg-RG4"/>
                 </mask>
                 <mask key="constraints">
                     <include reference="DJt-rG-hjt"/>
                     <include reference="JaJ-UB-yTr"/>
-                    <include reference="YLE-6K-AeL"/>
+                    <exclude reference="YLE-6K-AeL"/>
                     <include reference="vpf-Va-God"/>
+                    <include reference="Dvh-a3-PxX"/>
+                    <include reference="Fdn-jo-mu4"/>
+                    <include reference="V3T-3J-bpa"/>
+                    <include reference="v7q-JG-vXz"/>
                 </mask>
             </variation>
-            <point key="canvasLocation" x="185" y="2143.5"/>
+            <point key="canvasLocation" x="185" y="2148.5"/>
         </view>
     </objects>
 </document>

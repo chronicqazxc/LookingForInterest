@@ -37,6 +37,11 @@
 #define kGetAccessToken @"tokens/get_access_token/"
 #define kLookingForInterestUserDefaultKey @"LookingForInterestMenu"
 #define kAccessTokenKey @"access_token"
+#define kHospitalSourceKey @"source"
+#define kHospitalTitleKey @"title"
+#define kHospitalUpdateDateKey @"update_date"
+#define kHospitalFunctionOpenKey @"function_open"
+#define kHospitalFunctionCloseReasonKey @"close_reason"
 #pragma mark -
 #pragma mark - Adopt animals URL
 #define kAdoptAnimalsFacebookShareURL @"http://www.tcapo.gov.taipei"

@@ -735,8 +735,8 @@
 #pragma mark - RequestSenderDelegate
 - (void)accessTokenBack:(NSArray *)accessTokenData {
     if ([accessTokenData count] > 0) {
-        if (self.delegate && [self.delegate respondsToSelector:@selector(setAccessTokenValue:)]) {
-            [self.delegate setAccessTokenValue:[accessTokenData firstObject]];
+        if (self.delegate && [self.delegate respondsToSelector:@selector(setAccessTokenAndVersion:)]) {
+            [self.delegate setAccessTokenAndVersion:[accessTokenData firstObject]];
         }
     }
 }

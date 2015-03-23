@@ -297,7 +297,19 @@
     NSMutableArray *array = [NSMutableArray array];
     NSDictionary *parsedData = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
     NSString *accessToken = [parsedData objectForKey:kAccessTokenKey];
-    [array addObject:accessToken];
+    NSString *hospitalSource = [parsedData objectForKey:kHospitalSourceKey];
+    NSString *hospitalTitle = [parsedData objectForKey:kHospitalTitleKey];
+    NSString *hospitalUpdateDate = [parsedData objectForKey:kHospitalUpdateDateKey];
+    NSString *functionOpen = [parsedData objectForKey:kHospitalFunctionOpenKey];
+    NSString *closeReason = [parsedData objectForKey:kHospitalFunctionCloseReasonKey];
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    [dic setObject:accessToken forKey:kAccessTokenKey];
+    [dic setObject:hospitalSource forKey:kHospitalSourceKey];
+    [dic setObject:hospitalTitle forKey:kHospitalTitleKey];
+    [dic setObject:hospitalUpdateDate forKey:kHospitalUpdateDateKey];
+    [dic setObject:functionOpen forKey:kHospitalFunctionOpenKey];
+    [dic setObject:closeReason forKey:kHospitalFunctionCloseReasonKey];
+    [array addObject:dic];
     return array;
 }
 

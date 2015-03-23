@@ -19,6 +19,8 @@
 #define kMagnifierImg @"iconmonstr-magnifier-3-icon-256.png"
 #define kLeftArrowImg @"arrow-left@2x.png"
 
+#define kTitle @"與寵物相關"
+
 #define kSearch @"開始找"
 #define kBack @"返回"
 #define kTitleCurrentPosition @"目前位置附近"
@@ -69,6 +71,9 @@
 @property (weak, nonatomic) IBOutlet UIButton *navigationButton;
 - (IBAction)clickNavigationTitle:(UIButton *)sender;
 @property (strong, nonatomic) NSString *accessToken;
+@property (strong, nonatomic) NSString *hospitalDataSource;
+@property (strong, nonatomic) NSString *hospitalDataTitle;
+@property (strong, nonatomic) NSString *hospitalDataUpdateDate;
 @property (strong, nonatomic) AppDelegate *appDelegate;
 
 @property (weak, nonatomic) IBOutlet UIView *previousPageView;
@@ -78,6 +83,8 @@
 
 @property (strong, nonatomic) ManulHospitalMenuViewController *manulHospitalMenuViewController;
 @property (nonatomic) BOOL hadShowManul;
+
+@property (nonatomic) BOOL hasShowVersion;
 @end
 
 @implementation ViewController
@@ -114,6 +121,7 @@
     self.searchViewTitle.text = kSearch;
     self.storesOnMap = [NSArray array];
     self.accessToken = @"";
+    self.hasShowVersion = NO;
     self.appDelegate = [Utilities appdelegate];
 }
 
@@ -262,10 +270,13 @@
 #pragma mark - CLLocationManagerDelegate
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
-    NSLog(@"didFailWithError: %@", error);
-    UIAlertView *errorAlert = [[UIAlertView alloc]
-                               initWithTitle:@"Error" message:@"Failed to Get Your Location" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-    [errorAlert show];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"錯誤" message:@"無法取得定位，請重新開啟定位或者網路或開啟Wi-Fi" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *action = [UIAlertAction actionWithTitle:@"確定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [alertController dismissViewControllerAnimated:YES completion:nil];
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }];
+    [alertController addAction:action];
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
@@ -412,7 +423,28 @@
 - (void)setAccessTokenValue:(NSString *)accessToken {
     self.accessToken = accessToken;
     self.filterTableViewController.accessToken = self.accessToken;
-    [self.filterTableViewController sendInitRequest];    
+    [self.filterTableViewController sendInitRequest];
+}
+
+- (void)setAccessTokenAndVersion:(NSMutableDictionary *)dic {
+    self.accessToken = [dic objectForKey:kAccessTokenKey];
+    self.hospitalDataSource = [dic objectForKey:kHospitalSourceKey];
+    self.hospitalDataTitle = [dic objectForKey:kHospitalTitleKey];
+    self.hospitalDataUpdateDate = [dic objectForKey:kHospitalUpdateDateKey];
+    if ([[dic objectForKey:kHospitalFunctionOpenKey] isEqualToString:@"Y"]) {
+        self.filterTableViewController.accessToken = self.accessToken;
+        [self.filterTableViewController sendInitRequest];
+    } else {
+        [Utilities stopLoading];
+        NSString *reason = [dic objectForKey:kHospitalFunctionCloseReasonKey];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"功能暫禁" message:reason preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *action = [UIAlertAction actionWithTitle:@"確定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [alertController dismissViewControllerAnimated:YES completion:nil];
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }];
+        [alertController addAction:action];
+        [self presentViewController:alertController animated:YES completion:nil];
+    }
 }
 
 -(void)tableBeTapIn:(NSIndexPath *)indexPath withMenuSearchType:(MenuSearchType)menuSearchType{
@@ -676,6 +708,9 @@
 }
 
 - (void)changeTitleByMenu:(Menu *)menu {
+    if (!self.hasShowVersion) {
+        [self showVersionAlert];
+    }
     switch (menu.menuSearchType) {
         case MenuCurrentPosition:
             [self setFormattedTitle:kTitleCurrentPosition];
@@ -699,6 +734,17 @@
             break;
     }
     [self resetMap];
+}
+
+- (void)showVersionAlert {
+    NSString *message = [NSString stringWithFormat:@"資料來源:%@\n最後更新日期:%@",self.hospitalDataSource,self.hospitalDataUpdateDate];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:self.hospitalDataTitle message:message preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *action = [UIAlertAction actionWithTitle:@"確定" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        [alertController dismissViewControllerAnimated:YES completion:nil];
+    }];
+    [alertController addAction:action];
+    [self presentViewController:alertController animated:YES completion:nil];
+    self.hasShowVersion = YES;
 }
 
 - (void)surfWebWithStore:(Store *)store {
