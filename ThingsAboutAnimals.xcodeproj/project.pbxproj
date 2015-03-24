@@ -47,6 +47,8 @@
 		B07804AC1AA9467900DE8AD0 /* PopUpPicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = B07804AA1AA9467900DE8AD0 /* PopUpPicker.xib */; };
 		B08572471AA4C18400F0F8FD /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B08572461AA4C18400F0F8FD /* MenuViewController.m */; };
 		B085724D1AA74FC700F0F8FD /* FacebookController.m in Sources */ = {isa = PBXBuildFile; fileRef = B085724C1AA74FC700F0F8FD /* FacebookController.m */; };
+		B08CE6B71AC12F16000578CA /* background_img.png in Resources */ = {isa = PBXBuildFile; fileRef = B08CE6B61AC12F16000578CA /* background_img.png */; };
+		B08CE6B91AC13324000578CA /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B08CE6B81AC13324000578CA /* iAd.framework */; };
 		B0A320511AA98BEC0061384A /* AdoptAnimalFilterController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0A320501AA98BEC0061384A /* AdoptAnimalFilterController.m */; };
 		B0A320531AAD428A0061384A /* Loading100x100.png in Resources */ = {isa = PBXBuildFile; fileRef = B0A320521AAD428A0061384A /* Loading100x100.png */; };
 		B0A320551AAD45AF0061384A /* Loading300x400.png in Resources */ = {isa = PBXBuildFile; fileRef = B0A320541AAD45AF0061384A /* Loading300x400.png */; };
@@ -151,7 +153,7 @@
 		B02862001AAAEB40001C50DB /* AnimalDetailCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AnimalDetailCollectionViewCell.xib; path = Src/Views/AnimalDetailCollectionViewCell.xib; sourceTree = "<group>"; };
 		B02862031AAAF2F6001C50DB /* AnimalDetailScrollLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimalDetailScrollLayout.h; path = Src/Views/AnimalDetailScrollLayout.h; sourceTree = "<group>"; };
 		B02862041AAAF2F6001C50DB /* AnimalDetailScrollLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AnimalDetailScrollLayout.m; path = Src/Views/AnimalDetailScrollLayout.m; sourceTree = "<group>"; };
-		B034D95B1A8903A900360A6C /* 寵物相關.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "寵物相關.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B034D95B1A8903A900360A6C /* 關心毛小孩.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "關心毛小孩.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B034D95F1A8903A900360A6C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B034D9691A8903AA00360A6C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B034D96B1A8903AA00360A6C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -199,6 +201,8 @@
 		B08572461AA4C18400F0F8FD /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MenuViewController.m; path = Src/MenuViewController.m; sourceTree = "<group>"; };
 		B085724B1AA74FC700F0F8FD /* FacebookController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FacebookController.h; path = Src/Objects/FacebookController.h; sourceTree = "<group>"; };
 		B085724C1AA74FC700F0F8FD /* FacebookController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FacebookController.m; path = Src/Objects/FacebookController.m; sourceTree = "<group>"; };
+		B08CE6B61AC12F16000578CA /* background_img.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = background_img.png; path = Img/background_img.png; sourceTree = "<group>"; };
+		B08CE6B81AC13324000578CA /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		B0A3204F1AA98BEC0061384A /* AdoptAnimalFilterController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AdoptAnimalFilterController.h; path = Src/AdoptAnimalFilterController.h; sourceTree = "<group>"; };
 		B0A320501AA98BEC0061384A /* AdoptAnimalFilterController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AdoptAnimalFilterController.m; path = Src/AdoptAnimalFilterController.m; sourceTree = "<group>"; };
 		B0A320521AAD428A0061384A /* Loading100x100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Loading100x100.png; path = Img/Loading100x100.png; sourceTree = "<group>"; };
@@ -299,6 +303,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B08CE6B91AC13324000578CA /* iAd.framework in Frameworks */,
 				B002A2F81AA02FE800808055 /* QuartzCore.framework in Frameworks */,
 				FC4BF65D66AB946F55724AD7 /* libPods-ThingsAboutAnimals.a in Frameworks */,
 			);
@@ -317,6 +322,7 @@
 		6481B35C53C0A6FBF51E0A0E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B08CE6B81AC13324000578CA /* iAd.framework */,
 				B0391BDB1AADDEF60070C3CC /* MessageUI.framework */,
 				B002A2F71AA02FE700808055 /* QuartzCore.framework */,
 				C1D1C794A2B62ED9A85DC3D8 /* libPods-LookingForInterest.a */,
@@ -361,7 +367,7 @@
 		B034D95C1A8903A900360A6C /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				B034D95B1A8903A900360A6C /* 寵物相關.app */,
+				B034D95B1A8903A900360A6C /* 關心毛小孩.app */,
 				B0B048E31AB16AEB000154B2 /* ThingsAboutAnimals Tests.xctest */,
 			);
 			name = Products;
@@ -607,6 +613,7 @@
 		B0F06B4E1A8A0E8800FBC90C /* Img */ = {
 			isa = PBXGroup;
 			children = (
+				B08CE6B61AC12F16000578CA /* background_img.png */,
 				B06449191ABD62B700B6F7A5 /* manul */,
 				B06449171ABD484100B6F7A5 /* blur_background.JPG */,
 				B0B8660B1AB368FE0039BFB5 /* add_fav.png */,
@@ -656,7 +663,7 @@
 			);
 			name = ThingsAboutAnimals;
 			productName = LookingForInterest;
-			productReference = B034D95B1A8903A900360A6C /* 寵物相關.app */;
+			productReference = B034D95B1A8903A900360A6C /* 關心毛小孩.app */;
 			productType = "com.apple.product-type.application";
 		};
 		B0B048E21AB16AEB000154B2 /* ThingsAboutAnimals Tests */ = {
@@ -743,6 +750,7 @@
 				B0391BE21AADF9A60070C3CC /* Line20x20.png in Resources */,
 				B02861FD1AAAD90C001C50DB /* AnimalDetailScrollViewController.xib in Resources */,
 				B0B048FF1AB2F1EF000154B2 /* my_favorite_icon.png in Resources */,
+				B08CE6B71AC12F16000578CA /* background_img.png in Resources */,
 				B0B049051AB304F0000154B2 /* mail.png in Resources */,
 				B06449201ABD62C400B6F7A5 /* manul_adopt_list.png in Resources */,
 				B0BF73081A8916A400213C00 /* Icon-40@3x.png in Resources */,
@@ -1002,7 +1010,7 @@
 				GCC_PREFIX_HEADER = LookingForInterest/Src/AnimalHospital.pch;
 				INFOPLIST_FILE = LookingForInterest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "寵物相關";
+				PRODUCT_NAME = "關心毛小孩";
 				PROVISIONING_PROFILE = "b21a1eb8-38fe-4d1d-92cb-02c0143a53af";
 			};
 			name = Debug;
@@ -1017,7 +1025,7 @@
 				GCC_PREFIX_HEADER = LookingForInterest/Src/AnimalHospital.pch;
 				INFOPLIST_FILE = LookingForInterest/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "寵物相關";
+				PRODUCT_NAME = "關心毛小孩";
 				PROVISIONING_PROFILE = "b21a1eb8-38fe-4d1d-92cb-02c0143a53af";
 			};
 			name = Release;
