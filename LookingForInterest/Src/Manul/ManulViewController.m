@@ -58,9 +58,20 @@
     self.pageControl.currentPage = currentPage;
 }
 
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    CGPoint pt = [[touches anyObject] locationInView:self.view];
+    float dX = pt.x-CGRectGetMinX(self.buttonContainer.frame);
+    float dY = pt.y-CGRectGetMinY(self.buttonContainer.frame);
+    
+    self.buttonContainer.frame = CGRectMake(CGRectGetMinX(self.buttonContainer.frame)+dX, CGRectGetMinY(self.buttonContainer.frame)+dY, CGRectGetWidth(self.buttonContainer.frame), CGRectGetHeight(self.buttonContainer.frame));
+}
+
 - (void)touchesMoved:(NSSet*)touches withEvent:(UIEvent*)event {
     CGPoint pt = [[touches anyObject] locationInView:self.view];
-    self.buttonContainer.center = pt;
-    NSLog(@"%.2f,%.2f",pt.x,pt.y);
+    
+    float dX = pt.x-CGRectGetMinX(self.buttonContainer.frame);
+    float dY = pt.y-CGRectGetMinY(self.buttonContainer.frame);
+    
+    self.buttonContainer.frame = CGRectMake(CGRectGetMinX(self.buttonContainer.frame)+dX, CGRectGetMinY(self.buttonContainer.frame)+dY, CGRectGetWidth(self.buttonContainer.frame), CGRectGetHeight(self.buttonContainer.frame));
 }
 @end
