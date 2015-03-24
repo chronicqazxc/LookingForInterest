@@ -23,6 +23,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (strong, nonatomic) ManulMenuViewController *manulMenuViewController;
 @property (nonatomic) BOOL hadShowManul;
+@property (weak, nonatomic) IBOutlet UIVisualEffectView *effectView;
 @end
 
 @implementation MenuViewController
@@ -54,6 +55,7 @@
         dispatch_async(dispatch_get_main_queue(), ^(void){
             //Run UI Updates
             self.backgroundImageView.image = image;
+            self.backgroundImageView.contentMode = UIViewContentModeScaleAspectFit;
         });
     });
     

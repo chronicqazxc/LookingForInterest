@@ -131,6 +131,9 @@
             self.manulAdoptListViewController.delegate = self;
             [self presentViewController:self.manulAdoptListViewController animated:YES completion:nil];
         } else if (!self.isSendInitRequest && ![self.petResult.pets count]) {
+            if (!self.hadShowDataSource) {
+                [self showDataSource];
+            }
             [self startLoadingWithContent:nil];
             [self sendInitRequest];
             self.isSendInitRequest = YES;
