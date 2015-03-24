@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "B034D95A1A8903A900360A6C"
-               BuildableName = "&#x5bf5;&#x7269;&#x76f8;&#x95dc;.app"
+               BuildableName = "&#x95dc;&#x5fc3;&#x6bdb;&#x5c0f;&#x5b69;.app"
                BlueprintName = "ThingsAboutAnimals"
                ReferencedContainer = "container:ThingsAboutAnimals.xcodeproj">
             </BuildableReference>
@@ -57,7 +57,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "B034D95A1A8903A900360A6C"
-            BuildableName = "&#x5bf5;&#x7269;&#x76f8;&#x95dc;.app"
+            BuildableName = "&#x95dc;&#x5fc3;&#x6bdb;&#x5c0f;&#x5b69;.app"
             BlueprintName = "ThingsAboutAnimals"
             ReferencedContainer = "container:ThingsAboutAnimals.xcodeproj">
          </BuildableReference>
@@ -77,7 +77,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "B034D95A1A8903A900360A6C"
-            BuildableName = "&#x5bf5;&#x7269;&#x76f8;&#x95dc;.app"
+            BuildableName = "&#x95dc;&#x5fc3;&#x6bdb;&#x5c0f;&#x5b69;.app"
             BlueprintName = "ThingsAboutAnimals"
             ReferencedContainer = "container:ThingsAboutAnimals.xcodeproj">
          </BuildableReference>
@@ -96,7 +96,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "B034D95A1A8903A900360A6C"
-            BuildableName = "&#x5bf5;&#x7269;&#x76f8;&#x95dc;.app"
+            BuildableName = "&#x95dc;&#x5fc3;&#x6bdb;&#x5c0f;&#x5b69;.app"
             BlueprintName = "ThingsAboutAnimals"
             ReferencedContainer = "container:ThingsAboutAnimals.xcodeproj">
          </BuildableReference>
