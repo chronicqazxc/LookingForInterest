@@ -39,7 +39,6 @@
 		B064492F1ABD6FCE00B6F7A5 /* ManulAdoptListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B064492E1ABD6FCE00B6F7A5 /* ManulAdoptListViewController.m */; };
 		B06449321ABD702500B6F7A5 /* ManulAdoptDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B06449311ABD702500B6F7A5 /* ManulAdoptDetailViewController.m */; };
 		B06449351ABD706600B6F7A5 /* ManulHospitalMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B06449341ABD706600B6F7A5 /* ManulHospitalMenuViewController.m */; };
-		B064493C1AC1D80800B6F7A5 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B064493B1AC1D80800B6F7A5 /* iAd.framework */; };
 		B06E56991A9D64980030B6A4 /* GoTopButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B06E56981A9D64980030B6A4 /* GoTopButton.m */; };
 		B06E569D1A9DE2980030B6A4 /* AnimalHospitalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B06E569B1A9DE2980030B6A4 /* AnimalHospitalViewController.m */; };
 		B06E569E1A9DE2980030B6A4 /* AnimalHospitalViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B06E569C1A9DE2980030B6A4 /* AnimalHospitalViewController.xib */; };
@@ -188,7 +187,6 @@
 		B06449311ABD702500B6F7A5 /* ManulAdoptDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ManulAdoptDetailViewController.m; path = Src/Manul/ManulAdoptDetailViewController.m; sourceTree = "<group>"; };
 		B06449331ABD706600B6F7A5 /* ManulHospitalMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ManulHospitalMenuViewController.h; path = Src/Manul/ManulHospitalMenuViewController.h; sourceTree = "<group>"; };
 		B06449341ABD706600B6F7A5 /* ManulHospitalMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ManulHospitalMenuViewController.m; path = Src/Manul/ManulHospitalMenuViewController.m; sourceTree = "<group>"; };
-		B064493B1AC1D80800B6F7A5 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		B06E56971A9D64980030B6A4 /* GoTopButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GoTopButton.h; path = Src/Views/GoTopButton.h; sourceTree = "<group>"; };
 		B06E56981A9D64980030B6A4 /* GoTopButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GoTopButton.m; path = Src/Views/GoTopButton.m; sourceTree = "<group>"; };
 		B06E569A1A9DE2980030B6A4 /* AnimalHospitalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimalHospitalViewController.h; path = Src/Views/AnimalHospitalViewController.h; sourceTree = "<group>"; };
@@ -305,7 +303,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B064493C1AC1D80800B6F7A5 /* iAd.framework in Frameworks */,
+				B08CE6B91AC13324000578CA /* iAd.framework in Frameworks */,
 				B002A2F81AA02FE800808055 /* QuartzCore.framework in Frameworks */,
 				FC4BF65D66AB946F55724AD7 /* libPods-ThingsAboutAnimals.a in Frameworks */,
 			);
@@ -324,7 +322,7 @@
 		6481B35C53C0A6FBF51E0A0E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				B064493B1AC1D80800B6F7A5 /* iAd.framework */,
+				B08CE6B81AC13324000578CA /* iAd.framework */,
 				B0391BDB1AADDEF60070C3CC /* MessageUI.framework */,
 				B002A2F71AA02FE700808055 /* QuartzCore.framework */,
 				C1D1C794A2B62ED9A85DC3D8 /* libPods-LookingForInterest.a */,

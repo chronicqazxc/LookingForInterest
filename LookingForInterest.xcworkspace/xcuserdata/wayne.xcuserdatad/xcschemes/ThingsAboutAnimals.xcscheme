@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "B034D95A1A8903A900360A6C"
-               BuildableName = "&#x95dc;&#x5fc3;&#x6bdb;&#x5c0f;&#x5b69;.app"
+               BuildableName = "&#x5bf5;&#x7269;&#x76f8;&#x95dc;.app"
                BlueprintName = "ThingsAboutAnimals"
                ReferencedContainer = "container:ThingsAboutAnimals.xcodeproj">
             </BuildableReference>
@@ -33,7 +33,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "B034D95A1A8903A900360A6C"
-            BuildableName = "&#x95dc;&#x5fc3;&#x6bdb;&#x5c0f;&#x5b69;.app"
+            BuildableName = "&#x5bf5;&#x7269;&#x76f8;&#x95dc;.app"
             BlueprintName = "ThingsAboutAnimals"
             ReferencedContainer = "container:ThingsAboutAnimals.xcodeproj">
          </BuildableReference>
@@ -48,12 +48,11 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "B034D95A1A8903A900360A6C"
-            BuildableName = "&#x95dc;&#x5fc3;&#x6bdb;&#x5c0f;&#x5b69;.app"
+            BuildableName = "&#x5bf5;&#x7269;&#x76f8;&#x95dc;.app"
             BlueprintName = "ThingsAboutAnimals"
             ReferencedContainer = "container:ThingsAboutAnimals.xcodeproj">
          </BuildableReference>
@@ -67,12 +66,11 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "B034D95A1A8903A900360A6C"
-            BuildableName = "&#x95dc;&#x5fc3;&#x6bdb;&#x5c0f;&#x5b69;.app"
+            BuildableName = "&#x5bf5;&#x7269;&#x76f8;&#x95dc;.app"
             BlueprintName = "ThingsAboutAnimals"
             ReferencedContainer = "container:ThingsAboutAnimals.xcodeproj">
          </BuildableReference>
