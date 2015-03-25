@@ -77,7 +77,7 @@
         self.buttomVerticalConstraints.constant = 200.0;
     }
     [self updateConstraints];
-    self.imageView.image = [UIImage imageNamed:@"Loading300x400.png"];
+    self.imageView.image = [UIImage imageNamed:@"background_img.png"];
     [self loadImage];
     [self setLabel:self.variety title:@"" andContent:self.pet.variety];
     [self setLabel:self.sex title:@"" andContent:self.pet.sex];

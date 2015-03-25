@@ -56,7 +56,6 @@
 		B0ACC90D1AA6F9FA0068A7D5 /* PetResult.m in Sources */ = {isa = PBXBuildFile; fileRef = B0ACC90C1AA6F9FA0068A7D5 /* PetResult.m */; };
 		B0ACC9191AA84B1B0068A7D5 /* AdoptAnimalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0ACC9181AA84B1B0068A7D5 /* AdoptAnimalViewController.m */; };
 		B0B048E81AB16AEB000154B2 /* ThingsAboutAnimals_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = B0B048E71AB16AEB000154B2 /* ThingsAboutAnimals_Tests.m */; };
-		B0B048F51AB1749A000154B2 /* CoverImage4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B0B048F41AB1749A000154B2 /* CoverImage4.jpg */; };
 		B0B048F91AB2E4D1000154B2 /* cat_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = B0B048F61AB2E4D1000154B2 /* cat_icon.png */; };
 		B0B048FA1AB2E4D1000154B2 /* dog_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = B0B048F71AB2E4D1000154B2 /* dog_icon.png */; };
 		B0B048FB1AB2E4D1000154B2 /* rabbit_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = B0B048F81AB2E4D1000154B2 /* rabbit_icon.png */; };
@@ -103,12 +102,10 @@
 		B0F06B361A89B80500FBC90C /* MapViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B0F06B341A89B80500FBC90C /* MapViewCell.m */; };
 		B0F06B371A89B80500FBC90C /* MapViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0F06B351A89B80500FBC90C /* MapViewCell.xib */; };
 		B0F06B401A89F37500FBC90C /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = B0F06B3F1A89F37500FBC90C /* Utilities.m */; };
-		B0F06B521A8A10E500FBC90C /* magnifier-4.png in Resources */ = {isa = PBXBuildFile; fileRef = B0F06B511A8A10E500FBC90C /* magnifier-4.png */; };
 		B0F06B571A8B089A00FBC90C /* OptionTableHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0F06B551A8B089A00FBC90C /* OptionTableHeader.xib */; };
 		B0F06B581A8B089A00FBC90C /* StoreTableHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0F06B561A8B089A00FBC90C /* StoreTableHeader.xib */; };
 		B0F06B5F1A8B0FA200FBC90C /* OpenMapHeaderController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0F06B5D1A8B0FA200FBC90C /* OpenMapHeaderController.m */; };
 		B0F06B601A8B0FA200FBC90C /* OpenMapHeaderController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0F06B5E1A8B0FA200FBC90C /* OpenMapHeaderController.xib */; };
-		B0F06B621A8B252900FBC90C /* magnifier.png in Resources */ = {isa = PBXBuildFile; fileRef = B0F06B611A8B252900FBC90C /* magnifier.png */; };
 		B0F06B641A8B259F00FBC90C /* iconmonstr-magnifier-3-icon-256.png in Resources */ = {isa = PBXBuildFile; fileRef = B0F06B631A8B259F00FBC90C /* iconmonstr-magnifier-3-icon-256.png */; };
 		B0F06B661A8B2B5300FBC90C /* arrow-left@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0F06B651A8B2B5300FBC90C /* arrow-left@2x.png */; };
 		B0F06B691A8B3DFA00FBC90C /* arrow-down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0F06B671A8B3DFA00FBC90C /* arrow-down@2x.png */; };
@@ -216,7 +213,6 @@
 		B0B048E31AB16AEB000154B2 /* ThingsAboutAnimals Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ThingsAboutAnimals Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0B048E61AB16AEB000154B2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B0B048E71AB16AEB000154B2 /* ThingsAboutAnimals_Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ThingsAboutAnimals_Tests.m; sourceTree = "<group>"; };
-		B0B048F41AB1749A000154B2 /* CoverImage4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = CoverImage4.jpg; path = Img/CoverImage4.jpg; sourceTree = "<group>"; };
 		B0B048F61AB2E4D1000154B2 /* cat_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = cat_icon.png; path = Img/cat_icon.png; sourceTree = "<group>"; };
 		B0B048F71AB2E4D1000154B2 /* dog_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dog_icon.png; path = Img/dog_icon.png; sourceTree = "<group>"; };
 		B0B048F81AB2E4D1000154B2 /* rabbit_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = rabbit_icon.png; path = Img/rabbit_icon.png; sourceTree = "<group>"; };
@@ -280,13 +276,11 @@
 		B0F06B351A89B80500FBC90C /* MapViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MapViewCell.xib; path = Src/MapViewCell.xib; sourceTree = "<group>"; };
 		B0F06B3E1A89F37500FBC90C /* Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Utilities.h; path = Src/Utilities/Utilities.h; sourceTree = "<group>"; };
 		B0F06B3F1A89F37500FBC90C /* Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Utilities.m; path = Src/Utilities/Utilities.m; sourceTree = "<group>"; };
-		B0F06B511A8A10E500FBC90C /* magnifier-4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "magnifier-4.png"; path = "Img/magnifier-4.png"; sourceTree = "<group>"; };
 		B0F06B551A8B089A00FBC90C /* OptionTableHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = OptionTableHeader.xib; path = Src/Views/OptionTableHeader.xib; sourceTree = "<group>"; };
 		B0F06B561A8B089A00FBC90C /* StoreTableHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = StoreTableHeader.xib; path = Src/Views/StoreTableHeader.xib; sourceTree = "<group>"; };
 		B0F06B5C1A8B0FA200FBC90C /* OpenMapHeaderController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpenMapHeaderController.h; path = Src/Views/OpenMapHeaderController.h; sourceTree = "<group>"; };
 		B0F06B5D1A8B0FA200FBC90C /* OpenMapHeaderController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OpenMapHeaderController.m; path = Src/Views/OpenMapHeaderController.m; sourceTree = "<group>"; };
 		B0F06B5E1A8B0FA200FBC90C /* OpenMapHeaderController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = OpenMapHeaderController.xib; path = Src/Views/OpenMapHeaderController.xib; sourceTree = "<group>"; };
-		B0F06B611A8B252900FBC90C /* magnifier.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = magnifier.png; path = Img/magnifier.png; sourceTree = "<group>"; };
 		B0F06B631A8B259F00FBC90C /* iconmonstr-magnifier-3-icon-256.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iconmonstr-magnifier-3-icon-256.png"; path = "Img/iconmonstr-magnifier-3-icon-256.png"; sourceTree = "<group>"; };
 		B0F06B651A8B2B5300FBC90C /* arrow-left@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "arrow-left@2x.png"; path = "Img/arrow-left@2x.png"; sourceTree = "<group>"; };
 		B0F06B671A8B3DFA00FBC90C /* arrow-down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "arrow-down@2x.png"; path = "Img/arrow-down@2x.png"; sourceTree = "<group>"; };
@@ -626,7 +620,6 @@
 				B0B048F61AB2E4D1000154B2 /* cat_icon.png */,
 				B0B048F71AB2E4D1000154B2 /* dog_icon.png */,
 				B0B048F81AB2E4D1000154B2 /* rabbit_icon.png */,
-				B0B048F41AB1749A000154B2 /* CoverImage4.jpg */,
 				B0391BE11AADF9A60070C3CC /* Line20x20.png */,
 				B0A320541AAD45AF0061384A /* Loading300x400.png */,
 				B0A320521AAD428A0061384A /* Loading100x100.png */,
@@ -635,11 +628,9 @@
 				B0F06B681A8B3DFA00FBC90C /* arrow-up@2x.png */,
 				B0F06B651A8B2B5300FBC90C /* arrow-left@2x.png */,
 				B0F06B631A8B259F00FBC90C /* iconmonstr-magnifier-3-icon-256.png */,
-				B0F06B611A8B252900FBC90C /* magnifier.png */,
 				B0BF732B1A8A4EE000213C00 /* check@2x.png */,
 				B0BF732C1A8A4EE000213C00 /* fav@2x.png */,
 				B0BF732D1A8A4EE000213C00 /* menu@2x.png */,
-				B0F06B511A8A10E500FBC90C /* magnifier-4.png */,
 			);
 			name = Img;
 			sourceTree = "<group>";
@@ -732,7 +723,6 @@
 				B034D96F1A8903AA00360A6C /* LaunchScreen.xib in Resources */,
 				B02862021AAAEB40001C50DB /* AnimalDetailCollectionViewCell.xib in Resources */,
 				B034D96C1A8903AA00360A6C /* Images.xcassets in Resources */,
-				B0F06B521A8A10E500FBC90C /* magnifier-4.png in Resources */,
 				B0F06B6C1A8B479F00FBC90C /* arrow-right@2x.png in Resources */,
 				B0BF73071A8916A400213C00 /* Icon-40@2x.png in Resources */,
 				B0BF73051A8916A400213C00 /* Contents.json in Resources */,
@@ -741,7 +731,6 @@
 				B0B048FE1AB2F1EF000154B2 /* magnifier_icon.png in Resources */,
 				B07804AC1AA9467900DE8AD0 /* PopUpPicker.xib in Resources */,
 				B06449221ABD62C400B6F7A5 /* manul_hospital_menu.png in Resources */,
-				B0F06B621A8B252900FBC90C /* magnifier.png in Resources */,
 				B0F06B601A8B0FA200FBC90C /* OpenMapHeaderController.xib in Resources */,
 				B03B256D1AAEA6B6001C5928 /* AnimalListTableViewCell.xib in Resources */,
 				B0BF732A1A8A414500213C00 /* StoreCell.xib in Resources */,
@@ -766,7 +755,6 @@
 				B0B8660D1AB368FE0039BFB5 /* add_fav.png in Resources */,
 				B06E569E1A9DE2980030B6A4 /* AnimalHospitalViewController.xib in Resources */,
 				B0B048FB1AB2E4D1000154B2 /* rabbit_icon.png in Resources */,
-				B0B048F51AB1749A000154B2 /* CoverImage4.jpg in Resources */,
 				B04F70191AA44089007D9856 /* HUDView.xib in Resources */,
 				B0BF730D1A8916A400213C00 /* Icon-Small.png in Resources */,
 				B0F06B641A8B259F00FBC90C /* iconmonstr-magnifier-3-icon-256.png in Resources */,

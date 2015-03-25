@@ -58,9 +58,13 @@
     self.pageControl.currentPage = currentPage;
 }
 
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    CGPoint pt = [[touches anyObject] locationInView:self.view];
+    self.buttonContainer.center = pt;
+}
+
 - (void)touchesMoved:(NSSet*)touches withEvent:(UIEvent*)event {
     CGPoint pt = [[touches anyObject] locationInView:self.view];
     self.buttonContainer.center = pt;
-    NSLog(@"%.2f,%.2f",pt.x,pt.y);
 }
 @end
