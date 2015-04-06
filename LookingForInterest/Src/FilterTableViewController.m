@@ -48,8 +48,8 @@
 #define kCellNavigationTitle @"導航"
 #define kCellMoreTitle @"更多"
 
-#define kReloadDistance 100
-#define kSpringTreshold 120
+#define kReloadDistance 120
+#define kSpringTreshold 150
 
 @interface FilterTableViewController () <RequestSenderDelegate, MGSwipeTableCellDelegate, UITextFieldDelegate>
 @property (strong, nonatomic) NSMutableArray *dataArr;
@@ -1103,7 +1103,7 @@
         if (!self.isStartLoadingPage) {
             if (offset.y <= 0) {
                 [((ViewController *)self.delegate).loadPreviousPageView.indicatorLabel setAlpha:(0-offset.y)/100];
-                if (offset.y <= -kReloadDistance-30 && self.pageController.currentPage > 1) {
+                if (offset.y <= -kReloadDistance-20 && self.pageController.currentPage > 1) {
                     ((ViewController *)self.delegate).loadPreviousPageView.indicatorLabel.text = @"換上一頁！";
 //                    [self scaleItem:((ViewController *)self.delegate).loadPreviousPageView.indicator];
                 } else if (self.pageController.currentPage > 1) {
@@ -1131,7 +1131,7 @@
             }
         }
         
-        if (offset.y <= -kReloadDistance-30) {
+        if (offset.y <= -kReloadDistance-20) {
             if (self.pageController.currentPage > 1) {
                 [self previousPage];
             }

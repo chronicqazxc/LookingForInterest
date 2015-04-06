@@ -31,8 +31,8 @@
 #define kNavigationColorMyFavoriteSecond 0xff0000
 #define kNavigationColorFilterFirst 0xcc99ff
 #define kNavigationColorFilterSecond 0x690099
-#define kReloadDistance 100
-#define kSpringTreshold 120
+#define kReloadDistance 120
+#define kSpringTreshold 150
 #define DEGREES_TO_RADIANS(x) (M_PI * (x) / 180.0)
 
 @interface AdoptAnimalViewController () <UITableViewDataSource, UITableViewDelegate, UITabBarDelegate, ADBannerViewDelegate, RequestSenderDelegate, AdoptAnimalFilterControllerDelegate, MGSwipeTableCellDelegate, ManulViewControllerDelegate>
@@ -393,7 +393,7 @@
         if (offset.y <= 0) {
 //            [self scaleItem:nil];
             [self.loadPreviousPageView.indicatorLabel setAlpha:(0-offset.y)/100];
-            if (offset.y <= -kReloadDistance-30 && self.loadPreviousPageView.canLoading) {
+            if (offset.y <= -kReloadDistance-20 && self.loadPreviousPageView.canLoading) {
                 self.loadPreviousPageView.indicatorLabel.text = @"換上一頁！";
             } else if (self.loadPreviousPageView.canLoading) {
                 self.loadPreviousPageView.indicatorLabel.text = @"再拉再拉！";
@@ -422,7 +422,7 @@
     }
     
     if (self.isStartLoading == NO) {
-        if (offset.y <= -kReloadDistance-30 && self.loadPreviousPageView.canLoading) {
+        if (offset.y <= -kReloadDistance-20 && self.loadPreviousPageView.canLoading) {
             if ((self.petResult.previous && ![self.petResult.previous isEqualToString:@""]) ||
                 [self.petResult.next isEqualToString:@"40"]) {
                 [self rotateInfinitily:self.loadPreviousPageView.indicator];

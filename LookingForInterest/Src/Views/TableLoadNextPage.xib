@@ -8,7 +8,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="TableLoadNextPage">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="120"/>
+            <rect key="frame" x="0.0" y="0.0" width="320" height="130"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icon-60@3x.png" translatesAutoresizingMaskIntoConstraints="NO" id="X9C-1x-PiO">
@@ -24,20 +24,29 @@
                     </variation>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ydf-qH-32a">
-                    <rect key="frame" x="139" y="99.5" width="42" height="20.5"/>
+                    <rect key="frame" x="139" y="100" width="42" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="20" id="uVX-M7-ITK"/>
+                    </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="X9C-1x-PiO" secondAttribute="bottom" constant="20" id="3fL-d2-eQa"/>
+                <constraint firstAttribute="bottom" secondItem="X9C-1x-PiO" secondAttribute="bottom" constant="30" id="3fL-d2-eQa"/>
                 <constraint firstAttribute="centerX" secondItem="Ydf-qH-32a" secondAttribute="centerX" id="7CV-AX-ZLK"/>
-                <constraint firstAttribute="bottom" secondItem="Ydf-qH-32a" secondAttribute="bottom" id="D0w-9U-ih9"/>
+                <constraint firstAttribute="bottom" secondItem="Ydf-qH-32a" secondAttribute="bottom" constant="10" id="D0w-9U-ih9"/>
                 <constraint firstAttribute="centerX" secondItem="X9C-1x-PiO" secondAttribute="centerX" id="Eva-bA-HX8"/>
+                <constraint firstItem="Ydf-qH-32a" firstAttribute="top" secondItem="X9C-1x-PiO" secondAttribute="bottom" id="Rgl-9x-eMS"/>
                 <constraint firstItem="X9C-1x-PiO" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="wLa-LX-SPv"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="Rgl-9x-eMS"/>
+                </mask>
+            </variation>
             <connections>
                 <outlet property="indicator" destination="X9C-1x-PiO" id="0QS-Fi-Cy8"/>
                 <outlet property="indicatorLabel" destination="Ydf-qH-32a" id="nuZ-eq-St1"/>
