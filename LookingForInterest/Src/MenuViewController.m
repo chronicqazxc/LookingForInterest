@@ -10,6 +10,7 @@
 #import "DialingButton.h"
 #import <FacebookSDK/FacebookSDK.h>
 #import "ManulMenuViewController.h"
+#import <iAd/iAd.h>
 
 @interface MenuViewController () <FBLoginViewDelegate, ManulViewControllerDelegate>
 @property (nonatomic) BOOL isInitial;
@@ -24,6 +25,7 @@
 @property (strong, nonatomic) ManulMenuViewController *manulMenuViewController;
 @property (nonatomic) BOOL hadShowManul;
 @property (weak, nonatomic) IBOutlet UIVisualEffectView *effectView;
+@property (weak, nonatomic) IBOutlet ADBannerView *adBannerView;
 @end
 
 @implementation MenuViewController

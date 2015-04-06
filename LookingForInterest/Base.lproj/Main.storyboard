@@ -313,6 +313,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="跟動物有關的" id="mrb-Br-tnE"/>
                     <connections>
+                        <outlet property="adBannerView" destination="X3g-RK-KPM" id="yyy-Wc-SfY"/>
                         <outlet property="adoptButton" destination="f57-dH-u7Z" id="dLf-V1-B0z"/>
                         <outlet property="animalHospitalButton" destination="3XV-2o-Dca" id="hsB-sO-q5E"/>
                         <outlet property="backgroundImageView" destination="rtb-nr-57j" id="EQC-tr-8uj"/>
