@@ -12,7 +12,7 @@
 #import "ManulMenuViewController.h"
 #import <iAd/iAd.h>
 
-@interface MenuViewController () <FBLoginViewDelegate, ManulViewControllerDelegate>
+@interface MenuViewController () <ADBannerViewDelegate, FBLoginViewDelegate, ManulViewControllerDelegate>
 @property (nonatomic) BOOL isInitial;
 @property (nonatomic) BOOL isViewDidAppear;
 @property (weak, nonatomic) IBOutlet DialingButton *adoptButton;
@@ -50,6 +50,7 @@
     self.loginView.alpha = 0.0;
     self.nameLabel.alpha = 0.0;
     self.nameLabel.text = @"";
+    self.adBannerView.delegate = self;
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
         //Background Thread
 //        UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://i.ytimg.com/vi/usasigkvhDY/hqdefault.jpg"]]];
@@ -205,5 +206,51 @@
     if (self.manulMenuViewController.neverShowSwitch.on) {
         [Utilities setNeverShowManulMenuWithKey:kManulMenuKey];
     }
+}
+
+- (BOOL)allowActionToRun {
+    return YES;
+}
+
+#pragma mark - ADBannerViewDelegate
+- (BOOL)bannerViewActionShouldBegin:(ADBannerView *)banner willLeaveApplication:(BOOL)willLeave {
+    NSLog(@"Banner view is beginning an ad action");
+    BOOL shouldExecuteAction = [self allowActionToRun];
+    if (!willLeave && shouldExecuteAction) {
+        // insert code here to suspend any services that might conflict with the advertisement
+    }
+    return shouldExecuteAction;
+}
+
+- (void)bannerViewDidLoadAd:(ADBannerView *)banner
+{
+    [self layoutAnimated:YES];
+}
+
+- (void)layoutAnimated:(BOOL)animated
+{
+    CGRect contentFrame = self.view.bounds;
+    CGRect bannerFrame = self.adBannerView.frame;
+    if (self.adBannerView.bannerLoaded) {
+        contentFrame.size.height -= self.adBannerView.frame.size.height;
+        bannerFrame.origin.y = contentFrame.size.height;
+    } else {
+        bannerFrame.origin.y = contentFrame.size.height;
+    }
+    
+    [UIView animateWithDuration:animated ? 0.25 : 0.0 animations:^{
+        self.adBannerView.frame = contentFrame;
+        [self.adBannerView layoutIfNeeded];
+        self.adBannerView.frame = bannerFrame;
+    }];
+}
+
+
+- (void)bannerViewWillLoadAd:(ADBannerView *)banner {
+    
+}
+
+- (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error {
+    [self layoutAnimated:YES];
 }
 @end

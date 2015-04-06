@@ -16,12 +16,13 @@
 #import "RequestSender.h"
 #import "DialingButton.h"
 #import "MarqueeLabel.h"
+#import <iAd/iAd.h>
 
 #define kScrollViewMaxScale 0.7
 #define kScrollViewMinScale 0.3
 #define kScrollViewContentHeight 909
 
-@interface AnimalHospitalViewController () <FullScreenScrollViewDelegate, EndlessScrollGeneratorDelegate, UIScrollViewDelegate, GMSMapViewDelegate, GMSPanoramaViewDelegate, RequestSenderDelegate>
+@interface AnimalHospitalViewController () <FullScreenScrollViewDelegate, EndlessScrollGeneratorDelegate, UIScrollViewDelegate, ADBannerViewDelegate, GMSMapViewDelegate, GMSPanoramaViewDelegate, RequestSenderDelegate>
 @property (weak, nonatomic) IBOutlet UIView *mainContainer;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) NSMutableArray *imageViews;
@@ -74,6 +75,7 @@
 @property (strong, nonatomic) AppDelegate *appdelegate;
 
 @property (nonatomic) BOOL hadShowManul;
+@property (weak, nonatomic) IBOutlet ADBannerView *adBannerView;
 @end
 
 @implementation AnimalHospitalViewController
@@ -103,7 +105,7 @@
     self.appdelegate = [Utilities appdelegate];
     self.addressLabel.text = [NSString stringWithFormat:@"地址：%@",self.store.address];
     self.addressLabel.hidden = YES;
-    
+    self.adBannerView.delegate = self;
     
 }
 
@@ -598,5 +600,44 @@
     [alertController addAction:reConnectAction];
     [alertController addAction:cancelAction];
     [self presentViewController:alertController animated:YES completion:nil];
+}
+
+- (BOOL)allowActionToRun {
+    return YES;
+}
+
+#pragma mark - ADBannerViewDelegate
+- (BOOL)bannerViewActionShouldBegin:(ADBannerView *)banner willLeaveApplication:(BOOL)willLeave {
+    NSLog(@"Banner view is beginning an ad action");
+    BOOL shouldExecuteAction = [self allowActionToRun];
+    if (!willLeave && shouldExecuteAction) {
+        // insert code here to suspend any services that might conflict with the advertisement
+    }
+    return shouldExecuteAction;
+}
+
+- (void)bannerViewDidLoadAd:(ADBannerView *)banner {
+    [self layoutAnimated:YES];
+}
+
+- (void)layoutAnimated:(BOOL)animated {
+    CGRect contentFrame = self.view.bounds;
+    CGRect bannerFrame = self.adBannerView.frame;
+    if (self.adBannerView.bannerLoaded) {
+        contentFrame.size.height -= self.adBannerView.frame.size.height;
+        bannerFrame.origin.y = contentFrame.size.height;
+    } else {
+        bannerFrame.origin.y = contentFrame.size.height;
+    }
+    
+    [UIView animateWithDuration:animated ? 0.25 : 0.0 animations:^{
+        self.adBannerView.frame = contentFrame;
+        [self.adBannerView layoutIfNeeded];
+        self.adBannerView.frame = bannerFrame;
+    }];
+}
+
+- (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error {
+    [self layoutAnimated:YES];
 }
 @end

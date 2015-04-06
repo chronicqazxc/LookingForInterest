@@ -15,6 +15,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import "RequestSender.h"
 #import "ManulHospitalMenuViewController.h"
+#import <iAd/iAd.h>
 
 #define kMagnifierImg @"iconmonstr-magnifier-3-icon-256.png"
 #define kLeftArrowImg @"arrow-left@2x.png"
@@ -47,7 +48,7 @@
 // navigate
 // close
 
-@interface ViewController () <CLLocationManagerDelegate, GMSMapViewDelegate, FilterTableViewControllerDelegate, ManulViewControllerDelegate>
+@interface ViewController () <CLLocationManagerDelegate, ADBannerViewDelegate, GMSMapViewDelegate, FilterTableViewControllerDelegate, ManulViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIView *mapView;
 @property (nonatomic) CGSize mapViewSize;
 @property (strong, nonatomic) CLLocationManager *locationManager;
@@ -85,6 +86,7 @@
 @property (nonatomic) BOOL hadShowManul;
 
 @property (nonatomic) BOOL hasShowVersion;
+@property (weak, nonatomic) IBOutlet ADBannerView *adBannerView;
 @end
 
 @implementation ViewController
@@ -127,6 +129,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.adBannerView.delegate = self;
     NSDictionary *attributeDic = [NSDictionary dictionaryWithObjectsAndKeys:
                                    [UIColor darkTextColor], NSForegroundColorAttributeName,
                                    [UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:21.0], NSFontAttributeName, nil];
@@ -912,5 +915,44 @@
     if (self.manulHospitalMenuViewController.neverShowSwitch.on) {
         [Utilities setNeverShowManulMenuWithKey:kManulHospitalMenuKey];
     }
+}
+
+- (BOOL)allowActionToRun {
+    return YES;
+}
+
+#pragma mark - ADBannerViewDelegate
+- (BOOL)bannerViewActionShouldBegin:(ADBannerView *)banner willLeaveApplication:(BOOL)willLeave {
+    NSLog(@"Banner view is beginning an ad action");
+    BOOL shouldExecuteAction = [self allowActionToRun];
+    if (!willLeave && shouldExecuteAction) {
+        // insert code here to suspend any services that might conflict with the advertisement
+    }
+    return shouldExecuteAction;
+}
+
+- (void)bannerViewDidLoadAd:(ADBannerView *)banner {
+    [self layoutAnimated:YES];
+}
+
+- (void)layoutAnimated:(BOOL)animated {
+    CGRect contentFrame = self.view.bounds;
+    CGRect bannerFrame = self.adBannerView.frame;
+    if (self.adBannerView.bannerLoaded) {
+        contentFrame.size.height -= self.adBannerView.frame.size.height;
+        bannerFrame.origin.y = contentFrame.size.height;
+    } else {
+        bannerFrame.origin.y = contentFrame.size.height;
+    }
+    
+    [UIView animateWithDuration:animated ? 0.25 : 0.0 animations:^{
+        self.adBannerView.frame = contentFrame;
+        [self.adBannerView layoutIfNeeded];
+        self.adBannerView.frame = bannerFrame;
+    }];
+}
+
+- (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error {
+    [self layoutAnimated:YES];
 }
 @end

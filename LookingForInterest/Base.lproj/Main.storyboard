@@ -774,6 +774,7 @@
                         </button>
                     </navigationItem>
                     <connections>
+                        <outlet property="adBannerView" destination="q59-58-tmh" id="Kas-HP-8uc"/>
                         <outlet property="button" destination="oUF-6G-vyj" id="C1i-Um-lgL"/>
                         <outlet property="filterTableView" destination="AA4-lk-hYI" id="tRA-OA-Ypy"/>
                         <outlet property="mapView" destination="rGu-yR-n5I" id="e0s-wF-FwT"/>
@@ -1185,6 +1186,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="adBannerView" destination="oqA-s7-chv" id="Fwa-za-ZeT"/>
                         <outlet property="checkButton" destination="uS7-qC-Wac" id="afi-MV-wKQ"/>
                         <outlet property="nextPageIndicator" destination="tQ6-lc-ali" id="exL-xW-hTw"/>
                         <outlet property="nextPageView" destination="JzS-3J-n7e" id="Rge-6C-ME5"/>
@@ -1209,6 +1211,6 @@
         <image name="rabbit_icon.png" width="60" height="60"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="T8p-5V-2Jd"/>
+        <segue reference="Bss-qP-rJf"/>
     </inferredMetricsTieBreakers>
 </document>

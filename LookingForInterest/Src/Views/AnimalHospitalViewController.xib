@@ -9,6 +9,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AnimalHospitalViewController">
             <connections>
+                <outlet property="adBannerView" destination="RVC-tg-RG4" id="dug-Rj-Dpd"/>
                 <outlet property="addressLabel" destination="tnS-o1-bff" id="VF9-AZ-eQP"/>
                 <outlet property="directionModeSwitch" destination="dmp-3C-ner" id="jIq-Hb-Nes"/>
                 <outlet property="favoriteButton" destination="ohL-hd-Yxk" id="qYo-yY-Z0v"/>
@@ -697,14 +698,14 @@
                     <exclude reference="RVC-tg-RG4"/>
                 </mask>
                 <mask key="constraints">
-                    <exclude reference="DJt-rG-hjt"/>
-                    <exclude reference="JaJ-UB-yTr"/>
-                    <exclude reference="YLE-6K-AeL"/>
-                    <exclude reference="vpf-Va-God"/>
                     <exclude reference="Dvh-a3-PxX"/>
                     <exclude reference="Fdn-jo-mu4"/>
                     <exclude reference="V3T-3J-bpa"/>
                     <exclude reference="v7q-JG-vXz"/>
+                    <exclude reference="DJt-rG-hjt"/>
+                    <exclude reference="JaJ-UB-yTr"/>
+                    <exclude reference="YLE-6K-AeL"/>
+                    <exclude reference="vpf-Va-God"/>
                 </mask>
             </variation>
             <variation key="heightClass=regular-widthClass=compact">
@@ -713,14 +714,14 @@
                     <include reference="RVC-tg-RG4"/>
                 </mask>
                 <mask key="constraints">
-                    <include reference="DJt-rG-hjt"/>
-                    <include reference="JaJ-UB-yTr"/>
-                    <exclude reference="YLE-6K-AeL"/>
-                    <include reference="vpf-Va-God"/>
                     <include reference="Dvh-a3-PxX"/>
                     <include reference="Fdn-jo-mu4"/>
                     <include reference="V3T-3J-bpa"/>
                     <include reference="v7q-JG-vXz"/>
+                    <include reference="DJt-rG-hjt"/>
+                    <include reference="JaJ-UB-yTr"/>
+                    <exclude reference="YLE-6K-AeL"/>
+                    <include reference="vpf-Va-God"/>
                 </mask>
             </variation>
             <point key="canvasLocation" x="185" y="2148.5"/>

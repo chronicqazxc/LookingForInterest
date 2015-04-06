@@ -6,6 +6,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AnimalDetailScrollViewController">
             <connections>
+                <outlet property="adBannerView" destination="hv0-bZ-uti" id="biK-be-4Nx"/>
                 <outlet property="collectionView" destination="MJs-Ye-TPc" id="pfX-No-QaS"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -44,14 +45,14 @@
                     <exclude reference="hv0-bZ-uti"/>
                 </mask>
                 <mask key="constraints">
-                    <exclude reference="2kP-tl-s6O"/>
-                    <exclude reference="4Vp-Fi-spg"/>
-                    <exclude reference="DOI-Dh-lSn"/>
-                    <exclude reference="r1d-XZ-h58"/>
                     <exclude reference="8Nr-Zp-fzw"/>
                     <exclude reference="gzU-fX-dEp"/>
                     <exclude reference="yFr-Zf-T6I"/>
                     <exclude reference="zy6-uD-k70"/>
+                    <exclude reference="2kP-tl-s6O"/>
+                    <exclude reference="4Vp-Fi-spg"/>
+                    <exclude reference="DOI-Dh-lSn"/>
+                    <exclude reference="r1d-XZ-h58"/>
                 </mask>
             </variation>
             <variation key="heightClass=regular-widthClass=compact">
@@ -60,14 +61,14 @@
                     <include reference="hv0-bZ-uti"/>
                 </mask>
                 <mask key="constraints">
-                    <include reference="2kP-tl-s6O"/>
-                    <include reference="4Vp-Fi-spg"/>
-                    <exclude reference="DOI-Dh-lSn"/>
-                    <include reference="r1d-XZ-h58"/>
                     <include reference="8Nr-Zp-fzw"/>
                     <include reference="gzU-fX-dEp"/>
                     <include reference="yFr-Zf-T6I"/>
                     <include reference="zy6-uD-k70"/>
+                    <include reference="2kP-tl-s6O"/>
+                    <include reference="4Vp-Fi-spg"/>
+                    <exclude reference="DOI-Dh-lSn"/>
+                    <include reference="r1d-XZ-h58"/>
                 </mask>
             </variation>
             <point key="canvasLocation" x="52" y="180"/>

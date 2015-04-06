@@ -16,6 +16,7 @@
 #import "AnimalListTableViewCell.h"
 #import "GoTopButton.h"
 #import "ManulAdoptListViewController.h"
+#import <iAd/iAd.h>
 
 #define kAdoptAnimalTitle(type) [NSString stringWithFormat:@"觀看%@",type]
 #define kNavigationColorDogFirst 0xb2b2ff
@@ -29,7 +30,7 @@
 #define kNavigationColorFilterFirst 0xcc99ff
 #define kNavigationColorFilterSecond 0x690099
 
-@interface AdoptAnimalViewController () <UITableViewDataSource, UITableViewDelegate, UITabBarDelegate, RequestSenderDelegate, AdoptAnimalFilterControllerDelegate, MGSwipeTableCellDelegate, ManulViewControllerDelegate>
+@interface AdoptAnimalViewController () <UITableViewDataSource, UITableViewDelegate, UITabBarDelegate, ADBannerViewDelegate, RequestSenderDelegate, AdoptAnimalFilterControllerDelegate, MGSwipeTableCellDelegate, ManulViewControllerDelegate>
 @property (strong, nonatomic) PetResult *petResult;
 @property (strong, nonatomic) NSMutableArray *requests;
 @property (strong, nonatomic) PetFilters *petFilters;
@@ -52,6 +53,7 @@
 @property (strong, nonatomic) ManulAdoptListViewController *manulAdoptListViewController;
 @property (nonatomic) BOOL hadShowManul;
 @property (nonatomic) BOOL hadShowDataSource;
+@property (weak, nonatomic) IBOutlet ADBannerView *adBannerView;
 @end
 
 @implementation AdoptAnimalViewController
@@ -71,6 +73,7 @@
     self.petFilters = [[PetFilters alloc] init];
 //    [self composeFilters];
     [self initProperties];
+    self.adBannerView.delegate = self;
     
     self.navigationItem.leftBarButtonItem.title = @"首頁";
     NSDictionary *attributeDic2 = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -739,5 +742,44 @@
     if (self.manulAdoptListViewController.neverShowSwitch.on) {
         [Utilities setNeverShowManulMenuWithKey:kManulAdoptListKey];
     }
+}
+
+- (BOOL)allowActionToRun {
+    return YES;
+}
+
+#pragma mark - ADBannerViewDelegate
+- (BOOL)bannerViewActionShouldBegin:(ADBannerView *)banner willLeaveApplication:(BOOL)willLeave {
+    NSLog(@"Banner view is beginning an ad action");
+    BOOL shouldExecuteAction = [self allowActionToRun];
+    if (!willLeave && shouldExecuteAction) {
+        // insert code here to suspend any services that might conflict with the advertisement
+    }
+    return shouldExecuteAction;
+}
+
+- (void)bannerViewDidLoadAd:(ADBannerView *)banner {
+    [self layoutAnimated:YES];
+}
+
+- (void)layoutAnimated:(BOOL)animated {
+    CGRect contentFrame = self.view.bounds;
+    CGRect bannerFrame = self.adBannerView.frame;
+    if (self.adBannerView.bannerLoaded) {
+        contentFrame.size.height -= self.adBannerView.frame.size.height;
+        bannerFrame.origin.y = contentFrame.size.height;
+    } else {
+        bannerFrame.origin.y = contentFrame.size.height;
+    }
+    
+    [UIView animateWithDuration:animated ? 0.25 : 0.0 animations:^{
+        self.adBannerView.frame = contentFrame;
+        [self.adBannerView layoutIfNeeded];
+        self.adBannerView.frame = bannerFrame;
+    }];
+}
+
+- (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error {
+    [self layoutAnimated:YES];
 }
 @end

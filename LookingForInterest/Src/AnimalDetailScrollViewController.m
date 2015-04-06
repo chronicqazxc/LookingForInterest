@@ -12,8 +12,9 @@
 #import "FacebookController.h"
 #import <MessageUI/MessageUI.h>
 #import "ManulAdoptDetailViewController.h"
+#import <iAd/iAd.h>
 
-@interface AnimalDetailScrollViewController () <UICollectionViewDataSource, UICollectionViewDelegate, AnimalDetailCollectionViewCellDelegate, FacebookControllerDelegate, MFMailComposeViewControllerDelegate, ManulViewControllerDelegate>
+@interface AnimalDetailScrollViewController () <UICollectionViewDataSource, UICollectionViewDelegate, ADBannerViewDelegate, AnimalDetailCollectionViewCellDelegate, FacebookControllerDelegate, MFMailComposeViewControllerDelegate, ManulViewControllerDelegate>
 @property (nonatomic) BOOL isInit;
 @property (nonatomic) NSInteger currentRow;
 @property (nonatomic) NSInteger previousRow;
@@ -21,6 +22,7 @@
 @property (strong, nonatomic) NSMutableArray *tempPets;
 @property (strong, nonatomic) ManulAdoptDetailViewController *manulAdoptDetailViewController;
 @property (nonatomic) BOOL hadShowManul;
+@property (weak, nonatomic) IBOutlet ADBannerView *adBannerView;
 @end
 
 @implementation AnimalDetailScrollViewController
@@ -34,6 +36,7 @@
     self.currentRow = 0;
     self.previousRow = 0;
     self.isInit = NO;
+    self.adBannerView.delegate = self;
     self.tempPets = [NSMutableArray arrayWithArray:self.petResult.pets];
 }
 
@@ -311,5 +314,44 @@
     if (self.manulAdoptDetailViewController.neverShowSwitch.on) {
         [Utilities setNeverShowManulMenuWithKey:kManulAdoptDetailKey];
     }
+}
+
+- (BOOL)allowActionToRun {
+    return YES;
+}
+
+#pragma mark - ADBannerViewDelegate
+- (BOOL)bannerViewActionShouldBegin:(ADBannerView *)banner willLeaveApplication:(BOOL)willLeave {
+    NSLog(@"Banner view is beginning an ad action");
+    BOOL shouldExecuteAction = [self allowActionToRun];
+    if (!willLeave && shouldExecuteAction) {
+        // insert code here to suspend any services that might conflict with the advertisement
+    }
+    return shouldExecuteAction;
+}
+
+- (void)bannerViewDidLoadAd:(ADBannerView *)banner {
+    [self layoutAnimated:YES];
+}
+
+- (void)layoutAnimated:(BOOL)animated {
+    CGRect contentFrame = self.view.bounds;
+    CGRect bannerFrame = self.adBannerView.frame;
+    if (self.adBannerView.bannerLoaded) {
+        contentFrame.size.height -= self.adBannerView.frame.size.height;
+        bannerFrame.origin.y = contentFrame.size.height;
+    } else {
+        bannerFrame.origin.y = contentFrame.size.height;
+    }
+    
+    [UIView animateWithDuration:animated ? 0.25 : 0.0 animations:^{
+        self.adBannerView.frame = contentFrame;
+        [self.adBannerView layoutIfNeeded];
+        self.adBannerView.frame = bannerFrame;
+    }];
+}
+
+- (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error {
+    [self layoutAnimated:YES];
 }
 @end
