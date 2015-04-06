@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class TableLoadPreviousPage, TableLoadNextPage;
+
 @interface ViewController : UIViewController
-
-
+@property (strong, nonatomic) TableLoadPreviousPage *loadPreviousPageView;
+@property (strong, nonatomic) TableLoadNextPage *loadNextPageView;
 @end
 

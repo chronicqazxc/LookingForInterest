@@ -18,6 +18,9 @@
 #import "OpenMapHeaderController.h"
 #import "StoreTableHeaderViewController.h"
 #import "HUDView.h"
+#import "ViewController.h"
+#import "TableLoadPreviousPage.h"
+#import "TableLoadNextPage.h"
 
 #define kUpArrowImg @"arrow-up@2x.png"
 #define kDownArrowImg @"arrow-down@2x.png"
@@ -44,6 +47,9 @@
 #define kCloseMapMessage @"收起地圖"
 #define kCellNavigationTitle @"導航"
 #define kCellMoreTitle @"更多"
+
+#define kReloadDistance 100
+#define kSpringTreshold 120
 
 @interface FilterTableViewController () <RequestSenderDelegate, MGSwipeTableCellDelegate, UITextFieldDelegate>
 @property (strong, nonatomic) NSMutableArray *dataArr;
@@ -800,6 +806,11 @@
 
 - (void)storesBack:(NSMutableDictionary *)resultDic {
     [Utilities stopLoading];
+    
+    [self stopSunRotating:((ViewController *)self.delegate).loadPreviousPageView.indicator];
+    [self stopSunRotating:((ViewController *)self.delegate).loadNextPageView.indicator];
+    ((ViewController *)self.delegate).loadNextPageView.indicatorLabel.text = @"";
+    
     NSArray *stores = [resultDic objectForKey:@"stores"];
     self.stores = stores;
     self.pageController = [resultDic objectForKey:@"pageController"];
@@ -1054,6 +1065,31 @@
     }
 }
 
+-(void)scaleItem:(UIView *)item{
+    CGFloat shiftInPercents = [self shiftInPercents];
+    CGFloat buildigsScaleRatio = shiftInPercents / 100;
+    [item setTransform:CGAffineTransformMakeScale(buildigsScaleRatio,buildigsScaleRatio)];
+}
+
+-(CGFloat)shiftInPercents{
+    return (kReloadDistance / 100) * -self.tableView.contentOffset.y;
+}
+
+- (void)rotateInfinitily:(UIView *)view {
+    CABasicAnimation *rotationAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
+    rotationAnimation.toValue = @(M_PI * 2.0);
+    CGFloat SunRotationAnimationDuration = 0.9f;
+    rotationAnimation.duration = SunRotationAnimationDuration;
+    rotationAnimation.autoreverses = NO;
+    rotationAnimation.repeatCount = HUGE_VALF;
+    rotationAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+    [view.layer addAnimation:rotationAnimation forKey:@"rotationAnimation"];
+}
+
+-(void)stopSunRotating:(UIView *)view {
+    [view.layer removeAnimationForKey:@"rotationAnimation"];
+}
+
 #pragma mark - change page
 - (void)scrollViewDidScroll:(UIScrollView *)aScrollView {
     if (self.filterType == SearchStores) {
@@ -1063,13 +1099,43 @@
         UIEdgeInsets inset = aScrollView.contentInset;
         float y = offset.y + bounds.size.height - inset.bottom;
         float h = size.height;
-        float reloadDistance = 60;
         
-        if (offset.y <= -60) {
+        if (!self.isStartLoadingPage) {
+            if (offset.y <= 0) {
+                [((ViewController *)self.delegate).loadPreviousPageView.indicatorLabel setAlpha:(0-offset.y)/100];
+                if (offset.y <= -kReloadDistance-30 && self.pageController.currentPage > 1) {
+                    ((ViewController *)self.delegate).loadPreviousPageView.indicatorLabel.text = @"換上一頁！";
+//                    [self scaleItem:((ViewController *)self.delegate).loadPreviousPageView.indicator];
+                } else if (self.pageController.currentPage > 1) {
+                    ((ViewController *)self.delegate).loadPreviousPageView.indicatorLabel.text = @"再拉再拉！";
+                } else {
+                    ((ViewController *)self.delegate).loadPreviousPageView.indicatorLabel.text = @"沒上一頁！";
+                }
+                if (offset.y <= -kSpringTreshold-50) {
+                    [self.filterTableView setContentOffset:CGPointMake(0.f, -kSpringTreshold-50)];
+                }
+                ((ViewController *)self.delegate).loadPreviousPageView.frame = CGRectMake(0.f, 0.f, self.tableView.frame.size.width, offset.y);
+            } else if (y > h) {
+                [((ViewController *)self.delegate).loadNextPageView.indicatorLabel setAlpha:(y-h)/100];
+                if (self.pageController.currentPage < self.pageController.totalPage) {
+                    if (y > h + kReloadDistance) {
+                        ((ViewController *)self.delegate).loadNextPageView.indicatorLabel.text = @"換下一頁！";
+                        [self.filterTableView setContentOffset:CGPointMake(0.f, h+kSpringTreshold-CGRectGetHeight(bounds))];
+                    } else {
+                        ((ViewController *)self.delegate).loadNextPageView.indicatorLabel.text = @"再拉再拉！";
+                    }
+                    ((ViewController *)self.delegate).loadNextPageView.frame = CGRectMake(0.f, h, self.tableView.frame.size.width, y-h);
+                } else {
+                    ((ViewController *)self.delegate).loadNextPageView.indicatorLabel.text = @"";
+                }
+            }
+        }
+        
+        if (offset.y <= -kReloadDistance-30) {
             if (self.pageController.currentPage > 1) {
                 [self previousPage];
             }
-        } else if (y > h + reloadDistance) {
+        } else if (y > h + kReloadDistance) {
             if (self.pageController.currentPage < self.pageController.totalPage) {
                 [self getNextPage];
             }
@@ -1102,6 +1168,7 @@
 
 - (void)previousPage {
     if (!self.isStartLoadingPage) {
+        [self rotateInfinitily:((ViewController *)self.delegate).loadPreviousPageView.indicator];
         NSLog(@"previous page");
         if (self.delegate && [self.delegate respondsToSelector:@selector(loadPreviousPage:)]) {
             self.isStartLoadingPage = YES;
@@ -1114,6 +1181,7 @@
 
 - (void)getNextPage {
     if (!self.isStartLoadingPage) {
+        [self rotateInfinitily:((ViewController *)self.delegate).loadNextPageView.indicator];
         NSLog(@"next page");
         if (self.delegate && [self.delegate respondsToSelector:@selector(loadNextPage:)]) {
             self.isStartLoadingPage = YES;

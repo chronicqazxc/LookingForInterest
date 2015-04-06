@@ -16,6 +16,8 @@
 #import "RequestSender.h"
 #import "ManulHospitalMenuViewController.h"
 #import <iAd/iAd.h>
+#import "TableLoadNextPage.h"
+#import "TableLoadPreviousPage.h"
 
 #define kMagnifierImg @"iconmonstr-magnifier-3-icon-256.png"
 #define kLeftArrowImg @"arrow-left@2x.png"
@@ -87,6 +89,7 @@
 
 @property (nonatomic) BOOL hasShowVersion;
 @property (weak, nonatomic) IBOutlet ADBannerView *adBannerView;
+
 @end
 
 @implementation ViewController
@@ -162,6 +165,20 @@
     self.nextPageView.hidden = YES;
     self.mirrorMagnifierImage = [Utilities rotateImage:[UIImage imageNamed:kMagnifierImg] toDirection:DirectionMirror withScale:1.0];
     self.searchViewIcon.image = self.mirrorMagnifierImage;
+    
+    self.loadPreviousPageView = (TableLoadPreviousPage *)[Utilities getNibWithName:@"TableLoadPreviousPage"];
+    self.loadPreviousPageView.frame = CGRectZero;
+    self.loadPreviousPageView.canLoading = NO;
+    self.loadPreviousPageView.indicatorLabel.text = @"";
+    [self.filterTableView addSubview:self.loadPreviousPageView];
+    [self.filterTableView sendSubviewToBack:self.loadPreviousPageView];
+    
+    self.loadNextPageView = (TableLoadNextPage *)[Utilities getNibWithName:@"TableLoadNextPage"];
+    self.loadNextPageView.frame = CGRectZero;
+    self.loadNextPageView.canLoading = NO;
+    self.loadNextPageView.indicatorLabel.text = @"";
+    [self.filterTableView addSubview:self.loadNextPageView];
+    [self.filterTableView sendSubviewToBack:self.loadNextPageView];
 }
 
 - (void)setNaviTitleButtonWithString:(NSString *)string {

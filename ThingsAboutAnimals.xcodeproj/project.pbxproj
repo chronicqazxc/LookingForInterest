@@ -43,6 +43,10 @@
 		B06E569D1A9DE2980030B6A4 /* AnimalHospitalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B06E569B1A9DE2980030B6A4 /* AnimalHospitalViewController.m */; };
 		B06E569E1A9DE2980030B6A4 /* AnimalHospitalViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B06E569C1A9DE2980030B6A4 /* AnimalHospitalViewController.xib */; };
 		B06E56A11A9DE2BD0030B6A4 /* Detail.m in Sources */ = {isa = PBXBuildFile; fileRef = B06E56A01A9DE2BD0030B6A4 /* Detail.m */; };
+		B07720A91AD29C4700D8C406 /* TableLoadPreviousPage.m in Sources */ = {isa = PBXBuildFile; fileRef = B07720A81AD29C4700D8C406 /* TableLoadPreviousPage.m */; };
+		B07720AB1AD29C6400D8C406 /* TableLoadPreviousPage.xib in Resources */ = {isa = PBXBuildFile; fileRef = B07720AA1AD29C6400D8C406 /* TableLoadPreviousPage.xib */; };
+		B07720AE1AD29C7A00D8C406 /* TableLoadNextPage.m in Sources */ = {isa = PBXBuildFile; fileRef = B07720AD1AD29C7A00D8C406 /* TableLoadNextPage.m */; };
+		B07720B01AD29C8D00D8C406 /* TableLoadNextPage.xib in Resources */ = {isa = PBXBuildFile; fileRef = B07720AF1AD29C8D00D8C406 /* TableLoadNextPage.xib */; };
 		B07804AB1AA9467900DE8AD0 /* PopUpPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = B07804A91AA9467900DE8AD0 /* PopUpPicker.m */; };
 		B07804AC1AA9467900DE8AD0 /* PopUpPicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = B07804AA1AA9467900DE8AD0 /* PopUpPicker.xib */; };
 		B08572471AA4C18400F0F8FD /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B08572461AA4C18400F0F8FD /* MenuViewController.m */; };
@@ -191,6 +195,12 @@
 		B06E569C1A9DE2980030B6A4 /* AnimalHospitalViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AnimalHospitalViewController.xib; path = Src/Views/AnimalHospitalViewController.xib; sourceTree = "<group>"; };
 		B06E569F1A9DE2BD0030B6A4 /* Detail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Detail.h; path = Src/Objects/Detail.h; sourceTree = "<group>"; };
 		B06E56A01A9DE2BD0030B6A4 /* Detail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Detail.m; path = Src/Objects/Detail.m; sourceTree = "<group>"; };
+		B07720A71AD29C4700D8C406 /* TableLoadPreviousPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TableLoadPreviousPage.h; path = Src/Views/TableLoadPreviousPage.h; sourceTree = "<group>"; };
+		B07720A81AD29C4700D8C406 /* TableLoadPreviousPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TableLoadPreviousPage.m; path = Src/Views/TableLoadPreviousPage.m; sourceTree = "<group>"; };
+		B07720AA1AD29C6400D8C406 /* TableLoadPreviousPage.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TableLoadPreviousPage.xib; path = Src/Views/TableLoadPreviousPage.xib; sourceTree = "<group>"; };
+		B07720AC1AD29C7A00D8C406 /* TableLoadNextPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TableLoadNextPage.h; path = Src/Views/TableLoadNextPage.h; sourceTree = "<group>"; };
+		B07720AD1AD29C7A00D8C406 /* TableLoadNextPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TableLoadNextPage.m; path = Src/Views/TableLoadNextPage.m; sourceTree = "<group>"; };
+		B07720AF1AD29C8D00D8C406 /* TableLoadNextPage.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TableLoadNextPage.xib; path = Src/Views/TableLoadNextPage.xib; sourceTree = "<group>"; };
 		B07804A81AA9467900DE8AD0 /* PopUpPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PopUpPicker.h; path = Src/Views/PopUpPicker.h; sourceTree = "<group>"; };
 		B07804A91AA9467900DE8AD0 /* PopUpPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PopUpPicker.m; path = Src/Views/PopUpPicker.m; sourceTree = "<group>"; };
 		B07804AA1AA9467900DE8AD0 /* PopUpPicker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PopUpPicker.xib; path = Src/Views/PopUpPicker.xib; sourceTree = "<group>"; };
@@ -584,6 +594,12 @@
 				B07804A81AA9467900DE8AD0 /* PopUpPicker.h */,
 				B07804A91AA9467900DE8AD0 /* PopUpPicker.m */,
 				B07804AA1AA9467900DE8AD0 /* PopUpPicker.xib */,
+				B07720A71AD29C4700D8C406 /* TableLoadPreviousPage.h */,
+				B07720A81AD29C4700D8C406 /* TableLoadPreviousPage.m */,
+				B07720AA1AD29C6400D8C406 /* TableLoadPreviousPage.xib */,
+				B07720AC1AD29C7A00D8C406 /* TableLoadNextPage.h */,
+				B07720AD1AD29C7A00D8C406 /* TableLoadNextPage.m */,
+				B07720AF1AD29C8D00D8C406 /* TableLoadNextPage.xib */,
 				B0ACC9151AA84A2A0068A7D5 /* AdoptAnimal */,
 				B002A2F01A9E31D700808055 /* Scroll&ZoomingView */,
 			);
@@ -743,6 +759,7 @@
 				B0B049051AB304F0000154B2 /* mail.png in Resources */,
 				B06449201ABD62C400B6F7A5 /* manul_adopt_list.png in Resources */,
 				B0BF73081A8916A400213C00 /* Icon-40@3x.png in Resources */,
+				B07720B01AD29C8D00D8C406 /* TableLoadNextPage.xib in Resources */,
 				B06449291ABD634500B6F7A5 /* ManulViewController.xib in Resources */,
 				B06449211ABD62C400B6F7A5 /* manul_hospital_list.png in Resources */,
 				B0BF730A1A8916A400213C00 /* Icon-60@3x.png in Resources */,
@@ -751,6 +768,7 @@
 				B06449231ABD62C400B6F7A5 /* manul_menu.png in Resources */,
 				B0B049011AB3002A000154B2 /* FB-f-Logo__white_29.png in Resources */,
 				B0BF732F1A8A4EE000213C00 /* fav@2x.png in Resources */,
+				B07720AB1AD29C6400D8C406 /* TableLoadPreviousPage.xib in Resources */,
 				B0A320531AAD428A0061384A /* Loading100x100.png in Resources */,
 				B0B8660D1AB368FE0039BFB5 /* add_fav.png in Resources */,
 				B06E569E1A9DE2980030B6A4 /* AnimalHospitalViewController.xib in Resources */,
@@ -829,10 +847,12 @@
 			files = (
 				B002A2EF1A9CEFBA00808055 /* PageController.m in Sources */,
 				B08572471AA4C18400F0F8FD /* MenuViewController.m in Sources */,
+				B07720A91AD29C4700D8C406 /* TableLoadPreviousPage.m in Sources */,
 				B04F701C1AA585CB007D9856 /* DialingButton.m in Sources */,
 				B064492F1ABD6FCE00B6F7A5 /* ManulAdoptListViewController.m in Sources */,
 				B0BF72F81A8915ED00213C00 /* ViewController.m in Sources */,
 				B02862011AAAEB40001C50DB /* AnimalDetailCollectionViewCell.m in Sources */,
+				B07720AE1AD29C7A00D8C406 /* TableLoadNextPage.m in Sources */,
 				B0BF72DE1A8915C500213C00 /* main.m in Sources */,
 				B002A2EB1A9885FA00808055 /* WebViewController.m in Sources */,
 				B0BF72EA1A8915DD00213C00 /* MinorType.m in Sources */,

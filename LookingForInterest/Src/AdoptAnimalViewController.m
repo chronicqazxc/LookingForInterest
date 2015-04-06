@@ -17,6 +17,8 @@
 #import "GoTopButton.h"
 #import "ManulAdoptListViewController.h"
 #import <iAd/iAd.h>
+#import "TableLoadNextPage.h"
+#import "TableLoadPreviousPage.h"
 
 #define kAdoptAnimalTitle(type) [NSString stringWithFormat:@"觀看%@",type]
 #define kNavigationColorDogFirst 0xb2b2ff
@@ -29,6 +31,9 @@
 #define kNavigationColorMyFavoriteSecond 0xff0000
 #define kNavigationColorFilterFirst 0xcc99ff
 #define kNavigationColorFilterSecond 0x690099
+#define kReloadDistance 100
+#define kSpringTreshold 120
+#define DEGREES_TO_RADIANS(x) (M_PI * (x) / 180.0)
 
 @interface AdoptAnimalViewController () <UITableViewDataSource, UITableViewDelegate, UITabBarDelegate, ADBannerViewDelegate, RequestSenderDelegate, AdoptAnimalFilterControllerDelegate, MGSwipeTableCellDelegate, ManulViewControllerDelegate>
 @property (strong, nonatomic) PetResult *petResult;
@@ -54,6 +59,8 @@
 @property (nonatomic) BOOL hadShowManul;
 @property (nonatomic) BOOL hadShowDataSource;
 @property (weak, nonatomic) IBOutlet ADBannerView *adBannerView;
+@property (strong, nonatomic) TableLoadPreviousPage *loadPreviousPageView;
+@property (strong, nonatomic) TableLoadNextPage *loadNextPageView;
 @end
 
 @implementation AdoptAnimalViewController
@@ -80,7 +87,19 @@
                                    [UIColor whiteColor], NSForegroundColorAttributeName,
                                    [UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:15.0], NSFontAttributeName, nil];
     [self.navigationItem.leftBarButtonItem setTitleTextAttributes:attributeDic2 forState:UIControlStateNormal];
+    self.loadPreviousPageView = (TableLoadPreviousPage *)[Utilities getNibWithName:@"TableLoadPreviousPage"];
+    self.loadPreviousPageView.frame = CGRectZero;
+    self.loadPreviousPageView.canLoading = NO;
+    self.loadPreviousPageView.indicatorLabel.text = @"";
+    [self.tableView addSubview:self.loadPreviousPageView];
+    [self.tableView sendSubviewToBack:self.loadPreviousPageView];
     
+    self.loadNextPageView = (TableLoadNextPage *)[Utilities getNibWithName:@"TableLoadNextPage"];
+    self.loadNextPageView.frame = CGRectZero;
+    self.loadNextPageView.canLoading = NO;
+    self.loadNextPageView.indicatorLabel.text = @"";
+    [self.tableView addSubview:self.loadNextPageView];
+    [self.tableView sendSubviewToBack:self.loadNextPageView];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -331,6 +350,32 @@
     [self.navigationController pushViewController:animalDetailScrollViewController animated:YES];
 }
 
+-(CGFloat)shiftInPercents{
+    return (kReloadDistance / 100) * -self.tableView.contentOffset.y;
+}
+
+-(void)scaleItem:(UIView *)item{
+    CGFloat shiftInPercents = [self shiftInPercents];
+    CGFloat buildigsScaleRatio = shiftInPercents / 100;
+    [item setTransform:CGAffineTransformMakeScale(buildigsScaleRatio,buildigsScaleRatio)];
+
+}
+
+- (void)rotateInfinitily:(UIView *)view {
+    CABasicAnimation *rotationAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
+    rotationAnimation.toValue = @(M_PI * 2.0);
+    CGFloat SunRotationAnimationDuration = 0.9f;
+    rotationAnimation.duration = SunRotationAnimationDuration;
+    rotationAnimation.autoreverses = NO;
+    rotationAnimation.repeatCount = HUGE_VALF;
+    rotationAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+    [view.layer addAnimation:rotationAnimation forKey:@"rotationAnimation"];
+}
+
+-(void)stopSunRotating:(UIView *)view{
+    [view.layer removeAnimationForKey:@"rotationAnimation"];
+}
+
 #pragma mark - UIScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)aScrollView {
     [UIView animateWithDuration:1.0 animations:^{
@@ -343,17 +388,50 @@
     UIEdgeInsets inset = aScrollView.contentInset;
     float y = offset.y + bounds.size.height - inset.bottom;
     float h = size.height;
-    float reloadDistance = 50;
     
     if (self.isStartLoading == NO) {
-        if (offset.y <= -50) {
+        if (offset.y <= 0) {
+//            [self scaleItem:nil];
+            [self.loadPreviousPageView.indicatorLabel setAlpha:(0-offset.y)/100];
+            if (offset.y <= -kReloadDistance-30 && self.loadPreviousPageView.canLoading) {
+                self.loadPreviousPageView.indicatorLabel.text = @"換上一頁！";
+            } else if (self.loadPreviousPageView.canLoading) {
+                self.loadPreviousPageView.indicatorLabel.text = @"再拉再拉！";
+            } else {
+                self.loadPreviousPageView.indicatorLabel.text = @"沒上一頁！";
+            }
+            if (offset.y <= -kSpringTreshold-50) {
+                [self.tableView setContentOffset:CGPointMake(0.f, -kSpringTreshold-50)];
+            }
+            self.loadPreviousPageView.frame = CGRectMake(0.f, 0.f, self.tableView.frame.size.width, offset.y);
+        } else if (y > h) {
+            [self.loadNextPageView.indicatorLabel setAlpha:(y-h)/100];
+//            [self scaleItem:nil];
+            if (self.loadNextPageView.canLoading) {
+                if (y > h + kReloadDistance) {
+                    self.loadNextPageView.indicatorLabel.text = @"換下一頁！";
+                    [self.tableView setContentOffset:CGPointMake(0.f, h+kSpringTreshold-CGRectGetHeight(bounds))];
+                } else {
+                    self.loadNextPageView.indicatorLabel.text = @"再拉再拉！";
+                }
+                self.loadNextPageView.frame = CGRectMake(0.f, h, self.tableView.frame.size.width, y-h);
+            } else {
+                self.loadNextPageView.indicatorLabel.text = @"";
+            }
+        }
+    }
+    
+    if (self.isStartLoading == NO) {
+        if (offset.y <= -kReloadDistance-30 && self.loadPreviousPageView.canLoading) {
             if ((self.petResult.previous && ![self.petResult.previous isEqualToString:@""]) ||
                 [self.petResult.next isEqualToString:@"40"]) {
+                [self rotateInfinitily:self.loadPreviousPageView.indicator];
                 self.isStartLoading = YES;
                 [self getPreviousPage];
             }
-        } else if (y > h + reloadDistance) {
+        } else if (y > h + kReloadDistance && self.loadNextPageView.canLoading) {
             if (self.petResult.next && ![self.petResult.next isEqualToString:@""] && [self.petResult.next intValue] < [self.petResult.total intValue]) {
+                [self rotateInfinitily:self.loadNextPageView.indicator];
                 self.isStartLoading = YES;
                 [self getNextPage];
             }
@@ -428,10 +506,11 @@
 }
 
 - (void)petResultBack:(PetResult *)petResult {
-    [self.nextPageIndicator stopAnimating];
+    [self stopSunRotating:self.loadPreviousPageView.indicator];
+    [self stopSunRotating:self.loadNextPageView.indicator];
     [self setPageIndicatorTitleByResult:petResult];
+    self.loadNextPageView.indicatorLabel.text = @"";
     
-    [self.previousPageIndicator stopAnimating];
     self.isStartLoading = NO;
     self.petResult = petResult;
     self.nextPage = petResult.next;
@@ -476,17 +555,25 @@
     [self.pageIndicator setTitle:[NSString stringWithFormat:@"%@/%@頁",currentPage,totalPage] forState:UIControlStateNormal];
     
     if ([currentPage isEqualToString:@"1"] && [currentPage isEqualToString:totalPage]) {
-        self.previousPageView.hidden = YES;
-        self.nextPageView.hidden = YES;
+//        self.previousPageView.hidden = YES;
+//        self.nextPageView.hidden = YES;
+        self.loadPreviousPageView.canLoading = NO;
+        self.loadNextPageView.canLoading = NO;
     } else if ([currentPage isEqualToString:@"1"] && ![currentPage isEqualToString:totalPage]) {
-        self.previousPageView.hidden = YES;
-        self.nextPageView.hidden = NO;
+//        self.previousPageView.hidden = YES;
+//        self.nextPageView.hidden = NO;
+        self.loadPreviousPageView.canLoading = NO;
+        self.loadNextPageView.canLoading = YES;
     } else if (![currentPage isEqualToString:@"1"] && [currentPage isEqualToString:totalPage]) {
-        self.previousPageView.hidden = NO;
-        self.nextPageView.hidden = YES;
+//        self.previousPageView.hidden = NO;
+//        self.nextPageView.hidden = YES;
+        self.loadPreviousPageView.canLoading = YES;
+        self.loadNextPageView.canLoading = NO;
     } else {
-        self.previousPageView.hidden = NO;
-        self.nextPageView.hidden = NO;
+//        self.previousPageView.hidden = NO;
+//        self.nextPageView.hidden = NO;
+        self.loadPreviousPageView.canLoading = YES;
+        self.loadNextPageView.canLoading = YES;
     }
 }
 
@@ -698,7 +785,7 @@
     return NO;
 }
 
--(NSArray*)swipeTableCell:(MGSwipeTableCell*)cell swipeButtonsForDirection:(MGSwipeDirection)direction swipeSettings:(MGSwipeSettings*)swipeSettings expansionSettings:(MGSwipeExpansionSettings*)expansionSettings {
+- (NSArray*)swipeTableCell:(MGSwipeTableCell*)cell swipeButtonsForDirection:(MGSwipeDirection)direction swipeSettings:(MGSwipeSettings*)swipeSettings expansionSettings:(MGSwipeExpansionSettings*)expansionSettings {
 
     swipeSettings.transition = MGSwipeTransitionBorder;
     expansionSettings.buttonIndex = 0;
@@ -711,7 +798,7 @@
     return buttons;
 }
 
--(NSArray *)createButtonsWithIndexPath:(NSIndexPath *)indexPath direction:(MGSwipeDirection)direction{
+- (NSArray *)createButtonsWithIndexPath:(NSIndexPath *)indexPath direction:(MGSwipeDirection)direction{
     NSMutableArray *result = [NSMutableArray array];
     UIColor *backgroundColor;
     if ([self isMyFavoriteAnimalByIndex:indexPath.row]) {
