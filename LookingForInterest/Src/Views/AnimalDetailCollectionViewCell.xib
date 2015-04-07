@@ -21,10 +21,12 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2bn-GZ-Zem" customClass="GoTopButton">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="5zI-5m-v8X"/>
+                                    <constraint firstAttribute="height" constant="50" id="5zI-5m-v8X">
+                                        <variation key="heightClass=regular-widthClass=compact" constant="20"/>
+                                    </constraint>
                                     <constraint firstAttribute="width" constant="100" id="nbH-xz-iJr"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <state key="normal" title="Button">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -61,12 +63,12 @@
                                 <exclude reference="2bn-GZ-Zem"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="Fd2-30-7HH"/>
+                                <exclude reference="j3m-te-eBK"/>
                                 <exclude reference="Ek4-hY-oas"/>
                                 <exclude reference="SIY-HS-yjp"/>
                                 <exclude reference="VVQ-1J-hcR"/>
                                 <exclude reference="Y5J-Za-XVX"/>
-                                <exclude reference="Fd2-30-7HH"/>
-                                <exclude reference="j3m-te-eBK"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -75,12 +77,12 @@
                                 <include reference="2bn-GZ-Zem"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="Fd2-30-7HH"/>
+                                <include reference="j3m-te-eBK"/>
                                 <include reference="Ek4-hY-oas"/>
                                 <include reference="SIY-HS-yjp"/>
                                 <include reference="VVQ-1J-hcR"/>
                                 <include reference="Y5J-Za-XVX"/>
-                                <include reference="Fd2-30-7HH"/>
-                                <include reference="j3m-te-eBK"/>
                             </mask>
                         </variation>
                     </view>
@@ -133,13 +135,13 @@
                     <exclude reference="2p0-Fa-I46"/>
                 </mask>
                 <mask key="constraints">
+                    <exclude reference="5YI-UL-Ib9"/>
                     <exclude reference="Nje-FC-8L8"/>
                     <exclude reference="ZdQ-hN-fM9"/>
                     <exclude reference="a8e-HD-9Ab"/>
                     <exclude reference="daf-5j-WSN"/>
                     <exclude reference="n3k-WD-Rrp"/>
                     <exclude reference="tlE-vK-pRc"/>
-                    <exclude reference="5YI-UL-Ib9"/>
                 </mask>
             </variation>
             <variation key="heightClass=regular-widthClass=compact">
@@ -148,13 +150,13 @@
                     <include reference="2p0-Fa-I46"/>
                 </mask>
                 <mask key="constraints">
+                    <include reference="5YI-UL-Ib9"/>
                     <include reference="Nje-FC-8L8"/>
                     <include reference="ZdQ-hN-fM9"/>
                     <include reference="a8e-HD-9Ab"/>
                     <include reference="daf-5j-WSN"/>
                     <include reference="n3k-WD-Rrp"/>
                     <include reference="tlE-vK-pRc"/>
-                    <include reference="5YI-UL-Ib9"/>
                 </mask>
             </variation>
             <connections>

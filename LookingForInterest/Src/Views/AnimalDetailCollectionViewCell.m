@@ -50,16 +50,19 @@
     [self.detailTableView registerNib:[UINib nibWithNibName:@"AnimalDetailTableViewCell" bundle:nil] forCellReuseIdentifier:kDetailTableCellIdentifier];
     self.detailTableView.dataSource = self;
     self.detailTableView.delegate = self;
+    [self.detailTableView reloadData];
     
-    self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, -30, CGRectGetWidth(self.detailTableView.frame), 150)];
-    self.imageView.contentMode = UIViewContentModeScaleAspectFill;
-//    self.imageView.image = [UIImage imageNamed:@"background_img.png"];
-    
-    [self.detailTableView addSubview:self.imageView];
-    [self.detailTableView sendSubviewToBack:self.imageView];
+    if (!self.imageView) {
+        self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth([[UIScreen mainScreen] bounds]), 300)];
+        [self.detailTableView addSubview:self.imageView];
+        [self.detailTableView sendSubviewToBack:self.imageView];
+    } else {
+        self.imageView.image = [UIImage imageNamed:@"background_img.png"];
+    }
+
+    self.imageView.contentMode = UIViewContentModeScaleAspectFit;
     
     [self loadImage];
-    self.viewController.edgesForExtendedLayout = UIRectEdgeNone;
     
     [self setPageIndicatorTitleByResult:self.petResult];
     self.pageIndicator.alpha = 0.0;
@@ -75,7 +78,6 @@
     self.lineButton.tintColor = UIColorFromRGB(0x19BD03);
     self.callButton.tintColor = [UIColor blackColor];
     self.mailButton.tintColor = [UIColor redColor];
-    self.viewController.navigationController.navigationBar.hidden = YES;
 }
 
 - (void)setPageIndicatorTitleByResult:(PetResult *)petResult {
@@ -108,7 +110,7 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             self.imageView.alpha = 0.0;
             self.imageView.image = self.image;
-            self.imageView.contentMode = UIViewContentModeScaleAspectFill;
+            self.imageView.contentMode = UIViewContentModeScaleAspectFit;
             self.imageView.autoresizingMask =
             ( UIViewAutoresizingFlexibleBottomMargin
              | UIViewAutoresizingFlexibleHeight
@@ -163,12 +165,12 @@
     NSLog(@"offset.y:%.2f",offset.y);
     if (offset.y <= 0) {
         [self scaleItem:self.imageView];
-        if (offset.y <= -20) {
-            [self.detailTableView setContentOffset:CGPointMake(0, -20)];
+        if (offset.y <= -50) {
+            [self.detailTableView setContentOffset:CGPointMake(0, -50)];
         }
-        self.viewController.navigationController.navigationBar.hidden = YES;
+//        self.viewController.navigationController.navigationBar.hidden = YES;
     } else if (offset.y >= 150) {
-        self.viewController.navigationController.navigationBar.hidden = NO;
+//        self.viewController.navigationController.navigationBar.hidden = NO;
     }
 }
 
@@ -196,6 +198,6 @@
 }
 
 -(CGFloat)shiftInPercents{
-    return (-self.detailTableView.contentOffset.y/10)+1;
+    return (-self.detailTableView.contentOffset.y/80)+1;
 }
 @end

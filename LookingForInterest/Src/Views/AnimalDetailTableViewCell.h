@@ -10,4 +10,5 @@
 
 @interface AnimalDetailTableViewCell : UITableViewCell
 - (void)settingContentsByPet:(Pet *)pet;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageHeightConstraint;
 @end
