@@ -20,7 +20,6 @@
 
 #define kScrollViewMaxScale 0.7
 #define kScrollViewMinScale 0.3
-#define kScrollViewContentHeight 909
 
 @interface AnimalHospitalViewController () <FullScreenScrollViewDelegate, EndlessScrollGeneratorDelegate, UIScrollViewDelegate, ADBannerViewDelegate, GMSMapViewDelegate, GMSPanoramaViewDelegate, RequestSenderDelegate>
 @property (weak, nonatomic) IBOutlet UIView *mainContainer;
@@ -401,7 +400,7 @@
             [self.mapContainer bringSubviewToFront:self.mapModeSwitch];
             [self.mapContainer bringSubviewToFront:self.directionModeSwitch];
             [self.mapContainer bringSubviewToFront:self.noteLabel];
-            self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.scrollView.frame), kScrollViewContentHeight);
+            self.scrollView.scrollEnabled = YES;
             break;
         case 1:
             [self.googleMap removeFromSuperview];
@@ -410,7 +409,8 @@
             self.streetView.delegate = self;
             [self.mapContainer addSubview:self.streetView];
             [self.mapContainer bringSubviewToFront:self.mapModeSwitch];
-            self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.scrollView.frame), CGRectGetHeight(self.view.frame));
+            [self.scrollView scrollRectToVisible:CGRectMake(0.0f, 0.0f, 10.0f, 10.0f) animated:YES];
+            self.scrollView.scrollEnabled = NO;
             break;
         default:
             break;

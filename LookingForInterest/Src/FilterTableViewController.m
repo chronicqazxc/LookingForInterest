@@ -48,8 +48,8 @@
 #define kCellNavigationTitle @"導航"
 #define kCellMoreTitle @"更多"
 
-#define kReloadDistance 120
-#define kSpringTreshold 150
+#define kReloadDistance 100
+#define kSpringTreshold 130
 
 @interface FilterTableViewController () <RequestSenderDelegate, MGSwipeTableCellDelegate, UITextFieldDelegate>
 @property (strong, nonatomic) NSMutableArray *dataArr;

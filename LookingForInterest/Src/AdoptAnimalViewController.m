@@ -31,8 +31,8 @@
 #define kNavigationColorMyFavoriteSecond 0xff0000
 #define kNavigationColorFilterFirst 0xcc99ff
 #define kNavigationColorFilterSecond 0x690099
-#define kReloadDistance 120
-#define kSpringTreshold 150
+#define kReloadDistance 100
+#define kSpringTreshold 130
 #define DEGREES_TO_RADIANS(x) (M_PI * (x) / 180.0)
 
 @interface AdoptAnimalViewController () <UITableViewDataSource, UITableViewDelegate, UITabBarDelegate, ADBannerViewDelegate, RequestSenderDelegate, AdoptAnimalFilterControllerDelegate, MGSwipeTableCellDelegate, ManulViewControllerDelegate>
