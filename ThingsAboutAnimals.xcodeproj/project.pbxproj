@@ -49,6 +49,8 @@
 		B07720B01AD29C8D00D8C406 /* TableLoadNextPage.xib in Resources */ = {isa = PBXBuildFile; fileRef = B07720AF1AD29C8D00D8C406 /* TableLoadNextPage.xib */; };
 		B07804AB1AA9467900DE8AD0 /* PopUpPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = B07804A91AA9467900DE8AD0 /* PopUpPicker.m */; };
 		B07804AC1AA9467900DE8AD0 /* PopUpPicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = B07804AA1AA9467900DE8AD0 /* PopUpPicker.xib */; };
+		B07F3E471AD3CADB00FCF1E2 /* AnimalDetailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B07F3E451AD3CADB00FCF1E2 /* AnimalDetailTableViewCell.m */; };
+		B07F3E481AD3CADB00FCF1E2 /* AnimalDetailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B07F3E461AD3CADB00FCF1E2 /* AnimalDetailTableViewCell.xib */; };
 		B08572471AA4C18400F0F8FD /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B08572461AA4C18400F0F8FD /* MenuViewController.m */; };
 		B085724D1AA74FC700F0F8FD /* FacebookController.m in Sources */ = {isa = PBXBuildFile; fileRef = B085724C1AA74FC700F0F8FD /* FacebookController.m */; };
 		B08CE6B71AC12F16000578CA /* background_img.png in Resources */ = {isa = PBXBuildFile; fileRef = B08CE6B61AC12F16000578CA /* background_img.png */; };
@@ -204,6 +206,9 @@
 		B07804A81AA9467900DE8AD0 /* PopUpPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PopUpPicker.h; path = Src/Views/PopUpPicker.h; sourceTree = "<group>"; };
 		B07804A91AA9467900DE8AD0 /* PopUpPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PopUpPicker.m; path = Src/Views/PopUpPicker.m; sourceTree = "<group>"; };
 		B07804AA1AA9467900DE8AD0 /* PopUpPicker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = PopUpPicker.xib; path = Src/Views/PopUpPicker.xib; sourceTree = "<group>"; };
+		B07F3E441AD3CADB00FCF1E2 /* AnimalDetailTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimalDetailTableViewCell.h; path = Src/Views/AnimalDetailTableViewCell.h; sourceTree = "<group>"; };
+		B07F3E451AD3CADB00FCF1E2 /* AnimalDetailTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AnimalDetailTableViewCell.m; path = Src/Views/AnimalDetailTableViewCell.m; sourceTree = "<group>"; };
+		B07F3E461AD3CADB00FCF1E2 /* AnimalDetailTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AnimalDetailTableViewCell.xib; path = Src/Views/AnimalDetailTableViewCell.xib; sourceTree = "<group>"; };
 		B08572451AA4C18400F0F8FD /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MenuViewController.h; path = Src/MenuViewController.h; sourceTree = "<group>"; };
 		B08572461AA4C18400F0F8FD /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MenuViewController.m; path = Src/MenuViewController.m; sourceTree = "<group>"; };
 		B085724B1AA74FC700F0F8FD /* FacebookController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FacebookController.h; path = Src/Objects/FacebookController.h; sourceTree = "<group>"; };
@@ -511,6 +516,9 @@
 				B02861FE1AAAEB40001C50DB /* AnimalDetailCollectionViewCell.h */,
 				B02861FF1AAAEB40001C50DB /* AnimalDetailCollectionViewCell.m */,
 				B02862001AAAEB40001C50DB /* AnimalDetailCollectionViewCell.xib */,
+				B07F3E441AD3CADB00FCF1E2 /* AnimalDetailTableViewCell.h */,
+				B07F3E451AD3CADB00FCF1E2 /* AnimalDetailTableViewCell.m */,
+				B07F3E461AD3CADB00FCF1E2 /* AnimalDetailTableViewCell.xib */,
 			);
 			name = AdoptAnimal;
 			sourceTree = "<group>";
@@ -764,6 +772,7 @@
 				B06449211ABD62C400B6F7A5 /* manul_hospital_list.png in Resources */,
 				B0BF730A1A8916A400213C00 /* Icon-60@3x.png in Resources */,
 				B0A320551AAD45AF0061384A /* Loading300x400.png in Resources */,
+				B07F3E481AD3CADB00FCF1E2 /* AnimalDetailTableViewCell.xib in Resources */,
 				B0BF73301A8A4EE000213C00 /* menu@2x.png in Resources */,
 				B06449231ABD62C400B6F7A5 /* manul_menu.png in Resources */,
 				B0B049011AB3002A000154B2 /* FB-f-Logo__white_29.png in Resources */,
@@ -846,6 +855,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B002A2EF1A9CEFBA00808055 /* PageController.m in Sources */,
+				B07F3E471AD3CADB00FCF1E2 /* AnimalDetailTableViewCell.m in Sources */,
 				B08572471AA4C18400F0F8FD /* MenuViewController.m in Sources */,
 				B07720A91AD29C4700D8C406 /* TableLoadPreviousPage.m in Sources */,
 				B04F701C1AA585CB007D9856 /* DialingButton.m in Sources */,

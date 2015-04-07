@@ -7,11 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AnimalDetailTableViewCell.h"
 
 @protocol AnimalDetailCollectionViewCellDelegate;
 
 @interface AnimalDetailCollectionViewCell : UICollectionViewCell
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (strong, nonatomic) AnimalDetailTableViewCell *tableCell;
 @property (strong, nonatomic) Pet *pet;
 @property (strong, nonatomic) PetResult *petResult;
 @property (strong, nonatomic) UIViewController <AnimalDetailCollectionViewCellDelegate> *viewController;

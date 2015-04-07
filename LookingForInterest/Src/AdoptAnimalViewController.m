@@ -67,7 +67,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.edgesForExtendedLayout = UIRectEdgeNone;   
+    self.edgesForExtendedLayout = UIRectEdgeNone;
     self.isSendInitRequest = NO;
     self.tableView.dataSource = self;
     self.tableView.delegate = self;

@@ -8,6 +8,8 @@
 
 #import "AnimalDetailCollectionViewCell.h"
 #import "GoTopButton.h"
+#import "AnimalDetailTableViewCell.h"
+#import "TableLoadPreviousPage.h"
 
 #define kVarietyTitle @"品種"
 #define kSexTitle @"性別"
@@ -24,27 +26,13 @@
 #define kBodyweightTitle @"體重"
 #define kPetImageWeigh CGRectGetWidth(self.frame)
 #define kPetImageHeigh 400
+#define kDetailTableCellIdentifier @"AnimalDetailTableViewCell"
 
-@interface AnimalDetailCollectionViewCell() <UIScrollViewDelegate>
-@property (weak, nonatomic) IBOutlet UIImageView *imageView;
-@property (weak, nonatomic) IBOutlet UILabel *variety;
-@property (weak, nonatomic) IBOutlet UILabel *sex;
-@property (weak, nonatomic) IBOutlet UILabel *isSterilization;
-@property (weak, nonatomic) IBOutlet UILabel *hairType;
-@property (weak, nonatomic) IBOutlet UILabel *age;
-@property (weak, nonatomic) IBOutlet UITextView *note;
-@property (weak, nonatomic) IBOutlet UILabel *resettlement;
-@property (weak, nonatomic) IBOutlet UILabel *phone;
-@property (weak, nonatomic) IBOutlet UILabel *email;
-@property (weak, nonatomic) IBOutlet UILabel *childreAnlong;
-@property (weak, nonatomic) IBOutlet UILabel *animalAnlong;
-@property (weak, nonatomic) IBOutlet UILabel *reason;
-@property (weak, nonatomic) IBOutlet UILabel *bodyweight;
+@interface AnimalDetailCollectionViewCell() <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate>
+//@property (weak, nonatomic) IBOutlet UIImageView *imageView;
+@property (weak, nonatomic) IBOutlet UITableView *detailTableView;
 @property (strong, nonatomic) UIImage *image;
 @property (weak, nonatomic) IBOutlet GoTopButton *pageIndicator;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageHeightConstraints;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageVerticalConstraints;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *buttomVerticalConstraints;
 - (IBAction)facebookShare:(UIBarButtonItem *)sender;
 - (IBAction)lineShare:(UIBarButtonItem *)sender;
 - (IBAction)callOut:(UIBarButtonItem *)sender;
@@ -53,45 +41,25 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *lineButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *callButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *mailButton;
+@property (strong, nonatomic) UIImageView *imageView;
 @end
 
 @implementation AnimalDetailCollectionViewCell
 
 - (void)awakeFromNib {
-    self.imageHeightConstraints.constant = CGRectGetHeight(self.frame)-44;
-    /*
-320 x 568	375 x 667	414 x 736	1024x768	1024x768
-     */
-    CGRect screenRect = [[UIScreen mainScreen] bounds];
-    if (screenRect.size.height < 568) {
-        self.imageVerticalConstraints.constant = 50.0;
-        self.buttomVerticalConstraints.constant = 50.0;
-    } else if (screenRect.size.height >= 568 && screenRect.size.height < 667) {
-        self.imageVerticalConstraints.constant = 50.0;
-        self.buttomVerticalConstraints.constant = 60.0;
-    } else if (screenRect.size.height >= 667 && screenRect.size.height < 768) {
-        self.imageVerticalConstraints.constant = 50.0;
-        self.buttomVerticalConstraints.constant = 100.0;
-    } else if (screenRect.size.height > 768) {
-        self.imageVerticalConstraints.constant = 90.0;
-        self.buttomVerticalConstraints.constant = 200.0;
-    }
-    [self updateConstraints];
-    self.imageView.image = [UIImage imageNamed:@"background_img.png"];
+    [self.detailTableView registerNib:[UINib nibWithNibName:@"AnimalDetailTableViewCell" bundle:nil] forCellReuseIdentifier:kDetailTableCellIdentifier];
+    self.detailTableView.dataSource = self;
+    self.detailTableView.delegate = self;
+    
+    self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, -30, CGRectGetWidth(self.detailTableView.frame), 150)];
+    self.imageView.contentMode = UIViewContentModeScaleAspectFill;
+//    self.imageView.image = [UIImage imageNamed:@"background_img.png"];
+    
+    [self.detailTableView addSubview:self.imageView];
+    [self.detailTableView sendSubviewToBack:self.imageView];
+    
     [self loadImage];
-    [self setLabel:self.variety title:@"" andContent:self.pet.variety];
-    [self setLabel:self.sex title:@"" andContent:self.pet.sex];
-    [self setLabel:self.isSterilization title:@"" andContent:self.pet.isSterilization];
-    [self setLabel:self.hairType title:@"" andContent:self.pet.hairType];
-    [self setLabel:self.age title:@"" andContent:self.pet.age];
-    [self setTextView:self.note title:kNoteTitle andContent:self.pet.note];
-    [self setLabel:self.resettlement title:@"" andContent:self.pet.resettlement];
-    [self setLabel:self.phone title:@"" andContent:self.pet.phone];
-    [self setLabel:self.email title:@"" andContent:self.pet.email];
-    [self setLabel:self.childreAnlong title:@"" andContent:self.pet.childreAnlong];
-    [self setLabel:self.animalAnlong title:@"" andContent:self.pet.animalAnlong];
-    [self setLabel:self.reason title:@"" andContent:self.pet.reason];
-    [self setLabel:self.bodyweight title:@"" andContent:self.pet.bodyweight];
+    self.viewController.edgesForExtendedLayout = UIRectEdgeNone;
     
     [self setPageIndicatorTitleByResult:self.petResult];
     self.pageIndicator.alpha = 0.0;
@@ -102,16 +70,12 @@
             [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(hidePageIndicator:) userInfo:nil repeats:NO];
         }
     }];
-    [self.scrollView setContentOffset:CGPointMake(0.0, 0.0) animated:NO];
-    self.imageView.layer.masksToBounds = YES;
-    self.imageView.layer.cornerRadius = 10.0;
-    self.note.layer.borderColor = [UIColor darkGrayColor].CGColor;
-    self.note.layer.borderWidth = 1.0;
-    self.note.layer.cornerRadius = 5.0;
+    
     self.facebookButton.tintColor = UIColorFromRGB(0x3b5998);
     self.lineButton.tintColor = UIColorFromRGB(0x19BD03);
     self.callButton.tintColor = [UIColor blackColor];
     self.mailButton.tintColor = [UIColor redColor];
+    self.viewController.navigationController.navigationBar.hidden = YES;
 }
 
 - (void)setPageIndicatorTitleByResult:(PetResult *)petResult {
@@ -144,7 +108,7 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             self.imageView.alpha = 0.0;
             self.imageView.image = self.image;
-            self.imageView.contentMode = UIViewContentModeScaleAspectFit;
+            self.imageView.contentMode = UIViewContentModeScaleAspectFill;
             self.imageView.autoresizingMask =
             ( UIViewAutoresizingFlexibleBottomMargin
              | UIViewAutoresizingFlexibleHeight
@@ -195,6 +159,43 @@
 
 #pragma mark - UIScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    CGPoint offset = scrollView.contentOffset;
+    NSLog(@"offset.y:%.2f",offset.y);
+    if (offset.y <= 0) {
+        [self scaleItem:self.imageView];
+        if (offset.y <= -20) {
+            [self.detailTableView setContentOffset:CGPointMake(0, -20)];
+        }
+        self.viewController.navigationController.navigationBar.hidden = YES;
+    } else if (offset.y >= 150) {
+        self.viewController.navigationController.navigationBar.hidden = NO;
+    }
+}
+
+#pragma mark - UITableViewDataSource
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 1;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    AnimalDetailTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kDetailTableCellIdentifier];
+    if (!cell) {
+        cell = (AnimalDetailTableViewCell *)[Utilities getNibWithName:@"AnimalDetailTableViewCell"];
+    }
+    cell.backgroundColor = [UIColor clearColor];
+    [cell settingContentsByPet:self.pet];
+    return cell;
+}
+
+- (void)scaleItem:(UIView *)item{
+    CGFloat shiftInPercents = [self shiftInPercents];
+    CGFloat buildigsScaleRatio = shiftInPercents;
+    NSLog(@"buildigsScaleRatio:%.2f",buildigsScaleRatio);
+    [item setTransform:CGAffineTransformMakeScale(buildigsScaleRatio,buildigsScaleRatio)];
     
+}
+
+-(CGFloat)shiftInPercents{
+    return (-self.detailTableView.contentOffset.y/10)+1;
 }
 @end
