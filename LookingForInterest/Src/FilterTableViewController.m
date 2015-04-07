@@ -1102,10 +1102,15 @@
         
         if (!self.isStartLoadingPage) {
             if (offset.y <= 0) {
+                
                 [((ViewController *)self.delegate).loadPreviousPageView.indicatorLabel setAlpha:(0-offset.y)/100];
+                
+                
+                CGFloat fontSize = (ABS(offset.y)/5 > 20)?20:ABS(offset.y)/5;
+                [((ViewController *)self.delegate).loadPreviousPageView.indicatorLabel setFont:[UIFont systemFontOfSize:fontSize]];
+                
                 if (offset.y <= -kReloadDistance-20 && self.pageController.currentPage > 1) {
                     ((ViewController *)self.delegate).loadPreviousPageView.indicatorLabel.text = @"換上一頁！";
-//                    [self scaleItem:((ViewController *)self.delegate).loadPreviousPageView.indicator];
                 } else if (self.pageController.currentPage > 1) {
                     ((ViewController *)self.delegate).loadPreviousPageView.indicatorLabel.text = @"再拉再拉！";
                 } else {
@@ -1116,7 +1121,12 @@
                 }
                 ((ViewController *)self.delegate).loadPreviousPageView.frame = CGRectMake(0.f, 0.f, self.tableView.frame.size.width, offset.y);
             } else if (y > h) {
+                
                 [((ViewController *)self.delegate).loadNextPageView.indicatorLabel setAlpha:(y-h)/100];
+                
+                CGFloat fontSize = ((y-h)/5 > 20)?20:(y-h)/5;
+                [((ViewController *)self.delegate).loadNextPageView.indicatorLabel setFont:[UIFont systemFontOfSize:fontSize]];
+                
                 if (self.pageController.currentPage < self.pageController.totalPage) {
                     if (y > h + kReloadDistance) {
                         ((ViewController *)self.delegate).loadNextPageView.indicatorLabel.text = @"換下一頁！";

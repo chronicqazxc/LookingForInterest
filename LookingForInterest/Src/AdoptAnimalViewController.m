@@ -391,8 +391,17 @@
     
     if (self.isStartLoading == NO) {
         if (offset.y <= 0) {
-//            [self scaleItem:nil];
+            
             [self.loadPreviousPageView.indicatorLabel setAlpha:(0-offset.y)/100];
+            
+            CGFloat fontSize = 0.0;
+            if (-offset.y > 30) {
+                fontSize = (ABS(offset.y+30)/5 > 20)?20:ABS(offset.y+30)/5;
+            } else {
+                fontSize = 0.0;
+            }
+            [self.loadPreviousPageView.indicatorLabel setFont:[UIFont systemFontOfSize:fontSize]];
+            
             if (offset.y <= -kReloadDistance-20 && self.loadPreviousPageView.canLoading) {
                 self.loadPreviousPageView.indicatorLabel.text = @"換上一頁！";
             } else if (self.loadPreviousPageView.canLoading) {
@@ -405,8 +414,12 @@
             }
             self.loadPreviousPageView.frame = CGRectMake(0.f, 0.f, self.tableView.frame.size.width, offset.y);
         } else if (y > h) {
+            
             [self.loadNextPageView.indicatorLabel setAlpha:(y-h)/100];
-//            [self scaleItem:nil];
+            
+            CGFloat fontSize = ((y-h)/5 > 20)?20:(y-h)/5;
+            [self.loadNextPageView.indicatorLabel setFont:[UIFont systemFontOfSize:fontSize]];
+            
             if (self.loadNextPageView.canLoading) {
                 if (y > h + kReloadDistance) {
                     self.loadNextPageView.indicatorLabel.text = @"換下一頁！";
