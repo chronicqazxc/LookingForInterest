@@ -15,8 +15,9 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I58-9f-YlJ">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="k9a-gq-SII">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="780" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="k9a-gq-SII">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2bn-GZ-Zem" customClass="GoTopButton">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
@@ -166,6 +167,7 @@
                 <outlet property="lineButton" destination="HKA-BC-yVe" id="JXx-na-XbM"/>
                 <outlet property="mailButton" destination="3TW-Hx-23P" id="3ci-XB-z9D"/>
                 <outlet property="pageIndicator" destination="2bn-GZ-Zem" id="CNU-gp-rSA"/>
+                <outlet property="view" destination="I58-9f-YlJ" id="L9i-ng-0VH"/>
             </connections>
             <point key="canvasLocation" x="27" y="611"/>
         </collectionViewCell>

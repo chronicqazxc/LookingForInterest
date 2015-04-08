@@ -24,8 +24,8 @@
 #define kAnimalAnlongTitle @"可否與其他動物相處"
 #define kReasonTitle @"來的原因"
 #define kBodyweightTitle @"體重"
-#define kPetImageWeigh CGRectGetWidth(self.frame)
-#define kPetImageHeigh 400
+#define kPetImageWidth CGRectGetWidth([[UIScreen mainScreen] bounds])
+#define kPetImageHeigh 300
 #define kDetailTableCellIdentifier @"AnimalDetailTableViewCell"
 
 @interface AnimalDetailCollectionViewCell() <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate>
@@ -42,6 +42,7 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *callButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *mailButton;
 @property (strong, nonatomic) UIImageView *imageView;
+@property (weak, nonatomic) IBOutlet UIView *view;
 @end
 
 @implementation AnimalDetailCollectionViewCell
@@ -50,18 +51,17 @@
     [self.detailTableView registerNib:[UINib nibWithNibName:@"AnimalDetailTableViewCell" bundle:nil] forCellReuseIdentifier:kDetailTableCellIdentifier];
     self.detailTableView.dataSource = self;
     self.detailTableView.delegate = self;
+    [self.detailTableView scrollRectToVisible:CGRectMake(0, 0, 10, 10) animated:NO];
     [self.detailTableView reloadData];
     
     if (!self.imageView) {
-        self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth([[UIScreen mainScreen] bounds]), 300)];
-        [self.detailTableView addSubview:self.imageView];
-        [self.detailTableView sendSubviewToBack:self.imageView];
+        self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kPetImageWidth, kPetImageHeigh)];
+        self.imageView.contentMode = UIViewContentModeScaleAspectFit;
+        [self.view addSubview:self.imageView];
+        [self.view sendSubviewToBack:self.imageView];
     } else {
         self.imageView.image = [UIImage imageNamed:@"background_img.png"];
     }
-
-    self.imageView.contentMode = UIViewContentModeScaleAspectFit;
-    
     [self loadImage];
     
     [self setPageIndicatorTitleByResult:self.petResult];
@@ -110,7 +110,6 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             self.imageView.alpha = 0.0;
             self.imageView.image = self.image;
-            self.imageView.contentMode = UIViewContentModeScaleAspectFit;
             self.imageView.autoresizingMask =
             ( UIViewAutoresizingFlexibleBottomMargin
              | UIViewAutoresizingFlexibleHeight
@@ -125,14 +124,6 @@
             }];
         });
     });
-}
-
-- (void)setLabel:(UILabel *)label title:(NSString *)title andContent:(NSString *)content {
-    label.text = [NSString stringWithFormat:@"%@%@", title, content?content:@""];
-}
-
-- (void)setTextView:(UITextView *)textView title:(NSString *)title andContent:(NSString *)content {
-    textView.text = [NSString stringWithFormat:@"%@：%@", title, content];
 }
 
 - (IBAction)facebookShare:(UIBarButtonItem *)sender {
@@ -162,15 +153,20 @@
 #pragma mark - UIScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     CGPoint offset = scrollView.contentOffset;
-    NSLog(@"offset.y:%.2f",offset.y);
+    CGRect bounds = scrollView.bounds;
+    CGSize size = scrollView.contentSize;
+    UIEdgeInsets inset = scrollView.contentInset;
+    float y = offset.y + bounds.size.height - inset.bottom;
+    float h = size.height;
+    
     if (offset.y <= 0) {
         [self scaleItem:self.imageView];
         if (offset.y <= -50) {
             [self.detailTableView setContentOffset:CGPointMake(0, -50)];
         }
-//        self.viewController.navigationController.navigationBar.hidden = YES;
-    } else if (offset.y >= 150) {
-//        self.viewController.navigationController.navigationBar.hidden = NO;
+    } else if (y > h) {
+        self.viewController.navigationController.navigationBar.hidden = NO;
+        self.imageView.frame = CGRectMake(0, (h-y)*1.0, kPetImageWidth, kPetImageHeigh);
     }
 }
 
@@ -181,6 +177,15 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     AnimalDetailTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kDetailTableCellIdentifier];
+    
+    [cell sendSubviewToBack:cell.shadowView];
+    UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:CGRectMake(0, 0, kPetImageWidth, 5)];
+    cell.shadowView.layer.masksToBounds = NO;
+    cell.shadowView.layer.shadowColor = [UIColor blackColor].CGColor;
+    cell.shadowView.layer.shadowOffset = CGSizeMake(0.0f, -5.0f);
+    cell.shadowView.layer.shadowOpacity = 0.5f;
+    cell.shadowView.layer.shadowPath = shadowPath.CGPath;
+    
     if (!cell) {
         cell = (AnimalDetailTableViewCell *)[Utilities getNibWithName:@"AnimalDetailTableViewCell"];
     }
@@ -192,7 +197,6 @@
 - (void)scaleItem:(UIView *)item{
     CGFloat shiftInPercents = [self shiftInPercents];
     CGFloat buildigsScaleRatio = shiftInPercents;
-    NSLog(@"buildigsScaleRatio:%.2f",buildigsScaleRatio);
     [item setTransform:CGAffineTransformMakeScale(buildigsScaleRatio,buildigsScaleRatio)];
     
 }
