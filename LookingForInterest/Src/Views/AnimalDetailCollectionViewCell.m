@@ -56,6 +56,7 @@
     if (!self.imageView) {
         self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kPetImageWidth, kPetImageHeigh)];
         self.imageView.contentMode = UIViewContentModeScaleAspectFit;
+        self.imageView.image = [UIImage imageNamed:@"background_img.png"];
         [self.view addSubview:self.imageView];
         [self.view sendSubviewToBack:self.imageView];
     } else {
