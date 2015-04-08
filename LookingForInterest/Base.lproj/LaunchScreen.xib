@@ -56,9 +56,11 @@
                 <constraint firstItem="kId-c2-rCX" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="290" id="TrM-6d-kvq"/>
                 <constraint firstAttribute="centerX" secondItem="8ie-xW-0ye" secondAttribute="centerX" id="ZEH-qu-HZ9"/>
                 <constraint firstAttribute="bottom" secondItem="8ie-xW-0ye" secondAttribute="bottom" constant="20" id="abP-xJ-oWZ"/>
+                <constraint firstAttribute="centerX" secondItem="kId-c2-rCX" secondAttribute="centerX" id="dpk-2W-rii"/>
                 <constraint firstItem="8ie-xW-0ye" firstAttribute="leading" secondItem="kId-c2-rCX" secondAttribute="leading" id="ekq-cF-csk"/>
                 <constraint firstItem="Xuy-HB-DNu" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="fg9-ga-kjH"/>
                 <constraint firstItem="kId-c2-rCX" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" symbolic="YES" id="fvb-Df-36g"/>
+                <constraint firstItem="kId-c2-rCX" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="259" id="hJx-P0-xci"/>
                 <constraint firstItem="Xuy-HB-DNu" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="iqb-vs-MCN"/>
                 <constraint firstItem="kId-c2-rCX" firstAttribute="trailing" secondItem="8ie-xW-0ye" secondAttribute="trailing" id="lpA-JC-DvH"/>
                 <constraint firstAttribute="bottom" secondItem="Xuy-HB-DNu" secondAttribute="bottom" id="qSD-xz-k0x"/>
@@ -78,6 +80,8 @@
                     <exclude reference="J5w-2g-H5D"/>
                     <exclude reference="Syd-YE-ak8"/>
                     <exclude reference="TrM-6d-kvq"/>
+                    <exclude reference="dpk-2W-rii"/>
+                    <exclude reference="hJx-P0-xci"/>
                     <exclude reference="lpA-JC-DvH"/>
                     <exclude reference="abP-xJ-oWZ"/>
                     <exclude reference="ekq-cF-csk"/>
@@ -104,6 +108,13 @@
                     <exclude reference="ZEH-qu-HZ9"/>
                     <include reference="abP-xJ-oWZ"/>
                     <include reference="ekq-cF-csk"/>
+                </mask>
+            </variation>
+            <variation key="heightClass=regular-widthClass=regular">
+                <mask key="constraints">
+                    <exclude reference="0u8-Qx-xOM"/>
+                    <include reference="dpk-2W-rii"/>
+                    <include reference="hJx-P0-xci"/>
                 </mask>
             </variation>
             <point key="canvasLocation" x="548" y="455"/>
