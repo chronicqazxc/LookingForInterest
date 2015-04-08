@@ -684,8 +684,8 @@
     }
     
     GMSCircle *circ = [GMSCircle circleWithPosition:center radius:radius*1000];
-    circ.fillColor = [UIColor colorWithRed:0.25 green:0 blue:0 alpha:0.25];
-    circ.strokeColor = [UIColor blueColor];
+    circ.fillColor = [UIColor colorWithRed:0 green:0 blue:1 alpha:0.05];
+    circ.strokeColor = [UIColor colorWithRed:0 green:0 blue:1 alpha:0.5];
     circ.strokeWidth = 1;
     circ.map = self.googleMap;
     

@@ -36,6 +36,9 @@
 }
 
 - (void)settingContentsByPet:(Pet *)pet {
+    self.note.layer.cornerRadius = 5.0f;
+    self.note.layer.masksToBounds = YES;
+    
     self.pet = pet;
     [self.age setText:pet.age?pet.age:@""];
     [self.variety setText:pet.variety?pet.variety:@""];

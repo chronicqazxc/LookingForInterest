@@ -225,47 +225,56 @@
 }
 
 - (void)loadPathWithMode:(NSString *)mode {
-    NSString *startLatitudeString = [NSString stringWithFormat:@"%f",self.start.latitude];
-    NSString *startLongitudeString = [NSString stringWithFormat:@"%f",self.start.longitude];
-    NSString *endLatitudeString = [NSString stringWithFormat:@"%f",self.destination.latitude];
-    NSString *endLongitudeString = [NSString stringWithFormat:@"%f",self.destination.longitude];
-    NSString *polyLineURLString = kPolylineURLString(startLatitudeString, startLongitudeString, endLatitudeString, endLongitudeString, mode);
-    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:polyLineURLString]];
-    NSURLResponse *response = nil;
-    NSError *error = nil;
-    NSData *data = [NSURLConnection sendSynchronousRequest:urlRequest returningResponse:&response error:&error];
+    [self loadHtmlWithStringContent:@"<head><style>body{background-color:white; font-size:40px;}</style></head><h1>Parsing...</h1>"];
     
-    NSDictionary *parseDataDic = nil;
-    if (error == nil) {
-        parseDataDic = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
-    }
-    if (parseDataDic && [[parseDataDic objectForKey:@"status"] isEqualToString:@"OK"]) {
-        NSDictionary *route = [[parseDataDic objectForKey:@"routes"] firstObject];
+    dispatch_queue_t myQueue = dispatch_queue_create("generate path",NULL);
+    dispatch_async(myQueue, ^{
         
-        [self parseOverviewPolyline:[route objectForKey:@"overview_polyline"]];
+        NSString *startLatitudeString = [NSString stringWithFormat:@"%f",self.start.latitude];
+        NSString *startLongitudeString = [NSString stringWithFormat:@"%f",self.start.longitude];
+        NSString *endLatitudeString = [NSString stringWithFormat:@"%f",self.destination.latitude];
+        NSString *endLongitudeString = [NSString stringWithFormat:@"%f",self.destination.longitude];
+        NSString *polyLineURLString = kPolylineURLString(startLatitudeString, startLongitudeString, endLatitudeString, endLongitudeString, mode);
+        NSURLRequest *urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:polyLineURLString]];
+        NSURLResponse *response = nil;
+        NSError *error = nil;
+        NSData *data = [NSURLConnection sendSynchronousRequest:urlRequest returningResponse:&response error:&error];
         
-        self.htmlString = [NSMutableString string];
-        [self.htmlString appendFormat:@"<head><style>body{background-color:lightgray; font-size:40px;} table{border-collapse:collapse} table,td,th{padding:15px; border:1px solid blue; font-size:40px;} th{background-color:blue; color:white; font-size:40px;} .warning{color:red; font-size:40px;} p{font-size:40px;}</style></head>"];
-        [self.htmlString appendFormat:@"<h1>Route</h1>"];
-        [self parseLegs:[route objectForKey:@"legs"]];
-//        NSString *summary = [route objectForKey:@"summary"];
-        NSString *warning = [[route objectForKey:@"warnings"] firstObject];
-//        [self.htmlString appendFormat:@"<font size=\"3\">%@</font>",summary];
-        if (warning) {
-            [self.htmlString appendFormat:@"<p class=\"warning\">%@</p>",warning];
-        }
-        [self.htmlString appendFormat:@"<p>更多路線請參考導航功能</p>"];
-        [self loadHtmlWithStringContent:self.htmlString];
-        
-    }
-    GMSMutablePath *path = [GMSMutablePath path];
-    for (CLLocation *location in self.totalRoutes) {
-        [path addCoordinate:location.coordinate];
-    }
-    GMSPolyline *polyline = [GMSPolyline polylineWithPath:path];
-    polyline.map = self.googleMap;
-}
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSDictionary *parseDataDic = nil;
+            NSError *error = nil;
+            if (error == nil) {
+                parseDataDic = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+            }
+            if (parseDataDic && [[parseDataDic objectForKey:@"status"] isEqualToString:@"OK"]) {
+                NSDictionary *route = [[parseDataDic objectForKey:@"routes"] firstObject];
+                
+                [self parseOverviewPolyline:[route objectForKey:@"overview_polyline"]];
+                
+                self.htmlString = [NSMutableString string];
+                [self.htmlString appendFormat:@"<head><style>body{background-color:white; font-size:40px;} table{border-collapse:collapse} table,td,th{padding:15px; border:1px solid blue; font-size:40px;} th{background-color:blue; color:white; font-size:40px;} .warning{color:red; font-size:40px;} p{font-size:40px;}</style></head>"];
+                [self.htmlString appendFormat:@"<h1>Route</h1>"];
+                [self parseLegs:[route objectForKey:@"legs"]];
+                //        NSString *summary = [route objectForKey:@"summary"];
+                NSString *warning = [[route objectForKey:@"warnings"] firstObject];
+                //        [self.htmlString appendFormat:@"<font size=\"3\">%@</font>",summary];
+                if (warning) {
+                    [self.htmlString appendFormat:@"<p class=\"warning\">%@</p>",warning];
+                }
+                [self.htmlString appendFormat:@"<p>更多路線請參考導航功能</p>"];
+                [self loadHtmlWithStringContent:self.htmlString];
+                
+                GMSMutablePath *path = [GMSMutablePath path];
+                for (CLLocation *location in self.totalRoutes) {
+                    [path addCoordinate:location.coordinate];
+                }
+                GMSPolyline *polyline = [GMSPolyline polylineWithPath:path];
+                polyline.map = self.googleMap;
+            }
+        });
+    });
 
+}
 
 - (void)parseLegs:(NSArray *)legs {
     NSLog(@"legs:%lu",(unsigned long)[legs count]);
