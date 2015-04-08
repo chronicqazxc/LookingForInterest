@@ -101,23 +101,28 @@
     NSInteger lat=0;
     NSInteger lng=0;
     while (index < len) {
-        NSInteger b;
+        NSInteger b = 0;
         NSInteger shift = 0;
         NSInteger result = 0;
         do {
-            b = [encoded characterAtIndex:index++] - 63;
-            result |= (b & 0x1f) << shift;
-            shift += 5;
-        } while (b >= 0x20);
+            if (index < len) {
+                b = [encoded characterAtIndex:index++] - 63;
+                result |= (b & 0x1f) << shift;
+                shift += 5;
+            }
+        } while (b >= 0x20 && index < len);
         NSInteger dlat = ((result & 1) ? ~(result >> 1) : (result >> 1));
         lat += dlat;
+        
         shift = 0;
         result = 0;
         do {
-            b = [encoded characterAtIndex:index++] - 63;
-            result |= (b & 0x1f) << shift;
-            shift += 5;
-        } while (b >= 0x20);
+            if (index < len) {
+                b = [encoded characterAtIndex:index++] - 63;
+                result |= (b & 0x1f) << shift;
+                shift += 5;
+            }
+        } while (b >= 0x20 && index < len);
         NSInteger dlng = ((result & 1) ? ~(result >> 1) : (result >> 1));
         lng += dlng;
         NSNumber *latitude = [[NSNumber alloc] initWithFloat:lat * 1e-5];

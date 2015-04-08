@@ -158,13 +158,13 @@
     float y = offset.y + bounds.size.height - inset.bottom;
     float h = size.height;
     
+//    NSLog(@"offset.y:%.2f, y:%.2f, h:%.2f",offset.y,y,h);
     if (offset.y <= 0) {
         [self scaleItem:self.imageView];
         if (offset.y <= -50) {
             [self.detailTableView setContentOffset:CGPointMake(0, -50)];
         }
     } else if (y > h) {
-        self.viewController.navigationController.navigationBar.hidden = NO;
         self.imageView.frame = CGRectMake(0, (h-y)*1.0, kPetImageWidth, kPetImageHeigh);
     }
 }
@@ -176,15 +176,6 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     AnimalDetailTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kDetailTableCellIdentifier];
-    
-    [cell sendSubviewToBack:cell.shadowView];
-    UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:CGRectMake(0, 0, kPetImageWidth, 5)];
-    cell.shadowView.layer.masksToBounds = NO;
-    cell.shadowView.layer.shadowColor = [UIColor blackColor].CGColor;
-    cell.shadowView.layer.shadowOffset = CGSizeMake(0.0f, -5.0f);
-    cell.shadowView.layer.shadowOpacity = 0.5f;
-    cell.shadowView.layer.shadowPath = shadowPath.CGPath;
-    
     if (!cell) {
         cell = (AnimalDetailTableViewCell *)[Utilities getNibWithName:@"AnimalDetailTableViewCell"];
     }
@@ -197,7 +188,6 @@
     CGFloat shiftInPercents = [self shiftInPercents];
     CGFloat buildigsScaleRatio = shiftInPercents;
     [item setTransform:CGAffineTransformMakeScale(buildigsScaleRatio,buildigsScaleRatio)];
-    
 }
 
 -(CGFloat)shiftInPercents{

@@ -126,4 +126,12 @@
     NSLog(@"%@",petResult);
 }
 
+- (void)testCharactorInIndex {
+    NSString *encoded = @"ivzwCow~dVbHjd@Y|o@[lrAoS`jBaJbiBbO|OvLvRaXvn@eWfn@rRte@dpAr`D`w@l{Efl@jv@xV`oA|Y`qApEbcAni@lZzNhk@tBlnAhn@laBpRn{BaCzvBha@`pAvdAthBzeAnsEh^rb@v]bNv\r~@j}A~jAdp@bz@ziB`zBbMptDwFt\nXv|@vr@bqBbdAxtEnc@luBy@vwArAtfAdS~cAiAt]bj@`m@eI`PnIpVrPbUjRh[nYgTp_@|CpWhI|M|XvwA`b@jw@~_@heB|aCv_An[hd@lkBd`@jrArb@hNz]`Od]pGjf@za@pw@xRxa@rLfVb]xaAjhBvr@rcAxbAdX~qAhDxg@rWznAltA|rAdwAxQ~Xlj@rfBd}@hcArd@blAxbAzoApn@bZrvAlwAOfXze@hy@`q@h`@jcAfiApYzj@h`@pHb\dT|Mz\ni@dTrhAdv@j}Ar_@zrD|`@bnBbcAl\pMUhR`DfTdp@nl@phAlj@h_@rn@raBtl@`kAxeAdd@zn@lrA~a@xqAno@jfArtAv{@bw@rcBgAbcBpiAfsCbl@~xBhhAfzD~v@naD|cAxvDvmA`pBzp@bhBthAbw@jQd\fo@D|R_Jxy@{AlVdE`LvCveAnR`n@nFxq@iF`e@gPta@cHds@dInQnFzd@oEh^lAjg@a@pcAxKj{AxN`jAfGvTgBxHsFh]dGbcBtl@rlA|w@btDuRteDyJz]cFlv@v[|qB`|@twBvz@z`Ad@dqExEj}@gGboAwXj{B|WjgAzVrRhTn@hO|OtK|s@bObaAnUlsAbv@n{@d}@b]tF~fAfFnfAQpQ_A``@ns@dbAz|@bwAfl@p`Azd@xuCbeAl^rEr@hAvZ`Fxm@_DfxAzl@noAdb@v]nTbHx[fgAnDpkDpj@xQoCrRx@n|@vkAbu@hh@xhAfHxgCpErlDnGxxEnK|l@vOtRjSvj@pLtQWhGhNjGjIpInKvsAbi@vl@pV`f@dBjh@`f@vb@xf@pkBllAdhEv@xWz@|HjGbQvCba@qId~CoWd`BqCht@fTrjAjMzs@j]tWjEdF|Tlh@xJprAjUvKuAni@cF~JnMRXj\dKlx@aBx{@z_@~w@|Jvn@sCjf@zHrpA`oAzlAtErh@he@rl@l`Ape@xz@~U@vz@qUfwAyItzAia@pfAmO~|@|@hjAz\b`@zBp[}Lxv@kI|g@nBhuA`Y~oA~DpaCcb@zpDcYlmA}SneBaYnjCyb@|zAfUpnA|MzpBof@ttA_T~dBm`@jaBwHrt@aUNwC";
+    NSInteger a = [encoded length];
+    NSInteger b = [encoded characterAtIndex:1276];
+    //- 63
+    NSLog(@"%d",b);
+}
+
 @end
