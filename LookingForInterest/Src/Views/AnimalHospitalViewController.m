@@ -270,6 +270,8 @@
                 }
                 GMSPolyline *polyline = [GMSPolyline polylineWithPath:path];
                 polyline.map = self.googleMap;
+            } else if (parseDataDic && [[parseDataDic objectForKey:@"status"] isEqualToString:@"ZERO_RESULTS"]) {
+                [self loadHtmlWithStringContent:@"<head><style>body{background-color:white; font-size:40px;}</style></head><h1>無路徑...</h1>"];
             }
         });
     });

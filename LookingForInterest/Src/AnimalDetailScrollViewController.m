@@ -219,7 +219,6 @@
     NSString *description = [NSString stringWithFormat:@"%@/%@",pet.phone,pet.email];
     fbController.delegate = self;
     [fbController shareWithLink:kAdoptAnimalsFacebookShareURL name:name caption:caption description:description picture:pet.imageName message:pet.note];
-    
 }
 
 - (void)publishToLine:(Pet *)pet {
@@ -245,7 +244,7 @@
 }
 
 - (NSString *)composeLineContent:(Pet *)pet {
-    NSString *content = [NSString stringWithFormat:@"照片:%@\n名字:%@(%@)\n年齡:%@\n位置:%@\nPhone:%@\nEmail:%@\n介紹:%@",pet.imageName,pet.name,pet.sex,pet.age,pet.resettlement,pet.phone,pet.email,pet.note];
+    NSString *content = [NSString stringWithFormat:@"照片:%@\n名字:%@(%@)\n年齡:%@\n位置:%@\nPhone:%@\nEmail:%@\n介紹:%@\nSend from:%@\n臺北市動物保護處:",pet.imageName,pet.name,pet.sex,pet.age,pet.resettlement,pet.phone,pet.email,pet.note,kAppStoreURL];
     return content;
 }
 

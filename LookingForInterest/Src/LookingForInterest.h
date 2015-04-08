@@ -44,6 +44,7 @@
 #define kHospitalFunctionCloseReasonKey @"close_reason"
 #pragma mark -
 #pragma mark - Adopt animals URL
+#define kAppStoreURL @"https://itunes.apple.com/tw/app/guan-xin-mao-xiao-hai/id977007555?mt=8&uo=4"
 #define kAdoptAnimalsFacebookShareURL @"http://www.tcapo.gov.taipei"
 #define kAdoptAnimalsInTPCURL @"http://210.65.114.15/api/action/datastore_search"
 #define kResourceIDKey @"resource_id"
