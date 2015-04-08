@@ -29,7 +29,6 @@
 #define kDetailTableCellIdentifier @"AnimalDetailTableViewCell"
 
 @interface AnimalDetailCollectionViewCell() <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate>
-//@property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UITableView *detailTableView;
 @property (strong, nonatomic) UIImage *image;
 @property (weak, nonatomic) IBOutlet GoTopButton *pageIndicator;

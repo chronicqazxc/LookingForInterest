@@ -272,11 +272,6 @@
 - (void)searchWithContent:(NSString *)content {
     self.filterType = SearchStores;
 
-//    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-//    NSData *menuData=[NSKeyedArchiver archivedDataWithRootObject:self.menu];
-//    [defaults setObject:menuData forKey:kLookingForInterestUserDefaultKey];
-//    [defaults synchronize];
-    
     RequestSender *requestSender = [[RequestSender alloc] init];
     requestSender.delegate = self;
     CLLocationCoordinate2D currentLocation = CLLocationCoordinate2DMake(0, 0);
@@ -284,7 +279,6 @@
         if ([self.delegate respondsToSelector:@selector(sendLocationBackwithMenuSearchType:)]) {
             CLLocationCoordinate2D backLocation = [self.delegate sendLocationBackwithMenuSearchType:self.menu.menuSearchType];
             currentLocation = CLLocationCoordinate2DMake(backLocation.latitude, backLocation.longitude);
-//            currentLocation = CLLocationCoordinate2DMake(25.0525463, 121.5560048);
         }
     }
     requestSender.accessToken = self.accessToken;
@@ -807,8 +801,8 @@
 - (void)storesBack:(NSMutableDictionary *)resultDic {
     [Utilities stopLoading];
     
-    [self stopSunRotating:((ViewController *)self.delegate).loadPreviousPageView.indicator];
-    [self stopSunRotating:((ViewController *)self.delegate).loadNextPageView.indicator];
+    [self stopRotating:((ViewController *)self.delegate).loadPreviousPageView.indicator];
+    [self stopRotating:((ViewController *)self.delegate).loadNextPageView.indicator];
     ((ViewController *)self.delegate).loadNextPageView.indicatorLabel.text = @"";
     
     NSArray *stores = [resultDic objectForKey:@"stores"];
@@ -967,19 +961,6 @@
 
 -(NSArray *) createLeftButtonWithIndexPath:(NSIndexPath *)indexPath {
     NSMutableArray * result = [NSMutableArray array];
-    //    UIColor * colors[3] = {[UIColor greenColor],
-    //        [UIColor colorWithRed:0 green:0x99/255.0 blue:0xcc/255.0 alpha:1.0],
-    //        [UIColor colorWithRed:0.59 green:0.29 blue:0.08 alpha:1.0]};
-    //    UIImage * icons[3] = {[UIImage imageNamed:@"check.png"], [UIImage imageNamed:@"fav.png"], [UIImage imageNamed:@"menu.png"]};
-    //    for (int i = 0; i < number; ++i)
-    //    {
-    //        MGSwipeButton * button = [MGSwipeButton buttonWithTitle:@"" icon:icons[i] backgroundColor:colors[i] padding:10 callback:^BOOL(MGSwipeTableCell * sender){
-    //            NSLog(@"Convenience callback received (left).");
-    //            return YES;
-    //        }];
-    //        [result addObject:button];
-    //    }
-    
     UIColor *backgroundColor;
     if ([self isMyFavoriteStoresByIndex:indexPath.row]) {
         backgroundColor = kColorIsFavoriteStore;
@@ -993,16 +974,14 @@
 
 -(NSArray *) createRightButtons: (int) number {
     NSMutableArray * result = [NSMutableArray array];
-    NSString *titles[2] = {kCellNavigationTitle, kCellMoreTitle};
-    UIColor  *colors[2] = {[UIColor redColor], [UIColor lightGrayColor]};
-    for (int i = 0; i < number; ++i)
-    {
-        //        MGSwipeButton * button = [MGSwipeButton buttonWithTitle:titles[i] backgroundColor:colors[i] callback:^BOOL(MGSwipeTableCell * sender){
-        //            NSLog(@"Convenience callback received (right).");
-        //            return YES;
-        //        }];
-        MGSwipeButton *button = [MGSwipeButton buttonWithTitle:titles[i] backgroundColor:colors[i] padding:15];
-        [result addObject:button];
+    if (number == 2) {
+        NSString *titles[2] = {kCellNavigationTitle, kCellMoreTitle};
+        UIColor  *colors[2] = {[UIColor redColor], [UIColor lightGrayColor]};
+        for (int i = 0; i < number; ++i)
+        {
+            MGSwipeButton *button = [MGSwipeButton buttonWithTitle:titles[i] backgroundColor:colors[i] padding:15];
+            [result addObject:button];
+        }
     }
     return result;
 }
@@ -1065,16 +1044,6 @@
     }
 }
 
--(void)scaleItem:(UIView *)item{
-    CGFloat shiftInPercents = [self shiftInPercents];
-    CGFloat buildigsScaleRatio = shiftInPercents / 100;
-    [item setTransform:CGAffineTransformMakeScale(buildigsScaleRatio,buildigsScaleRatio)];
-}
-
--(CGFloat)shiftInPercents{
-    return (kReloadDistance / 100) * -self.tableView.contentOffset.y;
-}
-
 - (void)rotateInfinitily:(UIView *)view {
     CABasicAnimation *rotationAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
     rotationAnimation.toValue = @(M_PI * 2.0);
@@ -1086,7 +1055,7 @@
     [view.layer addAnimation:rotationAnimation forKey:@"rotationAnimation"];
 }
 
--(void)stopSunRotating:(UIView *)view {
+-(void)stopRotating:(UIView *)view {
     [view.layer removeAnimationForKey:@"rotationAnimation"];
 }
 

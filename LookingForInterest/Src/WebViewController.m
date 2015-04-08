@@ -34,7 +34,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-
+    [super viewWillAppear:animated];
 }
 
 - (void)viewDidLayoutSubviews NS_AVAILABLE_IOS(5_0) {

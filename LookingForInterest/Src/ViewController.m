@@ -219,12 +219,10 @@
 }
 
 - (void)setOriginalTitle {
-//    [self.navigationButton setTitle:kFormattedTitle(kTitleCurrentPosition) forState:UIControlStateNormal];
     [self setNaviTitleButtonWithString:kFormattedTitle(kTitleCurrentPosition)];
 }
 
 - (void)setFormattedTitle:(NSString *)title {
-//    [self.navigationButton setTitle:kFormattedTitle(title) forState:UIControlStateNormal];
     [self setNaviTitleButtonWithString:kFormattedTitle(title)];
 }
 
@@ -283,8 +281,6 @@
     self.googleMap.myLocationEnabled = YES;
     self.googleMap.settings.compassButton = YES;
     self.googleMap.accessibilityElementsHidden = NO;
-    
-//    [self.mapView addSubview:self.googleMap];
 }
 
 #pragma mark - CLLocationManagerDelegate
@@ -776,17 +772,6 @@
 
 - (void)showOptionsWithStore:(Store *)store {
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:kOptionsTitle(store.name) message:kOptionMessage(@"你可以") preferredStyle:UIAlertControllerStyleActionSheet];
-    
-//    UIAlertAction *callAction = [UIAlertAction actionWithTitle:kCallActionTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-//        if ((NSNull *)store.phoneNumber == [NSNull null] ||
-//            !store.phoneNumber ||
-//            [store.phoneNumber isEqualToString:@""]) {
-//            UIAlertController *alert = [Utilities normalAlertWithTitle:kNoPhoneNumberAlertTitle message:kNoPhoneNumberAlertMessage withObj:store andSEL:@selector(surfWebWithStore:) byCaller:self];
-//            [self presentViewController:alert animated:YES completion:^{
-//                NSLog(@"click ok!");
-//            }];
-//        }
-//    }];
     
     UIAlertAction *webSiteAction = [UIAlertAction actionWithTitle:kWebSiteActionTitle style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         NSLog(@"web site");

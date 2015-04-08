@@ -33,7 +33,6 @@
 #define kNavigationColorFilterSecond 0x690099
 #define kReloadDistance 100
 #define kSpringTreshold 130
-#define DEGREES_TO_RADIANS(x) (M_PI * (x) / 180.0)
 
 @interface AdoptAnimalViewController () <UITableViewDataSource, UITableViewDelegate, UITabBarDelegate, ADBannerViewDelegate, RequestSenderDelegate, AdoptAnimalFilterControllerDelegate, MGSwipeTableCellDelegate, ManulViewControllerDelegate>
 @property (strong, nonatomic) PetResult *petResult;
@@ -78,7 +77,6 @@
     self.hadShowManul = NO;
     self.hadShowDataSource = NO;
     self.petFilters = [[PetFilters alloc] init];
-//    [self composeFilters];
     [self initProperties];
     self.adBannerView.delegate = self;
     
@@ -132,16 +130,12 @@
         self.navigationItem.title = kAdoptAnimalTitle(@"全部");
     } else if ([self.petFilters.type isEqualToString:kAdoptFilterTypeDog]) {
         self.navigationItem.title = kAdoptAnimalTitle(kAdoptFilterTypeDog);
-        //        self.navigationController.navigationBar.topItem.title = kAdoptAnimalTitle(kAdoptFilterTypeDog);
     } else if ([self.petFilters.type isEqualToString:kAdoptFilterTypeCat]) {
         self.navigationItem.title = kAdoptAnimalTitle(kAdoptFilterTypeCat);
-        //        self.navigationController.navigationBar.topItem.title = kAdoptAnimalTitle(kAdoptFilterTypeCat);
     } else if ([self.petFilters.type isEqualToString:kAdoptFilterTypeOther]) {
         self.navigationItem.title = kAdoptAnimalTitle(kAdoptFilterTypeOther);
-        //        self.navigationController.navigationBar.topItem.title = kAdoptAnimalTitle(kAdoptFilterTypeOther);
     } else if ([self.petFilters.type isEqualToString:kAdoptFilterTypeMyFavorite]) {
         self.navigationItem.title = kAdoptAnimalTitle(kAdoptFilterTypeMyFavorite);
-        //        self.navigationController.navigationBar.topItem.title = kAdoptAnimalTitle(kAdoptFilterTypeMyFavorite);
     }
 }
 
@@ -350,17 +344,6 @@
     [self.navigationController pushViewController:animalDetailScrollViewController animated:YES];
 }
 
--(CGFloat)shiftInPercents{
-    return (kReloadDistance / 100) * -self.tableView.contentOffset.y;
-}
-
--(void)scaleItem:(UIView *)item{
-    CGFloat shiftInPercents = [self shiftInPercents];
-    CGFloat buildigsScaleRatio = shiftInPercents / 100;
-    [item setTransform:CGAffineTransformMakeScale(buildigsScaleRatio,buildigsScaleRatio)];
-
-}
-
 - (void)rotateInfinitily:(UIView *)view {
     CABasicAnimation *rotationAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
     rotationAnimation.toValue = @(M_PI * 2.0);
@@ -372,7 +355,7 @@
     [view.layer addAnimation:rotationAnimation forKey:@"rotationAnimation"];
 }
 
--(void)stopSunRotating:(UIView *)view{
+-(void)stopRotating:(UIView *)view{
     [view.layer removeAnimationForKey:@"rotationAnimation"];
 }
 
@@ -519,8 +502,8 @@
 }
 
 - (void)petResultBack:(PetResult *)petResult {
-    [self stopSunRotating:self.loadPreviousPageView.indicator];
-    [self stopSunRotating:self.loadNextPageView.indicator];
+    [self stopRotating:self.loadPreviousPageView.indicator];
+    [self stopRotating:self.loadNextPageView.indicator];
     [self setPageIndicatorTitleByResult:petResult];
     self.loadNextPageView.indicatorLabel.text = @"";
     
@@ -568,23 +551,15 @@
     [self.pageIndicator setTitle:[NSString stringWithFormat:@"%@/%@頁",currentPage,totalPage] forState:UIControlStateNormal];
     
     if ([currentPage isEqualToString:@"1"] && [currentPage isEqualToString:totalPage]) {
-//        self.previousPageView.hidden = YES;
-//        self.nextPageView.hidden = YES;
         self.loadPreviousPageView.canLoading = NO;
         self.loadNextPageView.canLoading = NO;
     } else if ([currentPage isEqualToString:@"1"] && ![currentPage isEqualToString:totalPage]) {
-//        self.previousPageView.hidden = YES;
-//        self.nextPageView.hidden = NO;
         self.loadPreviousPageView.canLoading = NO;
         self.loadNextPageView.canLoading = YES;
     } else if (![currentPage isEqualToString:@"1"] && [currentPage isEqualToString:totalPage]) {
-//        self.previousPageView.hidden = NO;
-//        self.nextPageView.hidden = YES;
         self.loadPreviousPageView.canLoading = YES;
         self.loadNextPageView.canLoading = NO;
     } else {
-//        self.previousPageView.hidden = NO;
-//        self.nextPageView.hidden = NO;
         self.loadPreviousPageView.canLoading = YES;
         self.loadNextPageView.canLoading = YES;
     }

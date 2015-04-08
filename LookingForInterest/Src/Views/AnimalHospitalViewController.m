@@ -442,23 +442,6 @@
     return YES;
 }
 
-//- (UIView *)mapView:(GMSMapView *)mapView markerInfoWindow:(GMSMarker *)marker {
-//    //selectedStoreIndexPath
-//    
-//    Store *store = nil;
-//    for (int i=0; i<[self.storesOnMap count]; i++) {
-//        store = [self.storesOnMap objectAtIndex:i];
-//        if ([store.storeID isEqualToString:marker.title]) {
-//            self.filterTableViewController.selectedStoreIndexPath = [NSIndexPath indexPathForRow:i inSection:1];
-//            break;
-//        }
-//    }
-//    
-//    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0,0,100,100)];
-//    view.backgroundColor = [UIColor yellowColor];
-//    return view;
-//}
-
 - (void)mapView:(GMSMapView *)mapView didLongPressAtCoordinate:(CLLocationCoordinate2D)coordinate {
 //    [self.googleMap clear];
     if (!self.myMarker) {
