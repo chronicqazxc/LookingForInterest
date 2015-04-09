@@ -250,7 +250,7 @@
     NSArray *animals = [Utilities getMyFavoriteAnimalsDecoded];
     BOOL isMyFavorite = NO;
     for (Pet *pet in animals) {
-        if ([pet.petID isEqualToNumber:selectedPet.petID]) {
+        if ([pet.petID isEqualToString:selectedPet.petID]) {
             isMyFavorite = YES;
             break;
         }
@@ -278,7 +278,7 @@
     NSArray *animals = [Utilities getMyFavoriteAnimalsDecoded];
     NSMutableArray *favoriteAnimals = [NSMutableArray arrayWithArray:animals];
     for (Pet *animal in favoriteAnimals) {
-        if ([animal.petID isEqualToNumber:pet.petID]) {
+        if ([animal.petID isEqualToString:pet.petID]) {
             [favoriteAnimals removeObject:animal];
             break;
         }

@@ -110,6 +110,39 @@
     
 }
 
+- (void)testNewURL {
+    //    NSURLRequest * urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:@"http://210.65.114.15/api/action/datastore_search?resource_id=c57f54e2-8ac3-4d30-bce0-637a8968796e&limit=500"]];
+    
+    NSURL *url = [NSURL URLWithString:@"http://data.taipei/opendata/datalist/apiAccess?rid=f4a75ba9-7721-4363-884d-c3820b0b917c&scope=resourceAquire&id=6a3e862a-e1cb-4e44-b989-d35609559463&limit=20&offset=20"];
+    
+    NSError *error = nil;
+    
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+    [urlRequest setHTTPMethod:@"GET"];
+    
+    NSURLResponse *response = nil;
+    
+    NSData *data = [NSURLConnection sendSynchronousRequest:urlRequest returningResponse:&response error:&error];
+    
+    if (error == nil) {
+        NSDictionary *encodeStrings = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+        NSString *success = [NSString stringWithFormat:@"%@",[encodeStrings objectForKey:@"success"]];
+        if ([success isEqualToString:@"1"]) {
+            NSDictionary *result = [encodeStrings objectForKey:@"result"];
+            //            PetResult *petResult = [self parseResult:result];
+            NSArray *records = [result objectForKey:@"records"];
+            NSMutableArray *pets = [NSMutableArray array];
+            for (NSDictionary *record in records) {
+                [pets addObject:[self parseRecord:record]];
+            }
+        } else {
+            NSLog(@"faild");
+        }
+        
+    }
+    
+}
+
 - (PetResult *)parseResult:(NSDictionary *)result {
     PetResult *petResult = [[PetResult alloc] initWithResult:result];
     return petResult;

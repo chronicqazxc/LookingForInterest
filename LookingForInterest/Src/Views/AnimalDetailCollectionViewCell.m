@@ -56,13 +56,13 @@
     if (!self.imageView) {
         self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, kPetImageWidth, kPetImageHeigh)];
         self.imageView.contentMode = UIViewContentModeScaleAspectFit;
-        self.imageView.image = [UIImage imageNamed:@"background_img.png"];
         [self.view addSubview:self.imageView];
-        [self.view sendSubviewToBack:self.imageView];
-    } else {
-        self.imageView.image = [UIImage imageNamed:@"background_img.png"];
     }
-    [self loadImage];
+    self.imageView.image = [UIImage imageNamed:@"background_img.png"];
+    
+    if (self.pet && ![self.pet.imageName isEqualToString:@""]) {
+        [self loadImage];
+    }
     
     [self setPageIndicatorTitleByResult:self.petResult];
     self.pageIndicator.alpha = 0.0;
@@ -86,7 +86,7 @@
     totalPage = [NSString stringWithFormat:@"%d",(int)[petResult.pets count]];
     NSInteger index = 0;
     for (Pet *pet in petResult.pets) {
-        if ([self.pet.petID isEqualToNumber:pet.petID]) {
+        if ([self.pet.petID isEqualToString:pet.petID]) {
             break;
         }
         index++;

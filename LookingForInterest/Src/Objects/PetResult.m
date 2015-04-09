@@ -13,27 +13,25 @@
 - (id)initWithResult:(NSDictionary *)result {
     self = [super init];
     if (self) {
-        NSDictionary *links = [result objectForKey:@"_links"]?[result objectForKey:@"_links"]:@"";
-        self.start = [links objectForKey:@"start"]?[links objectForKey:@"start"]:@"";
-        self.previous = [links objectForKey:@"prev"]?[self parseOffset:[links objectForKey:@"prev"]]:nil;
-        if ([result objectForKey:@"offset"]) {
-            if ([result objectForKey:@"offset"] == [result objectForKey:@"limit"]) {
-                self.previous = @"0";
-            } else if ([result objectForKey:@"offset"] == [NSNumber numberWithLong:0]) {
-                self.previous = @"";
-            }
+        
+        NSInteger offset = [[result objectForKey:@"offset"] intValue]?[[result objectForKey:@"offset"] intValue ]:0;
+        NSInteger limit = [[result objectForKey:@"limit"] intValue]?[[result objectForKey:@"limit"] intValue ]:0;
+        NSInteger count = [[result objectForKey:@"count"] intValue]?[[result objectForKey:@"count"] intValue ]:0;
+        
+        if (offset - limit) {
+            self.previous = [NSString stringWithFormat:@"%ld",offset-limit];
+        } else  {
+            self.previous = @"0";
         }
-        self.next = [links objectForKey:@"next"]?[self parseOffset:[links objectForKey:@"next"]]:@"";
-        self.total = [result objectForKey:@"total"]?[NSNumber numberWithInteger:[[result objectForKey:@"total"] integerValue]]:@0;
-        self.limit = [result objectForKey:@"limit"]?[NSNumber numberWithInteger:[[result objectForKey:@"limit"] integerValue]]:@0;
-        self.offset = [result objectForKey:@"offset"]?[result objectForKey:@"offset"]:@"";
+        
+        self.next = (limit+offset < count)?[NSString stringWithFormat:@"%ld",limit+offset]:@"";
+        
+        self.total = [NSNumber numberWithInteger:count];
+        
+        self.limit = [NSNumber numberWithInteger:limit];
+        
+        self.offset = [NSString stringWithFormat:@"%ld",offset];
     }
     return self;
-}
-
-- (NSString *)parseOffset:(NSString *)offset {
-    NSArray *separateString = [offset componentsSeparatedByString:@"offset="];
-    NSString *offsetString = [separateString lastObject];
-    return offsetString;
 }
 @end

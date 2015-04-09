@@ -46,9 +46,13 @@
 #pragma mark - Adopt animals URL
 #define kAppStoreURL @"https://itunes.apple.com/tw/app/guan-xin-mao-xiao-hai/id977007555?mt=8&uo=4"
 #define kAdoptAnimalsFacebookShareURL @"http://www.tcapo.gov.taipei"
-#define kAdoptAnimalsInTPCURL @"http://210.65.114.15/api/action/datastore_search"
-#define kResourceIDKey @"resource_id"
-#define kResourceID @"c57f54e2-8ac3-4d30-bce0-637a8968796e"
+#define kAdoptAnimalsInTPCURL @"http://data.taipei/opendata/datalist/apiAccess"
+#define kResourceScopeKey @"scope"
+#define kResourceScope @"resourceAquire"
+#define kResourceIDKey @"id"
+#define kResourceRIDKey @"rid"
+#define kResourceID @"6a3e862a-e1cb-4e44-b989-d35609559463"
+#define kResourceRID @"f4a75ba9-7721-4363-884d-c3820b0b917c"
 #define kLimitKey @"limit"
 #define kLimitValue @20
 

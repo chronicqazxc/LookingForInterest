@@ -25,7 +25,7 @@
 @property (strong, nonatomic) NSString *hairType;
 @property (strong, nonatomic) NSString *build;
 @property (strong, nonatomic) NSString *chipNum;
-@property (strong, nonatomic) NSNumber *petID;
+@property (strong, nonatomic) NSString *petID;
 @property (strong, nonatomic) NSString *type;
 @property (strong, nonatomic) NSString *email;
 @property (strong, nonatomic) NSString *bodyweight;

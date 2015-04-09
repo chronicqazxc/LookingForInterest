@@ -16,6 +16,7 @@
 @interface RequestSender() <NSURLConnectionDelegate>
 @property (strong, nonatomic) NSMutableArray *receivedDatas;
 @property (nonatomic) FilterType type;
+@property (strong, nonatomic) PetFilters *petFilters;
 #pragma mark - PetAdopt properties
 @property (strong, nonatomic) NSIndexPath *indexPath;
 @property (strong, nonatomic) NSMutableArray *checkFavoriteAnimalsArr;
@@ -36,7 +37,11 @@
 }
 
 - (void)reconnect:(NSURLConnection *)connection {
-    [connection start];
+
+    NSURLConnection *newConnection = [NSURLConnection connectionWithRequest:connection.originalRequest delegate:self];
+    [newConnection start];
+    
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
 }
 
 - (void)getAccessToken {
@@ -145,6 +150,8 @@
     
     NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
     [connection start];
+    
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
 }
 #pragma mark NSURLConnection Delegate Methods
 
@@ -181,7 +188,9 @@
     // The request has failed for some reason!
     // Check the error var
     NSLog(@"%@",error.description);
-    [self processErrorWithMessage:@"連線錯誤" connection:connection];
+    [self processErrorWithMessage:[error localizedDescription] connection:connection];
+    
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
@@ -255,7 +264,7 @@
                 break;
             case AdoptAnimals:
                 if ([self.delegate respondsToSelector:@selector(petResultBack:)]) {
-                    [self parsePetResultData:[self appendDataFromDatas:self.receivedDatas]];
+                    [self parsePetResultData:[self appendDataFromDatas:self.receivedDatas] withConnection:connection];
                 }
                 break;
             case PetThumbNail:
@@ -279,7 +288,7 @@
     } else {
         [Utilities stopLoading];
     }
-    
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
 }
 
 #pragma mark - parse data
@@ -412,50 +421,103 @@
 }
 
 #pragma mark - Request for adopt animals
+- (NSString *)composeURL:(NSString *)url withParameters:(NSMutableArray *)parameters andFilters:(NSMutableArray *)filters{
+    NSMutableString *tempString = [NSMutableString string];
+
+    for (NSString *parameter in parameters) {
+        if ([parameters indexOfObject:parameter] == 0) {
+            [tempString appendString:[NSString stringWithFormat:@"?%@",parameter]];
+        } else {
+            [tempString appendString:[NSString stringWithFormat:@"&%@",parameter]];
+        }
+    }
+    for (NSString *filter in filters) {
+        if ([filters indexOfObject:filter] == 0) {
+            [tempString appendString:[NSString stringWithFormat:@"&q=%@",filter]];
+        } else {
+            [tempString appendString:[NSString stringWithFormat:@",%@",filter]];
+        }
+    }
+    NSString *newUrl = [NSString stringWithFormat:@"%@%@",url,tempString];
+    return newUrl;
+}
+
+- (NSMutableArray *)generateParameterByDic:(NSMutableDictionary *)dic {
+    NSMutableArray *parameters = [NSMutableArray array];
+    NSArray *keys = [dic allKeys];
+    for (NSString *key in keys) {
+        NSString *value = [dic objectForKey:key];
+        NSString *parameter = [NSString stringWithFormat:@"%@=%@",key,value];
+        [parameters addObject:parameter];
+    }
+    return parameters;
+}
+
 - (void)sendRequestForAdoptAnimalsWithPetFilters:(PetFilters *)petFilters {
     self.type = AdoptAnimals;
-    NSURL *url = [NSURL URLWithString:kAdoptAnimalsInTPCURL];
     
     NSMutableDictionary *dataDic = [NSMutableDictionary dictionary];
+    [dataDic setObject:kResourceScope forKey:kResourceScopeKey];
     [dataDic setObject:kResourceID forKey:kResourceIDKey];
+    [dataDic setObject:kResourceRID forKey:kResourceRIDKey];
     [dataDic setObject:kLimitValue forKey:kLimitKey];
+    if (petFilters && petFilters.offset)
+        [dataDic setObject:[NSNumber numberWithInt:[petFilters.offset intValue]] forKey:@"offset"];
     
-    NSMutableDictionary *filters = [NSMutableDictionary dictionary];
-    if (petFilters.acceptNum)[filters setObject:petFilters.acceptNum forKey:@"AcceptNum"];
-    if (petFilters.isSterilization)[filters setObject:petFilters.isSterilization forKey:@"IsSterilization"];
-    if (petFilters.name)[filters setObject:petFilters.name forKey:@"Name"];
-    if (petFilters.variety)[filters setObject:petFilters.variety forKey:@"Variety"];
-    if (petFilters.age)[filters setObject:petFilters.age forKey:@"Age"];
-    if (petFilters.childreAnlong)[filters setObject:petFilters.childreAnlong forKey:@"ChildreAnlong"];
-    if (petFilters.resettlement)[filters setObject:petFilters.resettlement forKey:@"Resettlement"];
-    if (petFilters.sex)[filters setObject:petFilters.sex forKey:@"Sex"];
-    if (petFilters.note)[filters setObject:petFilters.note forKey:@"Note"];
-    if (petFilters.phone)[filters setObject:petFilters.phone forKey:@"Phone"];
-    if (petFilters.reason)[filters setObject:petFilters.reason forKey:@"Reason"];
-    if (petFilters.imageName)[filters setObject:petFilters.imageName forKey:@"ImageName"];
-    if (petFilters.hairType)[filters setObject:petFilters.hairType forKey:@"HairType"];
-    if (petFilters.build)[filters setObject:petFilters.build forKey:@"Build"];
-    if (petFilters.chipNum)[filters setObject:petFilters.chipNum forKey:@"ChipNum"];
-    if (petFilters.petID)[filters setObject:petFilters.petID forKey:@"PetID"];
-    if (petFilters.type)[filters setObject:petFilters.type forKey:@"Type"];
-    if (petFilters.email)[filters setObject:petFilters.email forKey:@"Email"];
-    if (petFilters.bodyweight)[filters setObject:petFilters.bodyweight forKey:@"Bodyweight"];
-    if (petFilters.offset)[dataDic setObject:petFilters.offset forKey:@"offset"];
-    [dataDic setObject:filters forKey:@"filters"];
+    NSMutableArray *filters = [NSMutableArray array];
+    if (petFilters.acceptNum)
+        [filters addObject:petFilters.acceptNum];
+    if (petFilters.isSterilization)
+        [filters addObject:petFilters.isSterilization];
+    if (petFilters.name)
+        [filters addObject:petFilters.name];
+    if (petFilters.variety)
+        [filters addObject:petFilters.variety];
+    if (petFilters.age)
+        [filters addObject:petFilters.age];
+    if (petFilters.childreAnlong)
+        [filters addObject:petFilters.childreAnlong];
+    if (petFilters.resettlement)
+        [filters addObject:petFilters.resettlement];
+    if (petFilters.sex)
+        [filters addObject:petFilters.sex];
+    if (petFilters.note)
+        [filters addObject:petFilters.note];
+    if (petFilters.phone)
+        [filters addObject:petFilters.phone];
+    if (petFilters.reason)
+        [filters addObject:petFilters.reason];
+    if (petFilters.imageName)
+        [filters addObject:petFilters.imageName];
+    if (petFilters.hairType)
+        [filters addObject:petFilters.hairType];
+    if (petFilters.build)
+        [filters addObject:petFilters.build];
+    if (petFilters.chipNum)
+        [filters addObject:petFilters.chipNum];
+    if (petFilters.petID)
+        [filters addObject:petFilters.petID];
+    if (petFilters.type)
+        [filters addObject:petFilters.type];
+    if (petFilters.email)
+        [filters addObject:petFilters.email];
+    if (petFilters.bodyweight)
+        [filters addObject:petFilters.bodyweight];
     
-    NSError *error = nil;
-    NSData *postData = [NSJSONSerialization dataWithJSONObject:dataDic options:NSJSONWritingPrettyPrinted error:&error];
+    NSString *urlString = [self composeURL:kAdoptAnimalsInTPCURL withParameters:[self generateParameterByDic:dataDic]andFilters:filters];
+    urlString = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
-    NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[postData length]];
+    NSURL *url = [NSURL URLWithString:urlString];
     
-    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
-    [urlRequest setValue:postLength forHTTPHeaderField:@"Content-Length"];
-    [urlRequest setHTTPMethod:@"POST"];
-    [urlRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [urlRequest setHTTPBody:postData];
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10.0];
+    [urlRequest setHTTPMethod:@"GET"];
     
     NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
+    self.petFilters = petFilters;
+    
     [connection start];
+    
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
 }
 
 - (void)checkFavoriteAnimals:(NSArray *)animals {
@@ -464,29 +526,33 @@
     self.checkFavoriteAnimalsArr = [NSMutableArray arrayWithArray:animals];
     for (Pet* pet in animals) {
         PetFilters *petFilters = [[PetFilters alloc] init];
-        petFilters.petID = pet.petID;
-        NSURL *url = [NSURL URLWithString:kAdoptAnimalsInTPCURL];
+        petFilters.acceptNum = pet.acceptNum;
         
         NSMutableDictionary *dataDic = [NSMutableDictionary dictionary];
+        [dataDic setObject:kResourceScope forKey:kResourceScopeKey];
         [dataDic setObject:kResourceID forKey:kResourceIDKey];
+        [dataDic setObject:kResourceRID forKey:kResourceRIDKey];
         [dataDic setObject:kLimitValue forKey:kLimitKey];
         
-        NSMutableDictionary *filters = [NSMutableDictionary dictionary];
-        if (petFilters.petID)[filters setObject:petFilters.petID forKey:@"_id"];
-        [dataDic setObject:filters forKey:@"filters"];
+        NSMutableArray *filters = [NSMutableArray array];
+
+        if (petFilters.acceptNum)
+            [filters addObject:petFilters.acceptNum];
+
+        NSString *urlString = [self composeURL:kAdoptAnimalsInTPCURL withParameters:[self generateParameterByDic:dataDic]andFilters:filters];
+        urlString = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         
-        NSError *error = nil;
-        NSData *postData = [NSJSONSerialization dataWithJSONObject:dataDic options:NSJSONWritingPrettyPrinted error:&error];
+        NSURL *url = [NSURL URLWithString:urlString];
         
-        NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[postData length]];
+        NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10.0];
+        [urlRequest setHTTPMethod:@"GET"];
         
-        NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
-        [urlRequest setValue:postLength forHTTPHeaderField:@"Content-Length"];
-        [urlRequest setHTTPMethod:@"POST"];
-        [urlRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-        [urlRequest setHTTPBody:postData];
         NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
+//        self.petFilters = petFilters;
+        
         [connection start];
+        
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
         
         NSMutableDictionary *connectionObj = [NSMutableDictionary dictionary];
         [connectionObj setObject:connection forKey:@"connection"];
@@ -499,43 +565,38 @@
 - (void)combineFavoriteAnimals:(NSData *)data {
     NSError *error = nil;
     NSDictionary *encodeStrings = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
-    NSString *success = [NSString stringWithFormat:@"%@",[encodeStrings objectForKey:@"success"]];
-    if ([success isEqualToString:@"1"]) {
-        NSDictionary *result = [encodeStrings objectForKey:@"result"];
-        NSArray *records = [result objectForKey:@"records"];
-        for (NSDictionary *record in records) {
-            [self.checkFavoriteAnimalsResult addObject:[self parseRecord:record]];
+
+    NSDictionary *result = [encodeStrings objectForKey:@"result"];
+    NSArray *results = [result objectForKey:@"results"];
+    for (NSDictionary *result in results) {
+        [self.checkFavoriteAnimalsResult addObject:[self parseRecord:result]];
+    }
+    if ([self.checkFavoriteAnimalsResult count] == [self.checkFavoriteAnimalsArr count]) {
+        if (self.delegate && [self.delegate respondsToSelector:@selector(checkFavoriteAnimalsResultBack:)]) {
+            [self.delegate checkFavoriteAnimalsResultBack:self.checkFavoriteAnimalsResult];
         }
-        if ([self.checkFavoriteAnimalsResult count] == [self.checkFavoriteAnimalsArr count]) {
-            if (self.delegate && [self.delegate respondsToSelector:@selector(checkFavoriteAnimalsResultBack:)]) {
-                [self.delegate checkFavoriteAnimalsResultBack:self.checkFavoriteAnimalsResult];
-            }
-        }
-    } else {
-//        [self processErrorWithMessage:kGetDataError];
     }
 }
 
-- (void)parsePetResultData:(NSData *)data {
+- (void)parsePetResultData:(NSData *)data withConnection:(NSURLConnection *)connection{
     NSError *error = nil;
     NSDictionary *encodeStrings = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
-    NSString *success = [NSString stringWithFormat:@"%@",[encodeStrings objectForKey:@"success"]];
-    if ([success isEqualToString:@"1"]) {
-        NSDictionary *result = [encodeStrings objectForKey:@"result"];
-        PetResult *petResult = [self parseResult:result];
-        NSArray *records = [result objectForKey:@"records"];
-        NSMutableArray *pets = [NSMutableArray array];
-        for (NSDictionary *record in records) {
-            [pets addObject:[self parseRecord:record]];
-        }
-        petResult.pets = pets;
-        PetFilters *petFilters = [self parseFilters:[result objectForKey:@"filters"]];
-        petResult.filters = petFilters;
-        if (self.delegate && [self.delegate respondsToSelector:@selector(petResultBack:)]) {
-            [self.delegate petResultBack:petResult];
-        }
-    } else {
-//        [self processErrorWithMessage:kGetDataError];
+    
+    NSMutableDictionary *result = [NSMutableDictionary dictionaryWithDictionary:[encodeStrings objectForKey:@"result"]];
+    
+    PetResult *petResult = [self parseResult:result];
+    
+    NSArray *results = [result objectForKey:@"results"];
+    NSMutableArray *pets = [NSMutableArray array];
+    for (NSDictionary *result in results) {
+        [pets addObject:[self parseRecord:result]];
+    }
+    petResult.pets = pets;
+    
+    petResult.filters = self.petFilters;
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(petResultBack:)]) {
+        [self.delegate petResultBack:petResult];
     }
 }
 
@@ -562,6 +623,8 @@
                                                            cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
     NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
     [connection start];
+    
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
 }
 
 - (void)parseThumbNailData:(NSData *)data {

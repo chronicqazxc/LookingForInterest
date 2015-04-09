@@ -867,6 +867,8 @@
         requestSender.accessToken = self.accessToken;
         [requestSender reconnect:connection];
         [self.requestArr addObject:requestSender];
+        
+        [Utilities startLoading];
     }];
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
         [alertController dismissViewControllerAnimated:YES completion:nil];

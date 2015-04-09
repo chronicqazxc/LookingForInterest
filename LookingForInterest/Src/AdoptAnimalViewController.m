@@ -45,11 +45,7 @@
 @property (nonatomic) BOOL isStartLoading;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UITabBar *tabBar;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *previousPageIndicator;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *nextPageIndicator;
 @property (weak, nonatomic) IBOutlet GoTopButton *pageIndicator;
-@property (weak, nonatomic) IBOutlet UIView *previousPageView;
-@property (weak, nonatomic) IBOutlet UIView *nextPageView;
 @property (strong, nonatomic) UIView *navigationBackgroundView;
 @property (strong, nonatomic) CAGradientLayer *gradientLayer;
 @property (strong, nonatomic) UIColor *currentFirstColor;
@@ -60,6 +56,7 @@
 @property (weak, nonatomic) IBOutlet ADBannerView *adBannerView;
 @property (strong, nonatomic) TableLoadPreviousPage *loadPreviousPageView;
 @property (strong, nonatomic) TableLoadNextPage *loadNextPageView;
+@property (nonatomic) BOOL isCheckMyFavorite;
 @end
 
 @implementation AdoptAnimalViewController
@@ -67,13 +64,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.edgesForExtendedLayout = UIRectEdgeNone;
+    self.isCheckMyFavorite = NO;
     self.isSendInitRequest = NO;
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     self.tabBar.delegate = self;
     self.checkButton.enabled = NO;
-    self.previousPageView.hidden = YES;
-    self.nextPageView.hidden = YES;
     self.hadShowManul = NO;
     self.hadShowDataSource = NO;
     self.petFilters = [[PetFilters alloc] init];
@@ -147,22 +143,18 @@
             self.manulAdoptListViewController.delegate = self;
             [self presentViewController:self.manulAdoptListViewController animated:YES completion:nil];
         } else if (!self.isSendInitRequest && ![self.petResult.pets count]) {
-            if (!self.hadShowDataSource) {
-                [self showDataSource];
-            }
+
             [self startLoadingWithContent:nil];
             [self sendInitRequest];
-            self.isSendInitRequest = YES;
+
         } else {
             [self.tableView reloadData];
         }
     } else if (!self.isSendInitRequest && ![self.petResult.pets count]) {
-        if (!self.hadShowDataSource) {
-            [self showDataSource];
-        }
+
         [self startLoadingWithContent:nil];
         [self sendInitRequest];
-        self.isSendInitRequest = YES;
+
     } else {
         [self.tableView reloadData];
     }
@@ -201,7 +193,6 @@
 }
 
 - (void)getNextPage {
-    [self.nextPageIndicator startAnimating];
     [self clearRequestSenderDelegate];
     [self startLoadingWithContent:@"下一頁"];
     self.petFilters.offset = self.nextPage;
@@ -210,7 +201,6 @@
 }
 
 - (void)getPreviousPage {
-    [self.previousPageIndicator startAnimating];
     [self clearRequestSenderDelegate];
     [self startLoadingWithContent:@"上一頁"];
 //    PetFilters *petFilters = [[PetFilters alloc] init];
@@ -300,7 +290,9 @@
                 petCell.thumbNail.image = [UIImage imageNamed:@"Loading100x100.png"];
             }
             
-            [self startThumbNailDownload:pet forIndexPath:indexPath];
+            if (![pet.imageName isEqualToString:@""]) {
+                [self startThumbNailDownload:pet forIndexPath:indexPath];
+            }
             petCell.thumbNail.layer.borderColor = [UIColor colorWithWhite:0.0 alpha:0.3].CGColor;
         } else {
             petCell.thumbNail.image = pet.thumbNail;
@@ -325,7 +317,7 @@
     Pet *selectedAnimal = [self.petResult.pets objectAtIndex:index];
     BOOL isMyFavorite = NO;
     for (Pet *pet in animals) {
-        if ([pet.petID isEqualToNumber:selectedAnimal.petID]) {
+        if ([pet.petID isEqualToString:selectedAnimal.petID]) {
             isMyFavorite = YES;
             break;
         }
@@ -465,7 +457,7 @@
         NSArray *visiblePaths = [self.tableView indexPathsForVisibleRows];
         for(NSIndexPath *indexPath in visiblePaths){
             Pet *pet = [self.petResult.pets objectAtIndex:indexPath.row];
-            if (!pet.thumbNail)
+            if (!pet.thumbNail && ![pet.imageName isEqualToString:@""])
                 [self startThumbNailDownload:pet forIndexPath:indexPath];
         }
     }
@@ -483,19 +475,30 @@
 - (void)requestFaildWithMessage:(NSString *)message connection:(NSURLConnection *)connection{
     self.appDelegate.viewController = self;
     [Utilities stopLoading];
-    [self.nextPageIndicator stopAnimating];
-    [self.previousPageIndicator stopAnimating];
     self.isStartLoading = NO;
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"錯誤" message:message preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"連線錯誤" message:message preferredStyle:UIAlertControllerStyleAlert];
+
     UIAlertAction *reConnectAction = [UIAlertAction actionWithTitle:@"重新連線" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        RequestSender *requestSender = [[RequestSender alloc] init];
-        requestSender.delegate = self;
-        [requestSender reconnect:connection];
-        [self.requests addObject:requestSender];
+        
+        if (self.isCheckMyFavorite) {
+            [self clickCheck:nil];
+        } else {
+            RequestSender *requestSender = [[RequestSender alloc] init];
+            requestSender.delegate = self;
+            [requestSender reconnect:connection];
+            [self.requests addObject:requestSender];
+            [self startLoadingWithContent:nil];
+        }
+        
     }];
+    
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
         [alertController dismissViewControllerAnimated:YES completion:nil];
+        if (self.isCheckMyFavorite) {
+            self.isCheckMyFavorite = NO;
+        }
     }];
+    
     [alertController addAction:reConnectAction];
     [alertController addAction:cancelAction];
     [self presentViewController:alertController animated:YES completion:nil];
@@ -520,6 +523,11 @@
     
     self.appDelegate.viewController = self;
     [Utilities stopLoading];
+    
+    if (!self.hadShowDataSource && !self.isSendInitRequest) {
+        [self showDataSource];
+        self.isSendInitRequest = YES;
+    }
 
 }
 
@@ -587,7 +595,7 @@
     for (Pet *favoritePet in [Utilities getMyFavoriteAnimalsDecoded]) {
         BOOL isFound = NO;
         for (Pet *resultPet in results) {
-            if ([favoritePet.petID isEqualToNumber:resultPet.petID]) {
+            if ([favoritePet.petID isEqualToString:resultPet.petID]) {
                 isFound = YES;
             }
         }
@@ -597,6 +605,13 @@
     }
     self.appDelegate.viewController = self;
     [Utilities stopLoading];
+    
+    if ([[Utilities getMyFavoriteAnimalsDecoded] count]) {
+        self.checkButton.enabled = YES;
+    } else {
+        self.checkButton.enabled = NO;
+    }
+    self.isCheckMyFavorite = NO;
 }
 
 #pragma mark - UITabBarDelegate
@@ -761,6 +776,13 @@
     if ([self isMyFavoriteAnimalByIndex:indexPath.row]) {
         [Utilities removeFromMyFavoriteAnimal:pet];
         [Utilities addHudViewTo:self withMessage:kRemoveFromFavorite];
+        
+        if ([[Utilities getMyFavoriteAnimalsDecoded] count]) {
+            self.checkButton.enabled = YES;
+        } else {
+            self.checkButton.enabled = NO;
+        }
+        
     } else {
         [Utilities addToMyFavoriteAnimal:pet];
         [Utilities addHudViewTo:self withMessage:kAddToFavorite];
@@ -808,6 +830,7 @@
     [requestSender checkFavoriteAnimals:[Utilities getMyFavoriteAnimalsDecoded]];
     [self.requests addObject:requestSender];
     [Utilities startLoadingWithContent:@"更新我的最愛"];
+    self.isCheckMyFavorite = YES;
 }
 
 #pragma mark - ManulViewControllerDelegate
