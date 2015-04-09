@@ -230,6 +230,9 @@
         NSMutableArray *decodedAnimals = [NSMutableArray array];
         for (NSData *encodedAnimal in animals) {
             Pet *pet = [NSKeyedUnarchiver unarchiveObjectWithData:encodedAnimal];
+            if ([pet.petID isKindOfClass:[NSNumber class]]) {
+                pet.petID = [NSString stringWithFormat:@"%d",[pet.petID intValue]];
+            }
             [decodedAnimals addObject:pet];
         }
         animals = [NSArray arrayWithArray:decodedAnimals];

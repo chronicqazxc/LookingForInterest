@@ -19,18 +19,18 @@
         NSInteger count = [[result objectForKey:@"count"] intValue]?[[result objectForKey:@"count"] intValue ]:0;
         
         if (offset - limit) {
-            self.previous = [NSString stringWithFormat:@"%ld",offset-limit];
+            self.previous = [NSString stringWithFormat:@"%d",offset-limit];
         } else  {
             self.previous = @"0";
         }
         
-        self.next = (limit+offset < count)?[NSString stringWithFormat:@"%ld",limit+offset]:@"";
+        self.next = (limit+offset < count)?[NSString stringWithFormat:@"%d",limit+offset]:@"";
         
         self.total = [NSNumber numberWithInteger:count];
         
         self.limit = [NSNumber numberWithInteger:limit];
         
-        self.offset = [NSString stringWithFormat:@"%ld",offset];
+        self.offset = [NSString stringWithFormat:@"%d",offset];
     }
     return self;
 }

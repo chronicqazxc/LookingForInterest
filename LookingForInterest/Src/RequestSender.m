@@ -277,7 +277,7 @@
                     NSURLConnection *connectionObj = [connectionDic objectForKey:@"connection"];
                     if (connectionObj == connection) {
                         NSMutableArray *dataArr = [connectionDic objectForKey:@"data"];
-                        [self combineFavoriteAnimals:[self appendDataFromDatas:dataArr]];
+                        [self combineFavoriteAnimals:[self appendDataFromDatas:dataArr] connection:connection];
                         break;
                     }
                 }
@@ -548,8 +548,6 @@
         [urlRequest setHTTPMethod:@"GET"];
         
         NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
-//        self.petFilters = petFilters;
-        
         [connection start];
         
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
@@ -562,18 +560,31 @@
     }
 }
 
-- (void)combineFavoriteAnimals:(NSData *)data {
+- (void)combineFavoriteAnimals:(NSData *)data connection:(NSURLConnection *)connection{
     NSError *error = nil;
     NSDictionary *encodeStrings = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
-
-    NSDictionary *result = [encodeStrings objectForKey:@"result"];
-    NSArray *results = [result objectForKey:@"results"];
-    for (NSDictionary *result in results) {
-        [self.checkFavoriteAnimalsResult addObject:[self parseRecord:result]];
-    }
-    if ([self.checkFavoriteAnimalsResult count] == [self.checkFavoriteAnimalsArr count]) {
-        if (self.delegate && [self.delegate respondsToSelector:@selector(checkFavoriteAnimalsResultBack:)]) {
-            [self.delegate checkFavoriteAnimalsResultBack:self.checkFavoriteAnimalsResult];
+    if (error == nil) {
+        NSDictionary *result = [encodeStrings objectForKey:@"result"];
+        NSArray *results = [result objectForKey:@"results"];
+        for (NSDictionary *result in results) {
+            [self.checkFavoriteAnimalsResult addObject:[self parseRecord:result]];
+        }
+        if ([self.checkFavoriteAnimalsResult count] == [self.checkFavoriteAnimalsArr count]) {
+            if (self.delegate && [self.delegate respondsToSelector:@selector(checkFavoriteAnimalsResultBack:)]) {
+                [self.delegate checkFavoriteAnimalsResultBack:self.checkFavoriteAnimalsResult];
+            }
+        }
+    } else {
+        NSURL *url = connection.originalRequest.URL;
+        NSString *urlString = url.absoluteString;
+        NSArray * arr = [urlString componentsSeparatedByString:@"&q="];
+        NSString *acceptNum = [arr lastObject];
+        for (Pet *pet in self.checkFavoriteAnimalsArr) {
+            if ([pet.acceptNum isEqualToString:acceptNum]) {
+                [Utilities removeFromMyFavoriteAnimal:pet];
+                [self.checkFavoriteAnimalsArr removeObject:pet];
+                break;
+            }
         }
     }
 }

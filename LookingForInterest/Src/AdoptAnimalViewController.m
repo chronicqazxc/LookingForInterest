@@ -496,6 +496,11 @@
         [alertController dismissViewControllerAnimated:YES completion:nil];
         if (self.isCheckMyFavorite) {
             self.isCheckMyFavorite = NO;
+            if ([[Utilities getMyFavoriteAnimalsDecoded] count]) {
+                self.checkButton.enabled = YES;
+            } else {
+                self.checkButton.enabled = NO;
+            }
         }
     }];
     
@@ -831,6 +836,7 @@
     [self.requests addObject:requestSender];
     [Utilities startLoadingWithContent:@"更新我的最愛"];
     self.isCheckMyFavorite = YES;
+    self.checkButton.enabled = NO;
 }
 
 #pragma mark - ManulViewControllerDelegate
