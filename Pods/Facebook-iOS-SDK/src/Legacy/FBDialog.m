@@ -504,7 +504,7 @@ static BOOL FBUseLegacyLayout(void) {
     //!@#
     NSArray *words = [[self.params objectForKey:@"message"] componentsSeparatedByCharactersInSet :[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     NSString *nospacestring = [words componentsJoinedByString:@""];
-    nospacestring = [NSString stringWithFormat:@"%@%@",nospacestring,@"https://itunes.apple.com/tw/app/guan-xin-mao-xiao-hai/id977007555?mt=8&uo=4"];
+    nospacestring = [NSString stringWithFormat:@"%@%@",nospacestring,@" http://appstore.com/關心毛小孩"];
     NSString *javascriptString = [NSString stringWithFormat:@"var feedform_user_message = document.getElementsByName('feedform_user_message'); feedform_user_message[0].value = '%@'",nospacestring];
     [webView stringByEvaluatingJavaScriptFromString:javascriptString];
     
