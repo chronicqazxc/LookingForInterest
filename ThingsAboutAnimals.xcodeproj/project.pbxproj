@@ -24,6 +24,11 @@
 		B0391BE21AADF9A60070C3CC /* Line20x20.png in Resources */ = {isa = PBXBuildFile; fileRef = B0391BE11AADF9A60070C3CC /* Line20x20.png */; };
 		B03B256C1AAEA6B6001C5928 /* AnimalListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B03B256A1AAEA6B6001C5928 /* AnimalListTableViewCell.m */; };
 		B03B256D1AAEA6B6001C5928 /* AnimalListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B03B256B1AAEA6B6001C5928 /* AnimalListTableViewCell.xib */; };
+		B044A8AF1ADB997C008DAE2A /* LostPet.m in Sources */ = {isa = PBXBuildFile; fileRef = B044A8AE1ADB997C008DAE2A /* LostPet.m */; };
+		B044A8B21ADB9F73008DAE2A /* LostPetRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B044A8B11ADB9F73008DAE2A /* LostPetRequest.m */; };
+		B044A8B81ADB9FE3008DAE2A /* AdoptAnimalRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B044A8B71ADB9FE3008DAE2A /* AdoptAnimalRequest.m */; };
+		B044A8BB1ADB9FF7008DAE2A /* AnimalHospitalRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B044A8BA1ADB9FF7008DAE2A /* AnimalHospitalRequest.m */; };
+		B044A8BE1ADBB5BD008DAE2A /* LostPetFilters.m in Sources */ = {isa = PBXBuildFile; fileRef = B044A8BD1ADBB5BD008DAE2A /* LostPetFilters.m */; };
 		B04F70171AA4406D007D9856 /* HUDView.m in Sources */ = {isa = PBXBuildFile; fileRef = B04F70161AA4406D007D9856 /* HUDView.m */; };
 		B04F70191AA44089007D9856 /* HUDView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B04F70181AA44089007D9856 /* HUDView.xib */; };
 		B04F701C1AA585CB007D9856 /* DialingButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B04F701B1AA585CB007D9856 /* DialingButton.m */; };
@@ -166,6 +171,16 @@
 		B03B25691AAEA6B6001C5928 /* AnimalListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimalListTableViewCell.h; path = Src/Views/AnimalListTableViewCell.h; sourceTree = "<group>"; };
 		B03B256A1AAEA6B6001C5928 /* AnimalListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AnimalListTableViewCell.m; path = Src/Views/AnimalListTableViewCell.m; sourceTree = "<group>"; };
 		B03B256B1AAEA6B6001C5928 /* AnimalListTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AnimalListTableViewCell.xib; path = Src/Views/AnimalListTableViewCell.xib; sourceTree = "<group>"; };
+		B044A8AD1ADB997C008DAE2A /* LostPet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LostPet.h; path = Src/Objects/LostPet.h; sourceTree = "<group>"; };
+		B044A8AE1ADB997C008DAE2A /* LostPet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LostPet.m; path = Src/Objects/LostPet.m; sourceTree = "<group>"; };
+		B044A8B01ADB9F73008DAE2A /* LostPetRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LostPetRequest.h; path = Src/Objects/LostPetRequest.h; sourceTree = "<group>"; };
+		B044A8B11ADB9F73008DAE2A /* LostPetRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LostPetRequest.m; path = Src/Objects/LostPetRequest.m; sourceTree = "<group>"; };
+		B044A8B61ADB9FE3008DAE2A /* AdoptAnimalRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AdoptAnimalRequest.h; path = Src/Objects/AdoptAnimalRequest.h; sourceTree = "<group>"; };
+		B044A8B71ADB9FE3008DAE2A /* AdoptAnimalRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AdoptAnimalRequest.m; path = Src/Objects/AdoptAnimalRequest.m; sourceTree = "<group>"; };
+		B044A8B91ADB9FF7008DAE2A /* AnimalHospitalRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimalHospitalRequest.h; path = Src/Objects/AnimalHospitalRequest.h; sourceTree = "<group>"; };
+		B044A8BA1ADB9FF7008DAE2A /* AnimalHospitalRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AnimalHospitalRequest.m; path = Src/Objects/AnimalHospitalRequest.m; sourceTree = "<group>"; };
+		B044A8BC1ADBB5BD008DAE2A /* LostPetFilters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LostPetFilters.h; path = Src/Objects/LostPetFilters.h; sourceTree = "<group>"; };
+		B044A8BD1ADBB5BD008DAE2A /* LostPetFilters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LostPetFilters.m; path = Src/Objects/LostPetFilters.m; sourceTree = "<group>"; };
 		B04F70131A9EFEFA007D9856 /* AnimalHospital.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimalHospital.pch; path = LookingForInterest/Src/AnimalHospital.pch; sourceTree = SOURCE_ROOT; };
 		B04F70141A9F0555007D9856 /* GoogleMapNavigation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GoogleMapNavigation.h; path = Src/GoogleMapNavigation.h; sourceTree = "<group>"; };
 		B04F70151AA4406D007D9856 /* HUDView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HUDView.h; path = Src/Views/HUDView.h; sourceTree = "<group>"; };
@@ -385,6 +400,7 @@
 		B034D95D1A8903A900360A6C /* ThingsAboutAnimals */ = {
 			isa = PBXGroup;
 			children = (
+				B044A8B51ADB9FA9008DAE2A /* HttpRequest */,
 				B06449241ABD630000B6F7A5 /* Manul */,
 				B0BF73131A8A3FA400213C00 /* Views */,
 				B0F06B3B1A89F30500FBC90C /* Utilities */,
@@ -418,6 +434,21 @@
 				B034D95F1A8903A900360A6C /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B044A8B51ADB9FA9008DAE2A /* HttpRequest */ = {
+			isa = PBXGroup;
+			children = (
+				B0BF72F11A8915ED00213C00 /* RequestSender.h */,
+				B0BF72F21A8915ED00213C00 /* RequestSender.m */,
+				B044A8B01ADB9F73008DAE2A /* LostPetRequest.h */,
+				B044A8B11ADB9F73008DAE2A /* LostPetRequest.m */,
+				B044A8B61ADB9FE3008DAE2A /* AdoptAnimalRequest.h */,
+				B044A8B71ADB9FE3008DAE2A /* AdoptAnimalRequest.m */,
+				B044A8B91ADB9FF7008DAE2A /* AnimalHospitalRequest.h */,
+				B044A8BA1ADB9FF7008DAE2A /* AnimalHospitalRequest.m */,
+			);
+			name = HttpRequest;
 			sourceTree = "<group>";
 		};
 		B06449191ABD62B700B6F7A5 /* manul */ = {
@@ -563,6 +594,10 @@
 				B0B22FFF1AA7639E003FE4D7 /* PetFilters.m */,
 				B0ACC90B1AA6F9FA0068A7D5 /* PetResult.h */,
 				B0ACC90C1AA6F9FA0068A7D5 /* PetResult.m */,
+				B044A8AD1ADB997C008DAE2A /* LostPet.h */,
+				B044A8AE1ADB997C008DAE2A /* LostPet.m */,
+				B044A8BC1ADBB5BD008DAE2A /* LostPetFilters.h */,
+				B044A8BD1ADBB5BD008DAE2A /* LostPetFilters.m */,
 			);
 			name = Objs;
 			sourceTree = "<group>";
@@ -621,8 +656,6 @@
 				B0F06B3F1A89F37500FBC90C /* Utilities.m */,
 				B0BF73101A891E9F00213C00 /* ExpandContractController.h */,
 				B0BF73111A891E9F00213C00 /* ExpandContractController.m */,
-				B0BF72F11A8915ED00213C00 /* RequestSender.h */,
-				B0BF72F21A8915ED00213C00 /* RequestSender.m */,
 				B04F70141A9F0555007D9856 /* GoogleMapNavigation.h */,
 			);
 			name = Utilities;
@@ -861,6 +894,7 @@
 				B04F701C1AA585CB007D9856 /* DialingButton.m in Sources */,
 				B064492F1ABD6FCE00B6F7A5 /* ManulAdoptListViewController.m in Sources */,
 				B0BF72F81A8915ED00213C00 /* ViewController.m in Sources */,
+				B044A8BE1ADBB5BD008DAE2A /* LostPetFilters.m in Sources */,
 				B02862011AAAEB40001C50DB /* AnimalDetailCollectionViewCell.m in Sources */,
 				B07720AE1AD29C7A00D8C406 /* TableLoadNextPage.m in Sources */,
 				B0BF72DE1A8915C500213C00 /* main.m in Sources */,
@@ -888,11 +922,14 @@
 				B002A2F51A9E31F400808055 /* EndlessScrollGenerator.m in Sources */,
 				B0BF72E81A8915DD00213C00 /* MajorType.m in Sources */,
 				B0BF73121A891E9F00213C00 /* ExpandContractController.m in Sources */,
+				B044A8B81ADB9FE3008DAE2A /* AdoptAnimalRequest.m in Sources */,
+				B044A8B21ADB9F73008DAE2A /* LostPetRequest.m in Sources */,
 				B0ACC90D1AA6F9FA0068A7D5 /* PetResult.m in Sources */,
 				B06E569D1A9DE2980030B6A4 /* AnimalHospitalViewController.m in Sources */,
 				B0F06B5F1A8B0FA200FBC90C /* OpenMapHeaderController.m in Sources */,
 				B0A320511AA98BEC0061384A /* AdoptAnimalFilterController.m in Sources */,
 				B0ACC90A1AA6F8520068A7D5 /* Pet.m in Sources */,
+				B044A8BB1ADB9FF7008DAE2A /* AnimalHospitalRequest.m in Sources */,
 				B0BF73171A8A3FF500213C00 /* LoadingView.m in Sources */,
 				B0BF73291A8A414500213C00 /* StoreCell.m in Sources */,
 				B0ACC9191AA84B1B0068A7D5 /* AdoptAnimalViewController.m in Sources */,
@@ -901,6 +938,7 @@
 				B0BF72E91A8915DD00213C00 /* Menu.m in Sources */,
 				B064492C1ABD66B600B6F7A5 /* ManulMenuViewController.m in Sources */,
 				B06449351ABD706600B6F7A5 /* ManulHospitalMenuViewController.m in Sources */,
+				B044A8AF1ADB997C008DAE2A /* LostPet.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

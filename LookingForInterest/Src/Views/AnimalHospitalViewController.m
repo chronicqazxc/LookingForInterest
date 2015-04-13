@@ -13,7 +13,7 @@
 #import "GoogleMapNavigation.h"
 #import <WebKit/WebKit.h>
 #import "WebViewController.h"
-#import "RequestSender.h"
+#import "AnimalHospitalRequest.h"
 #import "DialingButton.h"
 #import "MarqueeLabel.h"
 #import <iAd/iAd.h>
@@ -21,7 +21,7 @@
 #define kScrollViewMaxScale 0.7
 #define kScrollViewMinScale 0.3
 
-@interface AnimalHospitalViewController () <FullScreenScrollViewDelegate, EndlessScrollGeneratorDelegate, UIScrollViewDelegate, ADBannerViewDelegate, GMSMapViewDelegate, GMSPanoramaViewDelegate, RequestSenderDelegate>
+@interface AnimalHospitalViewController () <FullScreenScrollViewDelegate, EndlessScrollGeneratorDelegate, UIScrollViewDelegate, ADBannerViewDelegate, GMSMapViewDelegate, GMSPanoramaViewDelegate, AnimalHospitalRequestDelegate>
 @property (weak, nonatomic) IBOutlet UIView *mainContainer;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) NSMutableArray *imageViews;
@@ -195,8 +195,8 @@
 }
 
 - (void)getDefaultImages {
-    RequestSender *requestSender = [[RequestSender alloc] init];
-    requestSender.delegate = self;
+    AnimalHospitalRequest *requestSender = [[AnimalHospitalRequest alloc] init];
+    requestSender.animalHospitalRequestDelegate = self;
     requestSender.accessToken = self.accessToken;
     [requestSender sendDefaultImagesRequest];
     [self.requests addObject:requestSender];

@@ -42,7 +42,7 @@
 #define kHospitalUpdateDateKey @"update_date"
 #define kHospitalFunctionOpenKey @"function_open"
 #define kHospitalFunctionCloseReasonKey @"close_reason"
-#pragma mark -
+
 #pragma mark - Adopt animals URL
 #define kAppStoreURL @"http://appstore.com/關心毛小孩" // @"https://itunes.apple.com/tw/app/guan-xin-mao-xiao-hai/id977007555?mt=8&uo=4"
 #define kAdoptAnimalsFacebookShareURL @"http://www.tcapo.gov.taipei"
@@ -55,6 +55,14 @@
 #define kResourceRID @"f4a75ba9-7721-4363-884d-c3820b0b917c"
 #define kLimitKey @"limit"
 #define kLimitValue @20
+
+#pragma mark - Lost pet URL
+#define kLostPetDomain @"http://data.coa.gov.tw/Service/OpenData/DataFileService.aspx"
+#define kLostPetUnitIDKey @"UnitId"
+#define kLostPetUnitIDValue @"127"
+#define kLostPetTopKey @"$top"
+#define kLostPetSkipKey @"$skip"
+#define kLostPetFiltersKey @"$filter"
 
 #pragma mark - Messages
 #define kNoPhoneNumberAlertTitle @"Opps!"

@@ -9,6 +9,9 @@
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
 #import "LookingForInterest.h"
+#import "LostPetRequest.h"
+#import "LostPet.h"
+#import "LostPetFilters.h"
 
 @interface ThingsAboutAnimals_Tests : XCTestCase
 
@@ -165,6 +168,41 @@
     NSInteger b = [encoded characterAtIndex:1276];
     //- 63
     NSLog(@"%d",b);
+}
+
+- (void)testLostPetRequest {
+    LostPetFilters *lostPetFilters = [[LostPetFilters alloc] init];
+    lostPetFilters.variety = @"貓";
+    lostPetFilters.gender = @"母";
+    lostPetFilters.chipNumber = @"92";
+    NSString *filterContent = [lostPetFilters filterContent];
+    
+    NSString *filterString = [NSString stringWithFormat:@"%@=%@",kLostPetFiltersKey,filterContent];
+    NSString *urlString = [NSString stringWithFormat:@"%@?%@=%@&%@=%@&%@=%@&%@",kLostPetDomain,kLostPetUnitIDKey,kLostPetUnitIDValue,kLostPetTopKey,@"20",kLostPetSkipKey,@"0",filterString];
+    urlString = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSError *error = nil;
+    
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+    [urlRequest setHTTPMethod:@"GET"];
+    
+    NSURLResponse *response = nil;
+    
+    NSData *data = [NSURLConnection sendSynchronousRequest:urlRequest returningResponse:&response error:&error];
+    
+    if (error == nil) {
+        NSArray *lostPets = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+        NSMutableArray *arr = [NSMutableArray array];
+        for (NSDictionary *petDic in lostPets) {
+            LostPet *lostPet = [[LostPet alloc] initWithDic:petDic];
+            [arr addObject:lostPet];
+        }
+        NSLog(@"encodeStrings:%@",arr);
+        
+    } else {
+        NSLog(@"faild");
+    }
+    
 }
 
 @end

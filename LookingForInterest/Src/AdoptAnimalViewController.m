@@ -10,7 +10,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import <MGSwipeTableCell/MGSwipeButton.h>
 #import <MGSwipeTableCell/MGSwipeTableCell.h>
-#import "RequestSender.h"
+#import "AdoptAnimalRequest.h"
 #import "AdoptAnimalFilterController.h"
 #import "AnimalDetailScrollViewController.h"
 #import "AnimalListTableViewCell.h"
@@ -34,7 +34,7 @@
 #define kReloadDistance 100
 #define kSpringTreshold 130
 
-@interface AdoptAnimalViewController () <UITableViewDataSource, UITableViewDelegate, UITabBarDelegate, ADBannerViewDelegate, RequestSenderDelegate, AdoptAnimalFilterControllerDelegate, MGSwipeTableCellDelegate, ManulViewControllerDelegate>
+@interface AdoptAnimalViewController () <UITableViewDataSource, UITableViewDelegate, UITabBarDelegate, ADBannerViewDelegate, AdoptAnimalRequestDelegate, AdoptAnimalFilterControllerDelegate, MGSwipeTableCellDelegate, ManulViewControllerDelegate>
 @property (strong, nonatomic) PetResult *petResult;
 @property (strong, nonatomic) NSMutableArray *requests;
 @property (strong, nonatomic) PetFilters *petFilters;
@@ -187,8 +187,8 @@
 }
 
 - (void)sendInitRequest {
-    RequestSender *requestSender = [[RequestSender alloc] init];
-    requestSender.delegate = self;
+    AdoptAnimalRequest *requestSender = [[AdoptAnimalRequest alloc] init];
+    requestSender.adoptAnimalRequestDelegate = self;
     [requestSender sendRequestForAdoptAnimalsWithPetFilters:self.petFilters];
 }
 
@@ -211,8 +211,8 @@
 }
 
 - (void)sendRequestWithFilters:(PetFilters *)petFilters {
-    RequestSender *requestSender = [[RequestSender alloc] init];
-    requestSender.delegate = self;
+    AdoptAnimalRequest *requestSender = [[AdoptAnimalRequest alloc] init];
+    requestSender.adoptAnimalRequestDelegate = self;
     [requestSender sendRequestForAdoptAnimalsWithPetFilters:petFilters];
     [self.requests addObject:requestSender];
 }
@@ -230,8 +230,8 @@
 }
 
 - (void)clearRequestSenderDelegate {
-    for (RequestSender *requestSender in self.requests) {
-        requestSender.delegate = nil;
+    for (AdoptAnimalRequest *requestSender in self.requests) {
+        requestSender.adoptAnimalRequestDelegate = nil;
     }
     self.requests = [NSMutableArray array];
 }
@@ -465,13 +465,13 @@
 
 #pragma mark - lazy loading
 - (void)startThumbNailDownload:(Pet *)pet forIndexPath:(NSIndexPath *)indexPath {
-    RequestSender *request = [[RequestSender alloc] init];
-    request.delegate = self;
+    AdoptAnimalRequest *request = [[AdoptAnimalRequest alloc] init];
+    request.adoptAnimalRequestDelegate = self;
     [request sendRequestForPetThumbNail:pet indexPath:indexPath];
     [self.requests addObject:request];
 }
 
-#pragma mark - RequestSenderDelegate
+#pragma mark - AdoptAnimalRequestDelegate
 - (void)requestFaildWithMessage:(NSString *)message connection:(NSURLConnection *)connection{
     self.appDelegate.viewController = self;
     [Utilities stopLoading];
@@ -483,8 +483,8 @@
         if (self.isCheckMyFavorite) {
             [self clickCheck:nil];
         } else {
-            RequestSender *requestSender = [[RequestSender alloc] init];
-            requestSender.delegate = self;
+            AdoptAnimalRequest *requestSender = [[AdoptAnimalRequest alloc] init];
+            requestSender.adoptAnimalRequestDelegate = self;
             [requestSender reconnect:connection];
             [self.requests addObject:requestSender];
             [self startLoadingWithContent:nil];
@@ -830,8 +830,8 @@
 }
 
 - (IBAction)clickCheck:(UIBarButtonItem *)sender {
-    RequestSender *requestSender = [[RequestSender alloc] init];
-    requestSender.delegate = self;
+    AdoptAnimalRequest *requestSender = [[AdoptAnimalRequest alloc] init];
+    requestSender.adoptAnimalRequestDelegate = self;
     [requestSender checkFavoriteAnimals:[Utilities getMyFavoriteAnimalsDecoded]];
     [self.requests addObject:requestSender];
     [Utilities startLoadingWithContent:@"更新我的最愛"];

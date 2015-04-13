@@ -7,7 +7,7 @@
 //
 
 #import "FilterTableViewController.h"
-#import "RequestSender.h"
+#import "AnimalHospitalRequest.h"
 #import "ExpandContractController.h"
 #import "MapViewCell.h"
 #import <MGSwipeTableCell/MGSwipeButton.h>
@@ -51,7 +51,7 @@
 #define kReloadDistance 100
 #define kSpringTreshold 130
 
-@interface FilterTableViewController () <RequestSenderDelegate, MGSwipeTableCellDelegate, UITextFieldDelegate>
+@interface FilterTableViewController () <AnimalHospitalRequestDelegate, MGSwipeTableCellDelegate, UITextFieldDelegate>
 @property (strong, nonatomic) NSMutableArray *dataArr;
 @property (strong, nonatomic) NSMutableArray *controlArr;
 @property (nonatomic) NSUInteger numberOfRow;
@@ -149,10 +149,10 @@
         self.appdelegate = [Utilities appdelegate];
         self.appdelegate.viewController = self;
     }
-    RequestSender *requestSender = [[RequestSender alloc] init];
+    AnimalHospitalRequest *requestSender = [[AnimalHospitalRequest alloc] init];
     switch (self.filterType) {
         case FilterTypeMajorType:
-            requestSender.delegate = self;
+            requestSender.animalHospitalRequestDelegate = self;
             requestSender.accessToken = self.accessToken;
             [requestSender sendMajorRequest];
             [self.requestArr addObject:requestSender];
@@ -160,7 +160,7 @@
             [Utilities startLoading];
             break;
         case FilterTypeMinorType:
-            requestSender.delegate = self;
+            requestSender.animalHospitalRequestDelegate = self;
             requestSender.accessToken = self.accessToken;
             [requestSender sendMinorRequestByMajorType:((FilterTableViewController *)self.notifyReceiver).menu.majorType];
             [self.requestArr addObject:requestSender];
@@ -168,7 +168,7 @@
             [Utilities startLoading];
             break;
         case FilterTypeStore:
-            requestSender.delegate = self;
+            requestSender.animalHospitalRequestDelegate = self;
             requestSender.accessToken = self.accessToken;
             [requestSender sendStoreRequestByMajorType:((FilterTableViewController *)self.notifyReceiver).menu.majorType minorType:((FilterTableViewController *)self.notifyReceiver).menu.minorType];
             [self.requestArr addObject:requestSender];
@@ -176,7 +176,7 @@
             [Utilities startLoadingWithContent:@"選擇醫院"];
             break;
         case FilterTypeRange:
-            requestSender.delegate = self;
+            requestSender.animalHospitalRequestDelegate = self;
             requestSender.accessToken = self.accessToken;
             [requestSender sendRangeRequest];
             [self.requestArr addObject:requestSender];
@@ -184,7 +184,7 @@
             [Utilities startLoadingWithContent:@"選擇範圍"];
             break;
         case FilterTypeCity:
-            requestSender.delegate = self;
+            requestSender.animalHospitalRequestDelegate = self;
             requestSender.accessToken = self.accessToken;
             [requestSender sendCityRequest];
             [self.requestArr addObject:requestSender];
@@ -192,7 +192,7 @@
             [Utilities startLoadingWithContent:@"選擇城市"];
             break;
         case FilterTypeMenuTypes:
-            requestSender.delegate = self;
+            requestSender.animalHospitalRequestDelegate = self;
             requestSender.accessToken = self.accessToken;
             [requestSender sendMenutypesRequest];
             [self.requestArr addObject:requestSender];
@@ -249,8 +249,8 @@
 }
 
 - (void)sendAccessTokenRequest {
-    RequestSender *requestSender = [[RequestSender alloc] init];
-    requestSender.delegate = self;
+    AnimalHospitalRequest *requestSender = [[AnimalHospitalRequest alloc] init];
+    requestSender.animalHospitalRequestDelegate = self;
     [requestSender getAccessToken];
     [self.requestArr addObject:requestSender];
     self.appdelegate.viewController = self.delegate;
@@ -258,8 +258,8 @@
 }
 
 - (void)sendInitRequest {
-    RequestSender *requestSender = [[RequestSender alloc] init];
-    requestSender.delegate = self;
+    AnimalHospitalRequest *requestSender = [[AnimalHospitalRequest alloc] init];
+    requestSender.animalHospitalRequestDelegate = self;
     requestSender.accessToken = self.accessToken;
     [requestSender sendMenuRequest];
     [self.requestArr addObject:requestSender];
@@ -272,8 +272,8 @@
 - (void)searchWithContent:(NSString *)content {
     self.filterType = SearchStores;
 
-    RequestSender *requestSender = [[RequestSender alloc] init];
-    requestSender.delegate = self;
+    AnimalHospitalRequest *requestSender = [[AnimalHospitalRequest alloc] init];
+    requestSender.animalHospitalRequestDelegate = self;
     CLLocationCoordinate2D currentLocation = CLLocationCoordinate2DMake(0, 0);
     if (self.delegate) {
         if ([self.delegate respondsToSelector:@selector(sendLocationBackwithMenuSearchType:)]) {
@@ -684,8 +684,8 @@
             } else if (indexPath.section == 1 && self.filterType == SearchStores){
                 if ([self.stores count]) {
                     self.selectedStoreIndexPath = indexPath;
-                    RequestSender *requestSender = [[RequestSender alloc] init];
-                    requestSender.delegate = self;
+                    AnimalHospitalRequest *requestSender = [[AnimalHospitalRequest alloc] init];
+                    requestSender.animalHospitalRequestDelegate = self;
                     requestSender.accessToken = self.accessToken;
                     [requestSender sendDetailRequestByStore:[self.stores objectAtIndex:indexPath.row]];
                     [self.requestArr addObject:requestSender];
@@ -862,8 +862,8 @@
     [Utilities stopLoading];
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"錯誤" message:message preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *reConnectAction = [UIAlertAction actionWithTitle:@"重新連線" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        RequestSender *requestSender = [[RequestSender alloc] init];
-        requestSender.delegate = self;
+        AnimalHospitalRequest *requestSender = [[AnimalHospitalRequest alloc] init];
+        requestSender.animalHospitalRequestDelegate = self;
         requestSender.accessToken = self.accessToken;
         [requestSender reconnect:connection];
         [self.requestArr addObject:requestSender];
@@ -884,8 +884,8 @@
     MajorType *backMajorType = [notification.userInfo objectForKey:@"MajorType"];
     if (![self.menu.majorType.typeID isEqualToString:backMajorType.typeID]) {
         self.menu.majorType = backMajorType;
-        RequestSender *requestSender = [[RequestSender alloc] init];
-        requestSender.delegate = self;
+        AnimalHospitalRequest *requestSender = [[AnimalHospitalRequest alloc] init];
+        requestSender.animalHospitalRequestDelegate = self;
         [self.requestArr addObject:requestSender];
         [requestSender sendMinorRequestByMajorType:backMajorType];
     }
@@ -924,8 +924,8 @@
 - (void)receiveSelectedMenuType:(NSNotification *)notification {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     MenuSearchType menuType = [[notification.userInfo objectForKey:@"MenuType"] intValue];
-    RequestSender *requestSender = [[RequestSender alloc] init];
-    requestSender.delegate = self;
+    AnimalHospitalRequest *requestSender = [[AnimalHospitalRequest alloc] init];
+    requestSender.animalHospitalRequestDelegate = self;
     requestSender.accessToken = self.accessToken;
     [requestSender sendMenuRequestWithType:menuType];
     [self.requestArr addObject:requestSender];
