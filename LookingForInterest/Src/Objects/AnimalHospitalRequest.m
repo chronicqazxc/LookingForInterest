@@ -14,26 +14,31 @@
     self.delegate = _animalHospitalRequestDelegate;
 }
 
+- (void)sendAnimalHospitalInformationRequest {
+    self.type = FilterTypeAnimalHospitalInformation;
+    [self sendRequestByParams:@{} andURL:kLookingForInterestURL(kGetAnimalHospitalInformation)];
+}
+
 - (void)sendMenuRequest {
     self.type = FilterTypeMenu;
-    [self sendRequestByParams:@{} andURL:[NSString stringWithFormat:@"%@%@",kLookingForInterestURL,kGetInitMenuURL]];
+    [self sendRequestByParams:@{} andURL:kLookingForInterestURL(kGetInitMenuURL)];
 }
 
 - (void)sendMajorRequest {
     self.type = FilterTypeMajorType;
-    [self sendRequestByParams:@{} andURL:[NSString stringWithFormat:@"%@%@",kLookingForInterestURL,kGetMajorTypesURL]];
+    [self sendRequestByParams:@{} andURL:kLookingForInterestURL(kGetMajorTypesURL)];
 }
 
 - (void)sendMinorRequestByMajorType:(MajorType *)majorType {
     self.type = FilterTypeMinorType;
-    [self sendRequestByParams:@{@"major_type_id": majorType.typeID} andURL:[NSString stringWithFormat:@"%@%@",kLookingForInterestURL,kGetMinorTypesURL]];
+    [self sendRequestByParams:@{@"major_type_id": majorType.typeID} andURL:kLookingForInterestURL(kGetMinorTypesURL)];
 }
 
 - (void)sendStoreRequestByMajorType:(MajorType *)majorType minorType:(MinorType *)minorType {
     self.type = FilterTypeStore;
     [self sendRequestByParams:@{@"major_type_id":majorType.typeID,
                                 @"minor_type_id":minorType.typeID}
-                       andURL:[NSString stringWithFormat:@"%@%@",kLookingForInterestTestURL,kGetStoresURL]];
+                       andURL:kLookingForInterestURL(kGetStoresURL)];
 }
 
 - (void)sendStoreRequestByMenuObj:(Menu *)menu andLocationCoordinate:(CLLocationCoordinate2D)location andPageController:(PageController *)pageController{
@@ -64,43 +69,49 @@
                                 @"latitude":latitude,
                                 @"longitude":longitude,
                                 @"store_ids":storeIDs}
-                       andURL:[NSString stringWithFormat:@"%@%@",kLookingForInterestURL,kGetStoresURL]];
+                       andURL:kLookingForInterestURL(kGetStoresURL)];
 }
 
 - (void)sendDetailRequestByStore:(Store *)store {
     self.type = SearchDetail;
-    [self sendRequestByParams:@{@"id":store.storeID} andURL:[NSString stringWithFormat:@"%@%@",kLookingForInterestURL,kGetDetailURL]];
+    [self sendRequestByParams:@{@"id":store.storeID} andURL:kLookingForInterestURL(kGetDetailURL)];
 }
 
 - (void)sendDefaultImagesRequest {
     self.type = GetDefaultImages;
-    [self sendRequestByParams:@{} andURL:[NSString stringWithFormat:@"%@%@",kLookingForInterestURL,kGetDefaultImagesURL]];
+    [self sendRequestByParams:@{} andURL:kLookingForInterestURL(kGetDefaultImagesURL)];
 }
 
 - (void)sendRangeRequest {
     self.type = FilterTypeRange;
-    [self sendRequestByParams:@{} andURL:[NSString stringWithFormat:@"%@%@",kLookingForInterestURL,kGetRangesURL]];
+    [self sendRequestByParams:@{} andURL:kLookingForInterestURL(kGetRangesURL)];
 }
 
 - (void)sendCityRequest {
     self.type = FilterTypeCity;
-    [self sendRequestByParams:@{} andURL:[NSString stringWithFormat:@"%@%@",kLookingForInterestURL,kGetCitiesURL]];
+    [self sendRequestByParams:@{} andURL:kLookingForInterestURL(kGetCitiesURL)];
 }
 
 - (void)sendMenuRequestWithType:(MenuSearchType)menuSearchType {
     self.type = FilterTypeMenu;
-    [self sendRequestByParams:@{@"menu_type":[NSString stringWithFormat:@"%d",(int)menuSearchType]} andURL:[NSString stringWithFormat:@"%@%@",kLookingForInterestURL,kGetInitMenuURL]];
+    [self sendRequestByParams:@{@"menu_type":[NSString stringWithFormat:@"%d",(int)menuSearchType]} andURL:kLookingForInterestURL(kGetInitMenuURL)];
 }
 
 - (void)sendMenutypesRequest {
     self.type = FilterTypeMenuTypes;
-    [self sendRequestByParams:@{} andURL:[NSString stringWithFormat:@"%@%@",kLookingForInterestURL,kGetMenuTypesURL]];
+    [self sendRequestByParams:@{} andURL:kLookingForInterestURL(kGetMenuTypesURL)];
 }
 
 #pragma mark - NSURLConnectionDelegate
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     if (self.animalHospitalRequestDelegate) {
         switch (self.type) {
+            case FilterTypeAnimalHospitalInformation:
+                if ([self.animalHospitalRequestDelegate respondsToSelector:@selector(animalHospitalInformationBack:)]) {
+                    NSArray *datas = [self parseAnimalHospitalInformationData:[self appendDataFromDatas:self.receivedDatas]];
+                    [self.animalHospitalRequestDelegate animalHospitalInformationBack:datas];
+                }
+                break;
             case FilterTypeMenu:
                 if ([self.animalHospitalRequestDelegate respondsToSelector:@selector(initMenuBack:)]) {
                     NSArray *datas = [self parseMenuData:[self appendDataFromDatas:self.receivedDatas]];
@@ -171,6 +182,25 @@
 }
 
 #pragma mark - parse data
+- (NSArray *)parseAnimalHospitalInformationData:(NSData *)data {
+    NSError *error = nil;
+    NSMutableArray *array = [NSMutableArray array];
+    NSDictionary *parsedData = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+    NSString *hospitalSource = [parsedData objectForKey:kHospitalSourceKey];
+    NSString *hospitalTitle = [parsedData objectForKey:kHospitalTitleKey];
+    NSString *hospitalUpdateDate = [parsedData objectForKey:kHospitalUpdateDateKey];
+    NSString *functionOpen = [parsedData objectForKey:kHospitalFunctionOpenKey];
+    NSString *closeReason = [parsedData objectForKey:kHospitalFunctionCloseReasonKey];
+    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    [dic setObject:hospitalSource forKey:kHospitalSourceKey];
+    [dic setObject:hospitalTitle forKey:kHospitalTitleKey];
+    [dic setObject:hospitalUpdateDate forKey:kHospitalUpdateDateKey];
+    [dic setObject:functionOpen forKey:kHospitalFunctionOpenKey];
+    [dic setObject:closeReason forKey:kHospitalFunctionCloseReasonKey];
+    [array addObject:dic];
+    return array;
+}
+
 - (NSArray *)parseMenuData:(NSData *)data {
     NSError *error = nil;
     NSMutableArray *array = [NSMutableArray array];

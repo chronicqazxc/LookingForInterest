@@ -86,15 +86,15 @@ typedef enum adoptAnimalFilterType {
 
 - (NSInteger)processFilterAge {
     NSInteger ageNumber = 0;
-    if ([self.petFilters.age isEqualToString:kAdoptFilterAll]) {
+    if ([self.petFilters.age isEqualToString:[Pet adoptFilterAll]]) {
         ageNumber = 0;
-    } else if ([self.petFilters.age isEqualToString:kAdoptFilterAgeBaby]) {
+    } else if ([self.petFilters.age isEqualToString:[Pet adoptFilterAgeBaby]]) {
         ageNumber = 1;
-    } else if ([self.petFilters.age isEqualToString:kAdoptFilterAgeYoung]) {
+    } else if ([self.petFilters.age isEqualToString:[Pet adoptFilterAgeYoung]]) {
         ageNumber = 2;
-    } else if ([self.petFilters.age isEqualToString:kAdoptFilterAgeAdult]) {
+    } else if ([self.petFilters.age isEqualToString:[Pet adoptFilterAgeAdult]]) {
         ageNumber = 3;
-    } else if ([self.petFilters.age isEqualToString:kAdoptFilterAgeOld]) {
+    } else if ([self.petFilters.age isEqualToString:[Pet adoptFilterAgeOld]]) {
         ageNumber = 4;
     }
     return ageNumber;
@@ -102,13 +102,13 @@ typedef enum adoptAnimalFilterType {
 
 - (NSInteger)processFilterType {
     NSInteger typeNumber = 0;
-    if ([self.petFilters.type isEqualToString:kAdoptFilterAll]) {
+    if ([self.petFilters.type isEqualToString:[Pet adoptFilterAll]]) {
         typeNumber = 0;
-    } else if ([self.petFilters.type isEqualToString:kAdoptFilterTypeDog]) {
+    } else if ([self.petFilters.type isEqualToString:[Pet adoptFilterTypeDog]]) {
         typeNumber = 1;
-    } else if ([self.petFilters.type isEqualToString:kAdoptFilterTypeCat]) {
+    } else if ([self.petFilters.type isEqualToString:[Pet adoptFilterTypeCat]]) {
         typeNumber = 2;
-    } else if ([self.petFilters.type isEqualToString:kAdoptFilterTypeOther]) {
+    } else if ([self.petFilters.type isEqualToString:[Pet adoptFilterTypeOther]]) {
         typeNumber = 3;
     }
     return typeNumber;
@@ -116,13 +116,13 @@ typedef enum adoptAnimalFilterType {
 
 - (NSInteger)processFilterGender {
     NSInteger genderNumber = 0;
-    if ([self.petFilters.sex isEqualToString:kAdoptFilterAll]) {
+    if ([self.petFilters.sex isEqualToString:[Pet adoptFilterAll]]) {
         genderNumber = 0;
-    } else if ([self.petFilters.sex isEqualToString:kAdoptFilterGenderMale]) {
+    } else if ([self.petFilters.sex isEqualToString:[Pet adoptFilterGenderMale]]) {
         genderNumber = 1;
-    } else if ([self.petFilters.sex isEqualToString:kAdoptFilterGenderFemale]) {
+    } else if ([self.petFilters.sex isEqualToString:[Pet adoptFilterGenderFemale]]) {
         genderNumber = 2;
-    } else if ([self.petFilters.sex isEqualToString:kAdoptFilterGenderUnknow]) {
+    } else if ([self.petFilters.sex isEqualToString:[Pet adoptFilterGenderUnknow]]) {
         genderNumber = 3;
     }
     return genderNumber;
@@ -130,15 +130,15 @@ typedef enum adoptAnimalFilterType {
 
 - (NSInteger)processFilterBody {
     NSInteger bodyNumber = 0;
-    if ([self.petFilters.build isEqualToString:kAdoptFilterAll]) {
+    if ([self.petFilters.build isEqualToString:[Pet adoptFilterAll]]) {
         bodyNumber = 0;
-    } else if ([self.petFilters.build isEqualToString:kAdoptFilterBodyMini]) {
+    } else if ([self.petFilters.build isEqualToString:[Pet adoptFilterBodyMini]]) {
         bodyNumber = 1;
-    } else if ([self.petFilters.build isEqualToString:kAdoptFilterBodySmall]) {
+    } else if ([self.petFilters.build isEqualToString:[Pet adoptFilterBodySmall]]) {
         bodyNumber = 2;
-    } else if ([self.petFilters.build isEqualToString:kAdoptFilterBodyMiddle]) {
+    } else if ([self.petFilters.build isEqualToString:[Pet adoptFilterBodyMiddle]]) {
         bodyNumber = 3;
-    } else if ([self.petFilters.build isEqualToString:kAdoptFilterBodyBig]) {
+    } else if ([self.petFilters.build isEqualToString:[Pet adoptFilterBodyBig]]) {
         bodyNumber = 4;
     }
     return bodyNumber;
@@ -174,23 +174,23 @@ typedef enum adoptAnimalFilterType {
 }
 
 - (NSString *)parseSelectedType {
-    NSString *selectedType = kAdoptFilterAll;
+    NSString *selectedType = [Pet adoptFilterAll];
     NSInteger selectedRow = [self.popUpPicker.pickerView selectedRowInComponent:AdoptFilterType];
     switch (selectedRow) {
         case -1:
             selectedType = @"";
             break;
         case 0:
-            selectedType = kAdoptFilterAll;
+            selectedType = [Pet adoptFilterAll];
             break;
         case 1:
-            selectedType = kAdoptFilterTypeDog;
+            selectedType = [Pet adoptFilterTypeDog];
             break;
         case 2:
-            selectedType = kAdoptFilterTypeCat;
+            selectedType = [Pet adoptFilterTypeCat];
             break;
         case 3:
-            selectedType = kAdoptFilterTypeOther;
+            selectedType = [Pet adoptFilterTypeOther];
             break;
         default:
             break;
@@ -199,23 +199,23 @@ typedef enum adoptAnimalFilterType {
 }
 
 - (NSString *)parseSelectedGender {
-    NSString *selectedGender = kAdoptFilterAll;
+    NSString *selectedGender = [Pet adoptFilterAll];
     NSInteger selectedRow = [self.popUpPicker.pickerView selectedRowInComponent:AdoptFilterGender];
     switch (selectedRow) {
         case -1:
             selectedGender = @"";
             break;
         case 0:
-            selectedGender = kAdoptFilterAll;
+            selectedGender = [Pet adoptFilterAll];
             break;
         case 1:
-            selectedGender = kAdoptFilterGenderMale;
+            selectedGender = [Pet adoptFilterGenderMale];
             break;
         case 2:
-            selectedGender = kAdoptFilterGenderFemale;
+            selectedGender = [Pet adoptFilterGenderFemale];
             break;
         case 3:
-            selectedGender = kAdoptFilterGenderUnknow;
+            selectedGender = [Pet adoptFilterGenderUnknow];
             break;
         default:
             break;
@@ -224,26 +224,26 @@ typedef enum adoptAnimalFilterType {
 }
 
 - (NSString *)parseSelectedAge {
-    NSString *selectedAge = kAdoptFilterAll;
+    NSString *selectedAge = [Pet adoptFilterAll];
     NSInteger selectedRow = [self.popUpPicker.pickerView selectedRowInComponent:AdoptFilterAge];
     switch (selectedRow) {
         case -1:
             selectedAge = @"";
             break;
         case 0:
-            selectedAge = kAdoptFilterAll;
+            selectedAge = [Pet adoptFilterAll];
             break;
         case 1:
-            selectedAge = kAdoptFilterAgeBaby;
+            selectedAge = [Pet adoptFilterAgeBaby];
             break;
         case 2:
-            selectedAge = kAdoptFilterAgeYoung;
+            selectedAge = [Pet adoptFilterAgeYoung];
             break;
         case 3:
-            selectedAge = kAdoptFilterAgeAdult;
+            selectedAge = [Pet adoptFilterAgeAdult];
             break;
         case 4:
-            selectedAge = kAdoptFilterAgeOld;
+            selectedAge = [Pet adoptFilterAgeOld];
             break;
         default:
             break;
@@ -252,26 +252,26 @@ typedef enum adoptAnimalFilterType {
 }
 
 - (NSString *)parseSelectedBody {
-    NSString *selectedBody = kAdoptFilterAll;
+    NSString *selectedBody = [Pet adoptFilterAll];
     NSInteger selectedRow = [self.popUpPicker.pickerView selectedRowInComponent:AdoptFilterBody];
     switch (selectedRow) {
         case -1:
             selectedBody = @"";
             break;
         case 0:
-            selectedBody = kAdoptFilterAll;
+            selectedBody = [Pet adoptFilterAll];
             break;
         case 1:
-            selectedBody = kAdoptFilterBodyMini;
+            selectedBody = [Pet adoptFilterBodyMini];
             break;
         case 2:
-            selectedBody = kAdoptFilterBodySmall;
+            selectedBody = [Pet adoptFilterBodySmall];
             break;
         case 3:
-            selectedBody = kAdoptFilterBodyMiddle;
+            selectedBody = [Pet adoptFilterBodyMiddle];
             break;
         case 4:
-            selectedBody = kAdoptFilterBodyBig;
+            selectedBody = [Pet adoptFilterBodyBig];
             break;
         default:
             break;
@@ -331,19 +331,19 @@ typedef enum adoptAnimalFilterType {
     NSString *ageTitle = @"";
     switch (row) {
         case 0:
-            ageTitle = kAdoptFilterAll;
+            ageTitle = [Pet adoptFilterAll];
             break;
         case 1:
-            ageTitle = kAdoptFilterAgeBaby;
+            ageTitle = [Pet adoptFilterAgeBaby];
             break;
         case 2:
-            ageTitle = kAdoptFilterAgeYoung;
+            ageTitle = [Pet adoptFilterAgeYoung];
             break;
         case 3:
-            ageTitle = kAdoptFilterAgeAdult;
+            ageTitle = [Pet adoptFilterAgeAdult];
             break;
         case 4:
-            ageTitle = kAdoptFilterAgeOld;
+            ageTitle = [Pet adoptFilterAgeOld];
             break;
         default:
             break;
@@ -355,16 +355,16 @@ typedef enum adoptAnimalFilterType {
     NSString *typeTitle = @"";
     switch (row) {
         case 0:
-            typeTitle = kAdoptFilterAll;
+            typeTitle = [Pet adoptFilterAll];
             break;
         case 1:
-            typeTitle = kAdoptFilterTypeDog;
+            typeTitle = [Pet adoptFilterTypeDog];
             break;
         case 2:
-            typeTitle = kAdoptFilterTypeCat;
+            typeTitle = [Pet adoptFilterTypeCat];
             break;
         case 3:
-            typeTitle = kAdoptFilterTypeOther;
+            typeTitle = [Pet adoptFilterTypeOther];
             break;
         default:
             break;
@@ -376,16 +376,16 @@ typedef enum adoptAnimalFilterType {
     NSString *genderTitle = @"";
     switch (row) {
         case 0:
-            genderTitle = kAdoptFilterAll;
+            genderTitle = [Pet adoptFilterAll];
             break;
         case 1:
-            genderTitle = kAdoptFilterGenderMale;
+            genderTitle = [Pet adoptFilterGenderMale];
             break;
         case 2:
-            genderTitle = kAdoptFilterGenderFemale;
+            genderTitle = [Pet adoptFilterGenderFemale];
             break;
         case 3:
-            genderTitle = kAdoptFilterGenderUnknow;
+            genderTitle = [Pet adoptFilterGenderUnknow];
             break;
         default:
             break;
@@ -397,19 +397,19 @@ typedef enum adoptAnimalFilterType {
     NSString *bodyTitle = @"";
     switch (row) {
         case 0:
-            bodyTitle = kAdoptFilterAll;
+            bodyTitle = [Pet adoptFilterAll];
             break;
         case 1:
-            bodyTitle = kAdoptFilterBodyMini;
+            bodyTitle = [Pet adoptFilterBodyMini];
             break;
         case 2:
-            bodyTitle = kAdoptFilterBodySmall;
+            bodyTitle = [Pet adoptFilterBodySmall];
             break;
         case 3:
-            bodyTitle = kAdoptFilterBodyMiddle;
+            bodyTitle = [Pet adoptFilterBodyMiddle];
             break;
         case 4:
-            bodyTitle = kAdoptFilterBodyBig;
+            bodyTitle = [Pet adoptFilterBodyBig];
             break;
         default:
             break;

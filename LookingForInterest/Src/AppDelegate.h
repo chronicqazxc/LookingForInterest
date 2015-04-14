@@ -14,8 +14,12 @@
 
 @property (strong, nonatomic) UIWindow *window;
 @property (weak, nonatomic) UIViewController *viewController;
+@property (strong, nonatomic) NSString *systemVersion;
+@property (strong, nonatomic) NSString *versionNote;
+@property (strong, nonatomic) NSString *accessToken;
 - (void)startLoading;
 - (void)startLoadingWithContent:(NSString *)content;
 - (void)stopLoading;
+- (void)resendAccessTokenRequest;
 @end
 

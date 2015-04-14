@@ -8,6 +8,23 @@
 
 #import "Pet.h"
 
+#define kAdoptFilterAll @"全"
+#define kAdoptFilterAgeBaby @"幼齡"
+#define kAdoptFilterAgeYoung @"年輕"
+#define kAdoptFilterAgeAdult @"成年"
+#define kAdoptFilterAgeOld @"老年"
+#define kAdoptFilterTypeDog @"犬"
+#define kAdoptFilterTypeCat @"貓"
+#define kAdoptFilterTypeOther @"其他"
+#define kAdoptFilterTypeMyFavorite @"我的最愛"
+#define kAdoptFilterGenderMale @"雄"
+#define kAdoptFilterGenderFemale @"雌"
+#define kAdoptFilterGenderUnknow @"未知"
+#define kAdoptFilterBodyMini @"微"
+#define kAdoptFilterBodySmall @"小"
+#define kAdoptFilterBodyMiddle @"中"
+#define kAdoptFilterBodyBig @"大"
+
 @implementation Pet
 - (id)initWithRecord:(NSDictionary *)record {
     self = [super init];
@@ -82,4 +99,67 @@
     return self;
 }
 
++ (NSString *)adoptFilterAll {
+    return kAdoptFilterAll;
+}
+
++ (NSString *)adoptFilterAgeBaby {
+    return kAdoptFilterAgeBaby;
+}
+
++ (NSString *)adoptFilterAgeYoung {
+    return kAdoptFilterAgeYoung;
+}
+
++ (NSString *)adoptFilterAgeAdult {
+    return kAdoptFilterAgeAdult;
+}
+
++ (NSString *)adoptFilterAgeOld {
+    return kAdoptFilterAgeOld;
+}
+
++ (NSString *)adoptFilterTypeDog {
+    return kAdoptFilterTypeDog;
+}
+
++ (NSString *)adoptFilterTypeCat {
+    return kAdoptFilterTypeCat;
+}
+
++ (NSString *)adoptFilterTypeOther {
+    return kAdoptFilterTypeOther;
+}
+
++ (NSString *)adoptFilterTypeMyFavorite {
+    return kAdoptFilterTypeMyFavorite;
+}
+
++ (NSString *)adoptFilterGenderMale {
+    return kAdoptFilterGenderMale;
+}
+
++ (NSString *)adoptFilterGenderFemale {
+    return kAdoptFilterGenderFemale;
+}
+
++ (NSString *)adoptFilterGenderUnknow {
+    return kAdoptFilterGenderUnknow;
+}
+
++ (NSString *)adoptFilterBodyMini {
+    return kAdoptFilterBodyMini;
+}
+
++ (NSString *)adoptFilterBodySmall {
+    return kAdoptFilterBodySmall;
+}
+
++ (NSString *)adoptFilterBodyMiddle {
+    return kAdoptFilterBodyMiddle;
+}
+
++ (NSString *)adoptFilterBodyBig {
+    return kAdoptFilterBodyBig;
+}
 @end

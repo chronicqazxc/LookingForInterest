@@ -33,7 +33,7 @@
 
 - (void)getAccessToken {
     self.type = GetAccessToken;
-    [self sendRequestByParams:@{} andURL:[NSString stringWithFormat:@"%@%@",kLookingForInterestURL,kGetAccessToken]];    
+    [self sendRequestByParams:@{} andURL:kLookingForInterestURL(kGetAccessToken)];
 }
 
 - (void)sendRequestByParams:(NSDictionary *)paramDic andURL:(NSString *)URL {
@@ -63,21 +63,7 @@
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    NSError *error = nil;
-    if (error == nil) {
-        if (self.type != CheckFavoriteAnimals) {
-            [self.receivedDatas addObject:data];
-        } else {
-            for (NSMutableDictionary *connectionDic in self.connectionsArr) {
-                NSURLConnection *connectionObj = [connectionDic objectForKey:@"connection"];
-                if (connectionObj == connection) {
-                    NSMutableArray *dataArr = [connectionDic objectForKey:@"data"];
-                    [dataArr addObject:data];
-                    break;
-                }
-            }
-        }
-    }
+    [self.receivedDatas addObject:data];
 }
 
 - (NSCachedURLResponse *)connection:(NSURLConnection *)connection

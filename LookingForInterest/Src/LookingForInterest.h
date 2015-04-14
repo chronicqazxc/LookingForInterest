@@ -23,9 +23,10 @@
 
 #pragma mark - API URL
 #define kLookingForInterestURL kLookingForInterestHerokuURL
-#define kLookingForInterestHerokuURL @"https://animal-hospital.herokuapp.com/api/v1/"
+#define kLookingForInterestHerokuURL(directory) (directory && ![directory isEqualToString:@""])?[NSString stringWithFormat:@"https://animal-hospital.herokuapp.com/api/v1/%@",directory]:@"https://animal-hospital.herokuapp.com/api/v1/"
 #define kLookingForInterestTestURL @"http://Waynes-MacBook-Pro.local:3000/api/v1/"
 #define kGetInitMenuURL @"datas/get_init_menus/"
+#define kGetAnimalHospitalInformation @"datas/get_animal_hospital_information/"
 #define kGetRangesURL @"datas/get_ranges/"
 #define kGetCitiesURL @"datas/get_cities/"
 #define kGetMenuTypesURL @"datas/get_menu_types/"
@@ -34,7 +35,8 @@
 #define kGetStoresURL @"datas/get_stores/"
 #define kGetDetailURL @"datas/get_detail/"
 #define kGetDefaultImagesURL @"datas/get_default_images/"
-#define kGetAccessToken @"tokens/get_access_token/"
+//#define kGetAccessToken @"tokens/get_access_token/"
+#define kGetAccessToken @"tokens/get_access_token2/"
 #define kLookingForInterestUserDefaultKey @"LookingForInterestMenu"
 #define kAccessTokenKey @"access_token"
 #define kHospitalSourceKey @"source"
@@ -42,6 +44,9 @@
 #define kHospitalUpdateDateKey @"update_date"
 #define kHospitalFunctionOpenKey @"function_open"
 #define kHospitalFunctionCloseReasonKey @"close_reason"
+
+#pragma mark - ThingsAboutAnimals Version URL
+#define kThingAboutAnimalsVersionURL @"datas/get_ios_app_version"
 
 #pragma mark - Adopt animals URL
 #define kAppStoreURL @"http://appstore.com/關心毛小孩" // @"https://itunes.apple.com/tw/app/guan-xin-mao-xiao-hai/id977007555?mt=8&uo=4"
@@ -79,31 +84,17 @@
 #define kRemoveFromFavorite @"移除我的最愛"
 #pragma mark -
 
-#pragma mark - AdoptAnimalNames
-#define kAdoptFilterAll @"全"
-#define kAdoptFilterAgeBaby @"幼齡"
-#define kAdoptFilterAgeYoung @"年輕"
-#define kAdoptFilterAgeAdult @"成年"
-#define kAdoptFilterAgeOld @"老年"
-#define kAdoptFilterTypeDog @"犬"
-#define kAdoptFilterTypeCat @"貓"
-#define kAdoptFilterTypeOther @"其他"
-#define kAdoptFilterTypeMyFavorite @"我的最愛"
-#define kAdoptFilterGenderMale @"雄"
-#define kAdoptFilterGenderFemale @"雌"
-#define kAdoptFilterGenderUnknow @"未知"
-#define kAdoptFilterBodyMini @"微"
-#define kAdoptFilterBodySmall @"小"
-#define kAdoptFilterBodyMiddle @"中"
-#define kAdoptFilterBodyBig @"大"
-#pragma mark - 
-
 #pragma mark - Favorite store colors
 #define kColorIsFavoriteStore [UIColor redColor]
 #define kColorNotFavoriteStore [UIColor greenColor]
 #pragma mark -
 
+#pragma mark - Second Storyboard
+#define kSecondStoryboard @"Main2"
+#define kLostPetStoryboardID @"LostPet"
+
 typedef enum filterType {
+    FilterTypeAnimalHospitalInformation,
     FilterTypeMenu,
     FilterTypeMajorType,
     FilterTypeMinorType,

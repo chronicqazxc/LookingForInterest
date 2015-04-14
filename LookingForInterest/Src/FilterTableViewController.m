@@ -248,10 +248,11 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)sendAccessTokenRequest {
+- (void)sendAnimalHospitalInformationRequest {
     AnimalHospitalRequest *requestSender = [[AnimalHospitalRequest alloc] init];
     requestSender.animalHospitalRequestDelegate = self;
-    [requestSender getAccessToken];
+    requestSender.accessToken = self.accessToken;
+    [requestSender sendAnimalHospitalInformationRequest];
     [self.requestArr addObject:requestSender];
     self.appdelegate.viewController = self.delegate;
     [Utilities startLoading];
@@ -733,10 +734,10 @@
 }
 
 #pragma mark - RequestSenderDelegate
-- (void)accessTokenBack:(NSArray *)accessTokenData {
-    if ([accessTokenData count] > 0) {
-        if (self.delegate && [self.delegate respondsToSelector:@selector(setAccessTokenAndVersion:)]) {
-            [self.delegate setAccessTokenAndVersion:[accessTokenData firstObject]];
+- (void)animalHospitalInformationBack:(NSArray *)informationData {
+    if ([informationData count] > 0) {
+        if (self.delegate && [self.delegate respondsToSelector:@selector(setAnimalHospitalInformation:)]) {
+            [self.delegate setAnimalHospitalInformation:[informationData firstObject]];
         }
     }
 }

@@ -32,4 +32,21 @@
 @property (strong, nonatomic) UIImage *thumbNail;
 @property (strong, nonatomic) NSString *animalAnlong;
 - (id)initWithRecord:(NSDictionary *)record;
+
++ (NSString *)adoptFilterAll;
++ (NSString *)adoptFilterAgeBaby;
++ (NSString *)adoptFilterAgeYoung;
++ (NSString *)adoptFilterAgeAdult;
++ (NSString *)adoptFilterAgeOld;
++ (NSString *)adoptFilterTypeDog;
++ (NSString *)adoptFilterTypeCat;
++ (NSString *)adoptFilterTypeOther;
++ (NSString *)adoptFilterTypeMyFavorite;
++ (NSString *)adoptFilterGenderMale;
++ (NSString *)adoptFilterGenderFemale;
++ (NSString *)adoptFilterGenderUnknow;
++ (NSString *)adoptFilterBodyMini;
++ (NSString *)adoptFilterBodySmall;
++ (NSString *)adoptFilterBodyMiddle;
++ (NSString *)adoptFilterBodyBig;
 @end

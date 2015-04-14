@@ -25,7 +25,7 @@
 @property (strong, nonatomic) NSIndexPath *selectedStoreIndexPath;
 @property (strong, nonatomic) NSString *accessToken;
 - (NSString *)getStoryboardID;
-- (void)sendAccessTokenRequest;
+- (void)sendAnimalHospitalInformationRequest;
 - (void)sendInitRequest;
 - (void)searchWithContent:(NSString *)content;
 - (void)back;
@@ -37,8 +37,7 @@
 @end
 
 @protocol FilterTableViewControllerDelegate <NSObject>
-- (void)setAccessTokenValue:(NSString *)accessToken;
-- (void)setAccessTokenAndVersion:(NSMutableDictionary *)dic;
+- (void)setAnimalHospitalInformation:(NSMutableDictionary *)dic;
 - (void)tableBeTapIn:(NSIndexPath *)indexPath withMenuSearchType:(MenuSearchType)menuSearchType;
 - (void)storeBeTapIn:(NSIndexPath *)indexPath withDetail:(Detail *)detail;
 - (CLLocationCoordinate2D)sendLocationBackwithMenuSearchType:(MenuSearchType)menuSearchType;

@@ -9,6 +9,12 @@
 #import "RequestSender.h"
 #import "LostPetFilters.h"
 
+@protocol LostPetRequestDelegate <RequestSenderDelegate>
+@optional
+- (void)lostPetResultBack:(NSArray *)lostPets;
+@end
+
 @interface LostPetRequest : RequestSender
 - (void)sendRequestForLostPetWithLostPetFilters:(LostPetFilters *)lostPetFilters;
+@property (assign, nonatomic) id <LostPetRequestDelegate> lostPetRequestDelegate;
 @end

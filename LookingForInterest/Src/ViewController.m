@@ -79,11 +79,6 @@
 @property (strong, nonatomic) NSString *hospitalDataUpdateDate;
 @property (strong, nonatomic) AppDelegate *appDelegate;
 
-@property (weak, nonatomic) IBOutlet UIView *previousPageView;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *previousPageIndicator;
-@property (weak, nonatomic) IBOutlet UIView *nextPageView;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *nextPageIndicator;
-
 @property (strong, nonatomic) ManulHospitalMenuViewController *manulHospitalMenuViewController;
 @property (nonatomic) BOOL hadShowManul;
 
@@ -125,9 +120,9 @@
     self.isSendForMenu = NO;
     self.searchViewTitle.text = kSearch;
     self.storesOnMap = [NSArray array];
-    self.accessToken = @"";
-    self.hasShowVersion = NO;
     self.appDelegate = [Utilities appdelegate];
+    self.accessToken = self.appDelegate.accessToken;
+    self.hasShowVersion = NO;
 }
 
 - (void)viewDidLoad {
@@ -161,8 +156,6 @@
         NSLog(@"%@",@"請開啟定位服務");
     }
     
-    self.previousPageView.hidden = YES;
-    self.nextPageView.hidden = YES;
     self.mirrorMagnifierImage = [Utilities rotateImage:[UIImage imageNamed:kMagnifierImg] toDirection:DirectionMirror withScale:1.0];
     self.searchViewIcon.image = self.mirrorMagnifierImage;
     
@@ -241,7 +234,8 @@
             self.filterTableViewController.filterTableView = self.filterTableView;
             self.filterTableView.dataSource = self.filterTableViewController;
             self.filterTableView.delegate = self.filterTableViewController;
-            [self.filterTableViewController sendAccessTokenRequest];
+            self.filterTableViewController.accessToken = self.accessToken;
+            [self.filterTableViewController sendAnimalHospitalInformationRequest];
             self.isSendForMenu = YES;
         }
     } else if (!self.isSendForMenu) {
@@ -251,7 +245,8 @@
         self.filterTableViewController.filterTableView = self.filterTableView;
         self.filterTableView.dataSource = self.filterTableViewController;
         self.filterTableView.delegate = self.filterTableViewController;
-        [self.filterTableViewController sendAccessTokenRequest];
+        self.filterTableViewController.accessToken = self.accessToken;
+        [self.filterTableViewController sendAnimalHospitalInformationRequest];
         self.isSendForMenu = YES;
     }
 }
@@ -436,19 +431,11 @@
 }
 
 #pragma mark - FilterTableViewControllerDelegate
-- (void)setAccessTokenValue:(NSString *)accessToken {
-    self.accessToken = accessToken;
-    self.filterTableViewController.accessToken = self.accessToken;
-    [self.filterTableViewController sendInitRequest];
-}
-
-- (void)setAccessTokenAndVersion:(NSMutableDictionary *)dic {
-    self.accessToken = [dic objectForKey:kAccessTokenKey];
+- (void)setAnimalHospitalInformation:(NSMutableDictionary *)dic {
     self.hospitalDataSource = [dic objectForKey:kHospitalSourceKey];
     self.hospitalDataTitle = [dic objectForKey:kHospitalTitleKey];
     self.hospitalDataUpdateDate = [dic objectForKey:kHospitalUpdateDateKey];
     if ([[dic objectForKey:kHospitalFunctionOpenKey] isEqualToString:@"Y"]) {
-        self.filterTableViewController.accessToken = self.accessToken;
         [self.filterTableViewController sendInitRequest];
     } else {
         [Utilities stopLoading];
@@ -693,20 +680,10 @@
     [self.googleMap setCamera:fancy];
     
     if (pageController.currentPage == 1 && pageController.totalPage != 1) {
-        self.previousPageView.hidden = YES;
-        self.nextPageView.hidden = NO;
     } else if (pageController.currentPage == pageController.totalPage && pageController.currentPage != 1) {
-        self.previousPageView.hidden = NO;
-        self.nextPageView.hidden = YES;
     } else if (pageController.totalPage == 1) {
-        self.previousPageView.hidden = YES;
-        self.nextPageView.hidden = YES;
     } else {
-        self.previousPageView.hidden = NO;
-        self.nextPageView.hidden = NO;
     }
-    [self.previousPageIndicator stopAnimating];
-    [self.nextPageIndicator stopAnimating];
 }
 
 - (void)resetMap {
@@ -876,12 +853,10 @@
 
 - (void)loadPreviousPage:(PageController *)pageController {
     [self resetMap];
-    [self.previousPageIndicator startAnimating];
 }
 
 - (void)loadNextPage:(PageController *)pageController {
     [self resetMap];
-    [self.nextPageIndicator startAnimating];
 }
 
 #pragma mark -
@@ -900,10 +875,6 @@
         self.searchViewIcon.image = self.mirrorMagnifierImage;
         [self.filterTableViewController back];
         [self setOriginalTitle];
-        self.previousPageView.hidden = YES;
-        self.nextPageView.hidden = YES;
-        [self.previousPageIndicator stopAnimating];
-        [self.nextPageIndicator stopAnimating];
     }
 }
 - (IBAction)clickNavigationTitle:(UIButton *)sender {

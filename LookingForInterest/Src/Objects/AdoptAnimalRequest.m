@@ -254,6 +254,24 @@
 }
 
 #pragma mark - NSURLConnectionDelegate
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
+    NSError *error = nil;
+    if (error == nil) {
+        if (self.type != CheckFavoriteAnimals) {
+            [self.receivedDatas addObject:data];
+        } else {
+            for (NSMutableDictionary *connectionDic in self.connectionsArr) {
+                NSURLConnection *connectionObj = [connectionDic objectForKey:@"connection"];
+                if (connectionObj == connection) {
+                    NSMutableArray *dataArr = [connectionDic objectForKey:@"data"];
+                    [dataArr addObject:data];
+                    break;
+                }
+            }
+        }
+    }
+}
+
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     if (self.delegate) {
         switch (self.type) {

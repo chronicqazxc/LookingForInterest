@@ -122,16 +122,16 @@
 }
 
 - (void)changeNavTitle {
-    if ([self.petFilters.type isEqualToString:kAdoptFilterAll] || !self.petFilters.type || [self.petFilters.type isEqualToString:@""]) {
+    if ([self.petFilters.type isEqualToString:[Pet adoptFilterAll]] || !self.petFilters.type || [self.petFilters.type isEqualToString:@""]) {
         self.navigationItem.title = kAdoptAnimalTitle(@"全部");
-    } else if ([self.petFilters.type isEqualToString:kAdoptFilterTypeDog]) {
-        self.navigationItem.title = kAdoptAnimalTitle(kAdoptFilterTypeDog);
-    } else if ([self.petFilters.type isEqualToString:kAdoptFilterTypeCat]) {
-        self.navigationItem.title = kAdoptAnimalTitle(kAdoptFilterTypeCat);
-    } else if ([self.petFilters.type isEqualToString:kAdoptFilterTypeOther]) {
-        self.navigationItem.title = kAdoptAnimalTitle(kAdoptFilterTypeOther);
-    } else if ([self.petFilters.type isEqualToString:kAdoptFilterTypeMyFavorite]) {
-        self.navigationItem.title = kAdoptAnimalTitle(kAdoptFilterTypeMyFavorite);
+    } else if ([self.petFilters.type isEqualToString:[Pet adoptFilterTypeDog]]) {
+        self.navigationItem.title = kAdoptAnimalTitle([Pet adoptFilterTypeDog]);
+    } else if ([self.petFilters.type isEqualToString:[Pet adoptFilterTypeCat]]) {
+        self.navigationItem.title = kAdoptAnimalTitle([Pet adoptFilterTypeCat]);
+    } else if ([self.petFilters.type isEqualToString:[Pet adoptFilterTypeOther]]) {
+        self.navigationItem.title = kAdoptAnimalTitle([Pet adoptFilterTypeOther]);
+    } else if ([self.petFilters.type isEqualToString:[Pet adoptFilterTypeMyFavorite]]) {
+        self.navigationItem.title = kAdoptAnimalTitle([Pet adoptFilterTypeMyFavorite]);
     }
 }
 
@@ -280,11 +280,11 @@
         petCell.body.text = [NSString stringWithFormat:@"體型：%@",pet.build];
         
         if (!pet.thumbNail && !self.isStartLoading) {
-            if ([pet.type isEqualToString:kAdoptFilterTypeDog]) {
+            if ([pet.type isEqualToString:[Pet adoptFilterTypeDog]]) {
                 petCell.thumbNail.image = [UIImage imageNamed:@"dog_icon.png"];
-            } else if ([pet.type isEqualToString:kAdoptFilterTypeCat]) {
+            } else if ([pet.type isEqualToString:[Pet adoptFilterTypeCat]]) {
                 petCell.thumbNail.image = [UIImage imageNamed:@"cat_icon.png"];
-            } else if ([pet.type isEqualToString:kAdoptFilterTypeOther]) {
+            } else if ([pet.type isEqualToString:[Pet adoptFilterTypeOther]]) {
                 petCell.thumbNail.image = [UIImage imageNamed:@"rabbit_icon.png"];
             } else {
                 petCell.thumbNail.image = [UIImage imageNamed:@"Loading100x100.png"];
@@ -713,7 +713,7 @@
     [self clearRequestSenderDelegate];
     [self startLoadingWithContent:@"讀取汪星人"];
     self.petFilters = [[PetFilters alloc] init];
-    self.petFilters.type = kAdoptFilterTypeDog;
+    self.petFilters.type = [Pet adoptFilterTypeDog];
     self.petFilters.offset = nil;
     [self sendRequestWithFilters:self.petFilters];
 }
@@ -722,7 +722,7 @@
     [self clearRequestSenderDelegate];
     [self startLoadingWithContent:@"讀取喵星人"];
     self.petFilters = [[PetFilters alloc] init];
-    self.petFilters.type = kAdoptFilterTypeCat;
+    self.petFilters.type = [Pet adoptFilterTypeCat];
     self.petFilters.offset = nil;
     [self sendRequestWithFilters:self.petFilters];
 }
@@ -731,7 +731,7 @@
     [self clearRequestSenderDelegate];
     [self startLoadingWithContent:@"讀取其他動物"];
     self.petFilters = [[PetFilters alloc] init];
-    self.petFilters.type = kAdoptFilterTypeOther;
+    self.petFilters.type = [Pet adoptFilterTypeOther];
     self.petFilters.offset = nil;
     [self sendRequestWithFilters:self.petFilters];
 }
@@ -739,7 +739,7 @@
 - (void)sendMyFavoriteRequest {
     [self clearRequestSenderDelegate];
     self.petFilters = [[PetFilters alloc] init];
-    self.petFilters.type = kAdoptFilterTypeMyFavorite;
+    self.petFilters.type = [Pet adoptFilterTypeMyFavorite];
     self.petResult.pets = [NSMutableArray arrayWithArray:[Utilities getMyFavoriteAnimalsDecoded]];
     NSInteger limitNumber = [self.petResult.pets count]?[self.petResult.pets count]:1;
     self.petResult.limit = [NSNumber numberWithInt:(int)limitNumber];
@@ -760,10 +760,10 @@
     [self startLoadingWithContent:@"讀取篩選資料"];
     [self changeNavTitle];
     [self clearRequestSenderDelegate];
-    self.petFilters.age = [self.petFilters.age isEqualToString:kAdoptFilterAll]?nil:self.petFilters.age;
-    self.petFilters.type = [self.petFilters.type isEqualToString:kAdoptFilterAll]?nil:self.petFilters.type;
-    self.petFilters.sex = [self.petFilters.sex isEqualToString:kAdoptFilterAll]?nil:self.petFilters.sex;
-    self.petFilters.build = [self.petFilters.build isEqualToString:kAdoptFilterAll]?nil:self.petFilters.build;
+    self.petFilters.age = [self.petFilters.age isEqualToString:[Pet adoptFilterAll]]?nil:self.petFilters.age;
+    self.petFilters.type = [self.petFilters.type isEqualToString:[Pet adoptFilterAll]]?nil:self.petFilters.type;
+    self.petFilters.sex = [self.petFilters.sex isEqualToString:[Pet adoptFilterAll]]?nil:self.petFilters.sex;
+    self.petFilters.build = [self.petFilters.build isEqualToString:[Pet adoptFilterAll]]?nil:self.petFilters.build;
     self.petFilters.offset = nil;
     self.petResult.filters = self.petFilters;
     [self clearRequestSenderDelegate];
@@ -792,7 +792,7 @@
         [Utilities addToMyFavoriteAnimal:pet];
         [Utilities addHudViewTo:self withMessage:kAddToFavorite];
     }
-    if ([self.petFilters.type isEqualToString:kAdoptFilterTypeMyFavorite]) {
+    if ([self.petFilters.type isEqualToString:[Pet adoptFilterTypeMyFavorite]]) {
         [self sendMyFavoriteRequest];
     } else {
         [self.tableView reloadData];

@@ -10,6 +10,7 @@
 
 @protocol AnimalHospitalRequestDelegate <RequestSenderDelegate>
 @optional
+- (void)animalHospitalInformationBack:(NSArray *)informationData;
 - (void)initMenuBack:(NSArray *)menuData;
 - (void)menuTypesBack:(NSArray *)menuData;
 - (void)majorsBack:(NSArray *)majorData;
@@ -22,6 +23,7 @@
 @end
 
 @interface AnimalHospitalRequest:RequestSender
+- (void)sendAnimalHospitalInformationRequest;
 - (void)sendMenuRequest;
 - (void)sendMenuRequestWithType:(MenuSearchType)menuSearchType;
 - (void)sendMenutypesRequest;

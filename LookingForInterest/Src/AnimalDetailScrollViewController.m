@@ -156,7 +156,7 @@
     [Utilities addHudViewTo:self withMessage:kRemoveFromFavorite];
     UIBarButtonItem *newButton = [self generateAddFavoriteButtonWithTag:buttonItem.tag];
     [self.navigationItem setRightBarButtonItem:newButton animated:YES];
-    if ([self.petFilters.type isEqualToString:kAdoptFilterTypeMyFavorite]) {
+    if ([self.petFilters.type isEqualToString:[Pet adoptFilterTypeMyFavorite]]) {
         self.petResult.pets = [NSMutableArray arrayWithArray:[Utilities getMyFavoriteAnimalsDecoded]];
     }
 }
@@ -167,7 +167,7 @@
     [Utilities addHudViewTo:self withMessage:kAddToFavorite];
     UIBarButtonItem *newButton = [self generateRemoveFavoriteButtonWithTag:buttonItem.tag];
     [self.navigationItem setRightBarButtonItem:newButton animated:YES];
-    if ([self.petFilters.type isEqualToString:kAdoptFilterTypeMyFavorite]) {
+    if ([self.petFilters.type isEqualToString:[Pet adoptFilterTypeMyFavorite]]) {
         self.petResult.pets = [NSMutableArray arrayWithArray:[Utilities getMyFavoriteAnimalsDecoded]];
     }
 }

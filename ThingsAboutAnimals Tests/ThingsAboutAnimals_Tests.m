@@ -12,9 +12,10 @@
 #import "LostPetRequest.h"
 #import "LostPet.h"
 #import "LostPetFilters.h"
+#import "LostPetRequest.h"
 
-@interface ThingsAboutAnimals_Tests : XCTestCase
-
+@interface ThingsAboutAnimals_Tests : XCTestCase <LostPetRequestDelegate>
+@property (nonatomic) BOOL callbackInvoked;
 @end
 
 @implementation ThingsAboutAnimals_Tests
@@ -170,7 +171,7 @@
     NSLog(@"%d",b);
 }
 
-- (void)testLostPetRequest {
+- (void)testLostPet {
     LostPetFilters *lostPetFilters = [[LostPetFilters alloc] init];
     lostPetFilters.variety = @"貓";
     lostPetFilters.gender = @"母";
@@ -203,6 +204,21 @@
         NSLog(@"faild");
     }
     
+}
+
+- (void)testLostPetRequest {
+    LostPetRequest *lostPetRequest = [[LostPetRequest alloc] init];
+    lostPetRequest.lostPetRequestDelegate = self;
+    LostPetFilters *lostPetFilters = [[LostPetFilters alloc] init];
+    lostPetFilters.variety = @"貓";
+    lostPetFilters.gender = @"母";
+    [lostPetRequest sendRequestForLostPetWithLostPetFilters:lostPetFilters];
+    XCTAssertTrue(self.callbackInvoked, @"Delegate should send -something:delegateInvoked:");
+}
+
+- (void)lostPetResultBack:(NSArray *)lostPets {
+    self.callbackInvoked = YES;
+    NSLog(@"%@",lostPets);
 }
 
 @end

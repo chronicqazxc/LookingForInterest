@@ -10,6 +10,7 @@
 #import "DialingButton.h"
 #import <FacebookSDK/FacebookSDK.h>
 #import "ManulMenuViewController.h"
+#import "LostPetViewController.h"
 #import <iAd/iAd.h>
 
 @interface MenuViewController () <ADBannerViewDelegate, FBLoginViewDelegate, ManulViewControllerDelegate>
@@ -26,6 +27,7 @@
 @property (nonatomic) BOOL hadShowManul;
 @property (weak, nonatomic) IBOutlet UIVisualEffectView *effectView;
 @property (weak, nonatomic) IBOutlet ADBannerView *adBannerView;
+- (IBAction)goToLostPet:(UIButton *)sender;
 @end
 
 @implementation MenuViewController
@@ -41,6 +43,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [[Utilities getAppDelegate] setViewController:self];
     self.loginView.delegate = self;
     self.loginView.readPermissions = @[@"public_profile", @"email", @"user_friends"];
     self.adoptButton.hidden = YES;
@@ -53,7 +56,6 @@
     self.adBannerView.delegate = self;
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
         //Background Thread
-//        UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://i.ytimg.com/vi/usasigkvhDY/hqdefault.jpg"]]];
         UIImage *image = [UIImage imageNamed:@"blur_background.JPG"];
         dispatch_async(dispatch_get_main_queue(), ^(void){
             //Run UI Updates
@@ -79,6 +81,12 @@
             self.manulMenuViewController = [[ManulMenuViewController alloc] initWithNibName:@"ManulViewController" bundle:nil];
             self.manulMenuViewController.delegate = self;
             [self presentViewController:self.manulMenuViewController animated:YES completion:nil];
+        }
+    } else {
+        if ([[Utilities getAppDelegate] accessToken] == nil) {
+            [[Utilities getAppDelegate] setViewController:self];
+            [Utilities startLoadingWithContent:@"準備資料中..."];
+            [[Utilities getAppDelegate] resendAccessTokenRequest];
         }
     }
 }
@@ -252,5 +260,36 @@
 
 - (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error {
     [self layoutAnimated:YES];
+}
+
+- (void)checkSystemVersion {
+    if ([[Utilities appdelegate] systemVersion] && ![[[Utilities appdelegate] systemVersion] isEqualToString:@""]) {
+        NSString *latestVersion = [[Utilities appdelegate] systemVersion];
+       
+        NSDictionary *infoDictionary = [[NSBundle mainBundle]infoDictionary];
+        NSString *version = infoDictionary[@"CFBundleShortVersionString"];
+        
+        if ([version compare:latestVersion] == NSOrderedAscending) {
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:[NSString stringWithFormat:@"新版本%@通知",((AppDelegate *)[Utilities appdelegate]).systemVersion] message:((AppDelegate *)[Utilities appdelegate]).versionNote preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *action = [UIAlertAction actionWithTitle:@"馬上下載" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+                NSString *appURL = @"http://appstore.com/關心毛小孩";
+                appURL = [appURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:appURL]];
+            }];
+            UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"暫時不用" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+                [alertController dismissViewControllerAnimated:YES completion:nil];
+            }];
+            [alertController addAction:action];
+            [alertController addAction:cancelAction];
+            [self presentViewController:alertController animated:YES completion:nil];
+        }
+    }
+}
+- (IBAction)goToLostPet:(UIButton *)sender {
+    UIStoryboard *secondStoryboard = [UIStoryboard storyboardWithName:kSecondStoryboard bundle:nil];
+    LostPetViewController *lostPetViewController = (LostPetViewController *)[secondStoryboard instantiateViewControllerWithIdentifier:kLostPetStoryboardID];
+    [self presentViewController:lostPetViewController animated:YES completion:nil];
+    
+    
 }
 @end

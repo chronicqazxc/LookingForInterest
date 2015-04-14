@@ -29,6 +29,8 @@
 		B044A8B81ADB9FE3008DAE2A /* AdoptAnimalRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B044A8B71ADB9FE3008DAE2A /* AdoptAnimalRequest.m */; };
 		B044A8BB1ADB9FF7008DAE2A /* AnimalHospitalRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B044A8BA1ADB9FF7008DAE2A /* AnimalHospitalRequest.m */; };
 		B044A8BE1ADBB5BD008DAE2A /* LostPetFilters.m in Sources */ = {isa = PBXBuildFile; fileRef = B044A8BD1ADBB5BD008DAE2A /* LostPetFilters.m */; };
+		B044A8C11ADD2A26008DAE2A /* Main2.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B044A8BF1ADD2A26008DAE2A /* Main2.storyboard */; };
+		B044A8C51ADD2A9D008DAE2A /* LostPetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B044A8C41ADD2A9D008DAE2A /* LostPetViewController.m */; };
 		B04F70171AA4406D007D9856 /* HUDView.m in Sources */ = {isa = PBXBuildFile; fileRef = B04F70161AA4406D007D9856 /* HUDView.m */; };
 		B04F70191AA44089007D9856 /* HUDView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B04F70181AA44089007D9856 /* HUDView.xib */; };
 		B04F701C1AA585CB007D9856 /* DialingButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B04F701B1AA585CB007D9856 /* DialingButton.m */; };
@@ -181,6 +183,9 @@
 		B044A8BA1ADB9FF7008DAE2A /* AnimalHospitalRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AnimalHospitalRequest.m; path = Src/Objects/AnimalHospitalRequest.m; sourceTree = "<group>"; };
 		B044A8BC1ADBB5BD008DAE2A /* LostPetFilters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LostPetFilters.h; path = Src/Objects/LostPetFilters.h; sourceTree = "<group>"; };
 		B044A8BD1ADBB5BD008DAE2A /* LostPetFilters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LostPetFilters.m; path = Src/Objects/LostPetFilters.m; sourceTree = "<group>"; };
+		B044A8C01ADD2A26008DAE2A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main2.storyboard; sourceTree = "<group>"; };
+		B044A8C31ADD2A9D008DAE2A /* LostPetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LostPetViewController.h; path = Src/LostPetViewController.h; sourceTree = "<group>"; };
+		B044A8C41ADD2A9D008DAE2A /* LostPetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LostPetViewController.m; path = Src/LostPetViewController.m; sourceTree = "<group>"; };
 		B04F70131A9EFEFA007D9856 /* AnimalHospital.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimalHospital.pch; path = LookingForInterest/Src/AnimalHospital.pch; sourceTree = SOURCE_ROOT; };
 		B04F70141A9F0555007D9856 /* GoogleMapNavigation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GoogleMapNavigation.h; path = Src/GoogleMapNavigation.h; sourceTree = "<group>"; };
 		B04F70151AA4406D007D9856 /* HUDView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HUDView.h; path = Src/Views/HUDView.h; sourceTree = "<group>"; };
@@ -407,6 +412,7 @@
 				B0BF72DF1A8915CC00213C00 /* Objs */,
 				B0ACC9131AA849670068A7D5 /* AnimalHospital */,
 				B0ACC9161AA84A650068A7D5 /* AdoptAnimal */,
+				B044A8C21ADD2A7B008DAE2A /* LostPet */,
 				B0BF72EC1A8915ED00213C00 /* AppDelegate.h */,
 				B0BF72ED1A8915ED00213C00 /* AppDelegate.m */,
 				B08572451AA4C18400F0F8FD /* MenuViewController.h */,
@@ -415,6 +421,7 @@
 				B002A2E91A9885FA00808055 /* WebViewController.m */,
 				B002A2EA1A9885FA00808055 /* WebViewController.xib */,
 				B034D9681A8903AA00360A6C /* Main.storyboard */,
+				B044A8BF1ADD2A26008DAE2A /* Main2.storyboard */,
 				B034D96B1A8903AA00360A6C /* Images.xcassets */,
 				B034D96D1A8903AA00360A6C /* LaunchScreen.xib */,
 				B034D95E1A8903A900360A6C /* Supporting Files */,
@@ -449,6 +456,15 @@
 				B044A8BA1ADB9FF7008DAE2A /* AnimalHospitalRequest.m */,
 			);
 			name = HttpRequest;
+			sourceTree = "<group>";
+		};
+		B044A8C21ADD2A7B008DAE2A /* LostPet */ = {
+			isa = PBXGroup;
+			children = (
+				B044A8C31ADD2A9D008DAE2A /* LostPetViewController.h */,
+				B044A8C41ADD2A9D008DAE2A /* LostPetViewController.m */,
+			);
+			name = LostPet;
 			sourceTree = "<group>";
 		};
 		B06449191ABD62B700B6F7A5 /* manul */ = {
@@ -791,6 +807,7 @@
 				B0F06B601A8B0FA200FBC90C /* OpenMapHeaderController.xib in Resources */,
 				B03B256D1AAEA6B6001C5928 /* AnimalListTableViewCell.xib in Resources */,
 				B0BF732A1A8A414500213C00 /* StoreCell.xib in Resources */,
+				B044A8C11ADD2A26008DAE2A /* Main2.storyboard in Resources */,
 				B0BF73391A8A844000213C00 /* OpenMapCell.xib in Resources */,
 				B0BF730C1A8916A400213C00 /* Icon-76@2x.png in Resources */,
 				B0391BE21AADF9A60070C3CC /* Line20x20.png in Resources */,
@@ -892,6 +909,7 @@
 				B08572471AA4C18400F0F8FD /* MenuViewController.m in Sources */,
 				B07720A91AD29C4700D8C406 /* TableLoadPreviousPage.m in Sources */,
 				B04F701C1AA585CB007D9856 /* DialingButton.m in Sources */,
+				B044A8C51ADD2A9D008DAE2A /* LostPetViewController.m in Sources */,
 				B064492F1ABD6FCE00B6F7A5 /* ManulAdoptListViewController.m in Sources */,
 				B0BF72F81A8915ED00213C00 /* ViewController.m in Sources */,
 				B044A8BE1ADBB5BD008DAE2A /* LostPetFilters.m in Sources */,
@@ -975,6 +993,14 @@
 				B034D96E1A8903AA00360A6C /* Base */,
 			);
 			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+		B044A8BF1ADD2A26008DAE2A /* Main2.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B044A8C01ADD2A26008DAE2A /* Base */,
+			);
+			name = Main2.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
