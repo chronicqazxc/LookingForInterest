@@ -13,9 +13,47 @@
                         <viewControllerLayoutGuide type="bottom" id="GuH-wc-fgu"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="ZUG-rP-olP">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="330" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="kpF-So-HJC">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="kpF-So-HJC" firstAttribute="top" secondItem="ZUG-rP-olP" secondAttribute="top" id="DpO-JX-N0e"/>
+                            <constraint firstItem="kpF-So-HJC" firstAttribute="leading" secondItem="ZUG-rP-olP" secondAttribute="leading" id="Xqd-ke-uUj"/>
+                            <constraint firstAttribute="trailing" secondItem="kpF-So-HJC" secondAttribute="trailing" id="cVE-EX-VZF"/>
+                            <constraint firstItem="GuH-wc-fgu" firstAttribute="top" secondItem="kpF-So-HJC" secondAttribute="bottom" id="eiv-PM-fzJ"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="kpF-So-HJC"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="DpO-JX-N0e"/>
+                                <exclude reference="Xqd-ke-uUj"/>
+                                <exclude reference="cVE-EX-VZF"/>
+                                <exclude reference="eiv-PM-fzJ"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular-widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="kpF-So-HJC"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="DpO-JX-N0e"/>
+                                <include reference="Xqd-ke-uUj"/>
+                                <include reference="cVE-EX-VZF"/>
+                                <include reference="eiv-PM-fzJ"/>
+                            </mask>
+                        </variation>
                     </view>
+                    <connections>
+                        <outlet property="tableView" destination="kpF-So-HJC" id="3yE-HB-y8h"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tVp-2h-gko" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

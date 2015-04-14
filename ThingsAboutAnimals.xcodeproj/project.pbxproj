@@ -112,6 +112,8 @@
 		B0BF73301A8A4EE000213C00 /* menu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0BF732D1A8A4EE000213C00 /* menu@2x.png */; };
 		B0BF73381A8A844000213C00 /* OpenMapCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B0BF73361A8A844000213C00 /* OpenMapCell.m */; };
 		B0BF73391A8A844000213C00 /* OpenMapCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0BF73371A8A844000213C00 /* OpenMapCell.xib */; };
+		B0D4A4DC1ADD5EA1006289BE /* LostPetListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B0D4A4DA1ADD5EA1006289BE /* LostPetListCell.m */; };
+		B0D4A4DD1ADD5EA1006289BE /* LostPetListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0D4A4DB1ADD5EA1006289BE /* LostPetListCell.xib */; };
 		B0F06B361A89B80500FBC90C /* MapViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B0F06B341A89B80500FBC90C /* MapViewCell.m */; };
 		B0F06B371A89B80500FBC90C /* MapViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0F06B351A89B80500FBC90C /* MapViewCell.xib */; };
 		B0F06B401A89F37500FBC90C /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = B0F06B3F1A89F37500FBC90C /* Utilities.m */; };
@@ -306,6 +308,9 @@
 		B0BF73351A8A844000213C00 /* OpenMapCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpenMapCell.h; path = Src/Views/OpenMapCell.h; sourceTree = "<group>"; };
 		B0BF73361A8A844000213C00 /* OpenMapCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OpenMapCell.m; path = Src/Views/OpenMapCell.m; sourceTree = "<group>"; };
 		B0BF73371A8A844000213C00 /* OpenMapCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = OpenMapCell.xib; path = Src/Views/OpenMapCell.xib; sourceTree = "<group>"; };
+		B0D4A4D91ADD5EA1006289BE /* LostPetListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LostPetListCell.h; path = Src/Views/LostPetListCell.h; sourceTree = "<group>"; };
+		B0D4A4DA1ADD5EA1006289BE /* LostPetListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LostPetListCell.m; path = Src/Views/LostPetListCell.m; sourceTree = "<group>"; };
+		B0D4A4DB1ADD5EA1006289BE /* LostPetListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LostPetListCell.xib; path = Src/Views/LostPetListCell.xib; sourceTree = "<group>"; };
 		B0F06B331A89B80500FBC90C /* MapViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MapViewCell.h; path = Src/MapViewCell.h; sourceTree = "<group>"; };
 		B0F06B341A89B80500FBC90C /* MapViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MapViewCell.m; path = Src/MapViewCell.m; sourceTree = "<group>"; };
 		B0F06B351A89B80500FBC90C /* MapViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MapViewCell.xib; path = Src/MapViewCell.xib; sourceTree = "<group>"; };
@@ -639,6 +644,7 @@
 		B0BF73131A8A3FA400213C00 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				B0D4A4D81ADD5E1B006289BE /* LostPet */,
 				B0ACC9141AA84A020068A7D5 /* AnimalHospital */,
 				B0BF73141A8A3FF500213C00 /* LoadingView.h */,
 				B0BF73151A8A3FF500213C00 /* LoadingView.m */,
@@ -663,6 +669,16 @@
 				B002A2F01A9E31D700808055 /* Scroll&ZoomingView */,
 			);
 			name = Views;
+			sourceTree = "<group>";
+		};
+		B0D4A4D81ADD5E1B006289BE /* LostPet */ = {
+			isa = PBXGroup;
+			children = (
+				B0D4A4D91ADD5EA1006289BE /* LostPetListCell.h */,
+				B0D4A4DA1ADD5EA1006289BE /* LostPetListCell.m */,
+				B0D4A4DB1ADD5EA1006289BE /* LostPetListCell.xib */,
+			);
+			name = LostPet;
 			sourceTree = "<group>";
 		};
 		B0F06B3B1A89F30500FBC90C /* Utilities */ = {
@@ -828,6 +844,7 @@
 				B0B049011AB3002A000154B2 /* FB-f-Logo__white_29.png in Resources */,
 				B0BF732F1A8A4EE000213C00 /* fav@2x.png in Resources */,
 				B07720AB1AD29C6400D8C406 /* TableLoadPreviousPage.xib in Resources */,
+				B0D4A4DD1ADD5EA1006289BE /* LostPetListCell.xib in Resources */,
 				B0A320531AAD428A0061384A /* Loading100x100.png in Resources */,
 				B0B8660D1AB368FE0039BFB5 /* add_fav.png in Resources */,
 				B06E569E1A9DE2980030B6A4 /* AnimalHospitalViewController.xib in Resources */,
@@ -929,6 +946,7 @@
 				B0BF72F51A8915ED00213C00 /* AppDelegate.m in Sources */,
 				B04F70171AA4406D007D9856 /* HUDView.m in Sources */,
 				B07804AB1AA9467900DE8AD0 /* PopUpPicker.m in Sources */,
+				B0D4A4DC1ADD5EA1006289BE /* LostPetListCell.m in Sources */,
 				B0F06B361A89B80500FBC90C /* MapViewCell.m in Sources */,
 				B0F06B401A89F37500FBC90C /* Utilities.m in Sources */,
 				B03B256C1AAEA6B6001C5928 /* AnimalListTableViewCell.m in Sources */,
