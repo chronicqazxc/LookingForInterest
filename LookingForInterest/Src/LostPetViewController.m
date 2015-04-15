@@ -13,6 +13,7 @@
 #import "MenuViewController.h"
 
 #define kLostPetListCell @"LostPetListCell"
+#define kToMenuSegueIdentifier @"ToMenuSegueIdentifier"
 
 @interface LostPetViewController () <LostPetRequestDelegate, UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -36,7 +37,6 @@
     self.tableView.delegate = self;
     
     [self initNavigationBar];
-    
 }
 
 - (void)initNavigationBar {
@@ -55,6 +55,14 @@
     MenuViewController *controller = (MenuViewController *)[firstStoryboard instantiateViewControllerWithIdentifier:kMenuStoryboardID];
 
     [self presentViewController:controller animated:NO completion:nil];
+//    UIStoryboardSegue *segue = [UIStoryboardSegue segueWithIdentifier:kToMenuSegueIdentifier source:self destination:controller performHandler:^{
+//        nil;
+//    }];
+    UIStoryboardSegue *segue =[UIStoryboardSegue segueWithIdentifier:kToMenuSegueIdentifier source:self destination:controller performHandler:^{
+        nil;
+    }];
+    [self prepareForSegue:segue sender:nil];
+    [segue perform];
 }
 
 - (void)didReceiveMemoryWarning {

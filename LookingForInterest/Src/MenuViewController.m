@@ -16,6 +16,7 @@
 #define kAnimationKeyAdoptAnimal @"AdoptAnimal"
 #define kAnimationKeyAnimalHospital @"AnimalHospital"
 #define kAnimationKeyLostPet @"LostPet"
+#define kToLostPetSegueIdentifier @"ToMenuSegueIdentifier"
 
 @interface MenuViewController () <ADBannerViewDelegate, FBLoginViewDelegate, ManulViewControllerDelegate>
 @property (nonatomic) BOOL isInitial;
@@ -34,6 +35,7 @@
 @property (weak, nonatomic) IBOutlet ADBannerView *adBannerView;
 - (IBAction)goToLostPet:(UIButton *)sender;
 - (IBAction)panInView:(UIPanGestureRecognizer *)recognizer;
+@property (strong, nonatomic) MenuViewControllerDelegate *myDelegate;
 @end
 
 @implementation MenuViewController
@@ -389,8 +391,14 @@
 - (IBAction)goToLostPet:(UIButton *)sender {
     UIStoryboard *secondStoryboard = [UIStoryboard storyboardWithName:kSecondStoryboard bundle:nil];
     UINavigationController *controller = (UINavigationController *)[secondStoryboard instantiateViewControllerWithIdentifier:kLostPetNavigationControllerStoryboardID];
+    self.myDelegate = [[MenuViewControllerDelegate alloc] init];
+    self.transitioningDelegate = self.myDelegate;    
     [self presentViewController:controller animated:YES completion:nil];
-    
+//    UIStoryboardSegue *segue = [UIStoryboardSegue segueWithIdentifier:kToLostPetSegueIdentifier source:self destination:controller performHandler:^{
+//        nil;
+//    }];
+//    [self prepareForSegue:segue sender:nil];
+//    [segue perform];
     
 }
 
@@ -418,5 +426,28 @@
     rotationAnimation.repeatCount = 0;//HUGE_VALF;
     rotationAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
     [view.layer addAnimation:rotationAnimation forKey:@"rotationAnimation"];
+}
+@end
+
+@implementation MenuViewControllerDelegate
+#pragma mark - UIViewControllerTransitioningDelegate
+- (id <UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source {
+    NSLog(@"123");
+    return self;
+}
+
+- (id <UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed {
+    NSLog(@"123");
+    return self;
+}
+
+#pragma mark - UIViewControllerAnimatedTransitioning
+- (NSTimeInterval)transitionDuration:(id <UIViewControllerContextTransitioning>)transitionContext {
+    NSLog(@"123");
+    return 1.0;
+}
+
+- (void)animateTransition:(id <UIViewControllerContextTransitioning>)transitionContext {
+    NSLog(@"123");
 }
 @end
