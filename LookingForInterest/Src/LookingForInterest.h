@@ -89,9 +89,14 @@
 #define kColorNotFavoriteStore [UIColor greenColor]
 #pragma mark -
 
+#pragma mark - First Storyboard
+#define kFirstStoryboard @"Main"
+#define kMenuStoryboardID @"MenuViewController"
+
 #pragma mark - Second Storyboard
 #define kSecondStoryboard @"Main2"
 #define kLostPetStoryboardID @"LostPet"
+#define kLostPetNavigationControllerStoryboardID @"LostPetNavigation"
 
 typedef enum filterType {
     FilterTypeAnimalHospitalInformation,

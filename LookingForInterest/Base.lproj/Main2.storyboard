@@ -4,6 +4,22 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
     </dependencies>
     <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="0Ex-LT-3kK">
+            <objects>
+                <navigationController storyboardIdentifier="LostPetNavigation" useStoryboardIdentifierAsRestorationIdentifier="YES" id="t6h-FM-5Pl" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Xlc-bp-D2x">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="DBs-MV-J6X" kind="relationship" relationship="rootViewController" id="9BP-pr-aOp"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LqX-y9-2eF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-556.5" y="213"/>
+        </scene>
         <!--Lost Pet View Controller-->
         <scene sceneID="bE3-Tp-N9f">
             <objects>
@@ -33,10 +49,10 @@
                                 <exclude reference="kpF-So-HJC"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="eiv-PM-fzJ"/>
                                 <exclude reference="DpO-JX-N0e"/>
                                 <exclude reference="Xqd-ke-uUj"/>
                                 <exclude reference="cVE-EX-VZF"/>
-                                <exclude reference="eiv-PM-fzJ"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -44,13 +60,14 @@
                                 <include reference="kpF-So-HJC"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="eiv-PM-fzJ"/>
                                 <include reference="DpO-JX-N0e"/>
                                 <include reference="Xqd-ke-uUj"/>
                                 <include reference="cVE-EX-VZF"/>
-                                <include reference="eiv-PM-fzJ"/>
                             </mask>
                         </variation>
                     </view>
+                    <navigationItem key="navigationItem" id="seb-EU-btL"/>
                     <connections>
                         <outlet property="tableView" destination="kpF-So-HJC" id="3yE-HB-y8h"/>
                     </connections>

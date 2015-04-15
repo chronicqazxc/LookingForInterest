@@ -8,7 +8,7 @@
         <!--跟動物有關的-->
         <scene sceneID="q0p-Na-C68">
             <objects>
-                <viewController id="Cd6-4V-3Qa" customClass="MenuViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MenuViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Cd6-4V-3Qa" customClass="MenuViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="xCy-hE-7bh"/>
                         <viewControllerLayoutGuide type="bottom" id="eqB-k9-9y3"/>
@@ -28,6 +28,7 @@
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f57-dH-u7Z" customClass="DialingButton">
                                             <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                            <gestureRecognizers/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="30" id="2lo-BB-0hQ">
                                                     <variation key="heightClass=regular-widthClass=compact" constant="100"/>
@@ -124,26 +125,6 @@
                                                 </mask>
                                             </variation>
                                         </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ff5-tl-zc7" customClass="FBProfilePictureView">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="100" id="NtT-ts-oT8"/>
-                                                <constraint firstAttribute="height" constant="100" id="dFP-9D-452"/>
-                                            </constraints>
-                                            <variation key="default">
-                                                <mask key="constraints">
-                                                    <exclude reference="NtT-ts-oT8"/>
-                                                    <exclude reference="dFP-9D-452"/>
-                                                </mask>
-                                            </variation>
-                                            <variation key="heightClass=regular-widthClass=compact">
-                                                <mask key="constraints">
-                                                    <include reference="NtT-ts-oT8"/>
-                                                    <include reference="dFP-9D-452"/>
-                                                </mask>
-                                            </variation>
-                                        </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iW0-Br-EJa">
                                             <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                             <constraints>
@@ -166,16 +147,53 @@
                                                 </mask>
                                             </variation>
                                         </label>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xmg-Oe-VhA">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xmg-Oe-VhA" customClass="DialingButton">
                                             <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                            <state key="normal" title="Button">
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="100" id="80X-BR-BAM"/>
+                                                <constraint firstAttribute="height" constant="100" id="obM-ay-5c1"/>
+                                            </constraints>
+                                            <state key="normal" title="走失寵物">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="80X-BR-BAM"/>
+                                                    <exclude reference="obM-ay-5c1"/>
+                                                </mask>
+                                            </variation>
+                                            <variation key="heightClass=regular-widthClass=compact">
+                                                <mask key="constraints">
+                                                    <include reference="80X-BR-BAM"/>
+                                                    <include reference="obM-ay-5c1"/>
+                                                </mask>
+                                            </variation>
                                             <connections>
                                                 <action selector="goToLostPet:" destination="Cd6-4V-3Qa" eventType="touchUpInside" id="aIo-cn-SHV"/>
                                             </connections>
                                         </button>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ff5-tl-zc7" customClass="FBProfilePictureView">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="100" id="NtT-ts-oT8"/>
+                                                <constraint firstAttribute="height" constant="100" id="dFP-9D-452"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="NtT-ts-oT8"/>
+                                                    <exclude reference="dFP-9D-452"/>
+                                                </mask>
+                                            </variation>
+                                            <variation key="heightClass=regular-widthClass=compact">
+                                                <mask key="constraints">
+                                                    <include reference="NtT-ts-oT8"/>
+                                                    <include reference="dFP-9D-452"/>
+                                                </mask>
+                                            </variation>
+                                        </view>
                                     </subviews>
+                                    <gestureRecognizers/>
                                     <constraints>
                                         <constraint firstAttribute="centerX" secondItem="3XV-2o-Dca" secondAttribute="centerX" constant="-89.5" id="01x-pl-z9Q">
                                             <variation key="heightClass=regular-widthClass=compact" constant="-91"/>
@@ -197,6 +215,7 @@
                                         <constraint firstAttribute="centerX" secondItem="hEE-X3-lRi" secondAttribute="centerX" id="PpK-mN-yll"/>
                                         <constraint firstItem="xmg-Oe-VhA" firstAttribute="top" secondItem="wLo-MV-ZZC" secondAttribute="top" constant="65" id="XRY-rv-OpR"/>
                                         <constraint firstItem="3XV-2o-Dca" firstAttribute="top" secondItem="iW0-Br-EJa" secondAttribute="bottom" constant="15" id="heU-jf-uVb"/>
+                                        <constraint firstItem="xmg-Oe-VhA" firstAttribute="centerY" secondItem="f57-dH-u7Z" secondAttribute="centerY" id="vmj-os-fvn"/>
                                         <constraint firstItem="iW0-Br-EJa" firstAttribute="top" secondItem="ff5-tl-zc7" secondAttribute="bottom" constant="8" id="wpt-2Q-0lu"/>
                                     </constraints>
                                     <variation key="default">
@@ -205,9 +224,9 @@
                                             <exclude reference="3XV-2o-Dca"/>
                                             <exclude reference="hEE-X3-lRi"/>
                                             <exclude reference="9Vc-Zb-Tfg"/>
-                                            <exclude reference="ff5-tl-zc7"/>
                                             <exclude reference="iW0-Br-EJa"/>
                                             <exclude reference="xmg-Oe-VhA"/>
+                                            <exclude reference="ff5-tl-zc7"/>
                                         </mask>
                                         <mask key="constraints">
                                             <exclude reference="2lh-up-e6L"/>
@@ -222,6 +241,7 @@
                                             <exclude reference="IhK-j6-GKI"/>
                                             <exclude reference="Evq-yY-jVe"/>
                                             <exclude reference="XRY-rv-OpR"/>
+                                            <exclude reference="vmj-os-fvn"/>
                                             <exclude reference="0l8-uT-0Ve"/>
                                             <exclude reference="3HH-hJ-euz"/>
                                             <exclude reference="4eI-Y2-yeP"/>
@@ -233,9 +253,9 @@
                                             <include reference="3XV-2o-Dca"/>
                                             <include reference="hEE-X3-lRi"/>
                                             <include reference="9Vc-Zb-Tfg"/>
-                                            <include reference="ff5-tl-zc7"/>
                                             <include reference="iW0-Br-EJa"/>
                                             <include reference="xmg-Oe-VhA"/>
+                                            <include reference="ff5-tl-zc7"/>
                                         </mask>
                                         <mask key="constraints">
                                             <include reference="2lh-up-e6L"/>
@@ -249,12 +269,16 @@
                                             <include reference="7dO-JT-D44"/>
                                             <include reference="IhK-j6-GKI"/>
                                             <include reference="Evq-yY-jVe"/>
-                                            <include reference="XRY-rv-OpR"/>
+                                            <exclude reference="XRY-rv-OpR"/>
+                                            <include reference="vmj-os-fvn"/>
                                             <include reference="0l8-uT-0Ve"/>
                                             <include reference="3HH-hJ-euz"/>
                                             <include reference="4eI-Y2-yeP"/>
                                         </mask>
                                     </variation>
+                                    <connections>
+                                        <outletCollection property="gestureRecognizers" destination="b2B-SU-NBq" appends="YES" id="6cP-9j-gLB"/>
+                                    </connections>
                                 </view>
                                 <blurEffect style="dark"/>
                             </visualEffectView>
@@ -339,14 +363,20 @@
                         <outlet property="backgroundImageView" destination="rtb-nr-57j" id="EQC-tr-8uj"/>
                         <outlet property="effectView" destination="e7K-Sr-kx3" id="elO-Cq-z6z"/>
                         <outlet property="loginView" destination="9Vc-Zb-Tfg" id="pZN-La-NRJ"/>
+                        <outlet property="lostPetButton" destination="xmg-Oe-VhA" id="7YS-AK-aSY"/>
                         <outlet property="nameLabel" destination="iW0-Br-EJa" id="Ewo-10-0AS"/>
                         <outlet property="profilePictureView" destination="ff5-tl-zc7" id="GGr-nE-DG3"/>
                         <outlet property="titleLabel" destination="hEE-X3-lRi" id="U6a-oe-o6y"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xgn-OD-EH5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="b2B-SU-NBq">
+                    <connections>
+                        <action selector="panInView:" destination="Cd6-4V-3Qa" id="Sf4-Ee-wCN"/>
+                    </connections>
+                </panGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-481.5" y="-119.25"/>
+            <point key="canvasLocation" x="-859.5" y="-123.75"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="ufC-wZ-h7g">
