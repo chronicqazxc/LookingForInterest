@@ -7,8 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-@interface MenuViewControllerDelegate : UIPercentDrivenInteractiveTransition<UIViewControllerAnimatedTransitioning, UIViewControllerInteractiveTransitioning, UIViewControllerTransitioningDelegate>
-@end
 @interface MenuViewController : UIViewController
 - (void)checkSystemVersion;
 @end

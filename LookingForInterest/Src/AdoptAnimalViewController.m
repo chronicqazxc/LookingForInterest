@@ -19,6 +19,8 @@
 #import <iAd/iAd.h>
 #import "TableLoadNextPage.h"
 #import "TableLoadPreviousPage.h"
+#import "MenuTransition.h"
+#import "MenuViewController.h"
 
 #define kAdoptAnimalTitle(type) [NSString stringWithFormat:@"觀看%@",type]
 #define kNavigationColorDogFirst 0xb2b2ff
@@ -33,6 +35,7 @@
 #define kNavigationColorFilterSecond 0x690099
 #define kReloadDistance 100
 #define kSpringTreshold 130
+#define kThreshold 0.30
 
 @interface AdoptAnimalViewController () <UITableViewDataSource, UITableViewDelegate, UITabBarDelegate, ADBannerViewDelegate, AdoptAnimalRequestDelegate, AdoptAnimalFilterControllerDelegate, MGSwipeTableCellDelegate, ManulViewControllerDelegate>
 @property (strong, nonatomic) PetResult *petResult;
@@ -57,6 +60,9 @@
 @property (strong, nonatomic) TableLoadPreviousPage *loadPreviousPageView;
 @property (strong, nonatomic) TableLoadNextPage *loadNextPageView;
 @property (nonatomic) BOOL isCheckMyFavorite;
+- (IBAction)panInView:(UIPanGestureRecognizer *)recognizer;
+@property (strong, nonatomic) IBOutlet UIPanGestureRecognizer *panGesture;
+@property (strong, nonatomic) MenuTransition *menuTransition;
 @end
 
 @implementation AdoptAnimalViewController
@@ -94,6 +100,8 @@
     self.loadNextPageView.indicatorLabel.text = @"";
     [self.tableView addSubview:self.loadNextPageView];
     [self.tableView sendSubviewToBack:self.loadNextPageView];
+    
+    self.menuTransition = [[MenuTransition alloc] init];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -307,6 +315,7 @@
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
         }
         cell.textLabel.text = @"查無資料...";
+        
         return cell;
     }
     return petCell;
@@ -801,14 +810,19 @@
 }
 
 - (NSArray*)swipeTableCell:(MGSwipeTableCell*)cell swipeButtonsForDirection:(MGSwipeDirection)direction swipeSettings:(MGSwipeSettings*)swipeSettings expansionSettings:(MGSwipeExpansionSettings*)expansionSettings {
-
-    swipeSettings.transition = MGSwipeTransitionBorder;
-    expansionSettings.buttonIndex = 0;
-    expansionSettings.fillOnTrigger = YES;
-    expansionSettings.threshold = 3.0;
     
-    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-    NSArray *buttons = [self createButtonsWithIndexPath:indexPath direction:direction];
+    NSArray *buttons;
+    if (direction == MGSwipeDirectionRightToLeft) {
+        buttons = @[];
+    } else {
+        swipeSettings.transition = MGSwipeTransitionBorder;
+        expansionSettings.buttonIndex = 0;
+        expansionSettings.fillOnTrigger = YES;
+        expansionSettings.threshold = 3.0;
+        
+        NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+        buttons = [self createButtonsWithIndexPath:indexPath direction:direction];
+    }
 
     return buttons;
 }
@@ -885,5 +899,55 @@
 
 - (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error {
     [self layoutAnimated:YES];
+}
+
+- (IBAction)panInView:(UIPanGestureRecognizer *)recognizer {
+    self.menuTransition.isInteraction = YES;
+    self.transitioningDelegate =  self.menuTransition;
+    CGFloat percentageX = [recognizer translationInView:self.view.superview].x / self.view.superview.bounds.size.width;
+    
+    if (recognizer.state == UIGestureRecognizerStateBegan){
+         if (percentageX < 0) {
+            self.menuTransition.direction = DirectionLeft;
+            
+            UIStoryboard *firstStoryboard = [UIStoryboard storyboardWithName:kFirstStoryboard bundle:nil];
+            MenuViewController *controller = (MenuViewController *)[firstStoryboard instantiateViewControllerWithIdentifier:kMenuStoryboardID];
+            controller.transitioningDelegate = self.menuTransition;
+            [self presentViewController:controller animated:YES completion:nil];
+            
+        }
+        return;
+    }
+    
+    CGFloat percentage = 0.0;
+    if (self.menuTransition.direction == DirectionLeft) {
+        percentage = -percentageX;
+    }
+    [self.menuTransition updateInteractiveTransition:percentage];
+    
+    if (recognizer.state == UIGestureRecognizerStateEnded) {
+        
+        CGFloat velocityX = [recognizer velocityInView:recognizer.view.superview].x;
+        
+        BOOL cancel;
+        CGFloat points;
+        NSTimeInterval duration;
+        if (self.menuTransition.direction == DirectionLeft) {
+            cancel = (percentageX > -kThreshold);
+            points = cancel ? recognizer.view.frame.origin.x : self.view.superview.bounds.size.width - recognizer.view.frame.origin.x;
+            duration = points / velocityX;
+        }
+        
+        if (duration < .2) {
+            duration = .2;
+        }else if(duration > .6){
+            duration = .6;
+        }
+        
+        cancel?[self.menuTransition cancelInteractiveTransitionWithDuration:duration]:[self.menuTransition finishInteractiveTransitionWithDuration:duration];
+        
+    } else if (recognizer.state == UIGestureRecognizerStateFailed){
+        [self.menuTransition cancelInteractiveTransitionWithDuration:.35];
+    }
 }
 @end

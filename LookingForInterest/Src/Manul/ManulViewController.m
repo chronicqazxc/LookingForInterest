@@ -8,9 +8,11 @@
 
 #import "ManulViewController.h"
 #import "FullScreenScrollView.h"
+#import "ManulTransition.h"
 
 @interface ManulViewController ()
 @property (strong, nonatomic) FullScreenScrollView *scrollView;
+@property (strong, nonatomic) ManulTransition *manulTransition;
 @end
 
 @implementation ManulViewController
@@ -20,6 +22,7 @@
     // Do any additional setup after loading the view from its nib.
     self.pageControl.currentPage = 0;
     self.pageControl.hidesForSinglePage = YES;
+    self.manulTransition = [[ManulTransition alloc] init];
 }
 
 - (void)didReceiveMemoryWarning {

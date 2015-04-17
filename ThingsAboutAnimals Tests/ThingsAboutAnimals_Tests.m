@@ -198,8 +198,6 @@
             LostPet *lostPet = [[LostPet alloc] initWithDic:petDic];
             [arr addObject:lostPet];
         }
-        NSLog(@"encodeStrings:%@",arr);
-        
     } else {
         NSLog(@"faild");
     }

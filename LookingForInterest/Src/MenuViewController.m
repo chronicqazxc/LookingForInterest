@@ -11,12 +11,17 @@
 #import <FacebookSDK/FacebookSDK.h>
 #import "ManulMenuViewController.h"
 #import "LostPetViewController.h"
+#import "LostPetNavigationController.h"
+#import "AnimalHospitalNavigationController.h"
+#import "AdoptAnimalNavigationController.h"
 #import <iAd/iAd.h>
+#import "MenuTransition.h"
 
 #define kAnimationKeyAdoptAnimal @"AdoptAnimal"
 #define kAnimationKeyAnimalHospital @"AnimalHospital"
 #define kAnimationKeyLostPet @"LostPet"
 #define kToLostPetSegueIdentifier @"ToMenuSegueIdentifier"
+#define kThreshold 0.30
 
 @interface MenuViewController () <ADBannerViewDelegate, FBLoginViewDelegate, ManulViewControllerDelegate>
 @property (nonatomic) BOOL isInitial;
@@ -35,7 +40,9 @@
 @property (weak, nonatomic) IBOutlet ADBannerView *adBannerView;
 - (IBAction)goToLostPet:(UIButton *)sender;
 - (IBAction)panInView:(UIPanGestureRecognizer *)recognizer;
-@property (strong, nonatomic) MenuViewControllerDelegate *myDelegate;
+- (IBAction)longPressInView:(UILongPressGestureRecognizer *)recognizer;
+@property (strong, nonatomic) IBOutlet UILongPressGestureRecognizer *longPressGesture;
+@property (strong, nonatomic) MenuTransition *menuTransition;
 @end
 
 @implementation MenuViewController
@@ -75,11 +82,16 @@
         });
     });
     
+    self.longPressGesture.minimumPressDuration = 1.0;
+    
+    self.menuTransition = [[MenuTransition alloc] init];
+    if (!self.transitioningDelegate) {
+        self.transitioningDelegate = self.menuTransition;
+    }
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -389,25 +401,125 @@
 
 #pragma mark -
 - (IBAction)goToLostPet:(UIButton *)sender {
+    self.menuTransition.isInteraction = NO;
+    self.transitioningDelegate = self.menuTransition;
     UIStoryboard *secondStoryboard = [UIStoryboard storyboardWithName:kSecondStoryboard bundle:nil];
-    UINavigationController *controller = (UINavigationController *)[secondStoryboard instantiateViewControllerWithIdentifier:kLostPetNavigationControllerStoryboardID];
-    self.myDelegate = [[MenuViewControllerDelegate alloc] init];
-    self.transitioningDelegate = self.myDelegate;    
+    LostPetNavigationController *controller = (LostPetNavigationController *)[secondStoryboard instantiateViewControllerWithIdentifier:kLostPetNavigationControllerStoryboardID];
+    controller.transitioningDelegate = self.transitioningDelegate;
     [self presentViewController:controller animated:YES completion:nil];
-//    UIStoryboardSegue *segue = [UIStoryboardSegue segueWithIdentifier:kToLostPetSegueIdentifier source:self destination:controller performHandler:^{
-//        nil;
-//    }];
-//    [self prepareForSegue:segue sender:nil];
-//    [segue perform];
     
 }
 
 #pragma mark - Animation
 - (IBAction)panInView:(UIPanGestureRecognizer *)recognizer {
+    self.menuTransition.isInteraction = YES;
+    self.transitioningDelegate = self.menuTransition;
+    [self switchViewByPanGesture:recognizer];
+}
+
+- (void)switchViewByPanGesture:(UIPanGestureRecognizer *)recognizer {
+    CGFloat percentageY = [recognizer translationInView:self.view.superview].y / self.view.superview.bounds.size.height;
+    CGFloat percentageX = [recognizer translationInView:self.view.superview].x / self.view.superview.bounds.size.width;
+    
+    if (recognizer.state == UIGestureRecognizerStateBegan){
+        if (percentageY > 0) {
+            self.menuTransition.direction = DirectionDown;
+            
+            UIStoryboard *secondStoryboard = [UIStoryboard storyboardWithName:kSecondStoryboard bundle:nil];
+            LostPetNavigationController *controller = (LostPetNavigationController *)[secondStoryboard instantiateViewControllerWithIdentifier:kLostPetNavigationControllerStoryboardID];
+            controller.transitioningDelegate = self.menuTransition;
+            [self presentViewController:controller animated:YES completion:nil];
+            
+        } else if (percentageY < 0){
+            self.menuTransition.direction = DirectionUp;
+            
+        } else if (percentageX > 0) {
+            self.menuTransition.direction = DirectionRight;
+            
+            UIStoryboard *firstStoryboard = [UIStoryboard storyboardWithName:kFirstStoryboard bundle:nil];
+            AdoptAnimalNavigationController *controller = (AdoptAnimalNavigationController *)[firstStoryboard instantiateViewControllerWithIdentifier:kAdoptAnimalNavigationControllerStoryboardID];
+            controller.transitioningDelegate = self.menuTransition;
+            [self presentViewController:controller animated:YES completion:nil];
+            
+        } else if (percentageX < 0) {
+            self.menuTransition.direction = DirectionLeft;
+            
+            UIStoryboard *firstStoryboard = [UIStoryboard storyboardWithName:kFirstStoryboard bundle:nil];
+            AnimalHospitalNavigationController *controller = (AnimalHospitalNavigationController *)[firstStoryboard instantiateViewControllerWithIdentifier:kAnimalHospitalNavigationControllerStoryboardID];
+            controller.transitioningDelegate = self.menuTransition;
+            [self presentViewController:controller animated:YES completion:nil];
+            
+        }
+        return;
+    }
+    
+    CGFloat percentage = 0.0;
+    if (self.menuTransition.direction == DirectionDown) {
+        percentage = percentageY;
+    } else if (self.menuTransition.direction == DirectionUp) {
+        percentage = -percentageY;
+    } else if (self.menuTransition.direction == DirectionRight) {
+        percentage = percentageX;
+    } else if (self.menuTransition.direction == DirectionLeft) {
+        percentage = -percentageX;
+    }
+    [self.menuTransition updateInteractiveTransition:percentage];
+    
+    if (recognizer.state==UIGestureRecognizerStateEnded) {
+        
+        CGFloat velocityY = [recognizer velocityInView:recognizer.view.superview].y;
+        CGFloat velocityX = [recognizer velocityInView:recognizer.view.superview].x;
+        
+        BOOL cancel;
+        CGFloat points;
+        NSTimeInterval duration;
+        if (self.menuTransition.direction == DirectionDown) {
+            
+            cancel = (percentageY < kThreshold);
+            points = cancel ? recognizer.view.frame.origin.y : self.view.superview.bounds.size.height - recognizer.view.frame.origin.y;
+            duration = points / velocityY;
+            
+        } else if (self.menuTransition.direction == DirectionUp) {
+            cancel = (percentageY > -kThreshold);
+            points = cancel ? recognizer.view.frame.origin.y : self.view.superview.bounds.size.height - recognizer.view.frame.origin.y;
+            duration = points / velocityY;
+            
+        } else if (self.menuTransition.direction == DirectionRight) {
+            cancel = (percentageX < kThreshold);
+            points = cancel ? recognizer.view.frame.origin.x : self.view.superview.bounds.size.width - recognizer.view.frame.origin.x;
+            duration = points / velocityX;
+            
+        } else if (self.menuTransition.direction == DirectionLeft) {
+            cancel = (percentageX > -kThreshold);
+            points = cancel ? recognizer.view.frame.origin.x : self.view.superview.bounds.size.width - recognizer.view.frame.origin.x;
+            duration = points / velocityX;
+        }
+        
+        if (duration < .2) {
+            duration = .2;
+        }else if(duration > .6){
+            duration = .6;
+        }
+        
+        cancel?[self.menuTransition cancelInteractiveTransitionWithDuration:duration]:[self.menuTransition finishInteractiveTransitionWithDuration:duration];
+        
+    } else if (recognizer.state == UIGestureRecognizerStateFailed){
+        [self.menuTransition cancelInteractiveTransitionWithDuration:.35];
+    }
+}
+
+- (IBAction)longPressInView:(UILongPressGestureRecognizer *)recognizer {
+    [self rotateButtonByRecognizer:recognizer];
+}
+
+- (void)rotateButtonByRecognizer:(UIGestureRecognizer *)recognizer {
     CGPoint location = [recognizer locationInView:self.view];
-    CGPoint velocity = [recognizer velocityInView:self.view];
+    CGPoint velocity = {500, 0};
+    if ([recognizer isKindOfClass:[UIPanGestureRecognizer class]]) {
+        velocity = [(UIPanGestureRecognizer *)recognizer velocityInView:self.view];
+    }
     if (CGRectContainsPoint(self.adoptButton.frame, location)) {
-        [self swipAnimationWithView:self.adoptButton value:velocity.x/100];
+        [self swipAnimationWithView:self.adoptButton value:0];
     }
     if (CGRectContainsPoint(self.animalHospitalButton.frame, location)) {
         [self swipAnimationWithView:self.animalHospitalButton value:velocity.x/100];
@@ -419,35 +531,12 @@
 
 - (void)swipAnimationWithView:(UIView *)view value:(CGFloat)value{
     CABasicAnimation *rotationAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.y"];
-    rotationAnimation.toValue = @((M_PI * 2.0)*value);
+    rotationAnimation.toValue = @(M_PI*2);//@((M_PI * 1.0)*value);
     CGFloat SunRotationAnimationDuration = 1.0f;
     rotationAnimation.duration = SunRotationAnimationDuration;
     rotationAnimation.autoreverses = YES;
     rotationAnimation.repeatCount = 0;//HUGE_VALF;
-    rotationAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+    rotationAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
     [view.layer addAnimation:rotationAnimation forKey:@"rotationAnimation"];
-}
-@end
-
-@implementation MenuViewControllerDelegate
-#pragma mark - UIViewControllerTransitioningDelegate
-- (id <UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source {
-    NSLog(@"123");
-    return self;
-}
-
-- (id <UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed {
-    NSLog(@"123");
-    return self;
-}
-
-#pragma mark - UIViewControllerAnimatedTransitioning
-- (NSTimeInterval)transitionDuration:(id <UIViewControllerContextTransitioning>)transitionContext {
-    NSLog(@"123");
-    return 1.0;
-}
-
-- (void)animateTransition:(id <UIViewControllerContextTransitioning>)transitionContext {
-    NSLog(@"123");
 }
 @end

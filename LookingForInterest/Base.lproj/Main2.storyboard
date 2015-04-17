@@ -4,10 +4,10 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
     </dependencies>
     <scenes>
-        <!--Navigation Controller-->
+        <!--Lost Pet Navigation Controller-->
         <scene sceneID="0Ex-LT-3kK">
             <objects>
-                <navigationController storyboardIdentifier="LostPetNavigation" useStoryboardIdentifierAsRestorationIdentifier="YES" id="t6h-FM-5Pl" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="LostPetNavigation" useStoryboardIdentifierAsRestorationIdentifier="YES" id="t6h-FM-5Pl" customClass="LostPetNavigationController" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Xlc-bp-D2x">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>

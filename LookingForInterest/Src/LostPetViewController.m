@@ -11,6 +11,7 @@
 #import "LostPetListCell.h"
 #import "LostPet.h"
 #import "MenuViewController.h"
+#import "LostPetTransition.h"
 
 #define kLostPetListCell @"LostPetListCell"
 #define kToMenuSegueIdentifier @"ToMenuSegueIdentifier"
@@ -18,25 +19,25 @@
 @interface LostPetViewController () <LostPetRequestDelegate, UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSArray *lostPets;
+@property (strong, nonatomic) LostPetTransition *transitionManager;
+@property (strong, nonatomic) NSMutableArray *requests;
 @end
 
 @implementation LostPetViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.requests = [NSMutableArray array];
     self.edgesForExtendedLayout = UIRectEdgeNone;
-    LostPetRequest *lostPetRequest = [[LostPetRequest alloc] init];
-    lostPetRequest.lostPetRequestDelegate = self;
-    LostPetFilters *lostPetFilters = [[LostPetFilters alloc] init];
-    lostPetFilters.variety = @"";
-    lostPetFilters.gender = @"";
-    [lostPetRequest sendRequestForLostPetWithLostPetFilters:lostPetFilters];
     self.lostPets = @[];
     [self.tableView registerNib:[UINib nibWithNibName:kLostPetListCell bundle:nil] forCellReuseIdentifier:kLostPetListCell];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     
     [self initNavigationBar];
+    
+    self.transitionManager = [[LostPetTransition alloc] init];
+    
 }
 
 - (void)initNavigationBar {
@@ -53,16 +54,8 @@
 - (void)goToMenu {
     UIStoryboard *firstStoryboard = [UIStoryboard storyboardWithName:kFirstStoryboard bundle:nil];
     MenuViewController *controller = (MenuViewController *)[firstStoryboard instantiateViewControllerWithIdentifier:kMenuStoryboardID];
-
+    controller.transitioningDelegate = self.transitionManager;
     [self presentViewController:controller animated:NO completion:nil];
-//    UIStoryboardSegue *segue = [UIStoryboardSegue segueWithIdentifier:kToMenuSegueIdentifier source:self destination:controller performHandler:^{
-//        nil;
-//    }];
-    UIStoryboardSegue *segue =[UIStoryboardSegue segueWithIdentifier:kToMenuSegueIdentifier source:self destination:controller performHandler:^{
-        nil;
-    }];
-    [self prepareForSegue:segue sender:nil];
-    [segue perform];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -72,12 +65,40 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    
+    LostPetRequest *lostPetRequest = [[LostPetRequest alloc] init];
+    lostPetRequest.lostPetRequestDelegate = self;
+    LostPetFilters *lostPetFilters = [[LostPetFilters alloc] init];
+    lostPetFilters.variety = @"";
+    lostPetFilters.gender = @"";
+    [self.requests addObject:lostPetRequest];
+    [lostPetRequest sendRequestForLostPetWithLostPetFilters:lostPetFilters];
+    ((AppDelegate *)[Utilities getAppDelegate]).viewController = self;
+    [Utilities startLoading];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [self clearRequestSenderDelegate];
+    [super viewWillDisappear:animated];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [self clearRequestSenderDelegate];
+    [super viewDidDisappear:animated];
+}
+
+- (void)clearRequestSenderDelegate {
+    for (LostPetRequest *requestSender in self.requests) {
+        requestSender.lostPetRequestDelegate = nil;
+    }
+    self.requests = [NSMutableArray array];
 }
 
 #pragma mark - LostPetRequestDelegate
 - (void)lostPetResultBack:(NSArray *)lostPets {
     self.lostPets = [NSArray arrayWithArray:lostPets];
     [self.tableView reloadData];
+    [Utilities stopLoading];
 }
 
 #pragma mark - Navigation

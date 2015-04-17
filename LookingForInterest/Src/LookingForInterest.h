@@ -92,6 +92,8 @@
 #pragma mark - First Storyboard
 #define kFirstStoryboard @"Main"
 #define kMenuStoryboardID @"MenuViewController"
+#define kAnimalHospitalNavigationControllerStoryboardID @"AnimalHospitalNavigationController"
+#define kAdoptAnimalNavigationControllerStoryboardID @"AdoptAnimalNavigationController"
 
 #pragma mark - Second Storyboard
 #define kSecondStoryboard @"Main2"

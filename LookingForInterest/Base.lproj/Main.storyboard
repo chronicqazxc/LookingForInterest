@@ -278,6 +278,7 @@
                                     </variation>
                                     <connections>
                                         <outletCollection property="gestureRecognizers" destination="b2B-SU-NBq" appends="YES" id="6cP-9j-gLB"/>
+                                        <outletCollection property="gestureRecognizers" destination="UOe-GT-3U2" appends="YES" id="bTu-cW-vDM"/>
                                     </connections>
                                 </view>
                                 <blurEffect style="dark"/>
@@ -363,6 +364,7 @@
                         <outlet property="backgroundImageView" destination="rtb-nr-57j" id="EQC-tr-8uj"/>
                         <outlet property="effectView" destination="e7K-Sr-kx3" id="elO-Cq-z6z"/>
                         <outlet property="loginView" destination="9Vc-Zb-Tfg" id="pZN-La-NRJ"/>
+                        <outlet property="longPressGesture" destination="UOe-GT-3U2" id="ehw-tc-ccK"/>
                         <outlet property="lostPetButton" destination="xmg-Oe-VhA" id="7YS-AK-aSY"/>
                         <outlet property="nameLabel" destination="iW0-Br-EJa" id="Ewo-10-0AS"/>
                         <outlet property="profilePictureView" destination="ff5-tl-zc7" id="GGr-nE-DG3"/>
@@ -375,6 +377,11 @@
                         <action selector="panInView:" destination="Cd6-4V-3Qa" id="Sf4-Ee-wCN"/>
                     </connections>
                 </panGestureRecognizer>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="UOe-GT-3U2">
+                    <connections>
+                        <action selector="longPressInView:" destination="Cd6-4V-3Qa" id="ceq-zx-0aw"/>
+                    </connections>
+                </pongPressGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-859.5" y="-123.75"/>
         </scene>
@@ -581,6 +588,7 @@
                             </adBannerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="q59-58-tmh" secondAttribute="trailing" id="EdY-fc-d3S"/>
                             <constraint firstItem="rGu-yR-n5I" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="-28" id="GD1-3Q-6KP">
@@ -658,6 +666,9 @@
                                 <include reference="fMY-eZ-dxf"/>
                             </mask>
                         </variation>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="P4C-yC-Exm" appends="YES" id="rXB-Km-N6a"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" id="KyK-N3-ED2">
                         <nil key="title"/>
@@ -689,6 +700,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="P4C-yC-Exm">
+                    <connections>
+                        <action selector="panInView:" destination="vXZ-lx-hvc" id="r27-mH-FHZ"/>
+                    </connections>
+                </panGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="949.5" y="-68.25"/>
         </scene>
@@ -741,10 +757,10 @@
             </objects>
             <point key="canvasLocation" x="1887" y="-216.75"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Animal Hospital Navigation Controller-->
         <scene sceneID="T5D-9e-ND2">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="cZm-Q1-c0l" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="AnimalHospitalNavigationController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="cZm-Q1-c0l" customClass="AnimalHospitalNavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="bGT-SJ-fA4">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -759,10 +775,10 @@
             </objects>
             <point key="canvasLocation" x="235.5" y="-3"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Adopt Animal Navigation Controller-->
         <scene sceneID="TXg-ij-30X">
             <objects>
-                <navigationController id="vfC-EC-pG8" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="AdoptAnimalNavigationController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="vfC-EC-pG8" customClass="AdoptAnimalNavigationController" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="AM8-Ii-YKb">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -847,6 +863,7 @@
                             </adBannerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="oqA-s7-chv" firstAttribute="leading" secondItem="1fK-Nm-BNJ" secondAttribute="leading" id="1Hr-ts-YRd"/>
                             <constraint firstItem="12O-x2-DkG" firstAttribute="top" secondItem="d9I-dT-n42" secondAttribute="top" id="1Mv-PE-t12"/>
@@ -916,6 +933,9 @@
                                 <include reference="g6a-2K-Xgc"/>
                             </mask>
                         </variation>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="XnV-IU-Buv" appends="YES" id="Vtx-Qr-1a3"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" id="HEG-Kl-Sn4">
                         <barButtonItem key="leftBarButtonItem" title="Home" id="0eb-La-6e9">
@@ -933,13 +953,19 @@
                         <outlet property="adBannerView" destination="oqA-s7-chv" id="Fwa-za-ZeT"/>
                         <outlet property="checkButton" destination="uS7-qC-Wac" id="afi-MV-wKQ"/>
                         <outlet property="pageIndicator" destination="12O-x2-DkG" id="gI3-1U-B7M"/>
+                        <outlet property="panGesture" destination="XnV-IU-Buv" id="Q8F-c6-d3G"/>
                         <outlet property="tabBar" destination="nGR-aS-U21" id="Hfo-mf-jNY"/>
                         <outlet property="tableView" destination="d9I-dT-n42" id="h9S-Xc-qXN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PXe-Xv-DJH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="XnV-IU-Buv">
+                    <connections>
+                        <action selector="panInView:" destination="UGt-tf-2F0" id="cDB-Aq-o0K"/>
+                    </connections>
+                </panGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="633" y="809.25"/>
+            <point key="canvasLocation" x="603" y="810"/>
         </scene>
     </scenes>
     <resources>

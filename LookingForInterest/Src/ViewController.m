@@ -18,6 +18,8 @@
 #import <iAd/iAd.h>
 #import "TableLoadNextPage.h"
 #import "TableLoadPreviousPage.h"
+#import "MenuTransition.h"
+#import "MenuViewController.h"
 
 #define kMagnifierImg @"iconmonstr-magnifier-3-icon-256.png"
 #define kLeftArrowImg @"arrow-left@2x.png"
@@ -42,6 +44,8 @@
 #define kPicturesActionTitle @"網路搜尋店家圖片"
 #define kNavigateActionTitle @"導航"
 #define kCloseActionTitle @"關閉"
+
+#define kThreshold 0.30
 
 // call
 // web site
@@ -84,7 +88,8 @@
 
 @property (nonatomic) BOOL hasShowVersion;
 @property (weak, nonatomic) IBOutlet ADBannerView *adBannerView;
-
+- (IBAction)panInView:(UIPanGestureRecognizer *)recognizer;
+@property (strong, nonatomic) MenuTransition *menuTransition;
 @end
 
 @implementation ViewController
@@ -172,6 +177,8 @@
     self.loadNextPageView.indicatorLabel.text = @"";
     [self.filterTableView addSubview:self.loadNextPageView];
     [self.filterTableView sendSubviewToBack:self.loadNextPageView];
+    
+    self.menuTransition = [[MenuTransition alloc] init];
 }
 
 - (void)setNaviTitleButtonWithString:(NSString *)string {
@@ -927,5 +934,57 @@
 
 - (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error {
     [self layoutAnimated:YES];
+}
+
+- (IBAction)panInView:(UIPanGestureRecognizer *)recognizer {
+    self.menuTransition.isInteraction = YES;
+    self.transitioningDelegate = self.menuTransition;
+    
+    CGFloat percentageX = [recognizer translationInView:self.view.superview].x / self.view.superview.bounds.size.width;
+    
+    if (recognizer.state == UIGestureRecognizerStateBegan){
+        if (percentageX > 0) {
+            self.menuTransition.direction = DirectionRight;
+            
+            UIStoryboard *firstStoryboard = [UIStoryboard storyboardWithName:kFirstStoryboard bundle:nil];
+            MenuViewController *controller = (MenuViewController *)[firstStoryboard instantiateViewControllerWithIdentifier:kMenuStoryboardID];
+            controller.transitioningDelegate = self.menuTransition;
+            [self presentViewController:controller animated:YES completion:nil];
+            
+        }
+        return;
+    }
+    
+    CGFloat percentage = 0.0;
+    if (self.menuTransition.direction == DirectionRight) {
+        percentage = percentageX;
+    }
+    [self.menuTransition updateInteractiveTransition:percentage];
+    
+    if (recognizer.state == UIGestureRecognizerStateEnded) {
+        
+        CGFloat velocityX = [recognizer velocityInView:recognizer.view.superview].x;
+        
+        BOOL cancel;
+        CGFloat points;
+        NSTimeInterval duration;
+        if (self.menuTransition.direction == DirectionRight) {
+            cancel = (percentageX < kThreshold);
+            points = cancel ? recognizer.view.frame.origin.x : self.view.superview.bounds.size.width - recognizer.view.frame.origin.x;
+            duration = points / velocityX;
+        }
+        
+        if (duration < .2) {
+            duration = .2;
+        }else if(duration > .6){
+            duration = .6;
+        }
+        
+        cancel?[self.menuTransition cancelInteractiveTransitionWithDuration:duration]:[self.menuTransition finishInteractiveTransitionWithDuration:duration];
+        
+    } else if (recognizer.state == UIGestureRecognizerStateFailed){
+        [self.menuTransition cancelInteractiveTransitionWithDuration:.35];
+    }
+
 }
 @end
