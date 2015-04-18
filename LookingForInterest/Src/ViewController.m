@@ -47,13 +47,6 @@
 
 #define kThreshold 0.30
 
-// call
-// web site
-// rate
-// pictures
-// navigate
-// close
-
 @interface ViewController () <CLLocationManagerDelegate, ADBannerViewDelegate, GMSMapViewDelegate, FilterTableViewControllerDelegate, ManulViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIView *mapView;
 @property (nonatomic) CGSize mapViewSize;
@@ -132,23 +125,53 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     self.adBannerView.delegate = self;
+    
+    [self settingTitleTextAttribute];
+    
+    [self settingBackButton];
+
+    [self settingLocationManager];
+    
+    if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied || [CLLocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined ) {
+        NSLog(@"%@",@"請開啟定位服務");
+    }
+
+    [self settingSearchButtonImage];
+    
+    [self settingLoadingPageView];
+    
+    self.menuTransition = [[MenuTransition alloc] init];
+}
+
+- (void)settingTitleTextAttribute {
     NSDictionary *attributeDic = [NSDictionary dictionaryWithObjectsAndKeys:
-                                   [UIColor darkTextColor], NSForegroundColorAttributeName,
-                                   [UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:21.0], NSFontAttributeName, nil];
+                                  [UIColor darkTextColor], NSForegroundColorAttributeName,
+                                  [UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:21.0], NSFontAttributeName, nil];
     [self.navigationController.navigationBar setTitleTextAttributes:attributeDic];
     
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:nil action:nil];
+}
+
+- (void)settingBackButton {
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"首頁" style:UIBarButtonItemStylePlain target:self action:@selector(goHome)];
     NSDictionary *attributeDic2 = [NSDictionary dictionaryWithObjectsAndKeys:
                                    [UIColor darkTextColor], NSForegroundColorAttributeName,
                                    [UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:15.0], NSFontAttributeName, nil];
     [backButton setTitleTextAttributes:attributeDic2 forState:UIControlStateNormal];
-    self.navigationItem.backBarButtonItem = backButton;
+    
     self.navigationController.navigationBar.tintColor = [UIColor darkTextColor];
-    
-    self.navigationItem.leftBarButtonItem.title = @"首頁";
-    [self.navigationItem.leftBarButtonItem setTitleTextAttributes:attributeDic2 forState:UIControlStateNormal];
-    
+    self.navigationItem.leftBarButtonItem = backButton;
+}
+
+- (void)goHome {
+    UIStoryboard *firstStoryboard = [UIStoryboard storyboardWithName:kFirstStoryboard bundle:nil];
+    MenuViewController *controller = (MenuViewController *)[firstStoryboard instantiateViewControllerWithIdentifier:kMenuStoryboardID];
+    controller.transitioningDelegate = self.menuTransition;
+    [self presentViewController:controller animated:YES completion:nil];
+}
+
+- (void)settingLocationManager {
     self.locationManager = [[CLLocationManager alloc] init];
     self.locationManager.delegate = self;
     [self.locationManager requestWhenInUseAuthorization];
@@ -156,29 +179,6 @@
     self.locationManager.distanceFilter = kCLDistanceFilterNone;
     self.locationManager.desiredAccuracy = kCLLocationAccuracyBest;
     [self.locationManager startUpdatingLocation];
-    
-    if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusDenied || [CLLocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined ) {
-        NSLog(@"%@",@"請開啟定位服務");
-    }
-    
-    self.mirrorMagnifierImage = [Utilities rotateImage:[UIImage imageNamed:kMagnifierImg] toDirection:DirectionMirror withScale:1.0];
-    self.searchViewIcon.image = self.mirrorMagnifierImage;
-    
-    self.loadPreviousPageView = (TableLoadPreviousPage *)[Utilities getNibWithName:@"TableLoadPreviousPage"];
-    self.loadPreviousPageView.frame = CGRectZero;
-    self.loadPreviousPageView.canLoading = NO;
-    self.loadPreviousPageView.indicatorLabel.text = @"";
-    [self.filterTableView addSubview:self.loadPreviousPageView];
-    [self.filterTableView sendSubviewToBack:self.loadPreviousPageView];
-    
-    self.loadNextPageView = (TableLoadNextPage *)[Utilities getNibWithName:@"TableLoadNextPage"];
-    self.loadNextPageView.frame = CGRectZero;
-    self.loadNextPageView.canLoading = NO;
-    self.loadNextPageView.indicatorLabel.text = @"";
-    [self.filterTableView addSubview:self.loadNextPageView];
-    [self.filterTableView sendSubviewToBack:self.loadNextPageView];
-    
-    self.menuTransition = [[MenuTransition alloc] init];
 }
 
 - (void)setNaviTitleButtonWithString:(NSString *)string {
@@ -192,6 +192,27 @@
     NSMutableAttributedString *attString = [[NSMutableAttributedString alloc] init];
     [attString appendAttributedString:[[NSAttributedString alloc] initWithString:string attributes:attributeDic]];
     [self.navigationButton setAttributedTitle:attString forState:UIControlStateNormal];
+}
+
+- (void)settingSearchButtonImage {
+    self.mirrorMagnifierImage = [Utilities rotateImage:[UIImage imageNamed:kMagnifierImg] toDirection:DirectionMirror withScale:1.0];
+    self.searchViewIcon.image = self.mirrorMagnifierImage;
+}
+
+- (void)settingLoadingPageView {
+    self.loadPreviousPageView = (TableLoadPreviousPage *)[Utilities getNibWithName:@"TableLoadPreviousPage"];
+    self.loadPreviousPageView.frame = CGRectZero;
+    self.loadPreviousPageView.canLoading = NO;
+    self.loadPreviousPageView.indicatorLabel.text = @"";
+    [self.filterTableView addSubview:self.loadPreviousPageView];
+    [self.filterTableView sendSubviewToBack:self.loadPreviousPageView];
+    
+    self.loadNextPageView = (TableLoadNextPage *)[Utilities getNibWithName:@"TableLoadNextPage"];
+    self.loadNextPageView.frame = CGRectZero;
+    self.loadNextPageView.canLoading = NO;
+    self.loadNextPageView.indicatorLabel.text = @"";
+    [self.filterTableView addSubview:self.loadNextPageView];
+    [self.filterTableView sendSubviewToBack:self.loadNextPageView];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -288,12 +309,19 @@
 #pragma mark - CLLocationManagerDelegate
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"錯誤" message:@"無法取得定位，請重新開啟定位或者網路或開啟Wi-Fi" preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *action = [UIAlertAction actionWithTitle:@"確定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [alertController dismissViewControllerAnimated:YES completion:nil];
-        [self dismissViewControllerAnimated:YES completion:nil];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"錯誤"
+                                                                             message:@"無法取得定位，請重新開啟定位或者網路或開啟Wi-Fi"
+                                                                      preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *action = [UIAlertAction actionWithTitle:@"確定"
+                                                     style:UIAlertActionStyleDefault
+                                                   handler:^(UIAlertAction *action) {
+                                                       [alertController dismissViewControllerAnimated:YES completion:nil];
+                                                       [self goHome];
     }];
+    
     [alertController addAction:action];
+    
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
@@ -946,10 +974,7 @@
         if (percentageX > 0) {
             self.menuTransition.direction = DirectionRight;
             
-            UIStoryboard *firstStoryboard = [UIStoryboard storyboardWithName:kFirstStoryboard bundle:nil];
-            MenuViewController *controller = (MenuViewController *)[firstStoryboard instantiateViewControllerWithIdentifier:kMenuStoryboardID];
-            controller.transitioningDelegate = self.menuTransition;
-            [self presentViewController:controller animated:YES completion:nil];
+            [self goHome];
             
         }
         return;

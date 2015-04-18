@@ -67,6 +67,7 @@
 		B07804AC1AA9467900DE8AD0 /* PopUpPicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = B07804AA1AA9467900DE8AD0 /* PopUpPicker.xib */; };
 		B07F3E471AD3CADB00FCF1E2 /* AnimalDetailTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B07F3E451AD3CADB00FCF1E2 /* AnimalDetailTableViewCell.m */; };
 		B07F3E481AD3CADB00FCF1E2 /* AnimalDetailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B07F3E461AD3CADB00FCF1E2 /* AnimalDetailTableViewCell.xib */; };
+		B08086C01AE243DD007F7F3F /* LostPetStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = B08086BF1AE243DD007F7F3F /* LostPetStatus.m */; };
 		B08572471AA4C18400F0F8FD /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B08572461AA4C18400F0F8FD /* MenuViewController.m */; };
 		B085724D1AA74FC700F0F8FD /* FacebookController.m in Sources */ = {isa = PBXBuildFile; fileRef = B085724C1AA74FC700F0F8FD /* FacebookController.m */; };
 		B08CE6B71AC12F16000578CA /* background_img.png in Resources */ = {isa = PBXBuildFile; fileRef = B08CE6B61AC12F16000578CA /* background_img.png */; };
@@ -258,6 +259,8 @@
 		B07F3E441AD3CADB00FCF1E2 /* AnimalDetailTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimalDetailTableViewCell.h; path = Src/Views/AnimalDetailTableViewCell.h; sourceTree = "<group>"; };
 		B07F3E451AD3CADB00FCF1E2 /* AnimalDetailTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AnimalDetailTableViewCell.m; path = Src/Views/AnimalDetailTableViewCell.m; sourceTree = "<group>"; };
 		B07F3E461AD3CADB00FCF1E2 /* AnimalDetailTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = AnimalDetailTableViewCell.xib; path = Src/Views/AnimalDetailTableViewCell.xib; sourceTree = "<group>"; };
+		B08086BE1AE243DD007F7F3F /* LostPetStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LostPetStatus.h; path = Src/Objects/LostPetStatus.h; sourceTree = "<group>"; };
+		B08086BF1AE243DD007F7F3F /* LostPetStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LostPetStatus.m; path = Src/Objects/LostPetStatus.m; sourceTree = "<group>"; };
 		B08572451AA4C18400F0F8FD /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MenuViewController.h; path = Src/MenuViewController.h; sourceTree = "<group>"; };
 		B08572461AA4C18400F0F8FD /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MenuViewController.m; path = Src/MenuViewController.m; sourceTree = "<group>"; };
 		B085724B1AA74FC700F0F8FD /* FacebookController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FacebookController.h; path = Src/Objects/FacebookController.h; sourceTree = "<group>"; };
@@ -652,6 +655,8 @@
 				B044A8AE1ADB997C008DAE2A /* LostPet.m */,
 				B044A8BC1ADBB5BD008DAE2A /* LostPetFilters.h */,
 				B044A8BD1ADBB5BD008DAE2A /* LostPetFilters.m */,
+				B08086BE1AE243DD007F7F3F /* LostPetStatus.h */,
+				B08086BF1AE243DD007F7F3F /* LostPetStatus.m */,
 			);
 			name = Objs;
 			sourceTree = "<group>";
@@ -1023,6 +1028,7 @@
 				B0BF73291A8A414500213C00 /* StoreCell.m in Sources */,
 				B0ACC9191AA84B1B0068A7D5 /* AdoptAnimalViewController.m in Sources */,
 				B06449281ABD634500B6F7A5 /* ManulViewController.m in Sources */,
+				B08086C01AE243DD007F7F3F /* LostPetStatus.m in Sources */,
 				B0BF72EB1A8915DD00213C00 /* Store.m in Sources */,
 				B0BF72E91A8915DD00213C00 /* Menu.m in Sources */,
 				B04DCD381ADF8E5B008D759A /* ManulTransition.m in Sources */,

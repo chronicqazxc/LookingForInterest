@@ -87,6 +87,7 @@
                                    [UIColor whiteColor], NSForegroundColorAttributeName,
                                    [UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:15.0], NSFontAttributeName, nil];
     [self.navigationItem.leftBarButtonItem setTitleTextAttributes:attributeDic2 forState:UIControlStateNormal];
+    
     self.loadPreviousPageView = (TableLoadPreviousPage *)[Utilities getNibWithName:@"TableLoadPreviousPage"];
     self.loadPreviousPageView.frame = CGRectZero;
     self.loadPreviousPageView.canLoading = NO;

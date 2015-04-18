@@ -15,6 +15,6 @@
 @end
 
 @interface LostPetRequest : RequestSender
-- (void)sendRequestForLostPetWithLostPetFilters:(LostPetFilters *)lostPetFilters;
+- (void)sendRequestForLostPetWithLostPetFilters:(LostPetFilters *)lostPetFilters top:(NSString *)top skip:(NSString *)skip;
 @property (assign, nonatomic) id <LostPetRequestDelegate> lostPetRequestDelegate;
 @end

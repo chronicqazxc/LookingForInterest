@@ -15,11 +15,22 @@
     self.delegate = _lostPetRequestDelegate;
 }
 
-- (void)sendRequestForLostPetWithLostPetFilters:(LostPetFilters *)lostPetFilters {
+- (void)sendRequestForLostPetWithLostPetFilters:(LostPetFilters *)lostPetFilters top:(NSString *)top skip:(NSString *)skip{
     NSString *filterContent = [lostPetFilters filterContent];
     
     NSString *filterString = [NSString stringWithFormat:@"%@=%@",kLostPetFiltersKey,filterContent];
-    NSString *urlString = [NSString stringWithFormat:@"%@?%@=%@&%@=%@&%@=%@&%@",kLostPetDomain,kLostPetUnitIDKey,kLostPetUnitIDValue,kLostPetTopKey,@"20",kLostPetSkipKey,@"0",filterString];
+    
+    NSString *urlString = [NSString stringWithFormat:
+                           @"%@?%@=%@&%@=%@&%@=%@&%@",
+                           kLostPetDomain,
+                           kLostPetUnitIDKey,
+                           kLostPetUnitIDValue,
+                           kLostPetTopKey,
+                           top,
+                           kLostPetSkipKey,
+                           skip,
+                           filterString];
+    
     urlString = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString] cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:20.0];
