@@ -34,6 +34,19 @@
 @property (nonatomic) BOOL isStartLoading;
 @property (strong, nonatomic) LostPetStatus *lostPetStatus;
 @property (weak, nonatomic) IBOutlet GoTopButton *pageIndicator;
+
+@property (strong, nonatomic) UIView *circleView;
+@property (strong, nonatomic) UIDynamicAnimator *animator;
+@property (strong, nonatomic) UIAttachmentBehavior *attachment;
+@property (strong, nonatomic) UIGravityBehavior *gravityBehavior;
+@property (strong, nonatomic) UICollisionBehavior *collisionBehavior;
+@property (strong, nonatomic) UIDynamicItemBehavior *circleViewBehavior;
+@property (strong, nonatomic) UIAttachmentBehavior *attachmentBehavior;
+@property CGPoint currentLocation;
+
+- (IBAction)panInView:(UIPanGestureRecognizer *)recognizer;
+
+
 @end
 
 @implementation LostPetViewController
@@ -55,6 +68,8 @@
     [self initLoadingPageView];
     
     self.transitionManager = [[LostPetTransition alloc] init];
+    
+//    [self initDynamicAnimation];
 }
 
 - (void)initNavigationBar {
@@ -91,8 +106,106 @@
     [self presentViewController:controller animated:NO completion:nil];
 }
 
+- (void)initDynamicAnimation {
+    
+    [self initCircleView];
+    
+    [self initAnimator];
+    
+    [self addGravityBehavior];
+    
+    [self addCollisionBehavior];
+    
+    [self addCircleViewBehavior];
+    
+//    [self addAttachmentBehavior];
+    
+}
+
+- (void)initCircleView {
+    self.circleView = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.view.frame)/2-15, 0, 30, 30)];
+    self.circleView.layer.cornerRadius = CGRectGetHeight(self.circleView.frame)/2;
+    self.circleView.backgroundColor = [UIColor blueColor];
+    [self.view addSubview:self.circleView];
+}
+
+- (void)initAnimator {
+    self.animator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];
+}
+
+- (void)addGravityBehavior{
+    if (!self.animator) {
+        [self initAnimator];
+    }
+
+    if (self.gravityBehavior) {
+        [self.animator removeBehavior:self.gravityBehavior];
+    }
+    
+    self.gravityBehavior = [[UIGravityBehavior alloc] initWithItems:@[self.circleView]];
+//    CGVector vector = CGVectorMake(0.0, 1.0);
+//    [self.gravityBehavior setGravityDirection:vector];
+    [self.animator addBehavior:self.gravityBehavior];
+
+}
+
+- (void)addCollisionBehavior {
+    if (!self.animator) {
+        [self initAnimator];
+    }
+    if (self.collisionBehavior) {
+        [self.animator removeBehavior:self.collisionBehavior];
+    }
+    
+    self.collisionBehavior = [[UICollisionBehavior alloc] initWithItems:@[self.circleView]];
+    self.collisionBehavior.translatesReferenceBoundsIntoBoundary = YES;
+    
+    [self.animator addBehavior:self.collisionBehavior];
+}
+
+- (void)addCircleViewBehavior {
+    if (!self.animator) {
+        [self initAnimator];
+    }
+    
+    if (self.circleViewBehavior) {
+        [self.animator removeBehavior:self.circleViewBehavior];
+    }
+    
+    self.circleViewBehavior = [[UIDynamicItemBehavior alloc] initWithItems:@[self.circleView]];
+    self.circleViewBehavior.elasticity = 0.7;
+    self.circleViewBehavior.friction = 1.0;
+    self.circleViewBehavior.resistance = 0.0;
+    self.circleViewBehavior.angularResistance = 0.0;
+    self.circleViewBehavior.allowsRotation = YES;
+    
+    [self.animator addBehavior:self.circleViewBehavior];
+}
+
+- (void)addAttachmentBehavior {
+    if (!self.animator) {
+        [self initAnimator];
+    }
+    
+    if (self.attachmentBehavior) {
+        [self.animator removeBehavior:self.attachmentBehavior];
+    }
+    
+    CGPoint point = CGPointMake(CGRectGetWidth(self.view.frame)/2, 200);
+    self.attachmentBehavior = [[UIAttachmentBehavior alloc] initWithItem:self.circleView offsetFromCenter:UIOffsetMake(0, 0) attachedToAnchor:point];
+    self.attachmentBehavior.length = 20.0;
+    self.attachmentBehavior.damping = 0.0;
+    
+    [self.animator addBehavior:self.attachmentBehavior];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -109,6 +222,8 @@
     self.lostPetStatus.loadingPageStatus = LoadingInitPage;
     
     [self startLoadingWithContent:@""];
+    
+    [self initDynamicAnimation];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -349,5 +464,39 @@
     NSString *skip = [NSString stringWithFormat:@"%d",(int)self.lostPetStatus.countOfCurrentTotal];
     [lostPetRequest sendRequestForLostPetWithLostPetFilters:lostPetFilters top:@"20" skip:skip];
     [self.requests addObject:lostPetRequest];
+}
+
+- (IBAction)panInView:(UIPanGestureRecognizer *)recognizer {
+    
+    CGPoint point = [recognizer locationInView:self.view];
+    self.currentLocation = [recognizer translationInView:self.view];
+
+    if (recognizer.state == UIGestureRecognizerStateBegan) {
+        
+//        UIOffset offset = UIOffsetMake(0, 0);
+//        self.attachment = [[UIAttachmentBehavior alloc] initWithItem:self.circleView offsetFromCenter:offset attachedToAnchor:self.currentLocation];
+//        
+//        [self.animator addBehavior:self.attachmqent];
+        
+        [self.animator removeAllBehaviors];
+    }
+    if (CGRectContainsPoint(self.circleView.frame, point)) {
+        self.circleView.center = point;
+        NSLog(@"x:%.2f, y:%.2f",self.circleView.frame.origin.x, self.circleView.frame.origin.y);
+    } else {
+        NSLog(@"x:%.2f, y:%.2f",self.circleView.frame.origin.x, self.circleView.frame.origin.y);
+        NSLog(@"current x:%.2f, y:%.2f",point.x, point.y);
+    }
+//    self.attachment.anchorPoint = self.currentLocation;
+    
+    
+    if (recognizer.state == UIGestureRecognizerStateEnded ||
+        recognizer.state == UIGestureRecognizerStateCancelled ||
+        recognizer.state == UIGestureRecognizerStateFailed
+        ) {
+        [self addGravityBehavior];
+        [self addCollisionBehavior];
+        [self addCircleViewBehavior];
+    }
 }
 @end
