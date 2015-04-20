@@ -123,7 +123,7 @@
 }
 
 - (BOOL)canDropMyMark {
-    if (self.menu.menuSearchType == MenuMarker && self.filterType == FilterTypeMenu) {
+    if (self.menu.menuSearchType == MenuMarker && self.filterType == RequestTypeMenu) {
         return YES;
     } else {
         return NO;
@@ -151,7 +151,7 @@
     }
     AnimalHospitalRequest *requestSender = [[AnimalHospitalRequest alloc] init];
     switch (self.filterType) {
-        case FilterTypeMajorType:
+        case RequestTypeMajorType:
             requestSender.animalHospitalRequestDelegate = self;
             requestSender.accessToken = self.accessToken;
             [requestSender sendMajorRequest];
@@ -159,7 +159,7 @@
             self.appdelegate.viewController = self;
             [Utilities startLoading];
             break;
-        case FilterTypeMinorType:
+        case RequestTypeMinorType:
             requestSender.animalHospitalRequestDelegate = self;
             requestSender.accessToken = self.accessToken;
             [requestSender sendMinorRequestByMajorType:((FilterTableViewController *)self.notifyReceiver).menu.majorType];
@@ -167,7 +167,7 @@
             self.appdelegate.viewController = self;
             [Utilities startLoading];
             break;
-        case FilterTypeStore:
+        case RequestTypeStore:
             requestSender.animalHospitalRequestDelegate = self;
             requestSender.accessToken = self.accessToken;
             [requestSender sendStoreRequestByMajorType:((FilterTableViewController *)self.notifyReceiver).menu.majorType minorType:((FilterTableViewController *)self.notifyReceiver).menu.minorType];
@@ -175,7 +175,7 @@
             self.appdelegate.viewController = self;
             [Utilities startLoadingWithContent:@"選擇醫院"];
             break;
-        case FilterTypeRange:
+        case RequestTypeRange:
             requestSender.animalHospitalRequestDelegate = self;
             requestSender.accessToken = self.accessToken;
             [requestSender sendRangeRequest];
@@ -183,7 +183,7 @@
             self.appdelegate.viewController = self;
             [Utilities startLoadingWithContent:@"選擇範圍"];
             break;
-        case FilterTypeCity:
+        case RequestTypeCity:
             requestSender.animalHospitalRequestDelegate = self;
             requestSender.accessToken = self.accessToken;
             [requestSender sendCityRequest];
@@ -191,7 +191,7 @@
             self.appdelegate.viewController = self;
             [Utilities startLoadingWithContent:@"選擇城市"];
             break;
-        case FilterTypeMenuTypes:
+        case RequestTypeMenuTypes:
             requestSender.animalHospitalRequestDelegate = self;
             requestSender.accessToken = self.accessToken;
             [requestSender sendMenutypesRequest];
@@ -207,19 +207,19 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     switch (self.filterType) {
-        case FilterTypeMajorType:
+        case RequestTypeMajorType:
             [self setNavigationTitle:kMajorTypeNavTitle];
             break;
-        case FilterTypeMinorType:
+        case RequestTypeMinorType:
             [self setNavigationTitle:kMinorTypeNavTitle];
             break;
-        case FilterTypeRange:
+        case RequestTypeRange:
             [self setNavigationTitle:kRangeNavTitle];
             break;
-        case FilterTypeCity:
+        case RequestTypeCity:
             [self setNavigationTitle:kCityNavTitle];
             break;
-        case FilterTypeMenuTypes:
+        case RequestTypeMenuTypes:
             [self setNavigationTitle:kMenuTypesTitle];
             break;
         default:
@@ -271,7 +271,7 @@
 }
 
 - (void)searchWithContent:(NSString *)content {
-    self.filterType = SearchStores;
+    self.filterType = RequestTypeSearchStores;
 
     AnimalHospitalRequest *requestSender = [[AnimalHospitalRequest alloc] init];
     requestSender.animalHospitalRequestDelegate = self;
@@ -296,7 +296,7 @@
 }
 
 - (void)back {
-    self.filterType = FilterTypeMenu;
+    self.filterType = RequestTypeMenu;
     [self.filterTableView reloadData];
     
     self.selectedStoreIndexPath = nil;
@@ -307,10 +307,10 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     NSInteger numberOfSections = 0;
     switch (self.filterType) {
-        case FilterTypeMenu:
+        case RequestTypeMenu:
             numberOfSections = 2;
             break;
-        case SearchStores:
+        case RequestTypeSearchStores:
             numberOfSections = 2;
             break;
         default:
@@ -323,32 +323,32 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSUInteger numberOfRows = 0;
     switch (self.filterType) {
-        case FilterTypeMenu:
+        case RequestTypeMenu:
             numberOfRows = [self.controlArr[section] count];
             break;
-        case FilterTypeMajorType:
+        case RequestTypeMajorType:
             numberOfRows = [self.majorTypes count];
             break;
-        case FilterTypeMinorType:
+        case RequestTypeMinorType:
             numberOfRows = [self.minorTypes count];
             break;
-        case FilterTypeStore:
+        case RequestTypeStore:
             numberOfRows = [self.stores count];
             break;
-        case FilterTypeRange:
+        case RequestTypeRange:
             numberOfRows = [self.ranges count];
             break;
-        case FilterTypeCity:
+        case RequestTypeCity:
             numberOfRows = [self.cities count];
             break;
-        case FilterTypeMenuTypes:
+        case RequestTypeMenuTypes:
             if ([self.menuTypes count]) {
                 numberOfRows = [self.menuTypes count];
             } else {
                 numberOfRows = 1;
             }
             break;
-        case SearchStores:
+        case RequestTypeSearchStores:
             if (section == 1) {
                 if ([self.stores count]) {
                     numberOfRows = [self.stores count];
@@ -370,17 +370,17 @@
     return [self heightForRowByType:self.filterType andIndexPath:indexPath];
 }
 
-- (CGFloat)heightForRowByType:(FilterType)type andIndexPath:(NSIndexPath *)indexPath {
+- (CGFloat)heightForRowByType:(AnimalHospitalRequestType)type andIndexPath:(NSIndexPath *)indexPath {
     CGFloat heightForRow = 0.0;
     switch (type) {
-        case FilterTypeMenu:
+        case RequestTypeMenu:
             if (indexPath.section == 0) {
                 heightForRow = [self heightForRowInMapSectionWithIndexPath:indexPath];
             } else {
                 heightForRow = [self heightForRowInMenuWithIndexPath:indexPath];
             }
             break;
-        case SearchStores:
+        case RequestTypeSearchStores:
             if (indexPath.section == 0) {
                 heightForRow = [self heightForRowInMapSectionWithIndexPath:indexPath];
             } else {
@@ -415,7 +415,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     CGFloat heightForHeader = 0.0;
-    if (self.filterType == FilterTypeMenu || self.filterType == SearchStores) {
+    if (self.filterType == RequestTypeMenu || self.filterType == RequestTypeSearchStores) {
         heightForHeader = 50.0;
     } else {
         heightForHeader = 0.0;
@@ -425,11 +425,11 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     UIView *headerView = nil;
-    if (self.filterType == FilterTypeMenu  && section == 1) {
+    if (self.filterType == RequestTypeMenu  && section == 1) {
         headerView = [Utilities getNibWithName:@"OptionTableHeader"];
         headerView.frame = CGRectMake(0,0,CGRectGetWidth(headerView.frame),50.0);
         [Utilities addShadowToView:headerView offset:CGSizeMake(0.0f, -5.0f)];
-    } else if (self.filterType == SearchStores && section == 1) {
+    } else if (self.filterType == RequestTypeSearchStores && section == 1) {
         if (!self.storeHeader) {
             self.storeHeader = [[StoreTableHeaderViewController alloc] initWithNibName:@"StoreTableHeaderViewController" bundle:nil];
             self.storeHeader.caller = self;
@@ -440,7 +440,7 @@
         [Utilities addShadowToView:self.storeHeader.view offset:CGSizeMake(0.0f, -5.0f)];
         headerView = self.storeHeader.view;
         
-    } else if ((self.filterType == FilterTypeMenu || self.filterType == SearchStores) && section == 0) {
+    } else if ((self.filterType == RequestTypeMenu || self.filterType == RequestTypeSearchStores) && section == 0) {
         if (!self.openMapHeader) {
             self.openMapHeader = [[OpenMapHeaderController alloc] initWithNibName:@"OpenMapHeaderController" bundle:nil];
             self.openMapHeader.caller = self;
@@ -475,7 +475,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = nil;
-    if ((self.filterType == FilterTypeMenu || self.filterType == SearchStores) && (indexPath.section == 0 && indexPath.row == 1)) {
+    if ((self.filterType == RequestTypeMenu || self.filterType == RequestTypeSearchStores) && (indexPath.section == 0 && indexPath.row == 1)) {
         UINib *mapViewCellNib = [UINib nibWithNibName:@"MapViewCell" bundle:nil];
         [tableView registerNib:mapViewCellNib forCellReuseIdentifier:kMapViewCellIdentifier];
         MapViewCell *mapViewCell = [tableView dequeueReusableCellWithIdentifier:kMapViewCellIdentifier];
@@ -489,7 +489,7 @@
             }
         }
         cell = mapViewCell;
-    } else if (self.filterType == FilterTypeMenu && indexPath.section == 1) {
+    } else if (self.filterType == RequestTypeMenu && indexPath.section == 1) {
         UINib *menuCellNib = [UINib nibWithNibName:@"MenuCell" bundle:nil];
         [tableView registerNib:menuCellNib forCellReuseIdentifier:kMenuCellIdentifier];
         MenuCell *menuCell = [tableView dequeueReusableCellWithIdentifier:kMenuCellIdentifier];
@@ -515,7 +515,7 @@
         
         menuCell.titleLabel.text = [NSString stringWithFormat:@"%@：",[self getTitleByIndexPath:indexPath andType:self.filterType]];
         cell = menuCell;
-    } else if (self.filterType == SearchStores && indexPath.section == 1) {
+    } else if (self.filterType == RequestTypeSearchStores && indexPath.section == 1) {
         UINib *storeCellNib = [UINib nibWithNibName:@"StoreCell" bundle:nil];
         [tableView registerNib:storeCellNib forCellReuseIdentifier:kStoreCellIdentifier];
         StoreCell *storeCell = [tableView dequeueReusableCellWithIdentifier:kStoreCellIdentifier];
@@ -530,7 +530,7 @@
         
         storeCell.delegate = self;
         cell = storeCell;
-    } else if ((self.filterType == FilterTypeMenu || self.filterType == SearchStores) && indexPath.section == 0 && indexPath.row == 0) {
+    } else if ((self.filterType == RequestTypeMenu || self.filterType == RequestTypeSearchStores) && indexPath.section == 0 && indexPath.row == 0) {
         UINib *openMapCellNib = [UINib nibWithNibName:@"OpenMapCell" bundle:nil];
         [tableView registerNib:openMapCellNib forCellReuseIdentifier:kOpenMapCellIdentifier];
         OpenMapCell *openMapCell = [tableView dequeueReusableCellWithIdentifier:kOpenMapCellIdentifier];
@@ -556,10 +556,10 @@
     return cell;
 }
 
-- (NSString *)getTitleByIndexPath:(NSIndexPath *)indexPath andType:(FilterType)type {
+- (NSString *)getTitleByIndexPath:(NSIndexPath *)indexPath andType:(AnimalHospitalRequestType)type {
     NSString *title = @"";
     switch (type) {
-        case FilterTypeMenu:
+        case RequestTypeMenu:
             if (indexPath.section == 0 && indexPath.row == 0) {
                 BOOL isExpand = [[self.controlArr[indexPath.section][indexPath.row] objectForKey:@"IsExpand"] intValue]?YES:NO;
                 if (isExpand) {
@@ -571,26 +571,26 @@
                 title = (indexPath.row < [self.menu.titles count])?[self.menu.titles objectAtIndex:indexPath.row]:@"";
             }
             break;
-        case FilterTypeMajorType:
+        case RequestTypeMajorType:
             title = (indexPath.row < [self.majorTypes count])?((MajorType *)[self.majorTypes objectAtIndex:indexPath.row]).typeDescription:@"";
             break;
-        case FilterTypeMinorType:
+        case RequestTypeMinorType:
             title = (indexPath.row < [self.minorTypes count])?((MinorType *)[self.minorTypes objectAtIndex:indexPath.row]).typeDescription:@"";
             break;
-        case FilterTypeStore:
+        case RequestTypeStore:
             title = (indexPath.row < [self.stores count])?((Store *)[self.stores objectAtIndex:indexPath.row]).name:@"";
             break;
-        case FilterTypeRange:
+        case RequestTypeRange:
             title = (indexPath.row < [self.ranges count])?[NSString stringWithFormat:@"%@公里",[self.ranges objectAtIndex:indexPath.row]]:@"";
             break;
-        case FilterTypeCity:
+        case RequestTypeCity:
             if ([self.cities count]) {
                 title = (indexPath.row < [self.cities count])?[self.cities objectAtIndex:indexPath.row]:@"";
             } else {
                 title = @"找不到...";
             }
             break;
-        case SearchStores:
+        case RequestTypeSearchStores:
             if (indexPath.section == 0 && indexPath.row == 0) {
                 BOOL isExpand = [[self.controlArr[indexPath.section][indexPath.row] objectForKey:@"IsExpand"] intValue]?YES:NO;
                 if (isExpand) {
@@ -608,7 +608,7 @@
                 }
             }
             break;
-        case FilterTypeMenuTypes:
+        case RequestTypeMenuTypes:
             title = (indexPath.row < [self.menuTypes count])?[self.menuTypes objectAtIndex:indexPath.row]:@"";
             break;
         default:
@@ -617,10 +617,10 @@
     return title;
 }
 
-- (NSString *)getDetailByIndexPath:(NSIndexPath *)indexPath andType:(FilterType)type {
+- (NSString *)getDetailByIndexPath:(NSIndexPath *)indexPath andType:(AnimalHospitalRequestType)type {
     NSString *detail = @"";
     switch (type) {
-        case FilterTypeMenu:
+        case RequestTypeMenu:
             if (indexPath.row == 0) {
                 detail = self.menu.depend;
             } else if (indexPath.row == 1) {
@@ -638,19 +638,19 @@
             }
             
             break;
-        case FilterTypeMajorType:
+        case RequestTypeMajorType:
             detail = (indexPath.row < [self.majorTypes count])?((MajorType *)[self.majorTypes objectAtIndex:indexPath.row]).typeDescription:@"";
             break;
-        case FilterTypeMinorType:
+        case RequestTypeMinorType:
             detail = (indexPath.row < [self.minorTypes count])?((MinorType *)[self.minorTypes objectAtIndex:indexPath.row]).typeDescription:@"";
             break;
-        case FilterTypeStore:
+        case RequestTypeStore:
             detail = (indexPath.row < [self.stores count])?[NSString stringWithFormat:@"距離%.2f公里",[((Store *)[self.stores objectAtIndex:indexPath.row]).distance doubleValue]]:@"";
             break;
-        case FilterTypeRange:
+        case RequestTypeRange:
             detail = (indexPath.row < [self.ranges count])?[self.ranges objectAtIndex:indexPath.row]:@"";
             break;
-        case SearchStores:
+        case RequestTypeSearchStores:
             detail = (indexPath.row < [self.stores count])?[NSString stringWithFormat:@"距離%.2f公里",[((Store *)[self.stores objectAtIndex:indexPath.row]).distance doubleValue]]:@"";
             break;
         default:
@@ -664,7 +664,7 @@
     if (self.delegate &&
         [self.delegate respondsToSelector:@selector(tableBeTapIn:withMenuSearchType:)] &&
         [self.delegate respondsToSelector:@selector(storeBeTapIn:withDetail:)]) {
-        if (self.filterType == FilterTypeMenu || self.filterType == SearchStores) {
+        if (self.filterType == RequestTypeMenu || self.filterType == RequestTypeSearchStores) {
             if (indexPath.section == 0) {
                 ExpandContractController *expandController = [[ExpandContractController alloc] init];
                 [expandController expandOrContractCellByIndexPaht:indexPath dataArray:self.dataArr controlArray:self.controlArr tableView:tableView];
@@ -678,11 +678,11 @@
                     self.openMapHeader.openMapIcon.image = self.downArrowImage;
                 }
                 
-            } else if (indexPath.section == 1 && self.filterType == FilterTypeMenu) {
+            } else if (indexPath.section == 1 && self.filterType == RequestTypeMenu) {
                 if (self.menu.menuSearchType != MenuKeyword || indexPath.row != 1) {
                     [self.delegate tableBeTapIn:indexPath withMenuSearchType:self.menu.menuSearchType];
                 }
-            } else if (indexPath.section == 1 && self.filterType == SearchStores){
+            } else if (indexPath.section == 1 && self.filterType == RequestTypeSearchStores){
                 if ([self.stores count]) {
                     self.selectedStoreIndexPath = indexPath;
                     AnimalHospitalRequest *requestSender = [[AnimalHospitalRequest alloc] init];
@@ -697,32 +697,32 @@
         }
     } else {
         switch (self.filterType) {
-            case FilterTypeMajorType:
+            case RequestTypeMajorType:
                 [[NSNotificationCenter defaultCenter] addObserver:self.notifyReceiver selector:@selector(receiveSelectedMajorType:) name:kMajorTypeSelected object:nil];
                 [[NSNotificationCenter defaultCenter] postNotificationName:kMajorTypeSelected object:self userInfo:@{@"MajorType":[self.majorTypes objectAtIndex:indexPath.row]}];
                 [self.navigationController popViewControllerAnimated:YES];
                 break;
-            case FilterTypeMinorType:
+            case RequestTypeMinorType:
                 [[NSNotificationCenter defaultCenter] addObserver:self.notifyReceiver selector:@selector(receiveSelectedMinorType:) name:kMinorTypeSelected object:nil];
                 [[NSNotificationCenter defaultCenter] postNotificationName:kMinorTypeSelected object:self userInfo:@{@"MinorType":[self.minorTypes objectAtIndex:indexPath.row]}];
                 [self.navigationController popViewControllerAnimated:YES];
                 break;
-            case FilterTypeStore:
+            case RequestTypeStore:
                 [[NSNotificationCenter defaultCenter] addObserver:self.notifyReceiver selector:@selector(receiveSelectedStore:) name:kStoreSelected object:nil];
                 [[NSNotificationCenter defaultCenter] postNotificationName:kStoreSelected object:self userInfo:@{@"Store":[self.stores objectAtIndex:indexPath.row]}];
                 [self.navigationController popViewControllerAnimated:YES];
                 break;
-            case FilterTypeRange:
+            case RequestTypeRange:
                 [[NSNotificationCenter defaultCenter] addObserver:self.notifyReceiver selector:@selector(receiveSelectedRange:) name:kRangeSelected object:nil];
                 [[NSNotificationCenter defaultCenter] postNotificationName:kRangeSelected object:self userInfo:@{@"Range":[self.ranges objectAtIndex:indexPath.row]}];
                 [self.navigationController popViewControllerAnimated:YES];
                 break;
-            case FilterTypeCity:
+            case RequestTypeCity:
                 [[NSNotificationCenter defaultCenter] addObserver:self.notifyReceiver selector:@selector(receiveSelectedCity:) name:kCitySelected object:nil];
                 [[NSNotificationCenter defaultCenter] postNotificationName:kCitySelected object:self userInfo:@{@"City":[self.cities objectAtIndex:indexPath.row]}];
                 [self.navigationController popViewControllerAnimated:YES];
                 break;
-            case FilterTypeMenuTypes:
+            case RequestTypeMenuTypes:
                 [[NSNotificationCenter defaultCenter] addObserver:self.notifyReceiver selector:@selector(receiveSelectedMenuType:) name:kMenuTypeSelected object:nil];
                 [[NSNotificationCenter defaultCenter] postNotificationName:kMenuTypeSelected object:self userInfo:@{@"MenuType":[NSNumber numberWithUnsignedInteger:indexPath.row]}];
                 [self.navigationController popViewControllerAnimated:YES];
@@ -1064,7 +1064,7 @@
 
 #pragma mark - change page
 - (void)scrollViewDidScroll:(UIScrollView *)aScrollView {
-    if (self.filterType == SearchStores) {
+    if (self.filterType == RequestTypeSearchStores) {
         CGPoint offset = aScrollView.contentOffset;
         CGRect bounds = aScrollView.bounds;
         CGSize size = aScrollView.contentSize;

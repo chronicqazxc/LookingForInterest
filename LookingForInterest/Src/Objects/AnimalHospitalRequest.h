@@ -7,6 +7,82 @@
 //
 
 #import "RequestSender.h"
+/*
+ case FilterTypeAnimalHospitalInformation:
+ if ([self.animalHospitalRequestDelegate respondsToSelector:@selector(animalHospitalInformationBack:)]) {
+ NSArray *datas = [self parseAnimalHospitalInformationData:[self appendDataFromDatas:self.receivedDatas]];
+ [self.animalHospitalRequestDelegate animalHospitalInformationBack:datas];
+ }
+ break;
+ case FilterTypeMenu:
+ if ([self.animalHospitalRequestDelegate respondsToSelector:@selector(initMenuBack:)]) {
+ NSArray *datas = [self parseMenuData:[self appendDataFromDatas:self.receivedDatas]];
+ [self.animalHospitalRequestDelegate initMenuBack:datas];
+ }
+ break;
+ case FilterTypeMajorType:
+ if ([self.animalHospitalRequestDelegate respondsToSelector:@selector(majorsBack:)]) {
+ NSArray *datas = [self parseMajorTypeData:[self appendDataFromDatas:self.receivedDatas]];
+ [self.animalHospitalRequestDelegate majorsBack:datas];
+ }
+ break;
+ case FilterTypeMinorType:
+ if ([self.animalHospitalRequestDelegate respondsToSelector:@selector(minorsBack:)]) {
+ NSArray *datas = [self parseMinorTypeData:[self appendDataFromDatas:self.receivedDatas]];
+ [self.animalHospitalRequestDelegate minorsBack:datas];
+ }
+ break;
+ case FilterTypeStore:
+ if ([self.animalHospitalRequestDelegate respondsToSelector:@selector(storesBack:)]) {
+ NSMutableDictionary *resultDic = [self parseStoreData:[self appendDataFromDatas:self.receivedDatas]];
+ [self.animalHospitalRequestDelegate storesBack:resultDic];
+ }
+ break;
+ case FilterTypeRange:
+ if ([self.animalHospitalRequestDelegate respondsToSelector:@selector(rangesBack:)]) {
+ NSArray *datas = [self parseRangeData:[self appendDataFromDatas:self.receivedDatas]];
+ [self.animalHospitalRequestDelegate rangesBack:datas];
+ }
+ break;
+ case FilterTypeCity:
+ if ([self.animalHospitalRequestDelegate respondsToSelector:@selector(rangesBack:)]) {
+ NSArray *datas = [self parseCitiesData:[self appendDataFromDatas:self.receivedDatas]];
+ [self.animalHospitalRequestDelegate citiesBack:datas];
+ }
+ break;
+ case SearchStores:
+ if ([self.animalHospitalRequestDelegate respondsToSelector:@selector(storesBack:)]) {
+ NSMutableDictionary *datas = [self parseStoreData:[self appendDataFromDatas:self.receivedDatas]];
+ [self.animalHospitalRequestDelegate storesBack:datas];
+ }
+ break;
+ case SearchDetail:
+ if ([self.animalHospitalRequestDelegate respondsToSelector:@selector(detailBack:)]) {
+ NSArray *datas = [self parseDetailData:[self appendDataFromDatas:self.receivedDatas]];
+ [self.animalHospitalRequestDelegate detailBack:datas];
+ }
+ break;
+ case FilterTypeMenuTypes:
+ if ([self.animalHospitalRequestDelegate respondsToSelector:@selector(menuTypesBack:)]) {
+ NSArray *datas = [self parseMenuTypesData:[self appendDataFromDatas:self.receivedDatas]];
+ [self.animalHospitalRequestDelegate menuTypesBack:datas];
+ }
+ break;
+ case GetDefaultImages:
+ */
+typedef NS_ENUM(NSInteger, AnimalHospitalRequestType) {
+    RequestTypeAnimalHospitalInformation = 0,
+    RequestTypeMenu,
+    RequestTypeMajorType,
+    RequestTypeMinorType,
+    RequestTypeStore,
+    RequestTypeRange,
+    RequestTypeCity,
+    RequestTypeSearchStores,
+    RequestTypeSearchDetail,
+    RequestTypeMenuTypes,
+    RequestTypeDefaultImages
+};
 
 @protocol AnimalHospitalRequestDelegate <RequestSenderDelegate>
 @optional
@@ -36,6 +112,5 @@
 - (void)sendDetailRequestByStore:(Store *)store;
 - (void)sendDefaultImagesRequest;
 @property (assign, nonatomic) id <AnimalHospitalRequestDelegate> animalHospitalRequestDelegate;
+@property (nonatomic) AnimalHospitalRequestType animalHospitalRequestType;
 @end
-
-

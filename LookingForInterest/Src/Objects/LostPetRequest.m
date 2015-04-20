@@ -21,7 +21,7 @@
 }
 
 - (void)sendRequestForLostPetGeocoder:(LostPet *)lostPet indexPath:(NSIndexPath *)indexPath {
-    self.lostPetRequestType = LostPetGeocoder;
+    self.lostPetRequestType = RequestTypeLostPetGeocoder;
     self.indexPath = indexPath;
     NSString *lostLocation = kGoogleGeocodeURL(lostPet.lostPlace);
     lostLocation = [lostLocation stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -66,7 +66,7 @@
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     switch (self.lostPetRequestType) {
-        case LostPetResult:
+        case RequestTypeLostPetResult:
             if (self.lostPetRequestDelegate) {
                 if ([self.lostPetRequestDelegate respondsToSelector:@selector(lostPetResultBack:)]) {
                     NSMutableArray *lostPets = [self parseLostPetResultData:[super appendDataFromDatas:self.receivedDatas]];
@@ -76,7 +76,7 @@
                 [Utilities stopLoading];
             }
             break;
-        case LostPetGeocoder:
+        case RequestTypeLostPetGeocoder:
             if (self.lostPetRequestDelegate) {
                 if ([self.lostPetRequestDelegate respondsToSelector:@selector(lostPetLocationBack:indexPath:)]) {
                     NSMutableDictionary *locationDic = [self parseGeocoder:[super appendDataFromDatas:self.receivedDatas]];

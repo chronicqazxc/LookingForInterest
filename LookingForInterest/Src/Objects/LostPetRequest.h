@@ -10,8 +10,8 @@
 #import "LostPetFilters.h"
 
 typedef NS_ENUM(NSInteger, LostPetRequestType) {
-    LostPetResult = 0,
-    LostPetGeocoder
+    RequestTypeLostPetResult = 0,
+    RequestTypeLostPetGeocoder
 };
 
 @protocol LostPetRequestDelegate <RequestSenderDelegate>

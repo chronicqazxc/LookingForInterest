@@ -80,7 +80,12 @@
     
     [petCollectionViewCell.uiWebView loadHTMLString:@"Loading" baseURL:nil];
     
-    [self wkWebView:petCollectionViewCell.uiWebView loadLocation:lostPet.lostPlace size:CGSizeMake(CGRectGetWidth(petCollectionViewCell.webViewContainer.frame), CGRectGetHeight(petCollectionViewCell.webViewContainer.frame))];
+    if ([lostPet.lostPlace isEqualToString:@""]) {
+        [petCollectionViewCell.uiWebView loadHTMLString:@"無提供地址" baseURL:nil];
+    } else {
+        [self wkWebView:petCollectionViewCell.uiWebView loadLocation:lostPet.lostPlace size:CGSizeMake(CGRectGetWidth(petCollectionViewCell.webViewContainer.frame), CGRectGetHeight(petCollectionViewCell.webViewContainer.frame))];
+    }
+    
     
     return petCollectionViewCell;
     
@@ -167,13 +172,12 @@
     
     NSString *width = [NSString stringWithFormat:@"%.f",size.width];
     NSString *height = [NSString stringWithFormat:@"%.f",size.height];
+    location = [location stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSString *urlString = kGoogleMapStaticMapURL(location,@"blue",width,height);
     
-    urlString = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSLog(@"%@",urlString);
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
     
     [wkWebView loadRequest:request];
-    
 }
 @end

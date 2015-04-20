@@ -100,25 +100,6 @@
 #define kLostPetStoryboardID @"LostPet"
 #define kLostPetNavigationControllerStoryboardID @"LostPetNavigation"
 
-
-typedef enum filterType {
-    FilterTypeAnimalHospitalInformation,
-    FilterTypeMenu,
-    FilterTypeMajorType,
-    FilterTypeMinorType,
-    FilterTypeStore,
-    FilterTypeRange,
-    FilterTypeCity,
-    SearchStores,
-    SearchDetail,
-    GetAccessToken,
-    FilterTypeMenuTypes,
-    GetDefaultImages,
-    AdoptAnimals,
-    PetThumbNail,
-    CheckFavoriteAnimals
-} FilterType;
-
 typedef NS_ENUM(NSInteger, Direction) {
     DirectionUp = 0,
     DirectionLeft,

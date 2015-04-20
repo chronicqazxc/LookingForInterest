@@ -355,7 +355,7 @@
 #pragma mark - UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     LostPetScrollViewController *lostPetScrollViewController = [[LostPetScrollViewController alloc] init];
-    lostPetScrollViewController.lostPets = [NSArray arrayWithArray:self.lostPets];
+    lostPetScrollViewController.lostPets = [NSMutableArray arrayWithArray:self.lostPets];
     lostPetScrollViewController.selectedIndexPath = indexPath;
     
     [self.navigationController pushViewController:lostPetScrollViewController animated:YES];

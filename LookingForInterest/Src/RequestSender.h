@@ -9,7 +9,15 @@
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CLLocation.h>
 
-@protocol RequestSenderDelegate;
+typedef NS_ENUM(NSInteger, FilterType) {
+    GetAccessToken
+};
+
+@protocol RequestSenderDelegate <NSObject>
+@optional
+- (void)accessTokenBack:(NSArray *)accessTokenData;
+- (void)requestFaildWithMessage:(NSString *)message connection:(NSURLConnection *)connection;
+@end
 
 @interface RequestSender : NSObject
 @property (assign, nonatomic) id <RequestSenderDelegate> delegate;
@@ -25,8 +33,4 @@
 - (void)getAccessToken;
 @end
 
-@protocol RequestSenderDelegate <NSObject>
-@optional
-- (void)accessTokenBack:(NSArray *)accessTokenData;
-- (void)requestFaildWithMessage:(NSString *)message connection:(NSURLConnection *)connection;
-@end
+

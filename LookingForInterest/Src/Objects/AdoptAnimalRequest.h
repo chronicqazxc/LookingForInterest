@@ -8,6 +8,12 @@
 
 #import "RequestSender.h"
 
+typedef NS_ENUM(NSInteger, AdoptAnimalRequestType) {
+    RequestTypeAdoptAnimals = 0,
+    RequestTypePetThumbNail,
+    RequestTypeCheckFavoriteAnimals
+};
+
 @protocol AdoptAnimalRequestDelegate <RequestSenderDelegate>
 @optional
 - (void)petResultBack:(PetResult *)petResult;
@@ -20,4 +26,5 @@
 - (void)sendRequestForPetThumbNail:(Pet *)pet indexPath:(NSIndexPath *)indexPath;
 - (void)checkFavoriteAnimals:(NSArray *)animals;
 @property (assign, nonatomic) id <AdoptAnimalRequestDelegate> adoptAnimalRequestDelegate;
+@property (nonatomic) AdoptAnimalRequestType adoptAnimalRequestType;
 @end

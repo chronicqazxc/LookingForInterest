@@ -24,7 +24,7 @@
 }
 
 - (void)sendRequestForAdoptAnimalsWithPetFilters:(PetFilters *)petFilters {
-    self.type = AdoptAnimals;
+    self.adoptAnimalRequestType = RequestTypeAdoptAnimals;
     
     NSMutableDictionary *dataDic = [NSMutableDictionary dictionary];
     [dataDic setObject:kResourceScope forKey:kResourceScopeKey];
@@ -91,7 +91,7 @@
 }
 
 - (void)checkFavoriteAnimals:(NSArray *)animals {
-    self.type = CheckFavoriteAnimals;
+    self.adoptAnimalRequestType = RequestTypeCheckFavoriteAnimals;
     self.checkFavoriteAnimalsResult = [NSMutableArray array];
     self.checkFavoriteAnimalsArr = [NSMutableArray arrayWithArray:animals];
     for (Pet* pet in animals) {
@@ -229,7 +229,7 @@
 }
 
 - (void)sendRequestForPetThumbNail:(Pet *)pet indexPath:(NSIndexPath *)indexPath {
-    self.type = PetThumbNail;
+    self.adoptAnimalRequestType = RequestTypePetThumbNail;
     self.indexPath = indexPath;
     NSURL *url = [NSURL URLWithString:pet.imageName];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
@@ -257,7 +257,7 @@
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     NSError *error = nil;
     if (error == nil) {
-        if (self.type != CheckFavoriteAnimals) {
+        if (self.adoptAnimalRequestType != RequestTypeCheckFavoriteAnimals) {
             [self.receivedDatas addObject:data];
         } else {
             for (NSMutableDictionary *connectionDic in self.connectionsArr) {
@@ -274,18 +274,18 @@
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     if (self.delegate) {
-        switch (self.type) {
-            case AdoptAnimals:
+        switch (self.adoptAnimalRequestType) {
+            case RequestTypeAdoptAnimals:
                 if ([self.delegate respondsToSelector:@selector(petResultBack:)]) {
                     [self parsePetResultData:[self appendDataFromDatas:self.receivedDatas] withConnection:connection];
                 }
                 break;
-            case PetThumbNail:
+            case RequestTypePetThumbNail:
                 if ([self.delegate respondsToSelector:@selector(thumbNailBack:indexPath:)]) {
                     [self parseThumbNailData:[self appendDataFromDatas:self.receivedDatas]];
                 }
                 break;
-            case CheckFavoriteAnimals:
+            case RequestTypeCheckFavoriteAnimals:
                 for (NSMutableDictionary *connectionDic in self.connectionsArr) {
                     NSURLConnection *connectionObj = [connectionDic objectForKey:@"connection"];
                     if (connectionObj == connection) {

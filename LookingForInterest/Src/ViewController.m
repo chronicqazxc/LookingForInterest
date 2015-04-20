@@ -13,7 +13,7 @@
 #import <GoogleMaps/GoogleMaps.h>
 #import "GoogleMapNavigation.h"
 #import <CoreLocation/CoreLocation.h>
-#import "RequestSender.h"
+#import "AnimalHospitalRequest.h"
 #import "ManulHospitalMenuViewController.h"
 #import <iAd/iAd.h>
 #import "TableLoadNextPage.h"
@@ -233,8 +233,8 @@
 
 - (void)clearFilterTableRequestDelegate {
     NSArray *requestSenders = [self.filterTableViewController getRequestArr];
-    for (RequestSender *requestSender in requestSenders) {
-        requestSender.delegate = nil;
+    for (AnimalHospitalRequest *requestSender in requestSenders) {
+        requestSender.animalHospitalRequestDelegate = nil;
     }
     [self.filterTableViewController resetRequestArr];
 }
@@ -258,7 +258,7 @@
         } else if (!self.isSendForMenu) {
             self.filterTableViewController = [[FilterTableViewController alloc] init];
             self.filterTableViewController.delegate = self;
-            self.filterTableViewController.filterType = FilterTypeMenu;
+            self.filterTableViewController.filterType = RequestTypeMenu;
             self.filterTableViewController.filterTableView = self.filterTableView;
             self.filterTableView.dataSource = self.filterTableViewController;
             self.filterTableView.delegate = self.filterTableViewController;
@@ -269,7 +269,7 @@
     } else if (!self.isSendForMenu) {
         self.filterTableViewController = [[FilterTableViewController alloc] init];
         self.filterTableViewController.delegate = self;
-        self.filterTableViewController.filterType = FilterTypeMenu;
+        self.filterTableViewController.filterType = RequestTypeMenu;
         self.filterTableViewController.filterTableView = self.filterTableView;
         self.filterTableView.dataSource = self.filterTableViewController;
         self.filterTableView.delegate = self.filterTableViewController;
@@ -517,14 +517,14 @@
     switch (indexPath.row) {
         case 0:
             filterTableViewController = [self.storyboard instantiateViewControllerWithIdentifier:storyboardID];
-            filterTableViewController.filterType = FilterTypeMenuTypes;
+            filterTableViewController.filterType = RequestTypeMenuTypes;
             filterTableViewController.notifyReceiver = self.filterTableViewController;
             filterTableViewController.accessToken = self.accessToken;
             [self.navigationController pushViewController:filterTableViewController animated:YES];
             break;
         case 1:
             filterTableViewController = [self.storyboard instantiateViewControllerWithIdentifier:storyboardID];
-            filterTableViewController.filterType = FilterTypeRange;
+            filterTableViewController.filterType = RequestTypeRange;
             filterTableViewController.notifyReceiver = self.filterTableViewController;
             filterTableViewController.accessToken = self.accessToken;
             [self.navigationController pushViewController:filterTableViewController animated:YES];
@@ -540,14 +540,14 @@
     switch (indexPath.row) {
         case 0:
             filterTableViewController = [self.storyboard instantiateViewControllerWithIdentifier:storyboardID];
-            filterTableViewController.filterType = FilterTypeMenuTypes;
+            filterTableViewController.filterType = RequestTypeMenuTypes;
             filterTableViewController.notifyReceiver = self.filterTableViewController;
             filterTableViewController.accessToken = self.accessToken;
             [self.navigationController pushViewController:filterTableViewController animated:YES];
             break;
         case 1:
             filterTableViewController = [self.storyboard instantiateViewControllerWithIdentifier:storyboardID];
-            filterTableViewController.filterType = FilterTypeCity;
+            filterTableViewController.filterType = RequestTypeCity;
             filterTableViewController.notifyReceiver = self.filterTableViewController;
             filterTableViewController.accessToken = self.accessToken;
             [self.navigationController pushViewController:filterTableViewController animated:YES];
@@ -560,7 +560,7 @@
 - (void)processMenuKeywordWithIndexPath:(NSIndexPath *)indexPath {
     NSString *storyboardID = [self.filterTableViewController getStoryboardID];
     FilterTableViewController *filterTableViewController = [self.storyboard instantiateViewControllerWithIdentifier:storyboardID];
-    filterTableViewController.filterType = FilterTypeMenuTypes;
+    filterTableViewController.filterType = RequestTypeMenuTypes;
     filterTableViewController.notifyReceiver = self.filterTableViewController;
     filterTableViewController.accessToken = self.accessToken;
     [self.navigationController pushViewController:filterTableViewController animated:YES];
@@ -572,14 +572,14 @@
     switch (indexPath.row) {
         case 0:
             filterTableViewController = [self.storyboard instantiateViewControllerWithIdentifier:storyboardID];
-            filterTableViewController.filterType = FilterTypeMenuTypes;
+            filterTableViewController.filterType = RequestTypeMenuTypes;
             filterTableViewController.notifyReceiver = self.filterTableViewController;
             filterTableViewController.accessToken = self.accessToken;
             [self.navigationController pushViewController:filterTableViewController animated:YES];
             break;
         case 1:
             filterTableViewController = [self.storyboard instantiateViewControllerWithIdentifier:storyboardID];
-            filterTableViewController.filterType = FilterTypeRange;
+            filterTableViewController.filterType = RequestTypeRange;
             filterTableViewController.notifyReceiver = self.filterTableViewController;
             filterTableViewController.accessToken = self.accessToken;
             [self.navigationController pushViewController:filterTableViewController animated:YES];
@@ -595,14 +595,14 @@
     switch (indexPath.row) {
         case 0:
             filterTableViewController = [self.storyboard instantiateViewControllerWithIdentifier:storyboardID];
-            filterTableViewController.filterType = FilterTypeMenuTypes;
+            filterTableViewController.filterType = RequestTypeMenuTypes;
             filterTableViewController.notifyReceiver = self.filterTableViewController;
             filterTableViewController.accessToken = self.accessToken;
             [self.navigationController pushViewController:filterTableViewController animated:YES];
             break;
         case 1:
             filterTableViewController = [self.storyboard instantiateViewControllerWithIdentifier:storyboardID];
-            filterTableViewController.filterType = FilterTypeRange;
+            filterTableViewController.filterType = RequestTypeRange;
             filterTableViewController.notifyReceiver = self.filterTableViewController;
             filterTableViewController.accessToken = self.accessToken;
             [self.navigationController pushViewController:filterTableViewController animated:YES];
@@ -618,7 +618,7 @@
     switch (indexPath.row) {
         case 0:
             filterTableViewController = [self.storyboard instantiateViewControllerWithIdentifier:storyboardID];
-            filterTableViewController.filterType = FilterTypeMenuTypes;
+            filterTableViewController.filterType = RequestTypeMenuTypes;
             filterTableViewController.notifyReceiver = self.filterTableViewController;
             filterTableViewController.accessToken = self.accessToken;
             [self.navigationController pushViewController:filterTableViewController animated:YES];

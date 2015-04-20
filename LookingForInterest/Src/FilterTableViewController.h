@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CLLocation.h>
+#import "AnimalHospitalRequest.h"
 
 @protocol FilterTableViewControllerDelegate;
 
@@ -18,7 +19,7 @@
 @property (strong, nonatomic) NSString *minorDetail;
 @property (strong, nonatomic) NSString *nameDetail;
 @property (strong, nonatomic) NSString *rangeDetail;
-@property (nonatomic) FilterType filterType;
+@property (nonatomic) AnimalHospitalRequestType filterType;
 @property (assign, nonatomic) UIViewController <FilterTableViewControllerDelegate> *delegate;
 @property (strong, nonatomic) FilterTableView *filterTableView;
 @property (strong, nonatomic) UIViewController *notifyReceiver;
