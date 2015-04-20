@@ -12,10 +12,11 @@
 #import "LostPet.h"
 #import "LostPetStatus.h"
 #import "MenuViewController.h"
-#import "LostPetTransition.h"
 #import "TableLoadPreviousPage.h"
 #import "TableLoadNextPage.h"
 #import "GoTopButton.h"
+#import "MenuTransition.h"
+#import "LostPetScrollViewController.h"
 
 #define kReloadDistance 100
 #define kSpringTreshold 130
@@ -27,7 +28,6 @@
 @interface LostPetViewController () <LostPetRequestDelegate, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSArray *lostPets;
-@property (strong, nonatomic) LostPetTransition *transitionManager;
 @property (strong, nonatomic) NSMutableArray *requests;
 @property (strong, nonatomic) TableLoadPreviousPage *loadPreviousPageView;
 @property (strong, nonatomic) TableLoadNextPage *loadNextPageView;
@@ -45,8 +45,10 @@
 @property CGPoint currentLocation;
 
 - (IBAction)panInView:(UIPanGestureRecognizer *)recognizer;
+@property (strong, nonatomic) MenuTransition *menuTransition;
 
-
+@property (weak, nonatomic) IBOutlet UITabBar *tabBar;
+@property (nonatomic) BOOL isBeenInit;
 @end
 
 @implementation LostPetViewController
@@ -67,13 +69,17 @@
     
     [self initLoadingPageView];
     
-    self.transitionManager = [[LostPetTransition alloc] init];
+    self.menuTransition = [[MenuTransition alloc] init];
+    if (!self.transitioningDelegate) {
+        self.transitioningDelegate = self.menuTransition;
+    }
     
+    self.isBeenInit = NO;
 //    [self initDynamicAnimation];
 }
 
 - (void)initNavigationBar {
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"首頁" style:UIBarButtonItemStylePlain target:self action:@selector(goToMenu)];
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"首頁" style:UIBarButtonItemStylePlain target:self action:@selector(goToMenu:)];
     
     NSDictionary *attributeDic2 = [NSDictionary dictionaryWithObjectsAndKeys:
                                    [UIColor darkTextColor], NSForegroundColorAttributeName,
@@ -99,11 +105,18 @@
     [self.tableView sendSubviewToBack:self.loadNextPageView];
 }
 
-- (void)goToMenu {
+- (void)goToMenu:(UIBarButtonItem *)sender {
+    if (sender) {
+        self.menuTransition.isInteraction = NO;
+    } else {
+        self.menuTransition.isInteraction = YES;
+    }
+    self.transitioningDelegate = self.menuTransition;
+    
     UIStoryboard *firstStoryboard = [UIStoryboard storyboardWithName:kFirstStoryboard bundle:nil];
     MenuViewController *controller = (MenuViewController *)[firstStoryboard instantiateViewControllerWithIdentifier:kMenuStoryboardID];
-    controller.transitioningDelegate = self.transitionManager;
-    [self presentViewController:controller animated:NO completion:nil];
+    controller.transitioningDelegate = self.menuTransition;
+    [self presentViewController:controller animated:YES completion:nil];
 }
 
 - (void)initDynamicAnimation {
@@ -157,7 +170,7 @@
         [self.animator removeBehavior:self.collisionBehavior];
     }
     
-    self.collisionBehavior = [[UICollisionBehavior alloc] initWithItems:@[self.circleView]];
+    self.collisionBehavior = [[UICollisionBehavior alloc] initWithItems:@[self.circleView, self.tabBar]];
     self.collisionBehavior.translatesReferenceBoundsIntoBoundary = YES;
     
     [self.animator addBehavior:self.collisionBehavior];
@@ -211,19 +224,23 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    LostPetRequest *lostPetRequest = [[LostPetRequest alloc] init];
-    lostPetRequest.lostPetRequestDelegate = self;
-    LostPetFilters *lostPetFilters = [[LostPetFilters alloc] init];
-    lostPetFilters.variety = @"";
-    lostPetFilters.gender = @"";
-    [self.requests addObject:lostPetRequest];
-    [lostPetRequest sendRequestForLostPetWithLostPetFilters:lostPetFilters top:@"20" skip:@"0"];
+    if (!self.isBeenInit) {
+        LostPetRequest *lostPetRequest = [[LostPetRequest alloc] init];
+        lostPetRequest.lostPetRequestDelegate = self;
+        LostPetFilters *lostPetFilters = [[LostPetFilters alloc] init];
+        lostPetFilters.variety = @"";
+        lostPetFilters.gender = @"";
+        [self.requests addObject:lostPetRequest];
+        [lostPetRequest sendRequestForLostPetWithLostPetFilters:lostPetFilters top:@"20" skip:@"0"];
+        
+        self.lostPetStatus.loadingPageStatus = LoadingInitPage;
+        
+        [self startLoadingWithContent:@""];
+        
+        self.isBeenInit = YES;
+    }
     
-    self.lostPetStatus.loadingPageStatus = LoadingInitPage;
-    
-    [self startLoadingWithContent:@""];
-    
-    [self initDynamicAnimation];
+//    [self initDynamicAnimation];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -333,6 +350,15 @@
     lostPetListCell.hairStyle.text = lostPet.hairStyle;
     lostPetListCell.describe.text = lostPet.characterized;
     return lostPetListCell;
+}
+
+#pragma mark - UITableViewDelegate
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    LostPetScrollViewController *lostPetScrollViewController = [[LostPetScrollViewController alloc] init];
+    lostPetScrollViewController.lostPets = [NSArray arrayWithArray:self.lostPets];
+    lostPetScrollViewController.selectedIndexPath = indexPath;
+    
+    [self.navigationController pushViewController:lostPetScrollViewController animated:YES];
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -467,36 +493,66 @@
 }
 
 - (IBAction)panInView:(UIPanGestureRecognizer *)recognizer {
+    self.menuTransition.isInteraction = YES;
+    self.transitioningDelegate = self.menuTransition;
     
-    CGPoint point = [recognizer locationInView:self.view];
+    CGFloat percentageY = [recognizer translationInView:self.view.superview].y / self.view.superview.bounds.size.height;
+
     self.currentLocation = [recognizer translationInView:self.view];
 
     if (recognizer.state == UIGestureRecognizerStateBegan) {
+        if (percentageY < 0){
+            self.menuTransition.direction = DirectionUp;
+            [self goToMenu:nil];
+        }
         
-//        UIOffset offset = UIOffsetMake(0, 0);
-//        self.attachment = [[UIAttachmentBehavior alloc] initWithItem:self.circleView offsetFromCenter:offset attachedToAnchor:self.currentLocation];
-//        
-//        [self.animator addBehavior:self.attachmqent];
-        
-        [self.animator removeAllBehaviors];
+//        [self.animator removeAllBehaviors];
     }
-    if (CGRectContainsPoint(self.circleView.frame, point)) {
-        self.circleView.center = point;
-        NSLog(@"x:%.2f, y:%.2f",self.circleView.frame.origin.x, self.circleView.frame.origin.y);
-    } else {
-        NSLog(@"x:%.2f, y:%.2f",self.circleView.frame.origin.x, self.circleView.frame.origin.y);
-        NSLog(@"current x:%.2f, y:%.2f",point.x, point.y);
-    }
-//    self.attachment.anchorPoint = self.currentLocation;
     
+    if (self.menuTransition.direction == DirectionUp) {
+        CGFloat percentage = -percentageY;
+        [self.menuTransition updateInteractiveTransition:percentage];
+    }
+    
+//    CGPoint point = [recognizer locationInView:self.view];
+//    if (CGRectContainsPoint(self.circleView.frame, point)) {
+//        self.circleView.center = point;
+//        NSLog(@"x:%.2f, y:%.2f",self.circleView.frame.origin.x, self.circleView.frame.origin.y);
+//    }
+//    self.attachment.anchorPoint = self.currentLocation;
     
     if (recognizer.state == UIGestureRecognizerStateEnded ||
         recognizer.state == UIGestureRecognizerStateCancelled ||
         recognizer.state == UIGestureRecognizerStateFailed
         ) {
-        [self addGravityBehavior];
-        [self addCollisionBehavior];
-        [self addCircleViewBehavior];
+        
+        CGFloat velocityY = [recognizer velocityInView:recognizer.view.superview].y;
+        BOOL cancel = YES;
+        CGFloat points;
+        NSTimeInterval duration;
+        
+        if (self.menuTransition.direction == DirectionUp) {
+            cancel = (percentageY > -kThreshold);
+            points = cancel ? recognizer.view.frame.origin.y : self.view.superview.bounds.size.height - recognizer.view.frame.origin.y;
+            duration = points / velocityY;
+            
+        }
+        
+        if (duration < .2) {
+            duration = .2;
+        }else if(duration > .6){
+            duration = .6;
+        }
+        
+        if (recognizer.state == UIGestureRecognizerStateFailed) {
+            [self.menuTransition cancelInteractiveTransitionWithDuration:.35];
+        } else {
+            cancel?[self.menuTransition cancelInteractiveTransitionWithDuration:duration]:[self.menuTransition finishInteractiveTransitionWithDuration:duration];
+        }
+        
+//        [self addGravityBehavior];
+//        [self addCollisionBehavior];
+//        [self addCircleViewBehavior];
     }
 }
 @end

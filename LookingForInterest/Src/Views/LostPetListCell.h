@@ -16,5 +16,4 @@
 @property (weak, nonatomic) IBOutlet UILabel *hairColor;
 @property (weak, nonatomic) IBOutlet UILabel *hairStyle;
 @property (weak, nonatomic) IBOutlet UITextView *describe;
-
 @end

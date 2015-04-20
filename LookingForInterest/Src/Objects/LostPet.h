@@ -35,6 +35,8 @@
 @property (strong, nonatomic) NSString *phone;
 /*!EMail*/
 @property (strong, nonatomic) NSString *email;
+/*!走失地點*/
+@property (nonatomic) CLLocationCoordinate2D location;
 - (id)initWithDic:(NSMutableDictionary *)dic;
 
 + (NSString *)chipNumberKey;

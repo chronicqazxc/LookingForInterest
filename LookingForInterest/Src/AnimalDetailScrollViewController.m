@@ -38,6 +38,8 @@
     self.isInit = NO;
     self.adBannerView.delegate = self;
     self.tempPets = [NSMutableArray arrayWithArray:self.petResult.pets];
+    UINib *nib = [UINib nibWithNibName:@"AnimalDetailCollectionViewCell" bundle:nil];
+    [self.collectionView registerNib:nib forCellWithReuseIdentifier:@"AnimalDetailCell"];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -64,8 +66,6 @@
 
 - (void)viewDidLayoutSubviews {
     if (!self.isInit) {
-        ((AnimalDetailScrollLayout *)self.collectionView.collectionViewLayout).itemSize = CGSizeMake(CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame));
-        
         if (self.selectedIndexPath) {
             [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:self.selectedIndexPath.row inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
         }
@@ -94,8 +94,6 @@
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    UINib *nib = [UINib nibWithNibName:@"AnimalDetailCollectionViewCell" bundle:nil];
-    [collectionView registerNib:nib forCellWithReuseIdentifier:@"AnimalDetailCell"];
     self.animalDetailCollectionViewCell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AnimalDetailCell" forIndexPath:indexPath];
     if (!self.animalDetailCollectionViewCell) {
         self.animalDetailCollectionViewCell = (AnimalDetailCollectionViewCell *)[Utilities getNibWithName:@"AnimalDetailCollectionViewCell"];

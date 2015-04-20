@@ -29,5 +29,9 @@
 #define kDirectionsModeBicycling @"bicycling"
 #define kDirectionsModeWalking @"walking"
 
-#define kGoogleMapStaticMapURL(center,color,size) [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/staticmap?center=%@&zoom=14&size=%@x%@&markers=color:%@%7Clabel:!%7C%@",center,size,size,color,center]
+#define kGoogleGeocodeURL(address) [NSString stringWithFormat:@"http://maps.google.com/maps/api/geocode/json?sensor=false&address=%@",address]
+
+#define kGoogleMapStaticMapURL(center,color,width,heigh) [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/staticmap?center=%@&zoom=14&size=%@x%@&markers=color:%@%%7Clabel:!%%7C%@",center,width,height,color,center]
+
+#define kGoogleMapStaticMapURLByAddress(center) [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/staticmap?center=%@&zoom=14&size=400x400&markers=color:blue%%7Clabel:!%%7C%@",center,center]
 #endif

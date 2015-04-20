@@ -122,6 +122,11 @@
 		B0BF73301A8A4EE000213C00 /* menu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B0BF732D1A8A4EE000213C00 /* menu@2x.png */; };
 		B0BF73381A8A844000213C00 /* OpenMapCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B0BF73361A8A844000213C00 /* OpenMapCell.m */; };
 		B0BF73391A8A844000213C00 /* OpenMapCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0BF73371A8A844000213C00 /* OpenMapCell.xib */; };
+		B0C3633F1AE4A01700C828E2 /* LostPetScrollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0C3633D1AE4A01700C828E2 /* LostPetScrollViewController.m */; };
+		B0C363401AE4A01700C828E2 /* LostPetScrollViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0C3633E1AE4A01700C828E2 /* LostPetScrollViewController.xib */; };
+		B0C363431AE4A24800C828E2 /* LostPetCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = B0C363421AE4A24800C828E2 /* LostPetCollectionViewFlowLayout.m */; };
+		B0C363471AE4A2F600C828E2 /* LostPetCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B0C363451AE4A2F600C828E2 /* LostPetCollectionViewCell.m */; };
+		B0C363481AE4A2F600C828E2 /* LostPetCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0C363461AE4A2F600C828E2 /* LostPetCollectionViewCell.xib */; };
 		B0D4A4DC1ADD5EA1006289BE /* LostPetListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B0D4A4DA1ADD5EA1006289BE /* LostPetListCell.m */; };
 		B0D4A4DD1ADD5EA1006289BE /* LostPetListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0D4A4DB1ADD5EA1006289BE /* LostPetListCell.xib */; };
 		B0F06B361A89B80500FBC90C /* MapViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B0F06B341A89B80500FBC90C /* MapViewCell.m */; };
@@ -338,6 +343,14 @@
 		B0BF73351A8A844000213C00 /* OpenMapCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpenMapCell.h; path = Src/Views/OpenMapCell.h; sourceTree = "<group>"; };
 		B0BF73361A8A844000213C00 /* OpenMapCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OpenMapCell.m; path = Src/Views/OpenMapCell.m; sourceTree = "<group>"; };
 		B0BF73371A8A844000213C00 /* OpenMapCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = OpenMapCell.xib; path = Src/Views/OpenMapCell.xib; sourceTree = "<group>"; };
+		B0C3633C1AE4A01700C828E2 /* LostPetScrollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LostPetScrollViewController.h; path = Src/LostPetScrollViewController.h; sourceTree = "<group>"; };
+		B0C3633D1AE4A01700C828E2 /* LostPetScrollViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LostPetScrollViewController.m; path = Src/LostPetScrollViewController.m; sourceTree = "<group>"; };
+		B0C3633E1AE4A01700C828E2 /* LostPetScrollViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LostPetScrollViewController.xib; path = Src/LostPetScrollViewController.xib; sourceTree = "<group>"; };
+		B0C363411AE4A24800C828E2 /* LostPetCollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LostPetCollectionViewFlowLayout.h; path = Src/LostPetCollectionViewFlowLayout.h; sourceTree = "<group>"; };
+		B0C363421AE4A24800C828E2 /* LostPetCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LostPetCollectionViewFlowLayout.m; path = Src/LostPetCollectionViewFlowLayout.m; sourceTree = "<group>"; };
+		B0C363441AE4A2F600C828E2 /* LostPetCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LostPetCollectionViewCell.h; path = Src/Views/LostPetCollectionViewCell.h; sourceTree = "<group>"; };
+		B0C363451AE4A2F600C828E2 /* LostPetCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LostPetCollectionViewCell.m; path = Src/Views/LostPetCollectionViewCell.m; sourceTree = "<group>"; };
+		B0C363461AE4A2F600C828E2 /* LostPetCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LostPetCollectionViewCell.xib; path = Src/Views/LostPetCollectionViewCell.xib; sourceTree = "<group>"; };
 		B0D4A4D91ADD5EA1006289BE /* LostPetListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LostPetListCell.h; path = Src/Views/LostPetListCell.h; sourceTree = "<group>"; };
 		B0D4A4DA1ADD5EA1006289BE /* LostPetListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LostPetListCell.m; path = Src/Views/LostPetListCell.m; sourceTree = "<group>"; };
 		B0D4A4DB1ADD5EA1006289BE /* LostPetListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LostPetListCell.xib; path = Src/Views/LostPetListCell.xib; sourceTree = "<group>"; };
@@ -498,6 +511,14 @@
 			children = (
 				B044A8C31ADD2A9D008DAE2A /* LostPetViewController.h */,
 				B044A8C41ADD2A9D008DAE2A /* LostPetViewController.m */,
+				B0C3633C1AE4A01700C828E2 /* LostPetScrollViewController.h */,
+				B0C3633D1AE4A01700C828E2 /* LostPetScrollViewController.m */,
+				B0C3633E1AE4A01700C828E2 /* LostPetScrollViewController.xib */,
+				B0C363411AE4A24800C828E2 /* LostPetCollectionViewFlowLayout.h */,
+				B0C363421AE4A24800C828E2 /* LostPetCollectionViewFlowLayout.m */,
+				B0C363441AE4A2F600C828E2 /* LostPetCollectionViewCell.h */,
+				B0C363451AE4A2F600C828E2 /* LostPetCollectionViewCell.m */,
+				B0C363461AE4A2F600C828E2 /* LostPetCollectionViewCell.xib */,
 				B04DCD241ADF5958008D759A /* LostPetNavigationController.h */,
 				B04DCD251ADF5958008D759A /* LostPetNavigationController.m */,
 			);
@@ -866,6 +887,8 @@
 				B0BF73071A8916A400213C00 /* Icon-40@2x.png in Resources */,
 				B0BF73051A8916A400213C00 /* Contents.json in Resources */,
 				B0F06B711A8B51E500FBC90C /* StoreTableHeaderViewController.xib in Resources */,
+				B0C363401AE4A01700C828E2 /* LostPetScrollViewController.xib in Resources */,
+				B0C363481AE4A2F600C828E2 /* LostPetCollectionViewCell.xib in Resources */,
 				B0BF730E1A8916A400213C00 /* Icon-Small@2x.png in Resources */,
 				B0B048FE1AB2F1EF000154B2 /* magnifier_icon.png in Resources */,
 				B07804AC1AA9467900DE8AD0 /* PopUpPicker.xib in Resources */,
@@ -971,6 +994,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0C3633F1AE4A01700C828E2 /* LostPetScrollViewController.m in Sources */,
 				B04DCD2F1ADF8D29008D759A /* AnimalHospitalTransition.m in Sources */,
 				B002A2EF1A9CEFBA00808055 /* PageController.m in Sources */,
 				B07F3E471AD3CADB00FCF1E2 /* AnimalDetailTableViewCell.m in Sources */,
@@ -1026,10 +1050,12 @@
 				B0BF73171A8A3FF500213C00 /* LoadingView.m in Sources */,
 				B04DCD261ADF5958008D759A /* LostPetNavigationController.m in Sources */,
 				B0BF73291A8A414500213C00 /* StoreCell.m in Sources */,
+				B0C363471AE4A2F600C828E2 /* LostPetCollectionViewCell.m in Sources */,
 				B0ACC9191AA84B1B0068A7D5 /* AdoptAnimalViewController.m in Sources */,
 				B06449281ABD634500B6F7A5 /* ManulViewController.m in Sources */,
 				B08086C01AE243DD007F7F3F /* LostPetStatus.m in Sources */,
 				B0BF72EB1A8915DD00213C00 /* Store.m in Sources */,
+				B0C363431AE4A24800C828E2 /* LostPetCollectionViewFlowLayout.m in Sources */,
 				B0BF72E91A8915DD00213C00 /* Menu.m in Sources */,
 				B04DCD381ADF8E5B008D759A /* ManulTransition.m in Sources */,
 				B064492C1ABD66B600B6F7A5 /* ManulMenuViewController.m in Sources */,

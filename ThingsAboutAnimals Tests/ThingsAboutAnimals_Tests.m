@@ -13,6 +13,7 @@
 #import "LostPet.h"
 #import "LostPetFilters.h"
 #import "LostPetRequest.h"
+#import "GoogleMapNavigation.h"
 
 @interface ThingsAboutAnimals_Tests : XCTestCase <LostPetRequestDelegate>
 @property (nonatomic) BOOL callbackInvoked;
@@ -205,18 +206,51 @@
 }
 
 - (void)testLostPetRequest {
-    LostPetRequest *lostPetRequest = [[LostPetRequest alloc] init];
-    lostPetRequest.lostPetRequestDelegate = self;
-    LostPetFilters *lostPetFilters = [[LostPetFilters alloc] init];
-    lostPetFilters.variety = @"貓";
-    lostPetFilters.gender = @"母";
-    [lostPetRequest sendRequestForLostPetWithLostPetFilters:lostPetFilters];
-    XCTAssertTrue(self.callbackInvoked, @"Delegate should send -something:delegateInvoked:");
+//    LostPetRequest *lostPetRequest = [[LostPetRequest alloc] init];
+//    lostPetRequest.lostPetRequestDelegate = self;
+//    LostPetFilters *lostPetFilters = [[LostPetFilters alloc] init];
+//    lostPetFilters.variety = @"貓";
+//    lostPetFilters.gender = @"母";
+//    [lostPetRequest sendRequestForLostPetWithLostPetFilters:lostPetFilters];
+//    XCTAssertTrue(self.callbackInvoked, @"Delegate should send -something:delegateInvoked:");
 }
 
 - (void)lostPetResultBack:(NSArray *)lostPets {
     self.callbackInvoked = YES;
     NSLog(@"%@",lostPets);
+}
+
+- (void)testURL2 {
+    NSString *lostLocation = kGoogleGeocodeURL(@"台北車站");
+    lostLocation = [lostLocation stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    NSURL *url = [NSURL URLWithString:lostLocation];
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
+                                                           cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:20.0];
+    NSURLResponse *response = nil;
+    NSError *error = nil;
+    NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+    
+    if (error == nil) {
+        NSDictionary *dataDic = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+        NSString *status = [dataDic objectForKey:@"status"];
+        NSMutableDictionary *locationDic = [NSMutableDictionary dictionary];
+        if ([status isEqualToString:@"OK"]) {
+            NSArray *results = [dataDic objectForKey:@"results"];
+            NSDictionary *result = [results firstObject];
+            NSDictionary *geometry = [result objectForKey:@"geometry"];
+            NSDictionary *location = [geometry objectForKey:@"location"];
+            [locationDic setObject:[NSNumber numberWithDouble:[location objectForKey:@"lat"]] forKey:@"latitude"];
+            [locationDic setObject:[NSNumber numberWithDouble:[location objectForKey:@"lng"]] forKey:@"longitude"];
+        } else {
+            NSLog(@"faild");
+        }
+
+        
+    } else {
+        NSLog(@"faild");
+    }
 }
 
 @end

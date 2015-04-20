@@ -66,6 +66,23 @@
                                     <tabBarItem systemItem="more" id="j8e-jc-QP6"/>
                                 </items>
                             </tabBar>
+                            <adBannerView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="2sx-hy-lOz">
+                                <rect key="frame" x="0.0" y="-50" width="320" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="Z78-C4-QOv"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="Z78-C4-QOv"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="0.0" y="750" width="400" height="50"/>
+                                    <mask key="constraints">
+                                        <include reference="Z78-C4-QOv"/>
+                                    </mask>
+                                </variation>
+                            </adBannerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
@@ -74,22 +91,41 @@
                             <constraint firstAttribute="centerX" secondItem="poq-SB-QAW" secondAttribute="centerX" id="DGm-se-JUh"/>
                             <constraint firstItem="kpF-So-HJC" firstAttribute="top" secondItem="ZUG-rP-olP" secondAttribute="top" id="DpO-JX-N0e"/>
                             <constraint firstAttribute="trailing" secondItem="Mer-AC-jQ8" secondAttribute="trailing" id="LON-0Q-fie"/>
+                            <constraint firstItem="GuH-wc-fgu" firstAttribute="top" secondItem="2sx-hy-lOz" secondAttribute="bottom" constant="375" id="Mf5-vC-dgL">
+                                <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                            </constraint>
                             <constraint firstItem="poq-SB-QAW" firstAttribute="top" secondItem="6hW-xw-iaV" secondAttribute="bottom" id="RQE-Kp-11I"/>
+                            <constraint firstItem="2sx-hy-lOz" firstAttribute="leading" secondItem="ZUG-rP-olP" secondAttribute="leading" constant="-16" id="TBx-3e-XLm">
+                                <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                            </constraint>
                             <constraint firstItem="kpF-So-HJC" firstAttribute="leading" secondItem="ZUG-rP-olP" secondAttribute="leading" id="Xqd-ke-uUj"/>
+                            <constraint firstAttribute="trailing" secondItem="2sx-hy-lOz" secondAttribute="trailing" constant="64" id="ZjW-M7-bid">
+                                <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                            </constraint>
                             <constraint firstAttribute="trailing" secondItem="kpF-So-HJC" secondAttribute="trailing" id="cVE-EX-VZF"/>
                             <constraint firstItem="GuH-wc-fgu" firstAttribute="top" secondItem="kpF-So-HJC" secondAttribute="bottom" id="eiv-PM-fzJ"/>
                             <constraint firstItem="Mer-AC-jQ8" firstAttribute="top" secondItem="kpF-So-HJC" secondAttribute="bottom" constant="51" id="jfn-lB-5by">
                                 <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                             </constraint>
-                            <constraint firstItem="GuH-wc-fgu" firstAttribute="top" secondItem="Mer-AC-jQ8" secondAttribute="bottom" id="mk4-2b-pNa"/>
+                            <constraint firstItem="GuH-wc-fgu" firstAttribute="top" secondItem="Mer-AC-jQ8" secondAttribute="bottom" id="mk4-2b-pNa">
+                                <variation key="heightClass=regular-widthClass=compact" constant="40"/>
+                            </constraint>
+                            <constraint firstItem="2sx-hy-lOz" firstAttribute="top" secondItem="Mer-AC-jQ8" secondAttribute="bottom" constant="-10" id="tfw-Lc-3YX">
+                                <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                            </constraint>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="kpF-So-HJC"/>
                                 <exclude reference="poq-SB-QAW"/>
                                 <exclude reference="Mer-AC-jQ8"/>
+                                <exclude reference="2sx-hy-lOz"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="TBx-3e-XLm"/>
+                                <exclude reference="ZjW-M7-bid"/>
+                                <exclude reference="tfw-Lc-3YX"/>
+                                <exclude reference="Mf5-vC-dgL"/>
                                 <exclude reference="eiv-PM-fzJ"/>
                                 <exclude reference="mk4-2b-pNa"/>
                                 <exclude reference="DGm-se-JUh"/>
@@ -107,10 +143,15 @@
                                 <include reference="kpF-So-HJC"/>
                                 <include reference="poq-SB-QAW"/>
                                 <include reference="Mer-AC-jQ8"/>
+                                <include reference="2sx-hy-lOz"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="TBx-3e-XLm"/>
+                                <include reference="ZjW-M7-bid"/>
+                                <include reference="tfw-Lc-3YX"/>
+                                <include reference="Mf5-vC-dgL"/>
                                 <exclude reference="eiv-PM-fzJ"/>
-                                <include reference="mk4-2b-pNa"/>
+                                <exclude reference="mk4-2b-pNa"/>
                                 <include reference="DGm-se-JUh"/>
                                 <include reference="RQE-Kp-11I"/>
                                 <include reference="6Vn-yT-wZG"/>
@@ -128,6 +169,7 @@
                     <navigationItem key="navigationItem" id="seb-EU-btL"/>
                     <connections>
                         <outlet property="pageIndicator" destination="poq-SB-QAW" id="1Mg-ok-Bok"/>
+                        <outlet property="tabBar" destination="Mer-AC-jQ8" id="kzy-TC-Xrd"/>
                         <outlet property="tableView" destination="kpF-So-HJC" id="3yE-HB-y8h"/>
                     </connections>
                 </viewController>

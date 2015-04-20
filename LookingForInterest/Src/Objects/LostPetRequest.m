@@ -8,11 +8,32 @@
 
 #import "LostPetRequest.h"
 #import "LostPet.h"
+#import "GoogleMapNavigation.h"
+
+@interface LostPetRequest()
+@property (strong, nonatomic) NSIndexPath *indexPath;
+@end
 
 @implementation LostPetRequest
 - (void)setLostPetRequestDelegate:(id<LostPetRequestDelegate>)lostPetRequestDelegate {
     _lostPetRequestDelegate = lostPetRequestDelegate;
     self.delegate = _lostPetRequestDelegate;
+}
+
+- (void)sendRequestForLostPetGeocoder:(LostPet *)lostPet indexPath:(NSIndexPath *)indexPath {
+    self.lostPetRequestType = LostPetGeocoder;
+    self.indexPath = indexPath;
+    NSString *lostLocation = kGoogleGeocodeURL(lostPet.lostPlace);
+    lostLocation = [lostLocation stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    NSURL *url = [NSURL URLWithString:lostLocation];
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
+                                                           cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:20.0];
+    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    [connection start];
+    
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
 }
 
 - (void)sendRequestForLostPetWithLostPetFilters:(LostPetFilters *)lostPetFilters top:(NSString *)top skip:(NSString *)skip{
@@ -44,13 +65,30 @@
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-    if (self.lostPetRequestDelegate) {
-        if ([self.lostPetRequestDelegate respondsToSelector:@selector(lostPetResultBack:)]) {
-            NSMutableArray *lostPets = [self parseLostPetResultData:[super appendDataFromDatas:self.receivedDatas]];
-            [self.lostPetRequestDelegate lostPetResultBack:lostPets];
-        }
-    } else {
-        [Utilities stopLoading];
+    switch (self.lostPetRequestType) {
+        case LostPetResult:
+            if (self.lostPetRequestDelegate) {
+                if ([self.lostPetRequestDelegate respondsToSelector:@selector(lostPetResultBack:)]) {
+                    NSMutableArray *lostPets = [self parseLostPetResultData:[super appendDataFromDatas:self.receivedDatas]];
+                    [self.lostPetRequestDelegate lostPetResultBack:lostPets];
+                }
+            } else {
+                [Utilities stopLoading];
+            }
+            break;
+        case LostPetGeocoder:
+            if (self.lostPetRequestDelegate) {
+                if ([self.lostPetRequestDelegate respondsToSelector:@selector(lostPetLocationBack:indexPath:)]) {
+                    NSMutableDictionary *locationDic = [self parseGeocoder:[super appendDataFromDatas:self.receivedDatas]];
+                    [self.lostPetRequestDelegate lostPetLocationBack:locationDic indexPath:self.indexPath];
+                } else {
+                    [Utilities stopLoading];
+                }
+            }
+            break;
+        default:
+            [Utilities stopLoading];
+            break;
     }
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
 }
@@ -64,5 +102,25 @@
         [arr addObject:lostPet];
     }
     return arr;
+}
+
+- (NSMutableDictionary *)parseGeocoder:(NSData *)data {
+    NSError *error = nil;
+    NSDictionary *dataDic = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+    NSString *status = [dataDic objectForKey:@"status"];
+    NSMutableDictionary *locationDic = [NSMutableDictionary dictionary];
+    if ([status isEqualToString:@"OK"]) {
+        NSArray *results = [dataDic objectForKey:@"results"];
+        NSDictionary *result = [results firstObject];
+        NSDictionary *geometry = [result objectForKey:@"geometry"];
+        NSDictionary *location = [geometry objectForKey:@"location"];
+        double lat = [[location objectForKey:@"lat"] doubleValue];
+        double lng = [[location objectForKey:@"lng"] doubleValue];
+        [locationDic setObject:[NSNumber numberWithDouble:lat] forKey:@"latitude"];
+        [locationDic setObject:[NSNumber numberWithDouble:lng] forKey:@"longitude"];
+    } else {
+        NSLog(@"faild");
+    }
+    return locationDic;
 }
 @end

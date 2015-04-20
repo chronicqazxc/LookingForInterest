@@ -1,0 +1,179 @@
+//
+//  LostPetScrollViewController.m
+//  ThingsAboutAnimals
+//
+//  Created by Wayne on 4/20/15.
+//  Copyright (c) 2015 Wayne. All rights reserved.
+//
+
+#import "LostPetScrollViewController.h"
+#import "LostPetCollectionViewCell.h"
+#import "LostPetCollectionViewFlowLayout.h"
+#import "GoTopButton.h"
+#import "LostPet.h"
+#import <iAd/iAd.h>
+#import <WebKit/WebKit.h>
+#import "GoogleMapNavigation.h"
+
+@interface LostPetScrollViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UIScrollViewDelegate, ADBannerViewDelegate>
+@property (weak, nonatomic) IBOutlet GoTopButton *pageIndicator;
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (nonatomic) BOOL isInit;
+@end
+
+@implementation LostPetScrollViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.edgesForExtendedLayout = UIRectEdgeNone;    
+    self.collectionView.dataSource = self;
+    self.collectionView.delegate = self;
+    [self.collectionView registerNib:[UINib nibWithNibName:kLostPetCollectionViewCellIdentifier bundle:nil] forCellWithReuseIdentifier:kLostPetCollectionViewCellIdentifier];
+    [self.collectionView reloadData];
+    self.isInit = NO;
+}
+
+- (void)viewDidLayoutSubviews {
+    if (!self.isInit) {
+        if (self.selectedIndexPath) {
+            [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:self.selectedIndexPath.row inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
+        }
+        self.isInit = YES;
+    }
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+- (NSString *)pageIndicatorTitleByIndexPath:(NSIndexPath *)indexPath {
+    NSString *title = [NSString stringWithFormat:@"%d/%d",(int)indexPath.row+1, (int)[self.lostPets count]];
+    return title;
+}
+
+#pragma mark - UICollectionViewDataSource
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    return [self.lostPets count];
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    [self.pageIndicator setTitle:[self pageIndicatorTitleByIndexPath:indexPath] forState:UIControlStateNormal];
+    LostPetCollectionViewCell *petCollectionViewCell = [collectionView dequeueReusableCellWithReuseIdentifier:kLostPetCollectionViewCellIdentifier forIndexPath:indexPath];
+    if (!petCollectionViewCell) {
+        petCollectionViewCell = (LostPetCollectionViewCell *)[Utilities getNibWithName:kLostPetCollectionViewCellIdentifier];
+    }
+    LostPet *lostPet = [self.lostPets objectAtIndex:indexPath.row];
+    
+//    petCollectionViewCell.webView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(petCollectionViewCell.webViewContainer.frame), CGRectGetHeight(petCollectionViewCell.webViewContainer.frame))];
+//    [petCollectionViewCell.webViewContainer addSubview:petCollectionViewCell.webView];
+    
+    [petCollectionViewCell.uiWebView loadHTMLString:@"Loading" baseURL:nil];
+    
+    [self wkWebView:petCollectionViewCell.uiWebView loadLocation:lostPet.lostPlace size:CGSizeMake(CGRectGetWidth(petCollectionViewCell.webViewContainer.frame), CGRectGetHeight(petCollectionViewCell.webViewContainer.frame))];
+    
+    return petCollectionViewCell;
+    
+}
+
+#pragma mark - UICollectionViewDelegateFlowLayout
+- (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
+    [self.pageIndicator setTitle:[self pageIndicatorTitleByIndexPath:indexPath] forState:UIControlStateNormal];
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didEndDisplayingCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
+    NSArray *cells = [collectionView visibleCells];
+    LostPetCollectionViewCell *visibleCell = (LostPetCollectionViewCell *)cells.firstObject;
+    if ([cells count]) {
+        
+    }
+    
+    NSIndexPath *visibaleIndexPath = [self.collectionView indexPathForCell:visibleCell];
+    [self.pageIndicator setTitle:[self pageIndicatorTitleByIndexPath:visibaleIndexPath] forState:UIControlStateNormal];
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    return CGSizeMake(CGRectGetWidth(collectionView.frame), CGRectGetHeight(collectionView.frame));
+}
+
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
+    return UIEdgeInsetsMake(0,0,0,0);
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
+    return 0.0;
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
+    return 0.0;
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
+    return CGSizeZero;
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
+    return CGSizeZero;
+}
+
+#pragma mark - UIScrollViewDelegate
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    [UIView animateWithDuration:1.0 animations:^{
+        self.pageIndicator.alpha = 1.0;
+    } completion:nil];
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    if (!decelerate) {
+        [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(hiddenPageIndicator:) userInfo:nil repeats:NO];
+    }
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(hiddenPageIndicator:) userInfo:nil repeats:NO];
+}
+
+- (void)hiddenPageIndicator:(NSTimer *)timer {
+    [UIView animateWithDuration:1.0 animations:^{
+        self.pageIndicator.alpha = 0.0;
+    } completion:nil];
+    [timer invalidate];
+}
+
+#pragma mark - LostPetRequestDelegate
+//- (void)lostPetLocationBack:(NSMutableDictionary *)lostLocation indexPath:(NSIndexPath *)indexPath{
+//    LostPet *lostPet = [self.lostPets objectAtIndex:indexPath.row];
+//    double latitude = [[lostLocation objectForKey:@"latitude"] doubleValue];
+//    double longitude = [[lostLocation objectForKey:@"longitude"] doubleValue];
+//    lostPet.location = CLLocationCoordinate2DMake(latitude, longitude);
+//    
+//    LostPetCollectionViewCell *lostPetCell = (LostPetCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
+//
+//}
+
+- (void)wkWebView:(UIWebView *)wkWebView loadLocation:(NSString *)location size:(CGSize)size{
+    
+    NSString *width = [NSString stringWithFormat:@"%.f",size.width];
+    NSString *height = [NSString stringWithFormat:@"%.f",size.height];
+    NSString *urlString = kGoogleMapStaticMapURL(location,@"blue",width,height);
+    
+    urlString = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSLog(@"%@",urlString);
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+    
+    [wkWebView loadRequest:request];
+    
+}
+@end

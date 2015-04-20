@@ -344,6 +344,7 @@
     animalDetailScrollViewController.selectedIndexPath = indexPath;
     animalDetailScrollViewController.petFilters = self.petFilters;
     [self.navigationController pushViewController:animalDetailScrollViewController animated:YES];
+
 }
 
 - (void)rotateInfinitily:(UIView *)view {
