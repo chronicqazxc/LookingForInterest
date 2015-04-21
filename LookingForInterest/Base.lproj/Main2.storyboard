@@ -62,8 +62,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <items>
-                                    <tabBarItem systemItem="favorites" id="6m2-rp-aX3"/>
-                                    <tabBarItem systemItem="more" id="j8e-jc-QP6"/>
+                                    <tabBarItem title="" systemItem="search" id="j8e-jc-QP6"/>
                                 </items>
                             </tabBar>
                             <adBannerView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="2sx-hy-lOz">
@@ -169,6 +168,7 @@
                     <navigationItem key="navigationItem" id="seb-EU-btL"/>
                     <connections>
                         <outlet property="pageIndicator" destination="poq-SB-QAW" id="1Mg-ok-Bok"/>
+                        <outlet property="searchBarItem" destination="j8e-jc-QP6" id="DoO-aw-Kt2"/>
                         <outlet property="tabBar" destination="Mer-AC-jQ8" id="kzy-TC-Xrd"/>
                         <outlet property="tableView" destination="kpF-So-HJC" id="3yE-HB-y8h"/>
                     </connections>

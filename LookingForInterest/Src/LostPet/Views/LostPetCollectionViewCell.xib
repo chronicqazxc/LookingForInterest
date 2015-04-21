@@ -10,97 +10,56 @@
             <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="316" height="349"/>
+                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fou-c3-jKM">
+                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="917" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="h95-Xr-WYH">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jnl-rT-Cgw">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="200" id="qpb-dx-KGw"/>
-                                </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="qpb-dx-KGw"/>
-                                    </mask>
-                                </variation>
-                                <variation key="heightClass=regular-widthClass=compact">
-                                    <mask key="constraints">
-                                        <include reference="qpb-dx-KGw"/>
-                                    </mask>
-                                </variation>
-                            </view>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="Jnl-rT-Cgw" firstAttribute="top" secondItem="fou-c3-jKM" secondAttribute="top" constant="10" id="EJG-7y-GCD"/>
-                            <constraint firstAttribute="trailing" secondItem="Jnl-rT-Cgw" secondAttribute="trailing" constant="50" id="RQu-J8-Wf6">
-                                <variation key="heightClass=regular-widthClass=compact" constant="10"/>
-                            </constraint>
-                            <constraint firstItem="Jnl-rT-Cgw" firstAttribute="leading" secondItem="fou-c3-jKM" secondAttribute="leading" constant="10" id="erG-iC-h7G"/>
-                        </constraints>
-                        <variation key="default">
-                            <mask key="subviews">
-                                <exclude reference="Jnl-rT-Cgw"/>
-                            </mask>
-                            <mask key="constraints">
-                                <exclude reference="EJG-7y-GCD"/>
-                                <exclude reference="RQu-J8-Wf6"/>
-                                <exclude reference="erG-iC-h7G"/>
-                            </mask>
-                        </variation>
-                        <variation key="heightClass=regular-widthClass=compact">
-                            <mask key="subviews">
-                                <include reference="Jnl-rT-Cgw"/>
-                            </mask>
-                            <mask key="constraints">
-                                <include reference="EJG-7y-GCD"/>
-                                <include reference="RQu-J8-Wf6"/>
-                                <include reference="erG-iC-h7G"/>
-                            </mask>
-                        </variation>
-                    </view>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tableView>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <gestureRecognizers/>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="fou-c3-jKM" secondAttribute="trailing" id="AiR-2u-ofr"/>
-                <constraint firstAttribute="bottom" secondItem="fou-c3-jKM" secondAttribute="bottom" id="Kip-tg-i5v"/>
-                <constraint firstItem="fou-c3-jKM" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="LD4-fL-0A4"/>
-                <constraint firstItem="fou-c3-jKM" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="enB-lz-uC1"/>
+                <constraint firstAttribute="trailing" secondItem="h95-Xr-WYH" secondAttribute="trailing" id="XEK-jh-W4S"/>
+                <constraint firstItem="h95-Xr-WYH" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="h1q-wl-1YO"/>
+                <constraint firstItem="h95-Xr-WYH" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="t40-A3-wZn"/>
+                <constraint firstAttribute="bottom" secondItem="h95-Xr-WYH" secondAttribute="bottom" id="x1K-cd-KLm"/>
             </constraints>
-            <size key="customSize" width="572" height="649"/>
+            <size key="customSize" width="497" height="745"/>
             <variation key="default">
                 <mask key="subviews">
-                    <exclude reference="fou-c3-jKM"/>
+                    <exclude reference="h95-Xr-WYH"/>
                 </mask>
                 <mask key="constraints">
-                    <exclude reference="AiR-2u-ofr"/>
-                    <exclude reference="Kip-tg-i5v"/>
-                    <exclude reference="LD4-fL-0A4"/>
-                    <exclude reference="enB-lz-uC1"/>
+                    <exclude reference="XEK-jh-W4S"/>
+                    <exclude reference="h1q-wl-1YO"/>
+                    <exclude reference="t40-A3-wZn"/>
+                    <exclude reference="x1K-cd-KLm"/>
                 </mask>
             </variation>
             <variation key="heightClass=regular-widthClass=compact">
                 <mask key="subviews">
-                    <include reference="fou-c3-jKM"/>
+                    <include reference="h95-Xr-WYH"/>
                 </mask>
                 <mask key="constraints">
-                    <include reference="AiR-2u-ofr"/>
-                    <include reference="Kip-tg-i5v"/>
-                    <include reference="LD4-fL-0A4"/>
-                    <include reference="enB-lz-uC1"/>
+                    <include reference="XEK-jh-W4S"/>
+                    <include reference="h1q-wl-1YO"/>
+                    <include reference="t40-A3-wZn"/>
+                    <include reference="x1K-cd-KLm"/>
                 </mask>
             </variation>
             <connections>
-                <outlet property="webContainerLeadingSpaceConstraint" destination="erG-iC-h7G" id="S6i-4B-Lgt"/>
-                <outlet property="webContainerTrailingSpaceConstraint" destination="RQu-J8-Wf6" id="8eO-8D-o8N"/>
-                <outlet property="webViewContainer" destination="Jnl-rT-Cgw" id="tJh-oo-5dU"/>
-                <outlet property="webViewContainerHeightConstraint" destination="qpb-dx-KGw" id="3B3-Qd-Xkk"/>
+                <outlet property="tableView" destination="h95-Xr-WYH" id="vbx-Tc-3jP"/>
+                <outletCollection property="gestureRecognizers" destination="5tg-yi-1lI" appends="YES" id="zgv-31-CI6"/>
             </connections>
-            <point key="canvasLocation" x="517" y="292.5"/>
+            <point key="canvasLocation" x="-180.5" y="424.5"/>
         </collectionViewCell>
+        <panGestureRecognizer minimumNumberOfTouches="1" id="5tg-yi-1lI">
+            <connections>
+                <action selector="panInView:" destination="gTV-IL-0wX" id="iXv-DX-5bW"/>
+            </connections>
+        </panGestureRecognizer>
     </objects>
 </document>

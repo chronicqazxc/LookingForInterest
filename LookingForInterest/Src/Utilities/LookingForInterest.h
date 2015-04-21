@@ -68,6 +68,7 @@
 #define kLostPetTopKey @"$top"
 #define kLostPetSkipKey @"$skip"
 #define kLostPetFiltersKey @"$filter"
+#define kLostPetImageURL(chipId) [NSString stringWithFormat:@"http://www.pet.gov.tw/ImageDBshow.ashx?ID=%@&fn=photo&tn=PET",chipId]
 
 #pragma mark - Messages
 #define kNoPhoneNumberAlertTitle @"Opps!"

@@ -159,7 +159,6 @@
     float y = offset.y + bounds.size.height - inset.bottom;
     float h = size.height;
     
-//    NSLog(@"offset.y:%.2f, y:%.2f, h:%.2f",offset.y,y,h);
     if (offset.y <= 0) {
         [self scaleItem:self.imageView];
         if (offset.y <= -50) {

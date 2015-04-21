@@ -25,7 +25,7 @@
 #define kLostPetListCell @"LostPetListCell"
 #define kToMenuSegueIdentifier @"ToMenuSegueIdentifier"
 
-@interface LostPetViewController () <LostPetRequestDelegate, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate>
+@interface LostPetViewController () <LostPetRequestDelegate, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, UITabBarDelegate, UIPopoverControllerDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSArray *lostPets;
 @property (strong, nonatomic) NSMutableArray *requests;
@@ -48,6 +48,7 @@
 @property (strong, nonatomic) MenuTransition *menuTransition;
 
 @property (weak, nonatomic) IBOutlet UITabBar *tabBar;
+@property (weak, nonatomic) IBOutlet UITabBarItem *searchBarItem;
 @property (nonatomic) BOOL isBeenInit;
 @end
 
@@ -75,6 +76,8 @@
     }
     
     self.isBeenInit = NO;
+    
+    self.tabBar.delegate = self;
 //    [self initDynamicAnimation];
 }
 
@@ -554,5 +557,14 @@
 //        [self addCollisionBehavior];
 //        [self addCircleViewBehavior];
     }
+}
+
+#pragma mark - UITabBarDelegate
+- (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item {
+    [self showSearchView];
+}
+
+#pragma maek - 
+- (void)showSearchView {
 }
 @end

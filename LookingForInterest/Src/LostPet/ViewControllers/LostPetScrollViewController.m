@@ -12,8 +12,6 @@
 #import "GoTopButton.h"
 #import "LostPet.h"
 #import <iAd/iAd.h>
-#import <WebKit/WebKit.h>
-#import "GoogleMapNavigation.h"
 
 @interface LostPetScrollViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UIScrollViewDelegate, ADBannerViewDelegate>
 @property (weak, nonatomic) IBOutlet GoTopButton *pageIndicator;
@@ -70,27 +68,8 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     [self.pageIndicator setTitle:[self pageIndicatorTitleByIndexPath:indexPath] forState:UIControlStateNormal];
     LostPetCollectionViewCell *petCollectionViewCell = [collectionView dequeueReusableCellWithReuseIdentifier:kLostPetCollectionViewCellIdentifier forIndexPath:indexPath];
-    CGFloat leadingSpace = petCollectionViewCell.webContainerLeadingSpaceConstraint.constant;
-    CGFloat trailingSpace = petCollectionViewCell.webContainerTrailingSpaceConstraint.constant;
-    CGFloat height = petCollectionViewCell.webViewContainerHeightConstraint.constant;
-    CGSize size = CGSizeMake([Utilities getScreenSize].width-leadingSpace-trailingSpace, height);
-    size = CGSizeMake([Utilities getScreenSize].width-20, 200);
-    
-    if (!petCollectionViewCell) {
-        petCollectionViewCell = (LostPetCollectionViewCell *)[Utilities getNibWithName:kLostPetCollectionViewCellIdentifier];
-    }
-    LostPet *lostPet = [self.lostPets objectAtIndex:indexPath.row];
-    
-    [petCollectionViewCell.webView loadHTMLString:@"Loading" baseURL:nil];
-    
-    if ([lostPet.lostPlace isEqualToString:@""]) {
-        [petCollectionViewCell.webView loadHTMLString:@"無提供地址" baseURL:nil];
-    } else {
-        [self wkWebView:petCollectionViewCell.webView
-           loadLocation:lostPet.lostPlace
-                   size:size];
-    }
-    
+    petCollectionViewCell.lostPet = [self.lostPets objectAtIndex:indexPath.row];
+    [petCollectionViewCell awakeFromNib];
     return petCollectionViewCell;
     
 }
@@ -161,18 +140,5 @@
     [timer invalidate];
 }
 
-- (void)wkWebView:(WKWebView *)wkWebView loadLocation:(NSString *)location size:(CGSize)size{
-    
-    NSString *width = [NSString stringWithFormat:@"%.f",size.width];
-    NSString *height = [NSString stringWithFormat:@"%.f",size.height];
-    NSLog(@"width:%.2f, height:%.2f",size.width, size.height);
-    
-    location = [location stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSString *urlString = kGoogleMapStaticMapURL(location,@"blue",width,height);
-    
-    NSLog(@"%@",urlString);
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-    
-    [wkWebView loadRequest:request];
-}
+
 @end
