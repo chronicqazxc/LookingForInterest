@@ -26,7 +26,7 @@
     self.edgesForExtendedLayout = UIRectEdgeNone;    
     self.collectionView.dataSource = self;
     self.collectionView.delegate = self;
-    [self.collectionView registerNib:[UINib nibWithNibName:kLostPetCollectionViewCellIdentifier bundle:nil] forCellWithReuseIdentifier:kLostPetCollectionViewCellIdentifier];
+    [self.collectionView registerNib:[UINib nibWithNibName:@"LostPetCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:kLostPetCollectionViewCellIdentifier];
     [self.collectionView reloadData];
     self.isInit = NO;
 }

@@ -21,7 +21,8 @@
 @property (strong, nonatomic) WKWebView *wkWebView;
 @property (strong, nonatomic) UIImageView *lostPetImageView;
 @property (strong, nonatomic) UIImage *image;
-- (IBAction)panInView:(UIPanGestureRecognizer *)recognizer;
+@property (strong, nonatomic) UIPanGestureRecognizer *panGesture;
+- (void)panInView:(UIPanGestureRecognizer *)recognizer;
 
 @end
 
@@ -59,6 +60,11 @@
     [self.tableView scrollRectToVisible:CGRectMake(0, 0, 10, 10) animated:NO];
     
     [self.tableView reloadData];
+    
+    if (!self.panGesture) {
+        self.panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panInView:)];
+        [self addGestureRecognizer:self.panGesture];
+    }
 }
 
 - (void)loadImage {
@@ -141,7 +147,7 @@
 -(CGFloat)shiftInPercents{
     return (-self.tableView.contentOffset.y/80)+1;
 }
-- (IBAction)panInView:(UIPanGestureRecognizer *)recognizer {
+- (void)panInView:(UIPanGestureRecognizer *)recognizer {
     CGPoint touchPoint = [recognizer locationInView:self];
     if (CGRectContainsPoint(self.upperViewContainer.frame, touchPoint)) {
         NSLog(@"ok");

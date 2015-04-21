@@ -52,14 +52,8 @@
             </variation>
             <connections>
                 <outlet property="tableView" destination="h95-Xr-WYH" id="vbx-Tc-3jP"/>
-                <outletCollection property="gestureRecognizers" destination="5tg-yi-1lI" appends="YES" id="zgv-31-CI6"/>
             </connections>
             <point key="canvasLocation" x="-180.5" y="424.5"/>
         </collectionViewCell>
-        <panGestureRecognizer minimumNumberOfTouches="1" id="5tg-yi-1lI">
-            <connections>
-                <action selector="panInView:" destination="gTV-IL-0wX" id="iXv-DX-5bW"/>
-            </connections>
-        </panGestureRecognizer>
     </objects>
 </document>
