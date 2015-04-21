@@ -37,6 +37,14 @@
     return screenSize;
 }
 
++ (CGSize)getScreenSize {
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    CGFloat screenWidth = screenRect.size.width;
+    CGFloat screenHeight = screenRect.size.height;
+    CGSize screenSize = CGSizeMake(screenWidth, screenHeight);
+    return screenSize;
+}
+
 + (UIView *)getNibWithName:(NSString *)name {
     NSArray *nibViews = [[NSBundle mainBundle] loadNibNamed:name owner:self options:nil];
     return [nibViews lastObject];

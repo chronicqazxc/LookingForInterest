@@ -70,22 +70,26 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     [self.pageIndicator setTitle:[self pageIndicatorTitleByIndexPath:indexPath] forState:UIControlStateNormal];
     LostPetCollectionViewCell *petCollectionViewCell = [collectionView dequeueReusableCellWithReuseIdentifier:kLostPetCollectionViewCellIdentifier forIndexPath:indexPath];
+    CGFloat leadingSpace = petCollectionViewCell.webContainerLeadingSpaceConstraint.constant;
+    CGFloat trailingSpace = petCollectionViewCell.webContainerTrailingSpaceConstraint.constant;
+    CGFloat height = petCollectionViewCell.webViewContainerHeightConstraint.constant;
+    CGSize size = CGSizeMake([Utilities getScreenSize].width-leadingSpace-trailingSpace, height);
+    size = CGSizeMake([Utilities getScreenSize].width-20, 200);
+    
     if (!petCollectionViewCell) {
         petCollectionViewCell = (LostPetCollectionViewCell *)[Utilities getNibWithName:kLostPetCollectionViewCellIdentifier];
     }
     LostPet *lostPet = [self.lostPets objectAtIndex:indexPath.row];
     
-//    petCollectionViewCell.webView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(petCollectionViewCell.webViewContainer.frame), CGRectGetHeight(petCollectionViewCell.webViewContainer.frame))];
-//    [petCollectionViewCell.webViewContainer addSubview:petCollectionViewCell.webView];
-    
-    [petCollectionViewCell.uiWebView loadHTMLString:@"Loading" baseURL:nil];
+    [petCollectionViewCell.webView loadHTMLString:@"Loading" baseURL:nil];
     
     if ([lostPet.lostPlace isEqualToString:@""]) {
-        [petCollectionViewCell.uiWebView loadHTMLString:@"無提供地址" baseURL:nil];
+        [petCollectionViewCell.webView loadHTMLString:@"無提供地址" baseURL:nil];
     } else {
-        [self wkWebView:petCollectionViewCell.uiWebView loadLocation:lostPet.lostPlace size:CGSizeMake(CGRectGetWidth(petCollectionViewCell.webViewContainer.frame), CGRectGetHeight(petCollectionViewCell.webViewContainer.frame))];
+        [self wkWebView:petCollectionViewCell.webView
+           loadLocation:lostPet.lostPlace
+                   size:size];
     }
-    
     
     return petCollectionViewCell;
     
@@ -157,21 +161,12 @@
     [timer invalidate];
 }
 
-#pragma mark - LostPetRequestDelegate
-//- (void)lostPetLocationBack:(NSMutableDictionary *)lostLocation indexPath:(NSIndexPath *)indexPath{
-//    LostPet *lostPet = [self.lostPets objectAtIndex:indexPath.row];
-//    double latitude = [[lostLocation objectForKey:@"latitude"] doubleValue];
-//    double longitude = [[lostLocation objectForKey:@"longitude"] doubleValue];
-//    lostPet.location = CLLocationCoordinate2DMake(latitude, longitude);
-//    
-//    LostPetCollectionViewCell *lostPetCell = (LostPetCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
-//
-//}
-
-- (void)wkWebView:(UIWebView *)wkWebView loadLocation:(NSString *)location size:(CGSize)size{
+- (void)wkWebView:(WKWebView *)wkWebView loadLocation:(NSString *)location size:(CGSize)size{
     
     NSString *width = [NSString stringWithFormat:@"%.f",size.width];
     NSString *height = [NSString stringWithFormat:@"%.f",size.height];
+    NSLog(@"width:%.2f, height:%.2f",size.width, size.height);
+    
     location = [location stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSString *urlString = kGoogleMapStaticMapURL(location,@"blue",width,height);
     

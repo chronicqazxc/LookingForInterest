@@ -14,5 +14,7 @@
 @interface LostPetCollectionViewCell : UICollectionViewCell
 @property (weak, nonatomic) IBOutlet UIView *webViewContainer;
 @property (strong, nonatomic) WKWebView *webView;
-@property (weak, nonatomic) IBOutlet UIWebView *uiWebView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *webViewContainerHeightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *webContainerTrailingSpaceConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *webContainerLeadingSpaceConstraint;
 @end

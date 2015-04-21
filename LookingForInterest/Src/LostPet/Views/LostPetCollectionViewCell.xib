@@ -10,49 +10,25 @@
             <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="400" height="800"/>
+                <rect key="frame" x="0.0" y="0.0" width="316" height="349"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fou-c3-jKM">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jnl-rT-Cgw">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <subviews>
-                                    <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5w2-f3-UHK">
-                                        <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    </webView>
-                                </subviews>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="5w2-f3-UHK" secondAttribute="trailing" constant="8" id="HnO-CM-XBh"/>
-                                    <constraint firstItem="5w2-f3-UHK" firstAttribute="leading" secondItem="Jnl-rT-Cgw" secondAttribute="leading" constant="-8" id="Lvd-Gl-Qex"/>
-                                    <constraint firstItem="5w2-f3-UHK" firstAttribute="top" secondItem="Jnl-rT-Cgw" secondAttribute="top" id="XRA-58-Hi4"/>
                                     <constraint firstAttribute="height" constant="200" id="qpb-dx-KGw"/>
-                                    <constraint firstAttribute="bottom" secondItem="5w2-f3-UHK" secondAttribute="bottom" id="xQp-wH-92V"/>
                                 </constraints>
                                 <variation key="default">
-                                    <mask key="subviews">
-                                        <exclude reference="5w2-f3-UHK"/>
-                                    </mask>
                                     <mask key="constraints">
                                         <exclude reference="qpb-dx-KGw"/>
-                                        <exclude reference="HnO-CM-XBh"/>
-                                        <exclude reference="Lvd-Gl-Qex"/>
-                                        <exclude reference="XRA-58-Hi4"/>
-                                        <exclude reference="xQp-wH-92V"/>
                                     </mask>
                                 </variation>
                                 <variation key="heightClass=regular-widthClass=compact">
-                                    <mask key="subviews">
-                                        <include reference="5w2-f3-UHK"/>
-                                    </mask>
                                     <mask key="constraints">
                                         <include reference="qpb-dx-KGw"/>
-                                        <include reference="HnO-CM-XBh"/>
-                                        <include reference="Lvd-Gl-Qex"/>
-                                        <include reference="XRA-58-Hi4"/>
-                                        <include reference="xQp-wH-92V"/>
                                     </mask>
                                 </variation>
                             </view>
@@ -95,6 +71,7 @@
                 <constraint firstItem="fou-c3-jKM" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="LD4-fL-0A4"/>
                 <constraint firstItem="fou-c3-jKM" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="enB-lz-uC1"/>
             </constraints>
+            <size key="customSize" width="572" height="649"/>
             <variation key="default">
                 <mask key="subviews">
                     <exclude reference="fou-c3-jKM"/>
@@ -118,10 +95,12 @@
                 </mask>
             </variation>
             <connections>
-                <outlet property="uiWebView" destination="5w2-f3-UHK" id="Mib-gt-caM"/>
+                <outlet property="webContainerLeadingSpaceConstraint" destination="erG-iC-h7G" id="S6i-4B-Lgt"/>
+                <outlet property="webContainerTrailingSpaceConstraint" destination="RQu-J8-Wf6" id="8eO-8D-o8N"/>
                 <outlet property="webViewContainer" destination="Jnl-rT-Cgw" id="tJh-oo-5dU"/>
+                <outlet property="webViewContainerHeightConstraint" destination="qpb-dx-KGw" id="3B3-Qd-Xkk"/>
             </connections>
-            <point key="canvasLocation" x="256" y="-7"/>
+            <point key="canvasLocation" x="517" y="292.5"/>
         </collectionViewCell>
     </objects>
 </document>

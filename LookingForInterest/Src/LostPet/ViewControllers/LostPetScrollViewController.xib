@@ -81,16 +81,16 @@
                     <exclude reference="Qp1-LP-69i"/>
                 </mask>
                 <mask key="constraints">
-                    <exclude reference="1Lt-Bx-aAE"/>
-                    <exclude reference="9tV-yS-Qv1"/>
-                    <exclude reference="Peu-wY-LJZ"/>
-                    <exclude reference="oJJ-sY-y24"/>
-                    <exclude reference="EwV-kC-ZHn"/>
-                    <exclude reference="qkn-Ly-crm"/>
                     <exclude reference="8OB-xU-kD7"/>
                     <exclude reference="JEe-aV-cYa"/>
                     <exclude reference="Nqz-qZ-Jzo"/>
                     <exclude reference="r1S-NL-kMi"/>
+                    <exclude reference="EwV-kC-ZHn"/>
+                    <exclude reference="qkn-Ly-crm"/>
+                    <exclude reference="1Lt-Bx-aAE"/>
+                    <exclude reference="9tV-yS-Qv1"/>
+                    <exclude reference="Peu-wY-LJZ"/>
+                    <exclude reference="oJJ-sY-y24"/>
                 </mask>
             </variation>
             <variation key="heightClass=regular-widthClass=compact">
@@ -100,16 +100,16 @@
                     <include reference="Qp1-LP-69i"/>
                 </mask>
                 <mask key="constraints">
-                    <include reference="1Lt-Bx-aAE"/>
-                    <include reference="9tV-yS-Qv1"/>
-                    <include reference="Peu-wY-LJZ"/>
-                    <include reference="oJJ-sY-y24"/>
-                    <exclude reference="EwV-kC-ZHn"/>
-                    <include reference="qkn-Ly-crm"/>
                     <include reference="8OB-xU-kD7"/>
                     <include reference="JEe-aV-cYa"/>
                     <include reference="Nqz-qZ-Jzo"/>
                     <include reference="r1S-NL-kMi"/>
+                    <exclude reference="EwV-kC-ZHn"/>
+                    <include reference="qkn-Ly-crm"/>
+                    <include reference="1Lt-Bx-aAE"/>
+                    <include reference="9tV-yS-Qv1"/>
+                    <include reference="Peu-wY-LJZ"/>
+                    <include reference="oJJ-sY-y24"/>
                 </mask>
             </variation>
             <point key="canvasLocation" x="67" y="-82"/>
