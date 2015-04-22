@@ -122,6 +122,8 @@
 		B0B049011AB3002A000154B2 /* FB-f-Logo__white_29.png in Resources */ = {isa = PBXBuildFile; fileRef = B0B049001AB3002A000154B2 /* FB-f-Logo__white_29.png */; };
 		B0B049031AB3035E000154B2 /* call.png in Resources */ = {isa = PBXBuildFile; fileRef = B0B049021AB3035E000154B2 /* call.png */; };
 		B0B049051AB304F0000154B2 /* mail.png in Resources */ = {isa = PBXBuildFile; fileRef = B0B049041AB304F0000154B2 /* mail.png */; };
+		B0B0D9261AE8035800BD846F /* LostPetSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0B0D9241AE8035800BD846F /* LostPetSearchViewController.m */; };
+		B0B0D9271AE8035800BD846F /* LostPetSearchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B0B0D9251AE8035800BD846F /* LostPetSearchViewController.xib */; };
 		B0B8660D1AB368FE0039BFB5 /* add_fav.png in Resources */ = {isa = PBXBuildFile; fileRef = B0B8660B1AB368FE0039BFB5 /* add_fav.png */; };
 		B0B8660E1AB368FE0039BFB5 /* remove_fav.png in Resources */ = {isa = PBXBuildFile; fileRef = B0B8660C1AB368FE0039BFB5 /* remove_fav.png */; };
 		B0BF72DE1A8915C500213C00 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B0BF72DD1A8915C500213C00 /* main.m */; };
@@ -353,6 +355,9 @@
 		B0B049001AB3002A000154B2 /* FB-f-Logo__white_29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "FB-f-Logo__white_29.png"; path = "Img/FB-f-Logo__white_29.png"; sourceTree = "<group>"; };
 		B0B049021AB3035E000154B2 /* call.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = call.png; path = Img/call.png; sourceTree = "<group>"; };
 		B0B049041AB304F0000154B2 /* mail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mail.png; path = Img/mail.png; sourceTree = "<group>"; };
+		B0B0D9231AE8035800BD846F /* LostPetSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LostPetSearchViewController.h; sourceTree = "<group>"; };
+		B0B0D9241AE8035800BD846F /* LostPetSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LostPetSearchViewController.m; sourceTree = "<group>"; };
+		B0B0D9251AE8035800BD846F /* LostPetSearchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LostPetSearchViewController.xib; sourceTree = "<group>"; };
 		B0B8660B1AB368FE0039BFB5 /* add_fav.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = add_fav.png; path = Img/add_fav.png; sourceTree = "<group>"; };
 		B0B8660C1AB368FE0039BFB5 /* remove_fav.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = remove_fav.png; path = Img/remove_fav.png; sourceTree = "<group>"; };
 		B0BF72DD1A8915C500213C00 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Src/main.m; sourceTree = "<group>"; };
@@ -602,6 +607,9 @@
 				B02376F01AE5F9540002BAA0 /* LostPetScrollViewController.h */,
 				B02376F11AE5F9540002BAA0 /* LostPetScrollViewController.m */,
 				B02376F21AE5F9540002BAA0 /* LostPetScrollViewController.xib */,
+				B0B0D9231AE8035800BD846F /* LostPetSearchViewController.h */,
+				B0B0D9241AE8035800BD846F /* LostPetSearchViewController.m */,
+				B0B0D9251AE8035800BD846F /* LostPetSearchViewController.xib */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -991,6 +999,7 @@
 				B044A8C11ADD2A26008DAE2A /* Main2.storyboard in Resources */,
 				B02377641AE5F9640002BAA0 /* PopUpPicker.xib in Resources */,
 				B02376951AE5F91F0002BAA0 /* AnimalListTableViewCell.xib in Resources */,
+				B0B0D9271AE8035800BD846F /* LostPetSearchViewController.xib in Resources */,
 				B02376CE1AE5F9310002BAA0 /* AnimalHospitalViewController.xib in Resources */,
 				B0BF730C1A8916A400213C00 /* Icon-76@2x.png in Resources */,
 				B02376931AE5F91F0002BAA0 /* AnimalDetailTableViewCell.xib in Resources */,
@@ -1118,6 +1127,7 @@
 				B02376FD1AE5F9540002BAA0 /* LostPetFilters.m in Sources */,
 				B023775C1AE5F9640002BAA0 /* EndlessScrollGenerator.m in Sources */,
 				B023774D1AE5F9640002BAA0 /* ManulAdoptListViewController.m in Sources */,
+				B0B0D9261AE8035800BD846F /* LostPetSearchViewController.m in Sources */,
 				B02376C51AE5F9310002BAA0 /* AnimalHospitalRequest.m in Sources */,
 				B02376C91AE5F9310002BAA0 /* Menu.m in Sources */,
 				B02376701AE5F8EF0002BAA0 /* AdoptAnimalRequest.m in Sources */,

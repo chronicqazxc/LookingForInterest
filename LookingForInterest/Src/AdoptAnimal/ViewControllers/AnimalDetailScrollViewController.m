@@ -114,6 +114,8 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     self.currentIndexPath = indexPath;
     
+    [self settingPgaeIndicator];
+    
     self.animalDetailCollectionViewCell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AnimalDetailCell" forIndexPath:indexPath];
     if (!self.animalDetailCollectionViewCell) {
         self.animalDetailCollectionViewCell = (AnimalDetailCollectionViewCell *)[Utilities getNibWithName:@"AnimalDetailCollectionViewCell"];
@@ -141,7 +143,7 @@
     
     self.currentIndexPath = visibaleIndexPath;
     
-    [self settingPgaeIndicator];
+    [self setPageIndicatorTitleByResult:self.petResult];
 }
 
 - (void)generateRightBarButtonByIndexPath:(NSIndexPath *)indexPath {

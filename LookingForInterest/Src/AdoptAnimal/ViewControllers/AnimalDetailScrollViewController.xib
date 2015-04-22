@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7531" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AnimalDetailScrollViewController">
@@ -113,20 +113,20 @@
                     <exclude reference="Rxy-Fv-ljC"/>
                 </mask>
                 <mask key="constraints">
-                    <exclude reference="2kP-tl-s6O"/>
-                    <exclude reference="4Vp-Fi-spg"/>
-                    <exclude reference="DOI-Dh-lSn"/>
-                    <exclude reference="r1d-XZ-h58"/>
-                    <exclude reference="9Pv-ox-MtZ"/>
-                    <exclude reference="mjk-Pu-ZdD"/>
-                    <exclude reference="Ifc-sh-ZIB"/>
-                    <exclude reference="s6C-Jw-ah0"/>
-                    <exclude reference="wUd-Hh-7Dx"/>
                     <exclude reference="8Nr-Zp-fzw"/>
                     <exclude reference="gzU-fX-dEp"/>
                     <exclude reference="sTk-zA-Xpz"/>
                     <exclude reference="yFr-Zf-T6I"/>
                     <exclude reference="zy6-uD-k70"/>
+                    <exclude reference="9Pv-ox-MtZ"/>
+                    <exclude reference="mjk-Pu-ZdD"/>
+                    <exclude reference="Ifc-sh-ZIB"/>
+                    <exclude reference="s6C-Jw-ah0"/>
+                    <exclude reference="wUd-Hh-7Dx"/>
+                    <exclude reference="2kP-tl-s6O"/>
+                    <exclude reference="4Vp-Fi-spg"/>
+                    <exclude reference="DOI-Dh-lSn"/>
+                    <exclude reference="r1d-XZ-h58"/>
                 </mask>
             </variation>
             <variation key="heightClass=regular-widthClass=compact">
@@ -137,20 +137,20 @@
                     <include reference="Rxy-Fv-ljC"/>
                 </mask>
                 <mask key="constraints">
-                    <include reference="2kP-tl-s6O"/>
-                    <include reference="4Vp-Fi-spg"/>
-                    <exclude reference="DOI-Dh-lSn"/>
-                    <include reference="r1d-XZ-h58"/>
-                    <include reference="9Pv-ox-MtZ"/>
-                    <include reference="mjk-Pu-ZdD"/>
-                    <include reference="Ifc-sh-ZIB"/>
-                    <include reference="s6C-Jw-ah0"/>
-                    <include reference="wUd-Hh-7Dx"/>
                     <include reference="8Nr-Zp-fzw"/>
                     <exclude reference="gzU-fX-dEp"/>
                     <include reference="sTk-zA-Xpz"/>
                     <include reference="yFr-Zf-T6I"/>
                     <include reference="zy6-uD-k70"/>
+                    <include reference="9Pv-ox-MtZ"/>
+                    <include reference="mjk-Pu-ZdD"/>
+                    <include reference="Ifc-sh-ZIB"/>
+                    <include reference="s6C-Jw-ah0"/>
+                    <include reference="wUd-Hh-7Dx"/>
+                    <include reference="2kP-tl-s6O"/>
+                    <include reference="4Vp-Fi-spg"/>
+                    <exclude reference="DOI-Dh-lSn"/>
+                    <include reference="r1d-XZ-h58"/>
                 </mask>
             </variation>
             <point key="canvasLocation" x="52" y="180"/>

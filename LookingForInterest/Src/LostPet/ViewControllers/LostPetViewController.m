@@ -16,7 +16,9 @@
 #import "TableLoadNextPage.h"
 #import "GoTopButton.h"
 #import "MenuTransition.h"
+#import "LostPetTransition.h"
 #import "LostPetScrollViewController.h"
+#import "LostPetSearchViewController.h"
 
 #define kReloadDistance 100
 #define kSpringTreshold 130
@@ -566,5 +568,10 @@
 
 #pragma maek - 
 - (void)showSearchView {
+    LostPetTransition *lostPetTransition = [[LostPetTransition alloc] init];
+    LostPetSearchViewController *searchViewController = [[LostPetSearchViewController alloc] initWithNibName:@"LostPetSearchViewController" bundle:nil];
+    searchViewController.transitioningDelegate = lostPetTransition;
+    searchViewController.myTransitionDelegate = lostPetTransition;
+    [self presentViewController:searchViewController animated:YES completion:nil];
 }
 @end
