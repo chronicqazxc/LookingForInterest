@@ -23,12 +23,19 @@
 @property (weak, nonatomic) IBOutlet UILabel *ownersName;
 @property (weak, nonatomic) IBOutlet UILabel *phoneNEmail;
 @property (weak, nonatomic) IBOutlet UITextView *characterized;
+
+//@property (strong, nonatomic) UIPanGestureRecognizer *panGesture;
+//- (void)panInView:(UIPanGestureRecognizer *)recognizer;
 @end
 
 @implementation LostPetDetailTableCell
 
 - (void)awakeFromNib {
-
+    
+//    if (!self.panGesture) {
+//        self.panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panInView:)];
+//        [self addGestureRecognizer:self.panGesture];
+//    }
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -60,4 +67,11 @@
                              self.lostPet.email?self.lostPet.email:@"-"];
     self.characterized.text = self.lostPet.characterized?self.lostPet.characterized:@"";
 }
+
+//- (void)panInView:(UIPanGestureRecognizer *)recognizer {
+//    CGPoint touchPoint = [recognizer locationInView:self];
+//    if (CGRectContainsPoint(self.lostPetCollectionViewCell.upperViewContainer.frame, touchPoint)) {
+//        NSLog(@"ok");
+//    }
+//}
 @end

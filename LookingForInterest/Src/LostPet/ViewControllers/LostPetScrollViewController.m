@@ -17,6 +17,9 @@
 @property (weak, nonatomic) IBOutlet GoTopButton *pageIndicator;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (nonatomic) BOOL isInit;
+@property (strong, nonatomic) LostPetCollectionViewCell *lostPetCollectionViewCell;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *mapPictureSwitch;
+- (IBAction)switchMapPicture:(UISegmentedControl *)sender;
 @end
 
 @implementation LostPetScrollViewController
@@ -29,6 +32,7 @@
     [self.collectionView registerNib:[UINib nibWithNibName:@"LostPetCollectionViewCell" bundle:nil] forCellWithReuseIdentifier:kLostPetCollectionViewCellIdentifier];
     [self.collectionView reloadData];
     self.isInit = NO;
+    
 }
 
 - (void)viewDidLayoutSubviews {
@@ -67,10 +71,11 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     [self.pageIndicator setTitle:[self pageIndicatorTitleByIndexPath:indexPath] forState:UIControlStateNormal];
-    LostPetCollectionViewCell *petCollectionViewCell = [collectionView dequeueReusableCellWithReuseIdentifier:kLostPetCollectionViewCellIdentifier forIndexPath:indexPath];
-    petCollectionViewCell.lostPet = [self.lostPets objectAtIndex:indexPath.row];
-    [petCollectionViewCell awakeFromNib];
-    return petCollectionViewCell;
+    self.lostPetCollectionViewCell = [collectionView dequeueReusableCellWithReuseIdentifier:kLostPetCollectionViewCellIdentifier forIndexPath:indexPath];
+    self.lostPetCollectionViewCell.showType = self.mapPictureSwitch.selectedSegmentIndex;
+    self.lostPetCollectionViewCell.lostPet = [self.lostPets objectAtIndex:indexPath.row];
+    [self.lostPetCollectionViewCell awakeFromNib];
+    return self.lostPetCollectionViewCell;
     
 }
 
@@ -88,6 +93,8 @@
     
     NSIndexPath *visibaleIndexPath = [self.collectionView indexPathForCell:visibleCell];
     [self.pageIndicator setTitle:[self pageIndicatorTitleByIndexPath:visibaleIndexPath] forState:UIControlStateNormal];
+    
+    self.lostPetCollectionViewCell = (LostPetCollectionViewCell *)[collectionView cellForItemAtIndexPath:visibaleIndexPath];
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -139,6 +146,11 @@
     } completion:nil];
     [timer invalidate];
 }
-
-
+- (IBAction)switchMapPicture:(UISegmentedControl *)sender {
+    if (sender.selectedSegmentIndex == LostPetScrollViewShowMap) {
+        [self.lostPetCollectionViewCell showMapOrPictureByValue:LostPetScrollViewShowMap];
+    } else {
+        [self.lostPetCollectionViewCell showMapOrPictureByValue:LostPetScrollViewShowPicture];
+    }
+}
 @end

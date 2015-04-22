@@ -17,13 +17,10 @@
 
 @interface LostPetCollectionViewCell() <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (strong, nonatomic) UIView *upperViewContainer;
 @property (strong, nonatomic) WKWebView *wkWebView;
 @property (strong, nonatomic) UIImageView *lostPetImageView;
 @property (strong, nonatomic) UIImage *image;
-@property (strong, nonatomic) UIPanGestureRecognizer *panGesture;
-- (void)panInView:(UIPanGestureRecognizer *)recognizer;
-
+@property (strong, nonatomic) UIView *upperViewContainer;
 @end
 
 @implementation LostPetCollectionViewCell
@@ -36,19 +33,23 @@
     }
     if (!self.lostPetImageView) {
         self.lostPetImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];
+        self.lostPetImageView.contentMode = UIViewContentModeScaleAspectFit;
         [self.upperViewContainer addSubview:self.lostPetImageView];
-        self.lostPetImageView.image = [UIImage imageNamed:@"background_img.png"];
-        [self loadImage];
-    } else {
-        [self loadImage];
     }
+    self.lostPetImageView.image = [UIImage imageNamed:@"background_img.png"];
+    [self loadImage];
+    
     if (!self.wkWebView) {
         self.wkWebView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];
         [self.upperViewContainer addSubview:self.wkWebView];
+    }
+    if (![self.lostPet.lostPlace isEqualToString:@""]) {
         [self wkWebView:self.wkWebView loadLocation:self.lostPet.lostPlace size:size];
     } else {
-        [self wkWebView:self.wkWebView loadLocation:self.lostPet.lostPlace size:size];
+        [self.wkWebView loadHTMLString:@"無地址" baseURL:nil];
     }
+    
+    [self showMapOrPictureByValue:self.showType];
     
     [self.tableView registerNib:[UINib nibWithNibName:kLostPetDetailTableCellIdentifier bundle:nil]
          forCellReuseIdentifier:kLostPetDetailTableCellIdentifier];
@@ -60,11 +61,17 @@
     [self.tableView scrollRectToVisible:CGRectMake(0, 0, 10, 10) animated:NO];
     
     [self.tableView reloadData];
-    
-    if (!self.panGesture) {
-        self.panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panInView:)];
-        [self addGestureRecognizer:self.panGesture];
+}
+
+- (void)showMapOrPictureByValue:(LostPetScrollViewShowMapPictureType)value {
+    if (value == LostPetScrollViewShowMap) {
+        self.wkWebView.hidden = NO;
+        self.lostPetImageView.hidden = YES;
+    } else {
+        self.wkWebView.hidden = YES;
+        self.lostPetImageView.hidden = NO;
     }
+    self.showType = value;
 }
 
 - (void)loadImage {
@@ -72,22 +79,24 @@
     dispatch_async(myQueue, ^{
         NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:kLostPetImageURL(self.lostPet.chipNumber)]];
         self.image = [UIImage imageWithData:imageData];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            self.lostPetImageView.alpha = 0.0;
-            self.lostPetImageView.image = self.image;
-            self.lostPetImageView.autoresizingMask =
-            ( UIViewAutoresizingFlexibleBottomMargin
-             | UIViewAutoresizingFlexibleHeight
-             | UIViewAutoresizingFlexibleLeftMargin
-             | UIViewAutoresizingFlexibleRightMargin
-             | UIViewAutoresizingFlexibleTopMargin
-             | UIViewAutoresizingFlexibleWidth );
-            [UIView animateWithDuration:1.0f animations:^{
-                self.lostPetImageView.alpha = 1.0;
-            } completion:^(BOOL finished) {
-                
-            }];
-        });
+        if (self.image) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.lostPetImageView.alpha = 0.0;
+                self.lostPetImageView.image = self.image;
+                self.lostPetImageView.autoresizingMask =
+                ( UIViewAutoresizingFlexibleBottomMargin
+                 | UIViewAutoresizingFlexibleHeight
+                 | UIViewAutoresizingFlexibleLeftMargin
+                 | UIViewAutoresizingFlexibleRightMargin
+                 | UIViewAutoresizingFlexibleTopMargin
+                 | UIViewAutoresizingFlexibleWidth );
+                [UIView animateWithDuration:1.0f animations:^{
+                    self.lostPetImageView.alpha = 1.0;
+                } completion:^(BOOL finished) {
+                    
+                }];
+            });
+        }
     });
 }
 
@@ -113,6 +122,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     LostPetDetailTableCell *lostPetDetailCell = [tableView dequeueReusableCellWithIdentifier:kLostPetDetailTableCellIdentifier];
+    lostPetDetailCell.lostPetCollectionViewCell = self;
     lostPetDetailCell.lostPet = self.lostPet;
     [lostPetDetailCell settingContentsByLostPet:self.lostPet];
     lostPetDetailCell.backgroundColor = [UIColor clearColor];
@@ -146,13 +156,5 @@
 
 -(CGFloat)shiftInPercents{
     return (-self.tableView.contentOffset.y/80)+1;
-}
-- (void)panInView:(UIPanGestureRecognizer *)recognizer {
-    CGPoint touchPoint = [recognizer locationInView:self];
-    if (CGRectContainsPoint(self.upperViewContainer.frame, touchPoint)) {
-        NSLog(@"ok");
-    }
-    
-    
 }
 @end

@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7531" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AnimalDetailScrollViewController">
             <connections>
                 <outlet property="adBannerView" destination="hv0-bZ-uti" id="biK-be-4Nx"/>
+                <outlet property="callOutButton" destination="Erc-c0-pTM" id="Ngu-08-315"/>
                 <outlet property="collectionView" destination="MJs-Ye-TPc" id="pfX-No-QaS"/>
+                <outlet property="eMailButton" destination="fXC-rc-pjJ" id="o8o-ID-fjL"/>
+                <outlet property="facebookButton" destination="04h-Py-1h5" id="mA6-Ct-F5O"/>
+                <outlet property="lineButton" destination="sAU-Ll-gdh" id="Hcg-y3-p4l"/>
+                <outlet property="pageIndicator" destination="tCB-DI-aXy" id="dy1-Kz-rHM"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -26,17 +31,75 @@
                         <rect key="frame" x="0.0" y="768" width="400" height="32"/>
                     </variation>
                 </adBannerView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tCB-DI-aXy" customClass="GoTopButton">
+                    <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="100" id="WPm-Ia-GNV"/>
+                        <constraint firstAttribute="height" constant="20" id="gGm-WK-cCa"/>
+                    </constraints>
+                    <state key="normal" title="Button">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="WPm-Ia-GNV"/>
+                            <exclude reference="gGm-WK-cCa"/>
+                        </mask>
+                    </variation>
+                    <variation key="heightClass=regular-widthClass=compact">
+                        <mask key="constraints">
+                            <include reference="WPm-Ia-GNV"/>
+                            <include reference="gGm-WK-cCa"/>
+                        </mask>
+                    </variation>
+                </button>
+                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rxy-Fv-ljC">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                    <items>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="5jJ-0z-YRB"/>
+                        <barButtonItem image="FB-f-Logo__white_29.png" id="04h-Py-1h5">
+                            <connections>
+                                <action selector="shareOnFacebook:" destination="-1" id="bFl-B8-gpL"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="fi5-SR-BfR"/>
+                        <barButtonItem image="Line20x20.png" id="sAU-Ll-gdh">
+                            <connections>
+                                <action selector="shareOnLine:" destination="-1" id="20Q-7t-et2"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="Ncb-EQ-hkZ"/>
+                        <barButtonItem image="call.png" id="Erc-c0-pTM">
+                            <connections>
+                                <action selector="callOut:" destination="-1" id="v9u-cy-chU"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="A2e-le-2E8"/>
+                        <barButtonItem image="mail.png" id="fXC-rc-pjJ">
+                            <connections>
+                                <action selector="sendEMail:" destination="-1" id="lYG-rL-UmT"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="kDp-tf-hxS"/>
+                    </items>
+                </toolbar>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="MJs-Ye-TPc" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="2kP-tl-s6O"/>
                 <constraint firstItem="MJs-Ye-TPc" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="4Vp-Fi-spg"/>
                 <constraint firstItem="hv0-bZ-uti" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="8Nr-Zp-fzw"/>
+                <constraint firstItem="tCB-DI-aXy" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="9Pv-ox-MtZ"/>
                 <constraint firstAttribute="bottom" secondItem="MJs-Ye-TPc" secondAttribute="bottom" id="DOI-Dh-lSn"/>
+                <constraint firstAttribute="trailing" secondItem="Rxy-Fv-ljC" secondAttribute="trailing" id="Ifc-sh-ZIB"/>
                 <constraint firstItem="hv0-bZ-uti" firstAttribute="top" secondItem="MJs-Ye-TPc" secondAttribute="bottom" constant="-32" id="gzU-fX-dEp">
                     <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                 </constraint>
+                <constraint firstAttribute="centerX" secondItem="tCB-DI-aXy" secondAttribute="centerX" id="mjk-Pu-ZdD"/>
                 <constraint firstAttribute="trailing" secondItem="MJs-Ye-TPc" secondAttribute="trailing" id="r1d-XZ-h58"/>
+                <constraint firstItem="Rxy-Fv-ljC" firstAttribute="top" secondItem="MJs-Ye-TPc" secondAttribute="bottom" id="s6C-Jw-ah0"/>
+                <constraint firstItem="hv0-bZ-uti" firstAttribute="top" secondItem="Rxy-Fv-ljC" secondAttribute="bottom" id="sTk-zA-Xpz"/>
+                <constraint firstItem="Rxy-Fv-ljC" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="wUd-Hh-7Dx"/>
                 <constraint firstAttribute="bottom" secondItem="hv0-bZ-uti" secondAttribute="bottom" constant="375" id="yFr-Zf-T6I">
                     <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                 </constraint>
@@ -46,35 +109,57 @@
                 <mask key="subviews">
                     <exclude reference="MJs-Ye-TPc"/>
                     <exclude reference="hv0-bZ-uti"/>
+                    <exclude reference="tCB-DI-aXy"/>
+                    <exclude reference="Rxy-Fv-ljC"/>
                 </mask>
                 <mask key="constraints">
-                    <exclude reference="8Nr-Zp-fzw"/>
-                    <exclude reference="gzU-fX-dEp"/>
-                    <exclude reference="yFr-Zf-T6I"/>
-                    <exclude reference="zy6-uD-k70"/>
                     <exclude reference="2kP-tl-s6O"/>
                     <exclude reference="4Vp-Fi-spg"/>
                     <exclude reference="DOI-Dh-lSn"/>
                     <exclude reference="r1d-XZ-h58"/>
+                    <exclude reference="9Pv-ox-MtZ"/>
+                    <exclude reference="mjk-Pu-ZdD"/>
+                    <exclude reference="Ifc-sh-ZIB"/>
+                    <exclude reference="s6C-Jw-ah0"/>
+                    <exclude reference="wUd-Hh-7Dx"/>
+                    <exclude reference="8Nr-Zp-fzw"/>
+                    <exclude reference="gzU-fX-dEp"/>
+                    <exclude reference="sTk-zA-Xpz"/>
+                    <exclude reference="yFr-Zf-T6I"/>
+                    <exclude reference="zy6-uD-k70"/>
                 </mask>
             </variation>
             <variation key="heightClass=regular-widthClass=compact">
                 <mask key="subviews">
                     <include reference="MJs-Ye-TPc"/>
                     <include reference="hv0-bZ-uti"/>
+                    <include reference="tCB-DI-aXy"/>
+                    <include reference="Rxy-Fv-ljC"/>
                 </mask>
                 <mask key="constraints">
-                    <include reference="8Nr-Zp-fzw"/>
-                    <include reference="gzU-fX-dEp"/>
-                    <include reference="yFr-Zf-T6I"/>
-                    <include reference="zy6-uD-k70"/>
                     <include reference="2kP-tl-s6O"/>
                     <include reference="4Vp-Fi-spg"/>
                     <exclude reference="DOI-Dh-lSn"/>
                     <include reference="r1d-XZ-h58"/>
+                    <include reference="9Pv-ox-MtZ"/>
+                    <include reference="mjk-Pu-ZdD"/>
+                    <include reference="Ifc-sh-ZIB"/>
+                    <include reference="s6C-Jw-ah0"/>
+                    <include reference="wUd-Hh-7Dx"/>
+                    <include reference="8Nr-Zp-fzw"/>
+                    <exclude reference="gzU-fX-dEp"/>
+                    <include reference="sTk-zA-Xpz"/>
+                    <include reference="yFr-Zf-T6I"/>
+                    <include reference="zy6-uD-k70"/>
                 </mask>
             </variation>
             <point key="canvasLocation" x="52" y="180"/>
         </view>
     </objects>
+    <resources>
+        <image name="FB-f-Logo__white_29.png" width="29" height="29"/>
+        <image name="Line20x20.png" width="40" height="40"/>
+        <image name="call.png" width="40" height="40"/>
+        <image name="mail.png" width="50" height="50"/>
+    </resources>
 </document>

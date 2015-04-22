@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <WebKit/WebKit.h>
+#import "LostPetCollectionViewCell.h"
 
 #define kLostPetDetailTableCellIdentifier @"LostPetDetailTableCell"
 
@@ -17,5 +18,5 @@
 - (void)settingContentsByLostPet:(LostPet *)lostPet;
 @property (strong, nonatomic) LostPet *lostPet;
 @property (weak, nonatomic) IBOutlet UIView *shadowView;
-
+@property (strong, nonatomic) LostPetCollectionViewCell *lostPetCollectionViewCell;
 @end

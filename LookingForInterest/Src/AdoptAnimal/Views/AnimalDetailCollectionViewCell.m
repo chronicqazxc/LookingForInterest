@@ -31,15 +31,6 @@
 @interface AnimalDetailCollectionViewCell() <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *detailTableView;
 @property (strong, nonatomic) UIImage *image;
-@property (weak, nonatomic) IBOutlet GoTopButton *pageIndicator;
-- (IBAction)facebookShare:(UIBarButtonItem *)sender;
-- (IBAction)lineShare:(UIBarButtonItem *)sender;
-- (IBAction)callOut:(UIBarButtonItem *)sender;
-- (IBAction)sendEmail:(UIBarButtonItem *)sender;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *facebookButton;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *lineButton;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *callButton;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *mailButton;
 @property (strong, nonatomic) UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UIView *view;
 @end
@@ -63,43 +54,7 @@
     if (self.pet && ![self.pet.imageName isEqualToString:@""]) {
         [self loadImage];
     }
-    
-    [self setPageIndicatorTitleByResult:self.petResult];
-    self.pageIndicator.alpha = 0.0;
-    [UIView animateWithDuration:1.0 animations:^{
-        self.pageIndicator.alpha = 1.0;
-    } completion:^(BOOL finished) {
-        if (finished) {
-            [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(hidePageIndicator:) userInfo:nil repeats:NO];
-        }
-    }];
-    
-    self.facebookButton.tintColor = UIColorFromRGB(0x3b5998);
-    self.lineButton.tintColor = UIColorFromRGB(0x19BD03);
-    self.callButton.tintColor = [UIColor blackColor];
-    self.mailButton.tintColor = [UIColor redColor];
-}
 
-- (void)setPageIndicatorTitleByResult:(PetResult *)petResult {
-    NSString *totalPage = @"";
-    NSString *currentPage = @"";
-    totalPage = [NSString stringWithFormat:@"%d",(int)[petResult.pets count]];
-    NSInteger index = 0;
-    for (Pet *pet in petResult.pets) {
-        if ([self.pet.petID isEqualToString:pet.petID]) {
-            break;
-        }
-        index++;
-    }
-    currentPage = [NSString stringWithFormat:@"%d",(int)++index];
-    [self.pageIndicator setTitle:[NSString stringWithFormat:@"%@/%@",currentPage,totalPage] forState:UIControlStateNormal];
-}
-
-- (void)hidePageIndicator:(NSTimer *)timer {
-    [UIView animateWithDuration:0.5 animations:^{
-        self.pageIndicator.alpha = 0.0;
-    }];
-    [timer invalidate];
 }
 
 - (void)loadImage {
@@ -124,30 +79,6 @@
             }];
         });
     });
-}
-
-- (IBAction)facebookShare:(UIBarButtonItem *)sender {
-    if (self.viewController && [self.viewController respondsToSelector:@selector(publishToFacebook:)]) {
-        [self.viewController publishToFacebook:self.pet];
-    }
-}
-
-- (IBAction)lineShare:(UIBarButtonItem *)sender {
-    if (self.viewController && [self.viewController respondsToSelector:@selector(publishToLine:)]) {
-        [self.viewController publishToLine:self.pet];
-    }
-}
-
-- (IBAction)callOut:(UIBarButtonItem *)sender {
-    if (self.viewController && [self.viewController respondsToSelector:@selector(callPhoneNumber:)]) {
-        [self.viewController callPhoneNumber:self.pet];
-    }
-}
-
-- (IBAction)sendEmail:(UIBarButtonItem *)sender {
-    if (self.viewController && [self.viewController respondsToSelector:@selector(sendEmail:)]) {
-        [self.viewController sendEmail:self.pet];
-    }
 }
 
 #pragma mark - UIScrollViewDelegate

@@ -9,20 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "AnimalDetailTableViewCell.h"
 
-@protocol AnimalDetailCollectionViewCellDelegate;
-
 @interface AnimalDetailCollectionViewCell : UICollectionViewCell
 @property (strong, nonatomic) AnimalDetailTableViewCell *tableCell;
 @property (strong, nonatomic) Pet *pet;
 @property (strong, nonatomic) PetResult *petResult;
-@property (strong, nonatomic) UIViewController <AnimalDetailCollectionViewCellDelegate> *viewController;
-@end
-
-@protocol AnimalDetailCollectionViewCellDelegate
-
-- (void)callPhoneNumber:(Pet *)pet;
-- (void)publishToFacebook:(Pet *)pet;
-- (void)publishToLine:(Pet *)pet;
-- (void)sendEmail:(Pet *)pet;
-
 @end

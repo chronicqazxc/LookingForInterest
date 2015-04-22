@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7531" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LostPetScrollViewController">
             <connections>
                 <outlet property="collectionView" destination="4D3-A9-QFa" id="tZe-hd-ona"/>
+                <outlet property="mapPictureSwitch" destination="CUw-rb-qnx" id="dRY-0p-MxJ"/>
                 <outlet property="pageIndicator" destination="Qp1-LP-69i" id="xnd-i9-s4O"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -59,6 +60,16 @@
                         </mask>
                     </variation>
                 </button>
+                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="CUw-rb-qnx">
+                    <rect key="frame" x="-61" y="-14" width="123" height="29"/>
+                    <segments>
+                        <segment title="Map"/>
+                        <segment title="Picture"/>
+                    </segments>
+                    <connections>
+                        <action selector="switchMapPicture:" destination="-1" eventType="valueChanged" id="5sR-Mm-fe7"/>
+                    </connections>
+                </segmentedControl>
             </subviews>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="4D3-A9-QFa" secondAttribute="trailing" id="1Lt-Bx-aAE"/>
@@ -70,15 +81,18 @@
                     <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                 </constraint>
                 <constraint firstItem="4D3-A9-QFa" firstAttribute="top" secondItem="Qp1-LP-69i" secondAttribute="top" id="Peu-wY-LJZ"/>
+                <constraint firstItem="CUw-rb-qnx" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="Vb8-Em-pqA"/>
                 <constraint firstItem="4D3-A9-QFa" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="oJJ-sY-y24"/>
                 <constraint firstAttribute="centerX" secondItem="Qp1-LP-69i" secondAttribute="centerX" id="qkn-Ly-crm"/>
                 <constraint firstItem="jTg-1l-t0O" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="r1S-NL-kMi"/>
+                <constraint firstItem="CUw-rb-qnx" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="8" id="vF1-0T-qI0"/>
             </constraints>
             <variation key="default">
                 <mask key="subviews">
                     <exclude reference="jTg-1l-t0O"/>
                     <exclude reference="4D3-A9-QFa"/>
                     <exclude reference="Qp1-LP-69i"/>
+                    <exclude reference="CUw-rb-qnx"/>
                 </mask>
                 <mask key="constraints">
                     <exclude reference="8OB-xU-kD7"/>
@@ -87,6 +101,8 @@
                     <exclude reference="r1S-NL-kMi"/>
                     <exclude reference="EwV-kC-ZHn"/>
                     <exclude reference="qkn-Ly-crm"/>
+                    <exclude reference="Vb8-Em-pqA"/>
+                    <exclude reference="vF1-0T-qI0"/>
                     <exclude reference="1Lt-Bx-aAE"/>
                     <exclude reference="9tV-yS-Qv1"/>
                     <exclude reference="Peu-wY-LJZ"/>
@@ -98,6 +114,7 @@
                     <include reference="jTg-1l-t0O"/>
                     <include reference="4D3-A9-QFa"/>
                     <include reference="Qp1-LP-69i"/>
+                    <include reference="CUw-rb-qnx"/>
                 </mask>
                 <mask key="constraints">
                     <include reference="8OB-xU-kD7"/>
@@ -106,13 +123,15 @@
                     <include reference="r1S-NL-kMi"/>
                     <exclude reference="EwV-kC-ZHn"/>
                     <include reference="qkn-Ly-crm"/>
+                    <include reference="Vb8-Em-pqA"/>
+                    <include reference="vF1-0T-qI0"/>
                     <include reference="1Lt-Bx-aAE"/>
                     <include reference="9tV-yS-Qv1"/>
                     <include reference="Peu-wY-LJZ"/>
                     <include reference="oJJ-sY-y24"/>
                 </mask>
             </variation>
-            <point key="canvasLocation" x="67" y="-82"/>
+            <point key="canvasLocation" x="-91" y="-85"/>
         </view>
     </objects>
 </document>
