@@ -111,6 +111,7 @@
 		B06449231ABD62C400B6F7A5 /* manul_menu.png in Resources */ = {isa = PBXBuildFile; fileRef = B064491E1ABD62C400B6F7A5 /* manul_menu.png */; };
 		B08CE6B71AC12F16000578CA /* background_img.png in Resources */ = {isa = PBXBuildFile; fileRef = B08CE6B61AC12F16000578CA /* background_img.png */; };
 		B08CE6B91AC13324000578CA /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B08CE6B81AC13324000578CA /* iAd.framework */; };
+		B09FF1501AE88AE3003BF56C /* LostPetSearchViewTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = B09FF14F1AE88AE3003BF56C /* LostPetSearchViewTransition.m */; };
 		B0A320531AAD428A0061384A /* Loading100x100.png in Resources */ = {isa = PBXBuildFile; fileRef = B0A320521AAD428A0061384A /* Loading100x100.png */; };
 		B0A320551AAD45AF0061384A /* Loading300x400.png in Resources */ = {isa = PBXBuildFile; fileRef = B0A320541AAD45AF0061384A /* Loading300x400.png */; };
 		B0B048E81AB16AEB000154B2 /* ThingsAboutAnimals_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = B0B048E71AB16AEB000154B2 /* ThingsAboutAnimals_Tests.m */; };
@@ -342,6 +343,8 @@
 		B064491E1ABD62C400B6F7A5 /* manul_menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = manul_menu.png; path = Img/manul/manul_menu.png; sourceTree = "<group>"; };
 		B08CE6B61AC12F16000578CA /* background_img.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = background_img.png; path = Img/background_img.png; sourceTree = "<group>"; };
 		B08CE6B81AC13324000578CA /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
+		B09FF14E1AE88AE3003BF56C /* LostPetSearchViewTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LostPetSearchViewTransition.h; sourceTree = "<group>"; };
+		B09FF14F1AE88AE3003BF56C /* LostPetSearchViewTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LostPetSearchViewTransition.m; sourceTree = "<group>"; };
 		B0A320521AAD428A0061384A /* Loading100x100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Loading100x100.png; path = Img/Loading100x100.png; sourceTree = "<group>"; };
 		B0A320541AAD45AF0061384A /* Loading300x400.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Loading300x400.png; path = Img/Loading300x400.png; sourceTree = "<group>"; };
 		B0B048E31AB16AEB000154B2 /* ThingsAboutAnimals Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ThingsAboutAnimals Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -593,6 +596,8 @@
 				B02376E81AE5F9540002BAA0 /* LostPetStatus.m */,
 				B02376E91AE5F9540002BAA0 /* LostPetTransition.h */,
 				B02376EA1AE5F9540002BAA0 /* LostPetTransition.m */,
+				B09FF14E1AE88AE3003BF56C /* LostPetSearchViewTransition.h */,
+				B09FF14F1AE88AE3003BF56C /* LostPetSearchViewTransition.m */,
 			);
 			path = Objects;
 			sourceTree = "<group>";
@@ -1162,6 +1167,7 @@
 				B02376851AE5F8FD0002BAA0 /* AnimalDetailScrollViewController.m in Sources */,
 				B023775E1AE5F9640002BAA0 /* GoTopButton.m in Sources */,
 				B023776B1AE5FB2E0002BAA0 /* LostPetCollectionViewFlowLayout.m in Sources */,
+				B09FF1501AE88AE3003BF56C /* LostPetSearchViewTransition.m in Sources */,
 				B02377521AE5F9640002BAA0 /* MenuTransition.m in Sources */,
 				B02376C71AE5F9310002BAA0 /* Detail.m in Sources */,
 				B02376CD1AE5F9310002BAA0 /* AnimalHospitalViewController.m in Sources */,

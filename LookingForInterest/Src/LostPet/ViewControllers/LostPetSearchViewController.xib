@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7531" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LostPetSearchViewController">
             <connections>
+                <outlet property="tableView" destination="Jo7-HO-waK" id="TOk-hW-CiM"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -29,16 +30,55 @@
                                     <action selector="clickCancel:" destination="-1" eventType="touchUpInside" id="fQe-ju-iHj"/>
                                 </connections>
                             </button>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Jo7-HO-waK">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="Yxd-O7-cVX"/>
+                                    <constraint firstAttribute="height" constant="400" id="yVU-5U-tj9">
+                                        <variation key="heightClass=regular-widthClass=compact" constant="200"/>
+                                    </constraint>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="Yxd-O7-cVX"/>
+                                        <exclude reference="yVU-5U-tj9"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="Yxd-O7-cVX"/>
+                                        <include reference="yVU-5U-tj9"/>
+                                    </mask>
+                                </variation>
+                            </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="搜尋條件" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Aea-N8-kED">
+                                <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
+                        <gestureRecognizers/>
                         <constraints>
+                            <constraint firstAttribute="centerX" secondItem="Aea-N8-kED" secondAttribute="centerX" id="Bg3-EN-VjH"/>
+                            <constraint firstItem="Jo7-HO-waK" firstAttribute="top" secondItem="Aea-N8-kED" secondAttribute="bottom" constant="35" id="Hwi-7D-sww"/>
                             <constraint firstAttribute="centerX" secondItem="f3J-no-wyV" secondAttribute="centerX" id="Vs5-wr-ixB"/>
                             <constraint firstAttribute="bottom" secondItem="f3J-no-wyV" secondAttribute="bottom" constant="56" id="dP1-Tp-qjU"/>
+                            <constraint firstAttribute="centerY" secondItem="Jo7-HO-waK" secondAttribute="centerY" id="jW0-hs-Q03"/>
+                            <constraint firstAttribute="centerX" secondItem="Jo7-HO-waK" secondAttribute="centerX" id="jXX-90-cvy"/>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="f3J-no-wyV"/>
+                                <exclude reference="Jo7-HO-waK"/>
+                                <exclude reference="Aea-N8-kED"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="Bg3-EN-VjH"/>
+                                <exclude reference="Hwi-7D-sww"/>
+                                <exclude reference="jW0-hs-Q03"/>
+                                <exclude reference="jXX-90-cvy"/>
                                 <exclude reference="Vs5-wr-ixB"/>
                                 <exclude reference="dP1-Tp-qjU"/>
                             </mask>
@@ -46,14 +86,23 @@
                         <variation key="heightClass=regular-widthClass=compact">
                             <mask key="subviews">
                                 <include reference="f3J-no-wyV"/>
+                                <include reference="Jo7-HO-waK"/>
+                                <include reference="Aea-N8-kED"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="Bg3-EN-VjH"/>
+                                <include reference="Hwi-7D-sww"/>
+                                <include reference="jW0-hs-Q03"/>
+                                <include reference="jXX-90-cvy"/>
                                 <include reference="Vs5-wr-ixB"/>
                                 <include reference="dP1-Tp-qjU"/>
                             </mask>
                         </variation>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="UJF-GG-NFk" appends="YES" id="bJq-eA-Vg0"/>
+                        </connections>
                     </view>
-                    <blurEffect style="light"/>
+                    <blurEffect style="dark"/>
                 </visualEffectView>
             </subviews>
             <constraints>
@@ -85,5 +134,10 @@
                 </mask>
             </variation>
         </view>
+        <panGestureRecognizer minimumNumberOfTouches="1" id="UJF-GG-NFk">
+            <connections>
+                <action selector="panInView:" destination="-1" id="Ji4-i1-0Ef"/>
+            </connections>
+        </panGestureRecognizer>
     </objects>
 </document>

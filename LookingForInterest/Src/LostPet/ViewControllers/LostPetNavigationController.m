@@ -10,14 +10,13 @@
 #import "LostPetTransition.h"
 
 @interface LostPetNavigationController ()
-@property (strong, nonatomic) LostPetTransition *lostPetTransition;
+
 @end
 
 @implementation LostPetNavigationController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.lostPetTransition = [[LostPetTransition alloc] init];
 }
 
 - (void)didReceiveMemoryWarning {

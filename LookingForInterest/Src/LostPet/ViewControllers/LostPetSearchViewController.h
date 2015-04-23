@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LostPetFilters.h"
 
 @interface LostPetSearchViewController : UIViewController
-@property (strong, nonatomic) id <UIViewControllerTransitioningDelegate> myTransitionDelegate;
+@property (strong, nonatomic) LostPetFilters *lostPetFilters;
 @end

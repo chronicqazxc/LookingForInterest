@@ -19,6 +19,7 @@
 #import "LostPetTransition.h"
 #import "LostPetScrollViewController.h"
 #import "LostPetSearchViewController.h"
+#import <iAd/iAd.h>
 
 #define kReloadDistance 100
 #define kSpringTreshold 130
@@ -49,9 +50,11 @@
 - (IBAction)panInView:(UIPanGestureRecognizer *)recognizer;
 @property (strong, nonatomic) MenuTransition *menuTransition;
 
-@property (weak, nonatomic) IBOutlet UITabBar *tabBar;
-@property (weak, nonatomic) IBOutlet UITabBarItem *searchBarItem;
+@property (weak, nonatomic) IBOutlet ADBannerView *adBannerView;
+@property (weak, nonatomic) IBOutlet UIView *bottomView;
 @property (nonatomic) BOOL isBeenInit;
+- (IBAction)clickSearch:(UIBarButtonItem *)sender;
+@property (strong, nonatomic) LostPetFilters *lostPetFilters;
 @end
 
 @implementation LostPetViewController
@@ -73,13 +76,9 @@
     [self initLoadingPageView];
     
     self.menuTransition = [[MenuTransition alloc] init];
-    if (!self.transitioningDelegate) {
-        self.transitioningDelegate = self.menuTransition;
-    }
-    
+
     self.isBeenInit = NO;
     
-    self.tabBar.delegate = self;
 //    [self initDynamicAnimation];
 }
 
@@ -116,7 +115,6 @@
     } else {
         self.menuTransition.isInteraction = YES;
     }
-    self.transitioningDelegate = self.menuTransition;
     
     UIStoryboard *firstStoryboard = [UIStoryboard storyboardWithName:kFirstStoryboard bundle:nil];
     MenuViewController *controller = (MenuViewController *)[firstStoryboard instantiateViewControllerWithIdentifier:kMenuStoryboardID];
@@ -175,7 +173,7 @@
         [self.animator removeBehavior:self.collisionBehavior];
     }
     
-    self.collisionBehavior = [[UICollisionBehavior alloc] initWithItems:@[self.circleView, self.tabBar]];
+    self.collisionBehavior = [[UICollisionBehavior alloc] initWithItems:@[self.circleView, self.bottomView]];
     self.collisionBehavior.translatesReferenceBoundsIntoBoundary = YES;
     
     [self.animator addBehavior:self.collisionBehavior];
@@ -232,11 +230,11 @@
     if (!self.isBeenInit) {
         LostPetRequest *lostPetRequest = [[LostPetRequest alloc] init];
         lostPetRequest.lostPetRequestDelegate = self;
-        LostPetFilters *lostPetFilters = [[LostPetFilters alloc] init];
-        lostPetFilters.variety = @"";
-        lostPetFilters.gender = @"";
+        self.lostPetFilters = [[LostPetFilters alloc] init];
+        self.lostPetFilters.variety = @"";
+        self.lostPetFilters.gender = @"";
         [self.requests addObject:lostPetRequest];
-        [lostPetRequest sendRequestForLostPetWithLostPetFilters:lostPetFilters top:@"20" skip:@"0"];
+        [lostPetRequest sendRequestForLostPetWithLostPetFilters:self.lostPetFilters top:@"20" skip:@"0"];
         
         self.lostPetStatus.loadingPageStatus = LoadingInitPage;
         
@@ -359,6 +357,8 @@
 
 #pragma mark - UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
     LostPetScrollViewController *lostPetScrollViewController = [[LostPetScrollViewController alloc] init];
     lostPetScrollViewController.lostPets = [NSMutableArray arrayWithArray:self.lostPets];
     lostPetScrollViewController.selectedIndexPath = indexPath;
@@ -499,10 +499,16 @@
 
 - (IBAction)panInView:(UIPanGestureRecognizer *)recognizer {
     self.menuTransition.isInteraction = YES;
-    self.transitioningDelegate = self.menuTransition;
     
     CGFloat percentageY = [recognizer translationInView:self.view.superview].y / self.view.superview.bounds.size.height;
-
+    NSLog(@"percentageY:%.2f",[recognizer velocityInView:recognizer.view.superview].y);
+    
+    if (percentageY < 0) {
+        self.adBannerView.alpha = 1 + percentageY * 2;
+    } else {
+        self.adBannerView.alpha = self.adBannerView.alpha + percentageY * 2;
+    }
+    
     self.currentLocation = [recognizer translationInView:self.view];
 
     if (recognizer.state == UIGestureRecognizerStateBegan) {
@@ -535,12 +541,11 @@
         BOOL cancel = YES;
         CGFloat points;
         NSTimeInterval duration;
-        
+
         if (self.menuTransition.direction == DirectionUp) {
-            cancel = (percentageY > -kThreshold);
+            cancel = (percentageY > -kThreshold) || (velocityY > 0);
             points = cancel ? recognizer.view.frame.origin.y : self.view.superview.bounds.size.height - recognizer.view.frame.origin.y;
             duration = points / velocityY;
-            
         }
         
         if (duration < .2) {
@@ -558,20 +563,16 @@
 //        [self addGravityBehavior];
 //        [self addCollisionBehavior];
 //        [self addCircleViewBehavior];
+        
+        self.adBannerView.alpha = cancel ? 1 : 0;
     }
+    
+//    NSLog(@"self.adBannerView.alpha:%.2f",self.adBannerView.alpha);
 }
 
-#pragma mark - UITabBarDelegate
-- (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item {
-    [self showSearchView];
-}
-
-#pragma maek - 
-- (void)showSearchView {
-    LostPetTransition *lostPetTransition = [[LostPetTransition alloc] init];
+- (IBAction)clickSearch:(UIBarButtonItem *)sender {
     LostPetSearchViewController *searchViewController = [[LostPetSearchViewController alloc] initWithNibName:@"LostPetSearchViewController" bundle:nil];
-    searchViewController.transitioningDelegate = lostPetTransition;
-    searchViewController.myTransitionDelegate = lostPetTransition;
+    searchViewController.lostPetFilters = self.lostPetFilters;
     [self presentViewController:searchViewController animated:YES completion:nil];
 }
 @end
