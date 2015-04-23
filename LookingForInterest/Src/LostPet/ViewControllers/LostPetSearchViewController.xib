@@ -21,15 +21,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f3J-no-wyV">
-                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                <state key="normal" title="Cancel">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="clickCancel:" destination="-1" eventType="touchUpInside" id="fQe-ju-iHj"/>
-                                </connections>
-                            </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Jo7-HO-waK">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -58,51 +49,102 @@
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f3J-no-wyV">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="Cancel">
+                                    <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="clickCancel:" destination="-1" eventType="touchUpInside" id="fQe-ju-iHj"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l1j-b6-Wmj">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="OK">
+                                    <color key="titleColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="clickOk:" destination="-1" eventType="touchUpInside" id="rh1-hM-m8m"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="Aea-N8-kED" secondAttribute="centerX" id="Bg3-EN-VjH"/>
+                            <constraint firstItem="f3J-no-wyV" firstAttribute="top" secondItem="Jo7-HO-waK" secondAttribute="bottom" constant="84" id="Cdx-XC-Su7">
+                                <variation key="heightClass=regular-widthClass=compact" constant="50"/>
+                            </constraint>
+                            <constraint firstItem="l1j-b6-Wmj" firstAttribute="leading" secondItem="f3J-no-wyV" secondAttribute="trailing" constant="26" id="G8J-Sk-Yth"/>
                             <constraint firstItem="Jo7-HO-waK" firstAttribute="top" secondItem="Aea-N8-kED" secondAttribute="bottom" constant="35" id="Hwi-7D-sww"/>
                             <constraint firstAttribute="centerX" secondItem="f3J-no-wyV" secondAttribute="centerX" id="Vs5-wr-ixB"/>
+                            <constraint firstAttribute="centerX" secondItem="f3J-no-wyV" secondAttribute="centerX" constant="36" id="YIh-6X-oxx">
+                                <variation key="heightClass=regular-widthClass=compact" constant="28"/>
+                            </constraint>
                             <constraint firstAttribute="bottom" secondItem="f3J-no-wyV" secondAttribute="bottom" constant="56" id="dP1-Tp-qjU"/>
+                            <constraint firstItem="f3J-no-wyV" firstAttribute="centerY" secondItem="l1j-b6-Wmj" secondAttribute="centerY" id="flW-98-Ksk"/>
                             <constraint firstAttribute="centerY" secondItem="Jo7-HO-waK" secondAttribute="centerY" id="jW0-hs-Q03"/>
                             <constraint firstAttribute="centerX" secondItem="Jo7-HO-waK" secondAttribute="centerX" id="jXX-90-cvy"/>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
-                                <exclude reference="f3J-no-wyV"/>
                                 <exclude reference="Jo7-HO-waK"/>
                                 <exclude reference="Aea-N8-kED"/>
+                                <exclude reference="f3J-no-wyV"/>
+                                <exclude reference="l1j-b6-Wmj"/>
                             </mask>
                             <mask key="constraints">
                                 <exclude reference="Bg3-EN-VjH"/>
                                 <exclude reference="Hwi-7D-sww"/>
                                 <exclude reference="jW0-hs-Q03"/>
                                 <exclude reference="jXX-90-cvy"/>
+                                <exclude reference="Cdx-XC-Su7"/>
                                 <exclude reference="Vs5-wr-ixB"/>
+                                <exclude reference="YIh-6X-oxx"/>
                                 <exclude reference="dP1-Tp-qjU"/>
+                                <exclude reference="flW-98-Ksk"/>
+                                <exclude reference="G8J-Sk-Yth"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
                             <mask key="subviews">
-                                <include reference="f3J-no-wyV"/>
                                 <include reference="Jo7-HO-waK"/>
                                 <include reference="Aea-N8-kED"/>
+                                <include reference="f3J-no-wyV"/>
+                                <include reference="l1j-b6-Wmj"/>
                             </mask>
                             <mask key="constraints">
                                 <include reference="Bg3-EN-VjH"/>
                                 <include reference="Hwi-7D-sww"/>
                                 <include reference="jW0-hs-Q03"/>
                                 <include reference="jXX-90-cvy"/>
-                                <include reference="Vs5-wr-ixB"/>
-                                <include reference="dP1-Tp-qjU"/>
+                                <include reference="Cdx-XC-Su7"/>
+                                <exclude reference="Vs5-wr-ixB"/>
+                                <include reference="YIh-6X-oxx"/>
+                                <exclude reference="dP1-Tp-qjU"/>
+                                <include reference="flW-98-Ksk"/>
+                                <include reference="G8J-Sk-Yth"/>
                             </mask>
                         </variation>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="UJF-GG-NFk" appends="YES" id="bJq-eA-Vg0"/>
                         </connections>
                     </view>
+                    <constraints>
+                        <constraint firstItem="f3J-no-wyV" firstAttribute="centerX" secondItem="Eyr-Ek-UtR" secondAttribute="centerX" constant="-36" id="igb-pl-OPz"/>
+                    </constraints>
                     <blurEffect style="dark"/>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="igb-pl-OPz"/>
+                        </mask>
+                    </variation>
+                    <variation key="heightClass=regular-widthClass=compact">
+                        <mask key="constraints">
+                            <exclude reference="igb-pl-OPz"/>
+                        </mask>
+                    </variation>
                 </visualEffectView>
             </subviews>
             <constraints>

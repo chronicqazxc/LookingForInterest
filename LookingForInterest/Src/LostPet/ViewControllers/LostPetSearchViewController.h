@@ -9,6 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "LostPetFilters.h"
 
+@protocol LostPetSearchViewControllerDelegate
+- (void)processSearchWithFilters:(LostPetFilters *)lostPetFilters;
+@end
+
 @interface LostPetSearchViewController : UIViewController
 @property (strong, nonatomic) LostPetFilters *lostPetFilters;
+@property (assign, nonatomic) UIViewController <LostPetSearchViewControllerDelegate> *delegate;
 @end

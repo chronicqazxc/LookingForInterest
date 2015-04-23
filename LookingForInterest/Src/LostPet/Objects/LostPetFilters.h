@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface LostPetFilters : NSObject
+- (id)initWithLostPetFilters:(LostPetFilters *)lostPetFilters;
 @property (strong, nonatomic) NSString *chipNumber;
 @property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) NSString *variety;

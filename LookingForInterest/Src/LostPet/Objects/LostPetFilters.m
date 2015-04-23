@@ -10,6 +10,22 @@
 #import "LostPet.h"
 
 @implementation LostPetFilters
+- (id)initWithLostPetFilters:(LostPetFilters *)lostPetFilters {
+    self = [super init];
+    if (self) {
+        self.chipNumber = [NSString stringWithString:lostPetFilters.chipNumber?lostPetFilters.chipNumber:@""];
+        self.name = [NSString stringWithString:lostPetFilters.name?lostPetFilters.name:@""];
+        self.variety = [NSString stringWithString:lostPetFilters.variety?lostPetFilters.variety:@""];
+        self.gender = [NSString stringWithString:lostPetFilters.gender?lostPetFilters.gender:@""];
+        self.race = [NSString stringWithString:lostPetFilters.race?lostPetFilters.race:@""];
+        self.hairColor = [NSString stringWithString:lostPetFilters.hairColor?lostPetFilters.hairColor:@""];
+        self.hairStyle = [NSString stringWithString:lostPetFilters.hairStyle?lostPetFilters.hairStyle:@""];
+        self.lostDate = [NSString stringWithString:lostPetFilters.lostDate?lostPetFilters.lostDate:@""];
+        self.lostPlace = [NSString stringWithString:lostPetFilters.lostPlace?lostPetFilters.lostPlace:@""];
+    }
+    return self;
+}
+
 - (NSString *)filterContent {
     NSMutableString *tempString = [NSMutableString stringWithString:@""];
     NSMutableDictionary *propertiesDic = [self enumerationProperties];

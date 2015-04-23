@@ -28,7 +28,7 @@
 #define kLostPetListCell @"LostPetListCell"
 #define kToMenuSegueIdentifier @"ToMenuSegueIdentifier"
 
-@interface LostPetViewController () <LostPetRequestDelegate, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, UITabBarDelegate, UIPopoverControllerDelegate>
+@interface LostPetViewController () <LostPetRequestDelegate, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, UITabBarDelegate, UIPopoverControllerDelegate, LostPetSearchViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSArray *lostPets;
 @property (strong, nonatomic) NSMutableArray *requests;
@@ -572,7 +572,21 @@
 
 - (IBAction)clickSearch:(UIBarButtonItem *)sender {
     LostPetSearchViewController *searchViewController = [[LostPetSearchViewController alloc] initWithNibName:@"LostPetSearchViewController" bundle:nil];
-    searchViewController.lostPetFilters = self.lostPetFilters;
+    searchViewController.lostPetFilters = [[LostPetFilters alloc] initWithLostPetFilters:self.lostPetFilters];
+    searchViewController.delegate = self;
     [self presentViewController:searchViewController animated:YES completion:nil];
+}
+
+#pragma mark - LostPetSearchViewControllerDelegate
+- (void)processSearchWithFilters:(LostPetFilters *)lostPetFilters {
+    self.lostPetFilters = [[LostPetFilters alloc] initWithLostPetFilters:lostPetFilters];
+    LostPetRequest *lostPetRequest = [[LostPetRequest alloc] init];
+    lostPetRequest.lostPetRequestDelegate = self;
+    [self.requests addObject:lostPetRequest];
+    [lostPetRequest sendRequestForLostPetWithLostPetFilters:self.lostPetFilters top:@"20" skip:@"0"];
+    
+    self.lostPetStatus.loadingPageStatus = LoadingInitPage;
+    
+    [self startLoadingWithContent:@""];
 }
 @end

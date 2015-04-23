@@ -28,6 +28,7 @@ typedef NS_ENUM(NSInteger, LostPetSearchType) {
 @property (nonatomic) LostPetSearchType searchType;
 @property (strong, nonatomic) UIDatePicker *datePicker;
 - (IBAction)panInView:(UIPanGestureRecognizer *)recognizer;
+- (IBAction)clickOk:(UIButton *)sender;
 @end
 
 @implementation LostPetSearchViewController
@@ -68,7 +69,6 @@ typedef NS_ENUM(NSInteger, LostPetSearchType) {
     self.datePicker.locale = [NSLocale currentLocale];
     self.datePicker.frame = CGRectMake(0,0,[Utilities getScreenSize].width, 162.0);
     self.datePicker.frame = CGRectOffset(self.datePicker.frame, 0, -(CGRectGetHeight(self.datePicker.frame)/5));
-    self.datePicker.backgroundColor = [UIColor greenColor];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -92,6 +92,14 @@ typedef NS_ENUM(NSInteger, LostPetSearchType) {
 
 - (IBAction)clickCancel:(UIButton *)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (IBAction)clickOk:(UIButton *)sender {
+    [self dismissViewControllerAnimated:YES completion:^{
+        if (self.delegate && [self.delegate respondsToSelector:@selector(processSearchWithFilters:)]) {
+            [self.delegate processSearchWithFilters:self.lostPetFilters];
+        }
+    }];
 }
 
 #pragma mark - UITableViewDataSource
@@ -382,57 +390,58 @@ typedef NS_ENUM(NSInteger, LostPetSearchType) {
 
 #pragma mark - Pan gesture
 - (IBAction)panInView:(UIPanGestureRecognizer *)recognizer {
-    self.myTransitionDelegate.isInteraction = YES;
-    
-    CGFloat percentageY = [recognizer translationInView:self.view.superview].y / self.view.superview.bounds.size.height;
-    NSLog(@"percentageY:%.2f",percentageY);
-    
-    if (percentageY < 0) {
-//        self.adBannerView.alpha = 1 + percentageY * 2;
-    } else {
-//        self.adBannerView.alpha = self.adBannerView.alpha + percentageY * 2;
-    }
-    
-    if (recognizer.state == UIGestureRecognizerStateBegan) {
-        if (percentageY > 0){
-            self.myTransitionDelegate.direction = DirectionDown;
-            [self dismissViewControllerAnimated:YES completion:nil];
-        }
-    }
-    
-    if (self.myTransitionDelegate.direction == DirectionDown) {
-        CGFloat percentage = percentageY;
-        [self.myTransitionDelegate updateInteractiveTransition:percentage];
-    }
-    
-    if (recognizer.state == UIGestureRecognizerStateEnded ||
-        recognizer.state == UIGestureRecognizerStateCancelled ||
-        recognizer.state == UIGestureRecognizerStateFailed
-        ) {
-        
-        CGFloat velocityY = [recognizer velocityInView:recognizer.view.superview].y;
-        BOOL cancel = YES;
-        CGFloat points;
-        NSTimeInterval duration;
-        
-        if (self.myTransitionDelegate.direction == DirectionDown) {
-            cancel = (percentageY < kThreshold);
-            points = cancel ? recognizer.view.frame.origin.y : self.view.superview.bounds.size.height - recognizer.view.frame.origin.y;
-            duration = points / velocityY;
-        }
-        
-        if (duration < .2) {
-            duration = .2;
-        }else if(duration > .6){
-            duration = .6;
-        }
-        
-        if (recognizer.state == UIGestureRecognizerStateFailed) {
-            [self.myTransitionDelegate cancelInteractiveTransitionWithDuration:.35];
-        } else {
-            cancel?[self.myTransitionDelegate cancelInteractiveTransitionWithDuration:duration]:[self.myTransitionDelegate finishInteractiveTransitionWithDuration:duration];
-        }
-    }
+    return;
+//    self.myTransitionDelegate.isInteraction = YES;
+//    
+//    CGFloat percentageY = [recognizer translationInView:self.view.superview].y / self.view.superview.bounds.size.height;
+//    NSLog(@"percentageY:%.2f",percentageY);
+//    
+//    if (percentageY < 0) {
+////        self.adBannerView.alpha = 1 + percentageY * 2;
+//    } else {
+////        self.adBannerView.alpha = self.adBannerView.alpha + percentageY * 2;
+//    }
+//    
+//    if (recognizer.state == UIGestureRecognizerStateBegan) {
+//        if (percentageY > 0){
+//            self.myTransitionDelegate.direction = DirectionDown;
+//            [self dismissViewControllerAnimated:YES completion:nil];
+//        }
+//    }
+//    
+//    if (self.myTransitionDelegate.direction == DirectionDown) {
+//        CGFloat percentage = percentageY;
+//        [self.myTransitionDelegate updateInteractiveTransition:percentage];
+//    }
+//    
+//    if (recognizer.state == UIGestureRecognizerStateEnded ||
+//        recognizer.state == UIGestureRecognizerStateCancelled ||
+//        recognizer.state == UIGestureRecognizerStateFailed
+//        ) {
+//        
+//        CGFloat velocityY = [recognizer velocityInView:recognizer.view.superview].y;
+//        BOOL cancel = YES;
+//        CGFloat points;
+//        NSTimeInterval duration;
+//        
+//        if (self.myTransitionDelegate.direction == DirectionDown) {
+//            cancel = (percentageY < kThreshold);
+//            points = cancel ? recognizer.view.frame.origin.y : self.view.superview.bounds.size.height - recognizer.view.frame.origin.y;
+//            duration = points / velocityY;
+//        }
+//        
+//        if (duration < .2) {
+//            duration = .2;
+//        }else if(duration > .6){
+//            duration = .6;
+//        }
+//        
+//        if (recognizer.state == UIGestureRecognizerStateFailed) {
+//            [self.myTransitionDelegate cancelInteractiveTransitionWithDuration:.35];
+//        } else {
+//            cancel?[self.myTransitionDelegate cancelInteractiveTransitionWithDuration:duration]:[self.myTransitionDelegate finishInteractiveTransitionWithDuration:duration];
+//        }
+//    }
     
 }
 @end
