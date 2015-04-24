@@ -37,6 +37,9 @@
 #define kSpringTreshold 130
 #define kThreshold 0.30
 
+#define kLoading @"Loading..."
+#define kNoData @"查無資料..."
+
 @interface AdoptAnimalViewController () <UITableViewDataSource, UITableViewDelegate, UITabBarDelegate, ADBannerViewDelegate, AdoptAnimalRequestDelegate, AdoptAnimalFilterControllerDelegate, MGSwipeTableCellDelegate, ManulViewControllerDelegate>
 @property (strong, nonatomic) PetResult *petResult;
 @property (strong, nonatomic) NSMutableArray *requests;
@@ -63,6 +66,7 @@
 - (IBAction)panInView:(UIPanGestureRecognizer *)recognizer;
 @property (strong, nonatomic) IBOutlet UIPanGestureRecognizer *panGesture;
 @property (strong, nonatomic) MenuTransition *menuTransition;
+@property (strong, nonatomic) NSString *cellStatus;
 @end
 
 @implementation AdoptAnimalViewController
@@ -103,6 +107,10 @@
     [self.tableView sendSubviewToBack:self.loadNextPageView];
     
     self.menuTransition = [[MenuTransition alloc] init];
+    
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+    
+    self.cellStatus = kLoading;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -315,7 +323,7 @@
         if (!cell) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
         }
-        cell.textLabel.text = @"查無資料...";
+        cell.textLabel.text = self.cellStatus;
         
         return cell;
     }
@@ -526,6 +534,10 @@
     [self setPageIndicatorTitleByResult:petResult];
     self.loadNextPageView.indicatorLabel.text = @"";
     
+    if (![petResult.pets count]) {
+        self.cellStatus = kNoData;
+    }
+    
     self.isStartLoading = NO;
     self.petResult = petResult;
     self.nextPage = petResult.next;
@@ -634,24 +646,36 @@
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item {
     switch (item.tag) {
         case 0:
+            self.cellStatus = kLoading;
+            [self.tableView reloadData];
+            
             [self setNavTitleAndTabBarColor:UIColorFromRGB(kNavigationColorDogFirst) secondColor:UIColorFromRGB(kNavigationColorDogSecond)];
             [self sendDogRequest];
             [self changeNavTitle];
             self.checkButton.enabled = NO;
             break;
         case 1:
+            self.cellStatus = kLoading;
+            [self.tableView reloadData];
+            
             [self setNavTitleAndTabBarColor:UIColorFromRGB(kNavigationColorCatFirst) secondColor:UIColorFromRGB(kNavigationColorCatSecond)];
             [self sendCatRequest];
             [self changeNavTitle];
             self.checkButton.enabled = NO;
             break;
         case 2:
+            self.cellStatus = kLoading;
+            [self.tableView reloadData];
+            
             [self setNavTitleAndTabBarColor:UIColorFromRGB(kNavigationColorOtherFirst) secondColor:UIColorFromRGB(kNavigationColorOtherSecond)];
             [self sendOtherRequest];
             [self changeNavTitle];
             self.checkButton.enabled = NO;
             break;
         case 3:
+            self.cellStatus = kLoading;
+            [self.tableView reloadData];
+            
             [self setNavTitleAndTabBarColor:UIColorFromRGB(kNavigationColorMyFavoriteFirst) secondColor:UIColorFromRGB(kNavigationColorMyFavoriteSecond)];
             [self sendMyFavoriteRequest];
             [self changeNavTitle];
@@ -757,6 +781,11 @@
     self.petResult.total = [NSNumber numberWithInt:(int)[self.petResult.pets count]];
     self.petResult.offset = @"";
     [self setPageIndicatorTitleByResult:self.petResult];
+    
+    if (![self.petResult.pets count]) {
+        self.cellStatus = kNoData;
+    }
+    
     [self.tableView reloadData];
 }
 
@@ -768,6 +797,9 @@
 
 #pragma mark - AdoptAnimalFilterControllerDelegate
 - (void)clickSearchWithPetFilters:(PetFilters *)petFilters {
+    self.cellStatus = kLoading;
+    [self.tableView reloadData];
+    
     [self startLoadingWithContent:@"讀取篩選資料"];
     [self changeNavTitle];
     [self clearRequestSenderDelegate];
@@ -951,5 +983,10 @@
     } else if (recognizer.state == UIGestureRecognizerStateFailed){
         [self.menuTransition cancelInteractiveTransitionWithDuration:.35];
     }
+}
+
+#pragma mark - AppDelegate call back
+- (void)stopLoadingDone {
+    
 }
 @end

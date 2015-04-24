@@ -41,6 +41,10 @@
         self.indicatorView.alpha = finishOpacity;
         self.backgroundView.alpha = 0.0;
     } completion:^(BOOL finished) {
+        AppDelegate *appDelegate = [Utilities getAppDelegate];
+        if (appDelegate.viewController && [appDelegate.viewController respondsToSelector:@selector(stopLoadingDone)]) {
+            [appDelegate.viewController performSelectorOnMainThread:@selector(stopLoadingDone) withObject:nil waitUntilDone:NO];
+        }
         [self removeFromSuperview];
     }];
 }

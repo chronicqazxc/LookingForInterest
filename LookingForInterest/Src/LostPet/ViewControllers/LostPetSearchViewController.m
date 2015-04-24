@@ -60,7 +60,7 @@ typedef NS_ENUM(NSInteger, LostPetSearchType) {
 - (void)initDatePicker {
     self.datePicker = [[UIDatePicker alloc] init];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    dateFormatter.dateFormat = @"yyyy/MM/dd";
+    dateFormatter.dateFormat = @"yyyy/M/d";
     if (self.lostPetFilters.lostDate && ![self.lostPetFilters.lostDate isEqualToString:@""]) {
         NSDate *date = [dateFormatter dateFromString:self.lostPetFilters.lostDate];
         self.datePicker.date = date;
@@ -345,7 +345,7 @@ typedef NS_ENUM(NSInteger, LostPetSearchType) {
 - (void)setSelectedDate {
     if (self.datePicker) {
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        dateFormatter.dateFormat = @"yyyy/MM/dd";
+        dateFormatter.dateFormat = @"yyyy/M/d";
         NSString *dateString = [dateFormatter stringFromDate:self.datePicker.date];
         
         self.lostPetFilters.lostDate = dateString;

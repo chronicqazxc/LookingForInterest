@@ -10,6 +10,10 @@
 
 @class ViewController;
 
+@protocol AppDelegateDelegate
+- (void)stopLoadingDone;
+@end
+
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;

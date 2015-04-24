@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7531" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -146,11 +146,13 @@
                                             </mask>
                                         </variation>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="成年" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Umo-32-l3J">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="成年" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Umo-32-l3J">
                                         <rect key="frame" x="20" y="180" width="34" height="17"/>
                                         <color key="tintColor" red="0.80000001190000003" green="1" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="34" id="7O6-Ni-mR4"/>
+                                            <constraint firstAttribute="width" constant="34" id="7O6-Ni-mR4">
+                                                <variation key="heightClass=regular-widthClass=compact" constant="69"/>
+                                            </constraint>
                                             <constraint firstAttribute="height" constant="17" id="lm8-mu-H6F"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="STHeitiTC-Light" family="Heiti TC" pointSize="15"/>
@@ -169,12 +171,12 @@
                                             </mask>
                                         </variation>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="米克斯" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OoP-H4-Wdc">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="米克斯" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OoP-H4-Wdc">
                                         <rect key="frame" x="258" y="180" width="51" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="20.5" id="WX6-eN-IPH"/>
                                             <constraint firstAttribute="width" constant="51" id="Y1A-CD-5vm">
-                                                <variation key="heightClass=regular-widthClass=compact" constant="45"/>
+                                                <variation key="heightClass=regular-widthClass=compact" constant="69"/>
                                             </constraint>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
@@ -193,12 +195,12 @@
                                             </mask>
                                         </variation>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="狗狗/雄" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z69-z2-sIE">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="狗狗/雄" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z69-z2-sIE">
                                         <rect key="frame" x="165" y="179" width="17" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="miH-0o-z7Y"/>
                                             <constraint firstAttribute="width" constant="17" id="ySC-Tx-KwS">
-                                                <variation key="heightClass=regular-widthClass=compact" constant="60"/>
+                                                <variation key="heightClass=regular-widthClass=compact" constant="78"/>
                                             </constraint>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="STHeitiTC-Light" family="Heiti TC" pointSize="15"/>

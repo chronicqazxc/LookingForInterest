@@ -21,10 +21,10 @@
 
 - (NSString *)currentPage {
     NSString *currentPage = @"";
-    if (self.countOfCurrentTotal / self.top <= 1) {
-        currentPage = @"第1頁";
-    } else if (self.countOfCurrentTotal % self.top) {
+    if (self.countOfCurrentTotal % self.top) {
         currentPage = [NSString stringWithFormat:@"第%d頁",(int)(self.countOfCurrentTotal / self.top + 1)];
+    } else if (self.countOfCurrentTotal / self.top <= 1) {
+        currentPage = @"第1頁";
     } else {
         currentPage = [NSString stringWithFormat:@"第%d頁",(int)(self.countOfCurrentTotal / self.top)];
     }

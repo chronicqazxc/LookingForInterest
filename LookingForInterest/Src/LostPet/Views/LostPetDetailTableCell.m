@@ -52,8 +52,8 @@
     self.characterized.layer.masksToBounds = YES;
     
     self.name.text = self.lostPet.name?self.lostPet.name:@"";
-    self.varietyNSex.text = [NSString stringWithFormat:@"%@/%@",
-                             self.lostPet.variety?self.lostPet.variety:@"-",
+    self.varietyNSex.text = [NSString stringWithFormat:@"%@ / %@",
+                             (self.lostPet.variety && ![self.lostPet.variety isEqualToString:@""])?self.lostPet.variety:@"-",
                              self.lostPet.gender?self.lostPet.gender:@"-"];
     self.race.text = self.lostPet.race?self.lostPet.race:@"";
     self.chipNumber.text = self.lostPet.chipNumber?self.lostPet.chipNumber:@"";
@@ -62,8 +62,8 @@
     self.lostDate.text = self.lostPet.lostDate?self.lostPet.lostDate:@"";
     self.lostPlace.text = self.lostPet.lostPlace?self.lostPet.lostPlace:@"";
     self.ownersName.text = self.lostPet.ownersName?self.lostPet.ownersName:@"";
-    self.phoneNEmail.text = [NSString stringWithFormat:@"%@/%@",
-                             self.lostPet.phone?self.lostPet.phone:@"-",
+    self.phoneNEmail.text = [NSString stringWithFormat:@"%@ / %@",
+                             (self.lostPet.phone && ![self.lostPet.phone isEqualToString:@""])?self.lostPet.phone:@"-",
                              self.lostPet.email?self.lostPet.email:@"-"];
     self.characterized.text = self.lostPet.characterized?self.lostPet.characterized:@"";
 }

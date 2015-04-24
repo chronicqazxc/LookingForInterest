@@ -26,7 +26,11 @@
 #define kThreshold 0.30
 
 #define kLostPetListCell @"LostPetListCell"
+#define kNoDataCell @"NoDataCell"
 #define kToMenuSegueIdentifier @"ToMenuSegueIdentifier"
+
+#define kLoading @"Loading..."
+#define kNodate @"查無資料..."
 
 @interface LostPetViewController () <LostPetRequestDelegate, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, UITabBarDelegate, UIPopoverControllerDelegate, LostPetSearchViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -55,6 +59,7 @@
 @property (nonatomic) BOOL isBeenInit;
 - (IBAction)clickSearch:(UIBarButtonItem *)sender;
 @property (strong, nonatomic) LostPetFilters *lostPetFilters;
+@property (strong, nonatomic) NSString *informationOnCell;
 @end
 
 @implementation LostPetViewController
@@ -68,6 +73,8 @@
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     self.isStartLoading = NO;
+    
+    self.informationOnCell = kLoading;
     
     self.lostPetStatus = [[LostPetStatus alloc] init];
     
@@ -265,39 +272,50 @@
 
 #pragma mark - LostPetRequestDelegate
 - (void)lostPetResultBack:(NSArray *)lostPets {
-    self.lostPets = [NSArray arrayWithArray:lostPets];
+    if ([lostPets count]) {
+        self.lostPets = [NSArray arrayWithArray:lostPets];
+    }
     
     if (self.lostPetStatus.loadingPageStatus == LoadingPreviousPage) {
         self.lostPetStatus.countOfCurrentTotal -= self.lostPetStatus.countOfCurrentPage;
-        if (self.lostPetStatus.countOfCurrentPage == 20) {
+        if (self.lostPetStatus.countOfCurrentTotal <= 20) {
             self.loadPreviousPageView.canLoading = NO;
         }
     } else if (self.lostPetStatus.loadingPageStatus == LoadingNextPage) {
-        self.lostPetStatus.countOfCurrentTotal += [self.lostPets count];
+        self.lostPetStatus.countOfCurrentTotal += [lostPets count];
     } else {
-        self.lostPetStatus.countOfCurrentTotal += [self.lostPets count];
+        self.lostPetStatus.countOfCurrentTotal += [lostPets count];
     }
-    self.lostPetStatus.countOfCurrentPage = [self.lostPets count];
     
-    if ([self.lostPets count]) {
+    if ([lostPets count]) {
+        self.lostPetStatus.countOfCurrentPage = [lostPets count];
+        
         [self.pageIndicator setTitle:[self.lostPetStatus currentPage] forState:UIControlStateNormal];
         self.loadNextPageView.canLoading = YES;
-        [self.tableView reloadData];
         [self scrollToTop];
         if (self.lostPetStatus.loadingPageStatus == LoadingNextPage) {
             self.loadPreviousPageView.canLoading = YES;
         }
     } else {
         NSString *message = @"";
-        if (self.lostPetStatus.loadingPageStatus == LoadingNextPage) {
-            message = @"無下一頁";
+        
+        if (self.lostPetStatus.loadingPageStatus == LoadingInitPage) {
+            
             [self.pageIndicator setTitle:@"第1頁" forState:UIControlStateNormal];
-            self.loadNextPageView.canLoading = NO;
+            
+            self.informationOnCell = kNodate;
+            
+            message = kNodate;
+            
+        } else if (self.lostPetStatus.loadingPageStatus == LoadingNextPage) {
+            
+            message = @"無下一頁";
+            
         } else if (self.lostPetStatus.loadingPageStatus == LoadingPreviousPage) {
+            
             message = @"無上一頁";
             self.loadPreviousPageView.canLoading = NO;
-        } else {
-            message = @"查無資料";
+            
         }
 
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"" message:message preferredStyle:UIAlertControllerStyleAlert];
@@ -305,6 +323,7 @@
             [alertController dismissViewControllerAnimated:YES completion:nil];
         }];
         [alertController addAction:cancelAction];
+        [self presentViewController:alertController animated:YES completion:nil];
         
         self.loadNextPageView.canLoading = NO;
     }
@@ -316,6 +335,8 @@
     self.isStartLoading = NO;
     
     [Utilities stopLoading];
+    
+    [self.tableView reloadData];
 }
 
 - (void)scrollToTop {
@@ -338,32 +359,53 @@
 
 #pragma mark - UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.lostPets count];
+    if ([self.lostPets count]) {
+        return [self.lostPets count];
+    } else {
+        return 1;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    LostPetListCell *lostPetListCell = [tableView dequeueReusableCellWithIdentifier:kLostPetListCell];
-    LostPet *lostPet = [self.lostPets objectAtIndex:indexPath.row];
-    
-    lostPetListCell.chipNumber.text = lostPet.chipNumber;
-    lostPetListCell.lostDate.text = lostPet.lostDate;
-    lostPetListCell.lostPlace.text = lostPet.lostPlace;
-    lostPetListCell.variety.text = lostPet.variety;
-    lostPetListCell.hairColor.text = lostPet.hairColor;
-    lostPetListCell.hairStyle.text = lostPet.hairStyle;
-    lostPetListCell.describe.text = lostPet.characterized;
-    return lostPetListCell;
+    UITableViewCell *cell;
+    if ([self.lostPets count]) {
+        
+        LostPetListCell *lostPetListCell = [tableView dequeueReusableCellWithIdentifier:kLostPetListCell];
+        LostPet *lostPet = [self.lostPets objectAtIndex:indexPath.row];
+        
+        lostPetListCell.chipNumber.text = lostPet.chipNumber;
+        lostPetListCell.lostDate.text = lostPet.lostDate;
+        lostPetListCell.lostPlace.text = lostPet.lostPlace;
+        lostPetListCell.variety.text = lostPet.variety;
+        lostPetListCell.hairColor.text = lostPet.hairColor;
+        lostPetListCell.hairStyle.text = lostPet.hairStyle;
+        lostPetListCell.describe.text = lostPet.characterized;
+        cell = lostPetListCell;
+    } else {
+        cell = [tableView dequeueReusableCellWithIdentifier:kNoDataCell];
+        if (!cell) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kNoDataCell];
+        }
+        NSDictionary *attributeDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                                      [UIColor darkTextColor], NSForegroundColorAttributeName,
+                                      [UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:15.0], NSFontAttributeName, nil];
+        NSAttributedString *attributeString = [[NSAttributedString alloc] initWithString:self.informationOnCell attributes:attributeDic];
+        [cell.textLabel setAttributedText:attributeString];
+    }
+    return cell;
 }
 
 #pragma mark - UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    LostPetScrollViewController *lostPetScrollViewController = [[LostPetScrollViewController alloc] init];
-    lostPetScrollViewController.lostPets = [NSMutableArray arrayWithArray:self.lostPets];
-    lostPetScrollViewController.selectedIndexPath = indexPath;
-    
-    [self.navigationController pushViewController:lostPetScrollViewController animated:YES];
+    if ([self.lostPets count]) {
+        LostPetScrollViewController *lostPetScrollViewController = [[LostPetScrollViewController alloc] init];
+        lostPetScrollViewController.lostPets = [NSMutableArray arrayWithArray:self.lostPets];
+        lostPetScrollViewController.selectedIndexPath = indexPath;
+        [self.navigationController pushViewController:lostPetScrollViewController animated:YES];
+    }
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -481,9 +523,8 @@
     self.lostPetStatus.loadingPageStatus = LoadingPreviousPage;
     LostPetRequest *lostPetRequest = [[LostPetRequest alloc] init];
     lostPetRequest.lostPetRequestDelegate = self;
-    LostPetFilters *lostPetFilters = [[LostPetFilters alloc] init];
     NSString *skip = [NSString stringWithFormat:@"%d",(int)(self.lostPetStatus.countOfCurrentTotal - self.lostPetStatus.countOfCurrentPage - self.lostPetStatus.top)];
-    [lostPetRequest sendRequestForLostPetWithLostPetFilters:lostPetFilters top:@"20" skip:skip];
+    [lostPetRequest sendRequestForLostPetWithLostPetFilters:self.lostPetFilters top:@"20" skip:skip];
     [self.requests addObject:lostPetRequest];
 }
 
@@ -491,9 +532,8 @@
     self.lostPetStatus.loadingPageStatus = LoadingNextPage;
     LostPetRequest *lostPetRequest = [[LostPetRequest alloc] init];
     lostPetRequest.lostPetRequestDelegate = self;
-    LostPetFilters *lostPetFilters = [[LostPetFilters alloc] init];
     NSString *skip = [NSString stringWithFormat:@"%d",(int)self.lostPetStatus.countOfCurrentTotal];
-    [lostPetRequest sendRequestForLostPetWithLostPetFilters:lostPetFilters top:@"20" skip:skip];
+    [lostPetRequest sendRequestForLostPetWithLostPetFilters:self.lostPetFilters top:@"20" skip:skip];
     [self.requests addObject:lostPetRequest];
 }
 
@@ -579,11 +619,17 @@
 
 #pragma mark - LostPetSearchViewControllerDelegate
 - (void)processSearchWithFilters:(LostPetFilters *)lostPetFilters {
+    self.lostPets = [NSMutableArray array];
+    self.informationOnCell = kLoading;
+    [self.tableView reloadData];
+    
     self.lostPetFilters = [[LostPetFilters alloc] initWithLostPetFilters:lostPetFilters];
     LostPetRequest *lostPetRequest = [[LostPetRequest alloc] init];
     lostPetRequest.lostPetRequestDelegate = self;
     [self.requests addObject:lostPetRequest];
     [lostPetRequest sendRequestForLostPetWithLostPetFilters:self.lostPetFilters top:@"20" skip:@"0"];
+    
+    self.lostPetStatus = [[LostPetStatus alloc] init];
     
     self.lostPetStatus.loadingPageStatus = LoadingInitPage;
     

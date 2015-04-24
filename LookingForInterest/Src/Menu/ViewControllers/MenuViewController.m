@@ -88,6 +88,12 @@
     if (!self.transitioningDelegate) {
         self.transitioningDelegate = self.menuTransition;
     }
+    
+    [self setNeedsStatusBarAppearanceUpdate];    
+}
+
+-(UIStatusBarStyle)preferredStatusBarStyle{
+    return UIStatusBarStyleLightContent;
 }
 
 - (void)didReceiveMemoryWarning {

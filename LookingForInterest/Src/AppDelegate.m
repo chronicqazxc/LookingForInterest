@@ -213,7 +213,7 @@
     if (self.viewController) {
         for (UIView *view in [self.viewController.view subviews]) {
             if (view.tag == kLoadingViewTag || [view isKindOfClass:[LoadingView class]]) {
-                [(LoadingView *)view removeWithDuration:1.0 speed:0.1 startOpacity:0.8 finishOpacity:0.0 completion:nil];
+                [(LoadingView *)view removeWithDuration:1.0 speed:1.0 startOpacity:0.8 finishOpacity:0.0 completion:nil];
                 break;
             }
         }
