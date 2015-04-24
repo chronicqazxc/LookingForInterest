@@ -53,6 +53,7 @@
 
 - (IBAction)panInView:(UIPanGestureRecognizer *)recognizer;
 @property (strong, nonatomic) MenuTransition *menuTransition;
+@property (strong, nonatomic) LostPetTransition *lostPetTransition;
 
 @property (weak, nonatomic) IBOutlet ADBannerView *adBannerView;
 @property (weak, nonatomic) IBOutlet UIView *bottomView;
@@ -83,6 +84,7 @@
     [self initLoadingPageView];
     
     self.menuTransition = [[MenuTransition alloc] init];
+    self.lostPetTransition = [[LostPetTransition alloc] init];
     
     self.adBannerView.alpha = 0.0;
 
@@ -119,15 +121,15 @@
 }
 
 - (void)goToMenu:(UIBarButtonItem *)sender {
-    if (sender) {
-        self.menuTransition.isInteraction = NO;
-    } else {
-        self.menuTransition.isInteraction = YES;
-    }
-    
     UIStoryboard *firstStoryboard = [UIStoryboard storyboardWithName:kFirstStoryboard bundle:nil];
     MenuViewController *controller = (MenuViewController *)[firstStoryboard instantiateViewControllerWithIdentifier:kMenuStoryboardID];
-    controller.transitioningDelegate = self.menuTransition;
+    if (sender) {
+        controller.transitioningDelegate = self.lostPetTransition;
+    } else {
+        controller.transitioningDelegate = self.menuTransition;
+        self.menuTransition.isInteraction = YES;
+    }
+    self.lostPetTransition.isInteraction = NO;
     [self presentViewController:controller animated:YES completion:nil];
 }
 
@@ -544,8 +546,6 @@
 }
 
 - (IBAction)panInView:(UIPanGestureRecognizer *)recognizer {
-    self.menuTransition.isInteraction = YES;
-    
     CGFloat percentageY = [recognizer translationInView:self.view.superview].y / self.view.superview.bounds.size.height;
     NSLog(@"percentageY:%.2f",[recognizer velocityInView:recognizer.view.superview].y);
     
@@ -558,6 +558,7 @@
     self.currentLocation = [recognizer translationInView:self.view];
 
     if (recognizer.state == UIGestureRecognizerStateBegan) {
+        
         if (percentageY < 0){
             self.menuTransition.direction = DirectionUp;
             [self goToMenu:nil];
@@ -611,6 +612,8 @@
 //        [self addCircleViewBehavior];
         
         self.adBannerView.alpha = cancel ? 1 : 0;
+        
+        self.transitioningDelegate = self.lostPetTransition;
     }
     
 //    NSLog(@"self.adBannerView.alpha:%.2f",self.adBannerView.alpha);

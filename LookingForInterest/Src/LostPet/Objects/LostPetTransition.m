@@ -15,7 +15,7 @@
 }
 
 - (id <UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed{
-    return nil;
+    return self;
 }
 
 - (id <UIViewControllerInteractiveTransitioning>)interactionControllerForPresentation:(id <UIViewControllerAnimatedTransitioning>)animator{
@@ -24,5 +24,28 @@
 
 - (id <UIViewControllerInteractiveTransitioning>)interactionControllerForDismissal:(id <UIViewControllerAnimatedTransitioning>)animator{
     return nil;
+}
+
+#pragma mark - UIViewControllerAnimatedTransitioning
+- (NSTimeInterval)transitionDuration:(id <UIViewControllerContextTransitioning>)transitionContext{
+    return 0.3;
+}
+
+- (void)animateTransition:(id <UIViewControllerContextTransitioning>)transitionContext{
+    
+    UIViewController *fromVC = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
+    UIViewController *toVC = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
+    UIView *contextView = [transitionContext containerView];
+    
+    [contextView addSubview:toVC.view];
+    [contextView sendSubviewToBack:toVC.view];
+    
+    [UIView animateWithDuration:[self transitionDuration:transitionContext] animations:^{
+        fromVC.view.alpha = 0.0;
+    } completion:^(BOOL finished) {
+        [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
+    }];
+    
+    
 }
 @end

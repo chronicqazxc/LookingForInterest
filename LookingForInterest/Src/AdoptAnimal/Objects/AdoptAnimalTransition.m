@@ -9,13 +9,17 @@
 #import "AdoptAnimalTransition.h"
 
 @implementation AdoptAnimalTransition
-
 - (id <UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source{
-    return nil;
+    return self;
 }
 
 - (id <UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed{
     return nil;
+}
+
+#pragma mark - UIViewControllerAnimatedTransitioning
+- (NSTimeInterval)transitionDuration:(id <UIViewControllerContextTransitioning>)transitionContext{
+    return 1;
 }
 
 - (void)animateTransition:(id <UIViewControllerContextTransitioning>)transitionContext{
@@ -25,18 +29,18 @@
     UIView *contextView = [transitionContext containerView];
     
     CGRect finalFrame = [transitionContext finalFrameForViewController:toVC];
-    toVC.view.alpha = 0.5;
-    toVC.view.transform = CGAffineTransformMakeScale(.0, .0);
+    
+    toVC.view.frame = CGRectMake(0, fromVC.view.bounds.size.height, finalFrame.size.width, finalFrame.size.height);
     [contextView addSubview:toVC.view];
     
     
     [UIView animateWithDuration:[self transitionDuration:transitionContext] animations:^{
-        fromVC.view.transform = CGAffineTransformMakeScale(1.0, 1.0);
-        toVC.view.transform = CGAffineTransformMakeScale(1.0, 1.0);
-//        toVC.view.frame = finalFrame;
-        toVC.view.alpha = 1.0;
+//        fromVC.view.transform = CGAffineTransformMakeScale(.7, .7);
+        toVC.view.frame = finalFrame;
     } completion:^(BOOL finished) {
         [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
     }];
+    
+    
 }
 @end

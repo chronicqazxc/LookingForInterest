@@ -105,7 +105,7 @@
     self.addressLabel.text = [NSString stringWithFormat:@"地址：%@",self.store.address];
     self.addressLabel.hidden = YES;
     self.adBannerView.delegate = self;
-    
+
 }
 
 - (void)didReceiveMemoryWarning {

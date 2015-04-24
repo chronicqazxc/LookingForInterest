@@ -19,6 +19,7 @@
 #import "TableLoadNextPage.h"
 #import "TableLoadPreviousPage.h"
 #import "MenuTransition.h"
+#import "AnimalHospitalTransition.h"
 #import "MenuViewController.h"
 
 #define kMagnifierImg @"iconmonstr-magnifier-3-icon-256.png"
@@ -83,6 +84,7 @@
 @property (weak, nonatomic) IBOutlet ADBannerView *adBannerView;
 - (IBAction)panInView:(UIPanGestureRecognizer *)recognizer;
 @property (strong, nonatomic) MenuTransition *menuTransition;
+@property (strong, nonatomic) AnimalHospitalTransition *animalHospitalTransition;
 @end
 
 @implementation ViewController
@@ -143,6 +145,7 @@
     [self settingLoadingPageView];
     
     self.menuTransition = [[MenuTransition alloc] init];
+    self.animalHospitalTransition = [[AnimalHospitalTransition alloc] init];
 }
 
 - (void)settingTitleTextAttribute {
@@ -165,10 +168,7 @@
 }
 
 - (void)goHome {
-    UIStoryboard *firstStoryboard = [UIStoryboard storyboardWithName:kFirstStoryboard bundle:nil];
-    MenuViewController *controller = (MenuViewController *)[firstStoryboard instantiateViewControllerWithIdentifier:kMenuStoryboardID];
-    controller.transitioningDelegate = self.menuTransition;
-    [self presentViewController:controller animated:YES completion:nil];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)settingLocationManager {

@@ -435,7 +435,7 @@
     self.transitioningDelegate = self.menuTransition;
     UIStoryboard *secondStoryboard = [UIStoryboard storyboardWithName:kSecondStoryboard bundle:nil];
     LostPetNavigationController *controller = (LostPetNavigationController *)[secondStoryboard instantiateViewControllerWithIdentifier:kLostPetNavigationControllerStoryboardID];
-    controller.transitioningDelegate = self.transitioningDelegate;
+//    controller.transitioningDelegate = self.transitioningDelegate;
     [self presentViewController:controller animated:YES completion:nil];
     
 }
