@@ -325,6 +325,12 @@
                                 <exclude reference="X3g-RK-KPM"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="BWS-5o-5m7"/>
+                                <exclude reference="QEh-2b-VT9"/>
+                                <exclude reference="qmP-u9-nJt"/>
+                                <exclude reference="CXf-pR-ENC"/>
+                                <exclude reference="gGx-83-mEc"/>
+                                <exclude reference="grK-aV-ULk"/>
                                 <exclude reference="4ml-oT-a6X"/>
                                 <exclude reference="aDV-pa-s9Y"/>
                                 <exclude reference="hh5-5J-b7b"/>
@@ -332,12 +338,6 @@
                                 <exclude reference="Gpf-qV-kTM"/>
                                 <exclude reference="VMq-d7-R4I"/>
                                 <exclude reference="vMi-pY-4gQ"/>
-                                <exclude reference="BWS-5o-5m7"/>
-                                <exclude reference="QEh-2b-VT9"/>
-                                <exclude reference="qmP-u9-nJt"/>
-                                <exclude reference="CXf-pR-ENC"/>
-                                <exclude reference="gGx-83-mEc"/>
-                                <exclude reference="grK-aV-ULk"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -347,6 +347,12 @@
                                 <include reference="X3g-RK-KPM"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="BWS-5o-5m7"/>
+                                <exclude reference="QEh-2b-VT9"/>
+                                <include reference="qmP-u9-nJt"/>
+                                <include reference="CXf-pR-ENC"/>
+                                <include reference="gGx-83-mEc"/>
+                                <include reference="grK-aV-ULk"/>
                                 <exclude reference="4ml-oT-a6X"/>
                                 <include reference="aDV-pa-s9Y"/>
                                 <include reference="hh5-5J-b7b"/>
@@ -354,12 +360,6 @@
                                 <include reference="Gpf-qV-kTM"/>
                                 <include reference="VMq-d7-R4I"/>
                                 <include reference="vMi-pY-4gQ"/>
-                                <include reference="BWS-5o-5m7"/>
-                                <exclude reference="QEh-2b-VT9"/>
-                                <include reference="qmP-u9-nJt"/>
-                                <include reference="CXf-pR-ENC"/>
-                                <include reference="gGx-83-mEc"/>
-                                <include reference="grK-aV-ULk"/>
                             </mask>
                         </variation>
                     </view>

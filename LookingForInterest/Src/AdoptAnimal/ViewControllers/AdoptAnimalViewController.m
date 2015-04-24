@@ -20,6 +20,7 @@
 #import "TableLoadNextPage.h"
 #import "TableLoadPreviousPage.h"
 #import "MenuTransition.h"
+#import "AdoptAnimalTransition.h"
 #import "MenuViewController.h"
 
 #define kAdoptAnimalTitle(type) [NSString stringWithFormat:@"觀看%@",type]
@@ -66,6 +67,7 @@
 - (IBAction)panInView:(UIPanGestureRecognizer *)recognizer;
 @property (strong, nonatomic) IBOutlet UIPanGestureRecognizer *panGesture;
 @property (strong, nonatomic) MenuTransition *menuTransition;
+@property (strong, nonatomic) AdoptAnimalTransition *adoptAnimalTransition;
 @property (strong, nonatomic) NSString *cellStatus;
 @end
 
@@ -91,7 +93,9 @@
     NSDictionary *attributeDic2 = [NSDictionary dictionaryWithObjectsAndKeys:
                                    [UIColor whiteColor], NSForegroundColorAttributeName,
                                    [UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:15.0], NSFontAttributeName, nil];
-    [self.navigationItem.leftBarButtonItem setTitleTextAttributes:attributeDic2 forState:UIControlStateNormal];
+    UIBarButtonItem *homeButton = [[UIBarButtonItem alloc] initWithTitle:@"首頁" style:UIBarButtonItemStylePlain target:self action:@selector(goHome)];
+    [homeButton setTitleTextAttributes:attributeDic2 forState:UIControlStateNormal];
+    self.navigationItem.leftBarButtonItem = homeButton;
     
     self.loadPreviousPageView = (TableLoadPreviousPage *)[Utilities getNibWithName:@"TableLoadPreviousPage"];
     self.loadPreviousPageView.frame = CGRectZero;
@@ -108,10 +112,16 @@
     [self.tableView sendSubviewToBack:self.loadNextPageView];
     
     self.menuTransition = [[MenuTransition alloc] init];
+    self.adoptAnimalTransition = [[AdoptAnimalTransition alloc] init];
+    self.transitioningDelegate = self.adoptAnimalTransition;
     
     self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
     
     self.cellStatus = kLoading;
+}
+
+- (void)goHome {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -993,8 +1003,12 @@
         
         cancel?[self.menuTransition cancelInteractiveTransitionWithDuration:duration]:[self.menuTransition finishInteractiveTransitionWithDuration:duration];
         
+        self.transitioningDelegate = self.adoptAnimalTransition;
+        
     } else if (recognizer.state == UIGestureRecognizerStateFailed){
         [self.menuTransition cancelInteractiveTransitionWithDuration:.35];
+        
+        self.transitioningDelegate = self.adoptAnimalTransition;
     }
 }
 
