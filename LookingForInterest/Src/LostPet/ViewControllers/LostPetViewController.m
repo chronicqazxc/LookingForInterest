@@ -83,6 +83,8 @@
     [self initLoadingPageView];
     
     self.menuTransition = [[MenuTransition alloc] init];
+    
+    self.adBannerView.alpha = 0.0;
 
     self.isBeenInit = NO;
     
@@ -246,6 +248,10 @@
         self.lostPetStatus.loadingPageStatus = LoadingInitPage;
         
         [self startLoadingWithContent:@""];
+        
+        [UIView animateWithDuration:1.0 animations:^{
+            self.adBannerView.alpha = 1.0;
+        }];
         
         self.isBeenInit = YES;
     }

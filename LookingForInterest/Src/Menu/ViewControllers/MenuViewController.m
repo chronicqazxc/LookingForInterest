@@ -89,6 +89,8 @@
         self.transitioningDelegate = self.menuTransition;
     }
     
+    self.adBannerView.hidden = YES;
+    
     [self setNeedsStatusBarAppearanceUpdate];    
 }
 
@@ -124,8 +126,45 @@
     [super viewDidLayoutSubviews];
     if (self.isViewDidAppear && !self.isInitial) {
         [self initButtons];
+        
+        [self initADBanner];
+        [self showADBanner];
+        
         self.isInitial = YES;
     }
+}
+
+- (void)initADBanner {
+    self.adBannerView.frame = CGRectMake(0,
+                                         CGRectGetHeight(self.view.frame),
+                                         CGRectGetWidth(self.adBannerView.frame),
+                                         CGRectGetHeight(self.adBannerView.frame));
+    self.adBannerView.hidden = NO;
+}
+
+- (void)showADBanner {
+    [UIView animateWithDuration:1.0 animations:^{
+        [self.adBannerView layoutIfNeeded];
+        self.adBannerView.frame = CGRectMake(0,
+                                             CGRectGetHeight(self.view.frame)-CGRectGetHeight(self.adBannerView.frame),
+                                             CGRectGetWidth(self.adBannerView.frame),
+                                             CGRectGetHeight(self.adBannerView.frame));
+    }];
+}
+
+- (void)hideADBanner {
+    self.adBannerView.hidden = NO;
+    [UIView animateWithDuration:1.0 animations:^{
+        [self.adBannerView layoutIfNeeded];
+        self.adBannerView.frame = CGRectMake(0,
+                                             CGRectGetHeight(self.view.frame),
+                                             CGRectGetWidth(self.adBannerView.frame),
+                                             CGRectGetHeight(self.adBannerView.frame));
+    }];
+}
+
+- (BOOL)isADBannerViewHidden {
+    return (CGRectGetMinY(self.adBannerView.frame) == CGRectGetHeight(self.view.frame));
 }
 
 - (void)initButtons {
@@ -351,34 +390,19 @@
 
 - (void)bannerViewDidLoadAd:(ADBannerView *)banner
 {
-    [self layoutAnimated:YES];
-}
-
-- (void)layoutAnimated:(BOOL)animated
-{
-    CGRect contentFrame = self.view.bounds;
-    CGRect bannerFrame = self.adBannerView.frame;
-    if (self.adBannerView.bannerLoaded) {
-        contentFrame.size.height -= self.adBannerView.frame.size.height;
-        bannerFrame.origin.y = contentFrame.size.height;
-    } else {
-        bannerFrame.origin.y = contentFrame.size.height;
+    if ([self isADBannerViewHidden]) {
+        [self showADBanner];
     }
-    
-    [UIView animateWithDuration:animated ? 0.25 : 0.0 animations:^{
-        self.adBannerView.frame = contentFrame;
-        [self.adBannerView layoutIfNeeded];
-        self.adBannerView.frame = bannerFrame;
-    }];
 }
-
 
 - (void)bannerViewWillLoadAd:(ADBannerView *)banner {
-    
+
 }
 
 - (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error {
-    [self layoutAnimated:YES];
+    if (![self isADBannerViewHidden]) {
+        [self hideADBanner];
+    }
 }
 
 - (void)checkSystemVersion {
