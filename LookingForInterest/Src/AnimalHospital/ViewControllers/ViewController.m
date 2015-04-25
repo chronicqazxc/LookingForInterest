@@ -157,7 +157,7 @@
 }
 
 - (void)settingBackButton {
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"首頁" style:UIBarButtonItemStylePlain target:self action:@selector(goHome)];
+    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"首頁" style:UIBarButtonItemStylePlain target:self action:@selector(goHome:)];
     NSDictionary *attributeDic2 = [NSDictionary dictionaryWithObjectsAndKeys:
                                    [UIColor darkTextColor], NSForegroundColorAttributeName,
                                    [UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:15.0], NSFontAttributeName, nil];
@@ -167,8 +167,20 @@
     self.navigationItem.leftBarButtonItem = backButton;
 }
 
-- (void)goHome {
-    [self dismissViewControllerAnimated:YES completion:nil];
+- (void)goHome:(UIBarButtonItem *)sender {
+//    [self dismissViewControllerAnimated:YES completion:nil];
+    id<UIViewControllerTransitioningDelegate> transitionDelegate;
+    if (sender) {
+        transitionDelegate = self.animalHospitalTransition;
+    } else {
+        transitionDelegate = self.menuTransition;
+        self.menuTransition.isInteraction = YES;
+    }
+    
+    UIStoryboard *firstStoryboard = [UIStoryboard storyboardWithName:kFirstStoryboard bundle:nil];
+    MenuViewController *controller = (MenuViewController *)[firstStoryboard instantiateViewControllerWithIdentifier:kMenuStoryboardID];
+    controller.transitioningDelegate = transitionDelegate;
+    [self presentViewController:controller animated:YES completion:nil];
 }
 
 - (void)settingLocationManager {
@@ -317,7 +329,7 @@
                                                      style:UIAlertActionStyleDefault
                                                    handler:^(UIAlertAction *action) {
                                                        [alertController dismissViewControllerAnimated:YES completion:nil];
-                                                       [self goHome];
+                                                       [self goHome:self.navigationItem.leftBarButtonItem];
     }];
     
     [alertController addAction:action];
@@ -974,7 +986,7 @@
         if (percentageX > 0) {
             self.menuTransition.direction = DirectionRight;
             
-            [self goHome];
+            [self goHome:nil];
             
         }
         return;

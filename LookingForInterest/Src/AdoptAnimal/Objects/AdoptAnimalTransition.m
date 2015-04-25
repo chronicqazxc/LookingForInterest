@@ -7,6 +7,7 @@
 //
 
 #import "AdoptAnimalTransition.h"
+#import "AdoptAnimalNavigationController.h"
 
 @implementation AdoptAnimalTransition
 - (id <UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source{
@@ -19,11 +20,39 @@
 
 #pragma mark - UIViewControllerAnimatedTransitioning
 - (NSTimeInterval)transitionDuration:(id <UIViewControllerContextTransitioning>)transitionContext{
-    return 1;
+    return 0.3;
 }
 
 - (void)animateTransition:(id <UIViewControllerContextTransitioning>)transitionContext{
     
+    UIViewController *fromVC = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
+    
+    if ([fromVC isKindOfClass:[AdoptAnimalNavigationController class]]) {
+        [self leaveFromAdoptAnimalViewControllerWithContext:transitionContext];
+        
+    } else {
+        
+        [self goToAdoptAnimalViewControllerWithContext:transitionContext];
+    }
+
+}
+
+- (void)leaveFromAdoptAnimalViewControllerWithContext:(id<UIViewControllerContextTransitioning>)transitionContext {
+    UIViewController *fromVC = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
+    UIViewController *toVC = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
+    UIView *contextView = [transitionContext containerView];
+    
+    [contextView addSubview:toVC.view];
+    [contextView sendSubviewToBack:toVC.view];
+    
+    [UIView animateWithDuration:[self transitionDuration:transitionContext] animations:^{
+        fromVC.view.alpha = 0.0;
+    } completion:^(BOOL finished) {
+        [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
+    }];
+}
+
+- (void)goToAdoptAnimalViewControllerWithContext:(id<UIViewControllerContextTransitioning>)transitionContext {
     UIViewController *fromVC = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
     UIViewController *toVC = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
     UIView *contextView = [transitionContext containerView];
@@ -35,12 +64,10 @@
     
     
     [UIView animateWithDuration:[self transitionDuration:transitionContext] animations:^{
-//        fromVC.view.transform = CGAffineTransformMakeScale(.7, .7);
+        //        fromVC.view.transform = CGAffineTransformMakeScale(.7, .7);
         toVC.view.frame = finalFrame;
     } completion:^(BOOL finished) {
         [transitionContext completeTransition:![transitionContext transitionWasCancelled]];
     }];
-    
-    
 }
 @end

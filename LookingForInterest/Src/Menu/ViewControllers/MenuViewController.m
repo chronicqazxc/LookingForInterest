@@ -469,6 +469,7 @@
             UIStoryboard *firstStoryboard = [UIStoryboard storyboardWithName:kFirstStoryboard bundle:nil];
             AdoptAnimalNavigationController *controller = (AdoptAnimalNavigationController *)[firstStoryboard instantiateViewControllerWithIdentifier:kAdoptAnimalNavigationControllerStoryboardID];
             controller.transitioningDelegate = self.menuTransition;
+            
             [self presentViewController:controller animated:YES completion:nil];
             
         } else if (percentageX < 0) {
