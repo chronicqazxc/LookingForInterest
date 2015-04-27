@@ -45,9 +45,10 @@
     if (!self.wkWebView) {
         self.wkWebView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];
         MarqueeLabel *marqueeLabel = [[MarqueeLabel alloc] initWithFrame:CGRectMake(0, size.height - 30.0, size.width, 21.0)];
-        marqueeLabel.text = @"地圖資料由google將走之地址轉換而成，僅供參考！";
+        marqueeLabel.text = @"地圖為利用google maps api將走失地點轉換而成，根據資料內容可能會有誤差，資料僅供參考！";
         marqueeLabel.textColor = [UIColor redColor];
         marqueeLabel.textAlignment = NSTextAlignmentCenter;
+        marqueeLabel.marqueeType = MLContinuous;
         [self.wkWebView addSubview:marqueeLabel];
         
         self.wkWebView.navigationDelegate = self;

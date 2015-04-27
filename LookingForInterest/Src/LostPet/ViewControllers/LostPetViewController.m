@@ -553,7 +553,6 @@
 
 - (IBAction)panInView:(UIPanGestureRecognizer *)recognizer {
     CGFloat percentageY = [recognizer translationInView:self.view.superview].y / self.view.superview.bounds.size.height;
-    NSLog(@"percentageY:%.2f",[recognizer velocityInView:recognizer.view.superview].y);
     
     if (percentageY < 0) {
         self.adBannerView.alpha = 1 + percentageY * 2;
