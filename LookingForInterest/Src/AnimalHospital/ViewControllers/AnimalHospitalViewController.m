@@ -601,7 +601,6 @@
 - (BOOL)allowActionToRun {
     return YES;
 }
-
 #pragma mark - ADBannerViewDelegate
 - (BOOL)bannerViewActionShouldBegin:(ADBannerView *)banner willLeaveApplication:(BOOL)willLeave {
     NSLog(@"Banner view is beginning an ad action");

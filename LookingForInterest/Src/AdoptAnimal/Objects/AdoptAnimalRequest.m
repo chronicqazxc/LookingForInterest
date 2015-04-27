@@ -276,12 +276,20 @@
     if (self.delegate) {
         switch (self.adoptAnimalRequestType) {
             case RequestTypeAdoptAnimals:
-                if ([self.delegate respondsToSelector:@selector(petResultBack:)]) {
-                    [self parsePetResultData:[self appendDataFromDatas:self.receivedDatas] withConnection:connection];
+                if (self.statusCode == 200) {
+                    if ([self.adoptAnimalRequestDelegate respondsToSelector:@selector(petResultBack:)]) {
+                        [self parsePetResultData:[self appendDataFromDatas:self.receivedDatas] withConnection:connection];
+                    }
+                } else {
+                    if ([self.adoptAnimalRequestDelegate respondsToSelector:@selector(faildResultWithHTMLContent:)]) {
+                        NSData *data = [self appendDataFromDatas:self.receivedDatas];
+                        NSString *htmlString = [NSString stringWithUTF8String:[data bytes]];
+                        [self.adoptAnimalRequestDelegate faildResultWithHTMLContent:htmlString];
+                    }
                 }
                 break;
             case RequestTypePetThumbNail:
-                if ([self.delegate respondsToSelector:@selector(thumbNailBack:indexPath:)]) {
+                if ([self.adoptAnimalRequestDelegate respondsToSelector:@selector(thumbNailBack:indexPath:)]) {
                     [self parseThumbNailData:[self appendDataFromDatas:self.receivedDatas]];
                 }
                 break;

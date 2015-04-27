@@ -33,6 +33,7 @@
     [self.collectionView reloadData];
     self.isInit = NO;
     
+    self.navigationItem.title = @"走失寵物";
 }
 
 - (void)viewDidLayoutSubviews {

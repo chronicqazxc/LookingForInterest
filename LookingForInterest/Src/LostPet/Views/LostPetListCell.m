@@ -11,7 +11,10 @@
 @implementation LostPetListCell
 
 - (void)awakeFromNib {
-    // Initialization code
+    self.describe.layer.borderColor = [UIColor blackColor].CGColor;
+    self.describe.layer.borderWidth = 1.0;
+    self.describe.layer.masksToBounds = YES;
+    self.describe.layer.cornerRadius = 5.0f;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

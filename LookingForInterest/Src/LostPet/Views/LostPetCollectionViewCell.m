@@ -11,16 +11,18 @@
 #import "LostPet.h"
 #import "MarqueeLabel.h"
 #import "GoogleMapNavigation.h"
+#import "MarqueeLabel.h"
 
 #define kPetImageWidth CGRectGetWidth([[UIScreen mainScreen] bounds])
 #define kPetImageHeigh 300
 
-@interface LostPetCollectionViewCell() <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate>
+@interface LostPetCollectionViewCell() <UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, WKNavigationDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) WKWebView *wkWebView;
 @property (strong, nonatomic) UIImageView *lostPetImageView;
 @property (strong, nonatomic) UIImage *image;
 @property (strong, nonatomic) UIView *upperViewContainer;
+@property (nonatomic) BOOL canLoadMap;
 @end
 
 @implementation LostPetCollectionViewCell
@@ -39,15 +41,19 @@
     self.lostPetImageView.image = [UIImage imageNamed:@"background_img.png"];
     [self loadImage];
     
+    self.canLoadMap = NO;
     if (!self.wkWebView) {
         self.wkWebView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];
+        MarqueeLabel *marqueeLabel = [[MarqueeLabel alloc] initWithFrame:CGRectMake(0, size.height - 30.0, size.width, 21.0)];
+        marqueeLabel.text = @"地圖資料由google將走之地址轉換而成，僅供參考！";
+        marqueeLabel.textColor = [UIColor redColor];
+        marqueeLabel.textAlignment = NSTextAlignmentCenter;
+        [self.wkWebView addSubview:marqueeLabel];
+        
+        self.wkWebView.navigationDelegate = self;
         [self.upperViewContainer addSubview:self.wkWebView];
     }
-    if (![self.lostPet.lostPlace isEqualToString:@""]) {
-        [self wkWebView:self.wkWebView loadLocation:self.lostPet.lostPlace size:size];
-    } else {
-        [self.wkWebView loadHTMLString:@"無地址" baseURL:nil];
-    }
+    [self.wkWebView loadHTMLString:@"<head><style>body{background-color:white; font-size:40px;}</style></head><body><H1><div align=\"center\">Loading...</div></H1></body>" baseURL:nil];
     
     [self showMapOrPictureByValue:self.showType];
     
@@ -156,5 +162,19 @@
 
 -(CGFloat)shiftInPercents{
     return (-self.tableView.contentOffset.y/80)+1;
+}
+
+#pragma mark - WKNavigationDelegate
+- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
+    if (!self.canLoadMap) {
+        if (![self.lostPet.lostPlace isEqualToString:@""]) {
+            CGSize size = CGSizeMake([Utilities getScreenSize].width, 300);
+            [self wkWebView:self.wkWebView loadLocation:self.lostPet.lostPlace size:size];
+        } else {
+            [self.wkWebView loadHTMLString:@"<head><style>body{background-color:white; font-size:40px;}</style></head><body><H1><div align=\"center\">無走失地址</div></H1></body>" baseURL:nil];
+        }
+        self.canLoadMap = YES;
+    }
+
 }
 @end

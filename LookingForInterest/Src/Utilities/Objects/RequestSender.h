@@ -17,6 +17,7 @@ typedef NS_ENUM(NSInteger, FilterType) {
 @optional
 - (void)accessTokenBack:(NSArray *)accessTokenData;
 - (void)requestFaildWithMessage:(NSString *)message connection:(NSURLConnection *)connection;
+- (void)faildResultWithHTMLContent:(NSString *)content;
 @end
 
 @interface RequestSender : NSObject
@@ -25,6 +26,7 @@ typedef NS_ENUM(NSInteger, FilterType) {
 @property (strong, nonatomic) NSString *accessToken;
 @property (nonatomic) FilterType type;
 @property (strong, nonatomic) NSMutableArray *connectionsArr;
+@property (nonatomic) NSInteger statusCode;
 - (void)reconnect:(NSURLConnection *)connection;
 - (NSData *)appendDataFromDatas:(NSMutableArray *)datas;
 - (NSArray *)parseAccessToken:(NSData *)data;

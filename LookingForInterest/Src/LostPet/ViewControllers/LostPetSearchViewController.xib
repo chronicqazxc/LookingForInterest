@@ -96,15 +96,15 @@
                             </mask>
                             <mask key="constraints">
                                 <exclude reference="Bg3-EN-VjH"/>
-                                <exclude reference="Hwi-7D-sww"/>
-                                <exclude reference="jW0-hs-Q03"/>
-                                <exclude reference="jXX-90-cvy"/>
                                 <exclude reference="Cdx-XC-Su7"/>
                                 <exclude reference="Vs5-wr-ixB"/>
                                 <exclude reference="YIh-6X-oxx"/>
                                 <exclude reference="dP1-Tp-qjU"/>
                                 <exclude reference="flW-98-Ksk"/>
                                 <exclude reference="G8J-Sk-Yth"/>
+                                <exclude reference="Hwi-7D-sww"/>
+                                <exclude reference="jW0-hs-Q03"/>
+                                <exclude reference="jXX-90-cvy"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -116,15 +116,15 @@
                             </mask>
                             <mask key="constraints">
                                 <include reference="Bg3-EN-VjH"/>
-                                <include reference="Hwi-7D-sww"/>
-                                <include reference="jW0-hs-Q03"/>
-                                <include reference="jXX-90-cvy"/>
                                 <include reference="Cdx-XC-Su7"/>
                                 <exclude reference="Vs5-wr-ixB"/>
                                 <include reference="YIh-6X-oxx"/>
                                 <exclude reference="dP1-Tp-qjU"/>
                                 <include reference="flW-98-Ksk"/>
                                 <include reference="G8J-Sk-Yth"/>
+                                <include reference="Hwi-7D-sww"/>
+                                <include reference="jW0-hs-Q03"/>
+                                <include reference="jXX-90-cvy"/>
                             </mask>
                         </variation>
                         <connections>

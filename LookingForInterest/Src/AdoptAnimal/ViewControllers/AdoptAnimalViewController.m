@@ -22,6 +22,7 @@
 #import "MenuTransition.h"
 #import "AdoptAnimalTransition.h"
 #import "MenuViewController.h"
+#import "WebViewController.h"
 
 #define kAdoptAnimalTitle(type) [NSString stringWithFormat:@"觀看%@",type]
 #define kNavigationColorDogFirst 0xb2b2ff
@@ -574,6 +575,13 @@
 
 }
 
+- (void)faildResultWithHTMLContent:(NSString *)content {
+    WebViewController *webViewController = [[WebViewController alloc] initWithNibName:@"WebViewController" bundle:nil];
+    webViewController.searchType = HTMLString;
+    webViewController.htmlString = [NSString stringWithString:content];
+    [self.navigationController pushViewController:webViewController animated:YES];
+}
+
 - (void)scrollToTop {
     [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
 }
@@ -962,6 +970,8 @@
     return (CGRectGetMinY(self.adBannerView.frame) == CGRectGetHeight(self.view.frame));
 }
 
+
+#pragma mark - Pan in view
 - (IBAction)panInView:(UIPanGestureRecognizer *)recognizer {
     self.menuTransition.isInteraction = YES;
     self.transitioningDelegate =  self.menuTransition;

@@ -10,10 +10,12 @@
 
 typedef enum searchType {
     SearchWeb,
-    SearchImage
+    SearchImage,
+    HTMLString
 } SearchType;
 
 @interface WebViewController : UIViewController
 @property (strong, nonatomic) NSString *keyword;
 @property (nonatomic) SearchType searchType;
+@property (strong, nonatomic) NSString *htmlString;
 @end

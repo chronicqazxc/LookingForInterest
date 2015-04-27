@@ -59,7 +59,8 @@
 
 #pragma mark - NSURLconnectionDelegate
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
-
+    NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse*)response;
+    self.statusCode = [httpResponse statusCode];
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {

@@ -44,9 +44,6 @@
         if (!self.keyword) {
             self.keyword = @"";
         }
-        if (!self.keyword) {
-            self.keyword = @"";
-        }
         self.keyword = [self.keyword stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         
         [self webViewLoadRequestByKeyword:self.keyword searchType:self.searchType];
@@ -65,8 +62,15 @@
     
     if (searchType == SearchWeb) {
         urlString = [NSString stringWithFormat:kSearchWeb,keyword];
-    } else {
+    } else if (searchType == SearchImage) {
         urlString = [NSString stringWithFormat:kSearchImage,keyword];
+    } else if (searchType == HTMLString) {
+        if (!self.htmlString) {
+            self.htmlString = @"";
+        }
+        [self.wkwebView loadHTMLString:self.htmlString baseURL:nil];
+        
+        return;
     }
     
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:urlString]];

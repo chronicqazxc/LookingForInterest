@@ -32,7 +32,7 @@
 #define kLoading @"Loading..."
 #define kNodate @"查無資料..."
 
-@interface LostPetViewController () <LostPetRequestDelegate, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, UITabBarDelegate, UIPopoverControllerDelegate, LostPetSearchViewControllerDelegate>
+@interface LostPetViewController () <LostPetRequestDelegate, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, UITabBarDelegate, UIPopoverControllerDelegate, LostPetSearchViewControllerDelegate, ADBannerViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSArray *lostPets;
 @property (strong, nonatomic) NSMutableArray *requests;
@@ -87,8 +87,11 @@
     self.lostPetTransition = [[LostPetTransition alloc] init];
     
     self.adBannerView.alpha = 0.0;
+    self.adBannerView.delegate = self;
 
     self.isBeenInit = NO;
+    
+    self.navigationItem.title = @"走失寵物";
     
 //    [self initDynamicAnimation];
 }
@@ -388,6 +391,9 @@
         lostPetListCell.hairColor.text = lostPet.hairColor;
         lostPetListCell.hairStyle.text = lostPet.hairStyle;
         lostPetListCell.describe.text = lostPet.characterized;
+        
+        [lostPetListCell awakeFromNib];
+        
         cell = lostPetListCell;
     } else {
         cell = [tableView dequeueReusableCellWithIdentifier:kNoDataCell];
@@ -643,5 +649,55 @@
     self.lostPetStatus.loadingPageStatus = LoadingInitPage;
     
     [self startLoadingWithContent:@""];
+}
+
+- (BOOL)allowActionToRun {
+    return YES;
+}
+#pragma mark - ADBannerViewDelegate
+- (BOOL)bannerViewActionShouldBegin:(ADBannerView *)banner willLeaveApplication:(BOOL)willLeave {
+    NSLog(@"Banner view is beginning an ad action");
+    BOOL shouldExecuteAction = [self allowActionToRun];
+    if (!willLeave && shouldExecuteAction) {
+        // insert code here to suspend any services that might conflict with the advertisement
+    }
+    return shouldExecuteAction;
+}
+
+- (void)bannerViewDidLoadAd:(ADBannerView *)banner {
+    if ([self isADBannerViewHidden]) {
+        [self showADBanner];
+    }
+}
+
+- (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error {
+    if (![self isADBannerViewHidden]) {
+        [self hideADBanner];
+    }
+}
+
+- (void)showADBanner {
+    [UIView animateWithDuration:1.0 animations:^{
+        [self.adBannerView layoutIfNeeded];
+        self.adBannerView.frame = CGRectMake(0,
+                                             CGRectGetHeight(self.view.frame)-CGRectGetHeight(self.adBannerView.frame),
+                                             CGRectGetWidth(self.adBannerView.frame),
+                                             CGRectGetHeight(self.adBannerView.frame));
+    }];
+}
+
+- (void)hideADBanner {
+    self.adBannerView.hidden = NO;
+    [UIView animateWithDuration:1.0 animations:^{
+        [self.adBannerView layoutIfNeeded];
+        self.adBannerView.frame = CGRectMake(0,
+                                             CGRectGetHeight(self.view.frame),
+                                             CGRectGetWidth(self.adBannerView.frame),
+                                             CGRectGetHeight(self.adBannerView.frame));
+    }];
+}
+
+- (BOOL)isADBannerViewHidden {
+    return (CGRectGetMinY(self.adBannerView.frame) == CGRectGetHeight(self.view.frame));
 }
 @end

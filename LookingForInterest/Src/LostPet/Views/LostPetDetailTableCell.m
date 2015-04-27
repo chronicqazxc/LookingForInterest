@@ -64,7 +64,7 @@
     self.ownersName.text = self.lostPet.ownersName?self.lostPet.ownersName:@"";
     self.phoneNEmail.text = [NSString stringWithFormat:@"%@ / %@",
                              (self.lostPet.phone && ![self.lostPet.phone isEqualToString:@""])?self.lostPet.phone:@"-",
-                             self.lostPet.email?self.lostPet.email:@"-"];
+                             (self.lostPet.email && ![self.lostPet.email isEqualToString:@""])?self.lostPet.email:@"-"];
     self.characterized.text = self.lostPet.characterized?self.lostPet.characterized:@"";
 }
 
