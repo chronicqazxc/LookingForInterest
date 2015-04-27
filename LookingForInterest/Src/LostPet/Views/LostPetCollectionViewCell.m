@@ -33,15 +33,28 @@
         self.upperViewContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];
         [self addSubview:self.upperViewContainer];
     }
-    if (!self.lostPetImageView) {
-        self.lostPetImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];
-        self.lostPetImageView.contentMode = UIViewContentModeScaleAspectFit;
-        [self.upperViewContainer addSubview:self.lostPetImageView];
-    }
-    self.lostPetImageView.image = [UIImage imageNamed:@"background_img.png"];
-    [self loadImage];
     
     self.canLoadMap = NO;
+    
+    [self initMapBySize:size];
+    
+    [self initImageBySize:size];
+    
+    [self showMapOrPictureByValue:self.showType];
+    
+    [self.tableView registerNib:[UINib nibWithNibName:kLostPetDetailTableCellIdentifier bundle:nil]
+         forCellReuseIdentifier:kLostPetDetailTableCellIdentifier];
+    
+    self.tableView.dataSource = self;
+    
+    self.tableView.delegate = self;
+    
+    [self.tableView scrollRectToVisible:CGRectMake(0, 0, 10, 10) animated:NO];
+    
+    [self.tableView reloadData];
+}
+
+- (void)initMapBySize:(CGSize)size {
     if (!self.wkWebView) {
         self.wkWebView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];
         MarqueeLabel *marqueeLabel = [[MarqueeLabel alloc] initWithFrame:CGRectMake(0, size.height - 30.0, size.width, 21.0)];
@@ -56,18 +69,16 @@
     }
     [self.wkWebView loadHTMLString:@"<head><style>body{background-color:white; font-size:40px;}</style></head><body><H1><div align=\"center\">Loading...</div></H1></body>" baseURL:nil];
     
-    [self showMapOrPictureByValue:self.showType];
-    
-    [self.tableView registerNib:[UINib nibWithNibName:kLostPetDetailTableCellIdentifier bundle:nil]
-         forCellReuseIdentifier:kLostPetDetailTableCellIdentifier];
-    
-    self.tableView.dataSource = self;
-    
-    self.tableView.delegate = self;
-    
-    [self.tableView scrollRectToVisible:CGRectMake(0, 0, 10, 10) animated:NO];
-    
-    [self.tableView reloadData];
+}
+
+- (void)initImageBySize:(CGSize)size {
+    if (!self.lostPetImageView) {
+        self.lostPetImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];
+        self.lostPetImageView.contentMode = UIViewContentModeScaleAspectFit;
+        [self.upperViewContainer addSubview:self.lostPetImageView];
+    }
+    self.lostPetImageView.image = [UIImage imageNamed:@"background_img.png"];
+    [self loadImage];
 }
 
 - (void)showMapOrPictureByValue:(LostPetScrollViewShowMapPictureType)value {

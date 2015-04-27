@@ -60,7 +60,7 @@
                         </mask>
                     </variation>
                 </button>
-                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="CUw-rb-qnx">
+                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="1" translatesAutoresizingMaskIntoConstraints="NO" id="CUw-rb-qnx">
                     <rect key="frame" x="-61" y="-14" width="123" height="29"/>
                     <segments>
                         <segment title="Map"/>

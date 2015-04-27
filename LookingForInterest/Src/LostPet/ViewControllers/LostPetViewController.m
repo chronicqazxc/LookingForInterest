@@ -551,6 +551,7 @@
     [self.requests addObject:lostPetRequest];
 }
 
+#pragma mark - Pan in view
 - (IBAction)panInView:(UIPanGestureRecognizer *)recognizer {
     CGFloat percentageY = [recognizer translationInView:self.view.superview].y / self.view.superview.bounds.size.height;
     

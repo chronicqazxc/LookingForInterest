@@ -76,6 +76,7 @@
     self.lostPetCollectionViewCell.showType = self.mapPictureSwitch.selectedSegmentIndex;
     self.lostPetCollectionViewCell.lostPet = [self.lostPets objectAtIndex:indexPath.row];
     [self.lostPetCollectionViewCell awakeFromNib];
+    
     return self.lostPetCollectionViewCell;
     
 }

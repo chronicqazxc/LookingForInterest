@@ -142,6 +142,7 @@ typedef NS_ENUM(NSInteger, LostPetSearchType) {
         cell.textLabel.textColor = [UIColor whiteColor];
         cell.detailTextLabel.textColor = [UIColor whiteColor];
     }
+    
     switch (self.searchType) {
         case SearchTypeMenu:
             cell = [self processMenuCell:cell indexPath:indexPath];

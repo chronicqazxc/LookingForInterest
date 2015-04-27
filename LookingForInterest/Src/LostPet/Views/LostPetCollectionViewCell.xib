@@ -10,7 +10,7 @@
             <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="384" height="429"/>
+                <rect key="frame" x="0.0" y="0.0" width="346" height="253"/>
                 <subviews>
                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="917" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="h95-Xr-WYH">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -27,7 +27,7 @@
                 <constraint firstItem="h95-Xr-WYH" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="t40-A3-wZn"/>
                 <constraint firstAttribute="bottom" secondItem="h95-Xr-WYH" secondAttribute="bottom" id="x1K-cd-KLm"/>
             </constraints>
-            <size key="customSize" width="1086" height="1593"/>
+            <size key="customSize" width="1382" height="1796"/>
             <variation key="default">
                 <mask key="subviews">
                     <exclude reference="h95-Xr-WYH"/>
@@ -53,7 +53,7 @@
             <connections>
                 <outlet property="tableView" destination="h95-Xr-WYH" id="vbx-Tc-3jP"/>
             </connections>
-            <point key="canvasLocation" x="-173" y="687.5"/>
+            <point key="canvasLocation" x="-25" y="788.5"/>
         </collectionViewCell>
     </objects>
 </document>
