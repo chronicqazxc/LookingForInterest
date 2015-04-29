@@ -76,11 +76,12 @@
 #define kWebSiteActionTitle @"網路搜尋更多資訊"
 #define kFavoriteStoresKey @"favoriteStoresKey"
 #define kFavoriteAnimalsKey @"favoriteAnimalsKey"
-#define kManulMenuKey @"manulMenuKey"
+#define kManulMenuKey @"manulMenuKey2"
 #define kManulAdoptListKey @"manulAdoptListKey"
 #define kManulAdoptDetailKey @"manulAdoptDetailKey"
 #define kManulHospitalMenuKey @"manulHospitalMenuKey"
 #define kManulHospitalListKey @"manulHospitalListKey"
+#define kManulLostPetKey @"manulLostPetKey"
 #define kAddToFavorite @"加到我的最愛"
 #define kRemoveFromFavorite @"移除我的最愛"
 #pragma mark -
