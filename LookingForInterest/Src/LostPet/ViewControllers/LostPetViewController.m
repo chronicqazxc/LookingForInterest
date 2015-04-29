@@ -70,9 +70,12 @@
     self.requests = [NSMutableArray array];
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.lostPets = @[];
+    
     [self.tableView registerNib:[UINib nibWithNibName:kLostPetListCell bundle:nil] forCellReuseIdentifier:kLostPetListCell];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
+    self.tableView.decelerationRate = 0.7;
+    
     self.isStartLoading = NO;
     
     self.informationOnCell = kLoading;
@@ -86,12 +89,17 @@
     self.menuTransition = [[MenuTransition alloc] init];
     self.lostPetTransition = [[LostPetTransition alloc] init];
     
-    self.adBannerView.alpha = 0.0;
+    self.adBannerView.alpha = 0.3;
     self.adBannerView.delegate = self;
 
     self.isBeenInit = NO;
     
-    self.navigationItem.title = @"走失寵物";
+    self.navigationItem.title = @"走失寵物列表";
+    NSDictionary *attributeDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                                  [UIColor darkTextColor], NSForegroundColorAttributeName,
+                                  [UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:21.0], NSFontAttributeName, nil];
+    [self.navigationController.navigationBar setTitleTextAttributes:attributeDic];
+
     
 //    [self initDynamicAnimation];
 }
@@ -112,6 +120,7 @@
     self.loadPreviousPageView.frame = CGRectZero;
     self.loadPreviousPageView.canLoading = NO;
     self.loadPreviousPageView.indicatorLabel.text = @"";
+    self.loadPreviousPageView.indicatorLabel.textColor = [UIColor whiteColor];
     [self.tableView addSubview:self.loadPreviousPageView];
     [self.tableView sendSubviewToBack:self.loadPreviousPageView];
     
@@ -119,6 +128,7 @@
     self.loadNextPageView.frame = CGRectZero;
     self.loadNextPageView.canLoading = NO;
     self.loadNextPageView.indicatorLabel.text = @"";
+    self.loadNextPageView.indicatorLabel.textColor = [UIColor whiteColor];
     [self.tableView addSubview:self.loadNextPageView];
     [self.tableView sendSubviewToBack:self.loadNextPageView];
 }
@@ -296,6 +306,10 @@
         self.lostPetStatus.countOfCurrentTotal += [lostPets count];
     } else {
         self.lostPetStatus.countOfCurrentTotal += [lostPets count];
+        
+        if (self.lostPetStatus.countOfCurrentTotal <= 20) {
+            self.loadPreviousPageView.canLoading = NO;
+        }
     }
     
     if ([lostPets count]) {
@@ -303,7 +317,7 @@
         
         [self.pageIndicator setTitle:[self.lostPetStatus currentPage] forState:UIControlStateNormal];
         self.loadNextPageView.canLoading = YES;
-        [self scrollToTop];
+        [self scrollToTopWithAnimation:YES];
         if (self.lostPetStatus.loadingPageStatus == LoadingNextPage) {
             self.loadPreviousPageView.canLoading = YES;
         }
@@ -317,6 +331,8 @@
             self.informationOnCell = kNodate;
             
             message = kNodate;
+            
+            self.loadPreviousPageView.canLoading = NO;
             
         } else if (self.lostPetStatus.loadingPageStatus == LoadingNextPage) {
             
@@ -348,10 +364,18 @@
     [Utilities stopLoading];
     
     [self.tableView reloadData];
+    
+    [self scrollToTopWithAnimation:YES];
 }
 
-- (void)scrollToTop {
-    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+- (void)scrollToTopWithAnimation:(BOOL)animation {
+    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:animation];
+}
+
+- (void)scrollToBottomWithAnimation:(BOOL)animation {
+    if ([self.lostPets count]) {
+        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[self.lostPets count]-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:animation];
+    }
 }
 
 #pragma mark - Navigation
@@ -405,7 +429,9 @@
                                       [UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:15.0], NSFontAttributeName, nil];
         NSAttributedString *attributeString = [[NSAttributedString alloc] initWithString:self.informationOnCell attributes:attributeDic];
         [cell.textLabel setAttributedText:attributeString];
+        cell.textLabel.textColor = [UIColor whiteColor];
     }
+    cell.backgroundColor = [UIColor clearColor];
     return cell;
 }
 
@@ -423,6 +449,14 @@
 }
 
 #pragma mark - UIScrollViewDelegate
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    [cell awakeFromNib];
+}
+
+- (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath*)indexPath NS_AVAILABLE_IOS(6_0) {
+}
+
 - (void)scrollViewDidScroll:(UIScrollView *)aScrollView {
     [UIView animateWithDuration:1.0 animations:^{
         self.pageIndicator.alpha = 1.0;
@@ -458,7 +492,10 @@
             if (offset.y <= -kSpringTreshold-50) {
                 [self.tableView setContentOffset:CGPointMake(0.f, -kSpringTreshold-50)];
             }
+            
             self.loadPreviousPageView.frame = CGRectMake(0.f, 0.f, self.tableView.frame.size.width, offset.y);
+            self.loadPreviousPageView.indicator.layer.masksToBounds = YES;
+            self.loadPreviousPageView.indicator.layer.cornerRadius = CGRectGetHeight(self.loadPreviousPageView.indicator.frame)/2;
         } else if (y > h) {
             
             [self.loadNextPageView.indicatorLabel setAlpha:(y-h)/100];
@@ -477,6 +514,9 @@
             } else {
                 self.loadNextPageView.indicatorLabel.text = @"";
             }
+            
+            self.loadNextPageView.indicator.layer.masksToBounds = YES;
+            self.loadNextPageView.indicator.layer.cornerRadius = CGRectGetHeight(self.loadNextPageView.indicator.frame)/2;
         }
     }
     

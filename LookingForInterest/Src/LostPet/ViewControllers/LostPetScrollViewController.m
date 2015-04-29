@@ -33,7 +33,12 @@
     [self.collectionView reloadData];
     self.isInit = NO;
     
-    self.navigationItem.title = @"走失寵物";
+    
+    NSDictionary *attributeDic = [NSDictionary dictionaryWithObjectsAndKeys:
+                                  [UIColor darkTextColor], NSForegroundColorAttributeName,
+                                  [UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:21.0], NSFontAttributeName, nil];
+    [self.navigationController.navigationBar setTitleTextAttributes:attributeDic];
+    self.navigationItem.title = @"走失寵物細節";
 }
 
 - (void)viewDidLayoutSubviews {
