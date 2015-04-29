@@ -39,7 +39,7 @@
     self.container.layer.masksToBounds = NO;
     self.container.layer.shadowColor = [UIColor blackColor].CGColor;
     self.container.layer.shadowOffset = CGSizeMake(size.width, size.height);
-    self.container.layer.shadowOpacity = 0.5f;
+    self.container.layer.shadowOpacity = 0.8f;
     self.container.layer.shadowPath = shadowPath.CGPath;
 }
 
