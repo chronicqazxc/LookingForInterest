@@ -213,14 +213,14 @@
 
 - (void)settingLoadingPageView {
     self.loadPreviousPageView = (TableLoadPreviousPage *)[Utilities getNibWithName:@"TableLoadPreviousPage"];
-    self.loadPreviousPageView.frame = CGRectZero;
+    self.loadPreviousPageView.hidden = YES;
     self.loadPreviousPageView.canLoading = NO;
     self.loadPreviousPageView.indicatorLabel.text = @"";
     [self.filterTableView addSubview:self.loadPreviousPageView];
     [self.filterTableView sendSubviewToBack:self.loadPreviousPageView];
     
     self.loadNextPageView = (TableLoadNextPage *)[Utilities getNibWithName:@"TableLoadNextPage"];
-    self.loadNextPageView.frame = CGRectZero;
+    self.loadNextPageView.hidden = YES;
     self.loadNextPageView.canLoading = NO;
     self.loadNextPageView.indicatorLabel.text = @"";
     [self.filterTableView addSubview:self.loadNextPageView];
@@ -268,7 +268,8 @@
             self.manulHospitalMenuViewController.delegate = self;
             [self presentViewController:self.manulHospitalMenuViewController animated:YES completion:nil];
         } else if (!self.isSendForMenu) {
-            self.filterTableViewController = [[FilterTableViewController alloc] init];
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:kFirstStoryboard bundle:nil];
+            self.filterTableViewController = [storyboard instantiateViewControllerWithIdentifier:@"FilterTableViewController"];
             self.filterTableViewController.delegate = self;
             self.filterTableViewController.filterType = RequestTypeMenu;
             self.filterTableViewController.filterTableView = self.filterTableView;
@@ -279,7 +280,8 @@
             self.isSendForMenu = YES;
         }
     } else if (!self.isSendForMenu) {
-        self.filterTableViewController = [[FilterTableViewController alloc] init];
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:kFirstStoryboard bundle:nil];
+        self.filterTableViewController = [storyboard instantiateViewControllerWithIdentifier:@"FilterTableViewController"];
         self.filterTableViewController.delegate = self;
         self.filterTableViewController.filterType = RequestTypeMenu;
         self.filterTableViewController.filterTableView = self.filterTableView;

@@ -67,6 +67,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+//    [self.view setTranslatesAutoresizingMaskIntoConstraints:NO];
+    
     self.requests = [NSMutableArray array];
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.lostPets = @[];
@@ -84,8 +87,6 @@
     
     [self initNavigationBar];
     
-    [self initLoadingPageView];
-    
     self.menuTransition = [[MenuTransition alloc] init];
     self.lostPetTransition = [[LostPetTransition alloc] init];
     
@@ -100,7 +101,7 @@
                                   [UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:21.0], NSFontAttributeName, nil];
     [self.navigationController.navigationBar setTitleTextAttributes:attributeDic];
 
-    
+    [self initLoadingPageView];
 //    [self initDynamicAnimation];
 }
 
@@ -117,7 +118,7 @@
 
 - (void)initLoadingPageView {
     self.loadPreviousPageView = (TableLoadPreviousPage *)[Utilities getNibWithName:@"TableLoadPreviousPage"];
-    self.loadPreviousPageView.frame = CGRectZero;
+    self.loadPreviousPageView.hidden = YES;
     self.loadPreviousPageView.canLoading = NO;
     self.loadPreviousPageView.indicatorLabel.text = @"";
     self.loadPreviousPageView.indicatorLabel.textColor = [UIColor whiteColor];
@@ -125,7 +126,7 @@
     [self.tableView sendSubviewToBack:self.loadPreviousPageView];
     
     self.loadNextPageView = (TableLoadNextPage *)[Utilities getNibWithName:@"TableLoadNextPage"];
-    self.loadNextPageView.frame = CGRectZero;
+    self.loadNextPageView.hidden = YES;
     self.loadNextPageView.canLoading = NO;
     self.loadNextPageView.indicatorLabel.text = @"";
     self.loadNextPageView.indicatorLabel.textColor = [UIColor whiteColor];
@@ -471,6 +472,8 @@
     
     if (self.isStartLoading == NO) {
         if (offset.y <= 0) {
+            self.loadPreviousPageView.hidden = NO;
+            self.loadNextPageView.hidden = YES;
             
             [self.loadPreviousPageView.indicatorLabel setAlpha:(0-offset.y)/100];
             
@@ -494,12 +497,14 @@
             }
             
             self.loadPreviousPageView.frame = CGRectMake(0.f, 0.f, self.tableView.frame.size.width, offset.y);
+            
             self.loadPreviousPageView.indicator.layer.masksToBounds = YES;
             self.loadPreviousPageView.indicator.layer.cornerRadius = CGRectGetHeight(self.loadPreviousPageView.indicator.frame)/2;
         } else if (y > h) {
+            self.loadPreviousPageView.hidden = YES;
+            self.loadNextPageView.hidden = NO;
             
             [self.loadNextPageView.indicatorLabel setAlpha:(y-h)/100];
-            
             CGFloat fontSize = ((y-h)/5 > 20)?20:(y-h)/5;
             [self.loadNextPageView.indicatorLabel setFont:[UIFont systemFontOfSize:fontSize]];
             

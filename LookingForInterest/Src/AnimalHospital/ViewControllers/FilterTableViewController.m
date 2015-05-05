@@ -51,6 +51,9 @@
 #define kReloadDistance 100
 #define kSpringTreshold 130
 
+@implementation FilterTableView
+@end
+
 @interface FilterTableViewController () <AnimalHospitalRequestDelegate, MGSwipeTableCellDelegate, UITextFieldDelegate>
 @property (strong, nonatomic) NSMutableArray *dataArr;
 @property (strong, nonatomic) NSMutableArray *controlArr;
@@ -1074,6 +1077,8 @@
         
         if (!self.isStartLoadingPage) {
             if (offset.y <= 0) {
+                ((ViewController *)self.delegate).loadPreviousPageView.hidden = NO;
+                ((ViewController *)self.delegate).loadNextPageView.hidden = YES;
                 
                 [((ViewController *)self.delegate).loadPreviousPageView.indicatorLabel setAlpha:(0-offset.y)/100];
                 
@@ -1093,6 +1098,9 @@
                 }
                 ((ViewController *)self.delegate).loadPreviousPageView.frame = CGRectMake(0.f, 0.f, self.tableView.frame.size.width, offset.y);
             } else if (y > h) {
+                ((ViewController *)self.delegate).loadPreviousPageView.hidden = YES;
+                ((ViewController *)self.delegate).loadNextPageView.hidden = NO;
+                
                 
                 [((ViewController *)self.delegate).loadNextPageView.indicatorLabel setAlpha:(y-h)/100];
                 

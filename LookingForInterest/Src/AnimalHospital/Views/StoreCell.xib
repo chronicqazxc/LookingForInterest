@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7531" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="StoreCell" rowHeight="442" id="KGk-i7-Jjw" customClass="StoreCell">
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="StoreCell" rowHeight="511" id="KGk-i7-Jjw" customClass="StoreCell">
             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
@@ -24,7 +24,8 @@
                                 <exclude reference="mIh-xS-qqZ"/>
                             </mask>
                         </variation>
-                        <variation key="heightClass=regular-widthClass=compact">
+                        <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                            <rect key="frame" x="0.0" y="0.0" width="1" height="43"/>
                             <mask key="constraints">
                                 <include reference="mIh-xS-qqZ"/>
                             </mask>
@@ -41,7 +42,8 @@
                                 <exclude reference="gtG-pc-bCH"/>
                             </mask>
                         </variation>
-                        <variation key="heightClass=regular-widthClass=compact">
+                        <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                            <rect key="frame" x="319" y="0.0" width="1" height="43"/>
                             <mask key="constraints">
                                 <include reference="gtG-pc-bCH"/>
                             </mask>
@@ -58,7 +60,8 @@
                                 <exclude reference="z11-sl-e82"/>
                             </mask>
                         </variation>
-                        <variation key="heightClass=regular-widthClass=compact">
+                        <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                            <rect key="frame" x="0.0" y="108" width="320" height="1"/>
                             <mask key="constraints">
                                 <include reference="z11-sl-e82"/>
                             </mask>
@@ -77,7 +80,8 @@
                                 <exclude reference="Hpj-SI-3Xr"/>
                             </mask>
                         </variation>
-                        <variation key="heightClass=regular-widthClass=compact">
+                        <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                            <rect key="frame" x="9" y="38" width="302" height="21"/>
                             <mask key="constraints">
                                 <include reference="Hpj-SI-3Xr"/>
                             </mask>
@@ -88,12 +92,18 @@
                         <fontDescription key="fontDescription" type="system" pointSize="24"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
+                        <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                            <rect key="frame" x="8" y="5" width="303" height="29"/>
+                        </variation>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="address label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d75-tz-Hob" customClass="MarqueeLabel">
                         <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
+                        <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                            <rect key="frame" x="9" y="63" width="302" height="42"/>
+                        </variation>
                     </label>
                 </subviews>
                 <constraints>
@@ -206,7 +216,7 @@
                 <outlet property="distanceLabel" destination="91W-ca-Z5a" id="tX1-nS-mha"/>
                 <outlet property="titleLabel" destination="Tqf-rR-yfl" id="kg9-8s-3Yi"/>
             </connections>
-            <point key="canvasLocation" x="152" y="363"/>
+            <point key="canvasLocation" x="152" y="397.5"/>
         </tableViewCell>
     </objects>
 </document>

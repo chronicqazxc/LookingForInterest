@@ -99,14 +99,14 @@
     self.navigationItem.leftBarButtonItem = homeButton;
     
     self.loadPreviousPageView = (TableLoadPreviousPage *)[Utilities getNibWithName:@"TableLoadPreviousPage"];
-    self.loadPreviousPageView.frame = CGRectZero;
+    self.loadPreviousPageView.hidden = YES;
     self.loadPreviousPageView.canLoading = NO;
     self.loadPreviousPageView.indicatorLabel.text = @"";
     [self.tableView addSubview:self.loadPreviousPageView];
     [self.tableView sendSubviewToBack:self.loadPreviousPageView];
     
     self.loadNextPageView = (TableLoadNextPage *)[Utilities getNibWithName:@"TableLoadNextPage"];
-    self.loadNextPageView.frame = CGRectZero;
+    self.loadNextPageView.hidden = YES;
     self.loadNextPageView.canLoading = NO;
     self.loadNextPageView.indicatorLabel.text = @"";
     [self.tableView addSubview:self.loadNextPageView];
@@ -401,6 +401,8 @@
     
     if (self.isStartLoading == NO) {
         if (offset.y <= 0) {
+            self.loadPreviousPageView.hidden = NO;
+            self.loadNextPageView.hidden = YES;
             
             [self.loadPreviousPageView.indicatorLabel setAlpha:(0-offset.y)/100];
             
@@ -424,6 +426,9 @@
             }
             self.loadPreviousPageView.frame = CGRectMake(0.f, 0.f, self.tableView.frame.size.width, offset.y);
         } else if (y > h) {
+            
+            self.loadPreviousPageView.hidden = YES;
+            self.loadNextPageView.hidden = NO;
             
             [self.loadNextPageView.indicatorLabel setAlpha:(y-h)/100];
             

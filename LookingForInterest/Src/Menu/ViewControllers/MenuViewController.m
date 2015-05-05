@@ -471,7 +471,6 @@
             controller.transitioningDelegate = self.menuTransition;
             
             [self presentViewController:controller animated:YES completion:nil];
-            
         } else if (percentageX < 0) {
             self.menuTransition.direction = DirectionLeft;
             

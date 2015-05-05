@@ -3,6 +3,7 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -11,24 +12,21 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a1y-4b-BsH">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                </view>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icon-60@3x.png" translatesAutoresizingMaskIntoConstraints="NO" id="kQT-qe-Pdb">
                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="100" id="5Ve-yz-Ybu"/>
-                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="XWJ-a0-bKx"/>
                         <constraint firstAttribute="width" secondItem="kQT-qe-Pdb" secondAttribute="height" multiplier="1:1" id="rAF-n5-SP5"/>
                     </constraints>
                     <variation key="default">
                         <mask key="constraints">
-                            <exclude reference="5Ve-yz-Ybu"/>
-                            <exclude reference="XWJ-a0-bKx"/>
                             <exclude reference="rAF-n5-SP5"/>
                         </mask>
                     </variation>
                     <variation key="heightClass=regular-widthClass=compact">
                         <mask key="constraints">
-                            <exclude reference="5Ve-yz-Ybu"/>
-                            <exclude reference="XWJ-a0-bKx"/>
                             <include reference="rAF-n5-SP5"/>
                         </mask>
                     </variation>
@@ -41,47 +39,53 @@
                 </label>
             </subviews>
             <constraints>
-                <constraint firstAttribute="centerY" secondItem="bYP-Nw-pWn" secondAttribute="centerY" id="6Nn-kS-nTm"/>
-                <constraint firstItem="kQT-qe-Pdb" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="7Fr-zi-bMr">
-                    <variation key="heightClass=regular-widthClass=compact" constant="30"/>
+                <constraint firstItem="kQT-qe-Pdb" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="57f-Zb-7d5"/>
+                <constraint firstAttribute="trailing" secondItem="a1y-4b-BsH" secondAttribute="trailing" id="Awl-sj-b0D"/>
+                <constraint firstAttribute="bottom" secondItem="a1y-4b-BsH" secondAttribute="bottom" constant="50" id="FY7-Cd-EAp">
+                    <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                 </constraint>
+                <constraint firstItem="kQT-qe-Pdb" firstAttribute="height" secondItem="a1y-4b-BsH" secondAttribute="height" multiplier="0.8" id="FiS-g7-Jh6"/>
                 <constraint firstAttribute="bottom" secondItem="bYP-Nw-pWn" secondAttribute="bottom" id="NXe-U1-g6U"/>
-                <constraint firstItem="bYP-Nw-pWn" firstAttribute="leading" secondItem="kQT-qe-Pdb" secondAttribute="trailing" constant="8" id="gyi-eD-Cbp"/>
-                <constraint firstAttribute="bottom" secondItem="kQT-qe-Pdb" secondAttribute="bottom" id="jIY-wR-DdL">
-                    <variation key="heightClass=regular-widthClass=compact" constant="20"/>
-                </constraint>
+                <constraint firstItem="a1y-4b-BsH" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Xb2-ew-8A0"/>
                 <constraint firstAttribute="centerX" secondItem="bYP-Nw-pWn" secondAttribute="centerX" id="kcO-WD-BNv"/>
+                <constraint firstItem="a1y-4b-BsH" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="rHL-IU-3h7"/>
                 <constraint firstAttribute="centerX" secondItem="kQT-qe-Pdb" secondAttribute="centerX" id="sjH-AS-8XD"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <variation key="default">
                 <mask key="subviews">
+                    <exclude reference="a1y-4b-BsH"/>
                     <exclude reference="kQT-qe-Pdb"/>
                     <exclude reference="bYP-Nw-pWn"/>
                 </mask>
                 <mask key="constraints">
-                    <exclude reference="6Nn-kS-nTm"/>
-                    <exclude reference="NXe-U1-g6U"/>
-                    <exclude reference="gyi-eD-Cbp"/>
-                    <exclude reference="kcO-WD-BNv"/>
-                    <exclude reference="7Fr-zi-bMr"/>
-                    <exclude reference="jIY-wR-DdL"/>
+                    <exclude reference="Awl-sj-b0D"/>
+                    <exclude reference="FY7-Cd-EAp"/>
+                    <exclude reference="Xb2-ew-8A0"/>
+                    <exclude reference="rHL-IU-3h7"/>
+                    <exclude reference="57f-Zb-7d5"/>
+                    <exclude reference="FiS-g7-Jh6"/>
                     <exclude reference="sjH-AS-8XD"/>
+                    <exclude reference="NXe-U1-g6U"/>
+                    <exclude reference="kcO-WD-BNv"/>
                 </mask>
             </variation>
             <variation key="heightClass=regular-widthClass=compact">
                 <mask key="subviews">
+                    <include reference="a1y-4b-BsH"/>
                     <include reference="kQT-qe-Pdb"/>
                     <include reference="bYP-Nw-pWn"/>
                 </mask>
                 <mask key="constraints">
-                    <exclude reference="6Nn-kS-nTm"/>
-                    <include reference="NXe-U1-g6U"/>
-                    <exclude reference="gyi-eD-Cbp"/>
-                    <include reference="kcO-WD-BNv"/>
-                    <include reference="7Fr-zi-bMr"/>
-                    <include reference="jIY-wR-DdL"/>
+                    <include reference="Awl-sj-b0D"/>
+                    <include reference="FY7-Cd-EAp"/>
+                    <include reference="Xb2-ew-8A0"/>
+                    <include reference="rHL-IU-3h7"/>
+                    <include reference="57f-Zb-7d5"/>
+                    <include reference="FiS-g7-Jh6"/>
                     <include reference="sjH-AS-8XD"/>
+                    <include reference="NXe-U1-g6U"/>
+                    <include reference="kcO-WD-BNv"/>
                 </mask>
             </variation>
             <connections>
