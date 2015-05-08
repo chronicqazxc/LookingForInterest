@@ -462,7 +462,7 @@ static BOOL FBUseLegacyLayout(void) {
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request
  navigationType:(UIWebViewNavigationType)navigationType {
     NSURL *url = request.URL;
-    
+
     if ([url.scheme isEqualToString:@"fbconnect"]) {
         if ([[url.resourceSpecifier substringToIndex:8] isEqualToString:@"//cancel"]) {
             NSString *errorCode = [self getStringFromUrl:[url absoluteString] needle:@"error_code="];

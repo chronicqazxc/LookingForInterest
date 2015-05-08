@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		B002A2F81AA02FE800808055 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B002A2F71AA02FE700808055 /* QuartzCore.framework */; };
+		B00353F01AFC8AC700B5B9E6 /* LookingForInterest_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = B00353EF1AFC8AC700B5B9E6 /* LookingForInterest_Tests.m */; };
 		B02376701AE5F8EF0002BAA0 /* AdoptAnimalRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = B02376651AE5F8EF0002BAA0 /* AdoptAnimalRequest.m */; };
 		B02376711AE5F8EF0002BAA0 /* AdoptAnimalTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = B02376671AE5F8EF0002BAA0 /* AdoptAnimalTransition.m */; };
 		B02376721AE5F8EF0002BAA0 /* PageController.m in Sources */ = {isa = PBXBuildFile; fileRef = B02376691AE5F8EF0002BAA0 /* PageController.m */; };
@@ -152,6 +153,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		B00353F11AFC8AC700B5B9E6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B034D9531A8903A900360A6C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B034D95A1A8903A900360A6C;
+			remoteInfo = ThingsAboutAnimals;
+		};
 		B0B048E91AB16AEB000154B2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B034D9531A8903A900360A6C /* Project object */;
@@ -168,6 +176,9 @@
 		8B5B7415EB81D51AA50E370A /* Pods-ThingsAboutAnimals.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ThingsAboutAnimals.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ThingsAboutAnimals/Pods-ThingsAboutAnimals.debug.xcconfig"; sourceTree = "<group>"; };
 		A9AD3B9BCAE0F32944C09EC2 /* libPods-ThingsAboutAnimals.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ThingsAboutAnimals.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B002A2F71AA02FE700808055 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		B00353EB1AFC8AC700B5B9E6 /* LookingForInterest Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "LookingForInterest Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B00353EE1AFC8AC700B5B9E6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B00353EF1AFC8AC700B5B9E6 /* LookingForInterest_Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LookingForInterest_Tests.m; sourceTree = "<group>"; };
 		B02376641AE5F8EF0002BAA0 /* AdoptAnimalRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AdoptAnimalRequest.h; path = Src/AdoptAnimal/Objects/AdoptAnimalRequest.h; sourceTree = "<group>"; };
 		B02376651AE5F8EF0002BAA0 /* AdoptAnimalRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AdoptAnimalRequest.m; path = Src/AdoptAnimal/Objects/AdoptAnimalRequest.m; sourceTree = "<group>"; };
 		B02376661AE5F8EF0002BAA0 /* AdoptAnimalTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AdoptAnimalTransition.h; path = Src/AdoptAnimal/Objects/AdoptAnimalTransition.h; sourceTree = "<group>"; };
@@ -389,6 +400,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		B00353E81AFC8AC700B5B9E6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B034D9581A8903A900360A6C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -430,6 +448,23 @@
 				193908BC157B2A29F5014D23 /* Pods-ThingsAboutAnimals.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		B00353EC1AFC8AC700B5B9E6 /* LookingForInterest Tests */ = {
+			isa = PBXGroup;
+			children = (
+				B00353EF1AFC8AC700B5B9E6 /* LookingForInterest_Tests.m */,
+				B00353ED1AFC8AC700B5B9E6 /* Supporting Files */,
+			);
+			path = "LookingForInterest Tests";
+			sourceTree = "<group>";
+		};
+		B00353ED1AFC8AC700B5B9E6 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B00353EE1AFC8AC700B5B9E6 /* Info.plist */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		B02376601AE5F8A70002BAA0 /* AdoptAnimal */ = {
@@ -775,6 +810,7 @@
 			children = (
 				B034D95D1A8903A900360A6C /* ThingsAboutAnimals */,
 				B0B048E41AB16AEB000154B2 /* ThingsAboutAnimals Tests */,
+				B00353EC1AFC8AC700B5B9E6 /* LookingForInterest Tests */,
 				B034D95C1A8903A900360A6C /* Products */,
 				A9A5CC563E29FFAF51E0A5E8 /* Pods */,
 				6481B35C53C0A6FBF51E0A0E /* Frameworks */,
@@ -786,6 +822,7 @@
 			children = (
 				B034D95B1A8903A900360A6C /* 關心毛小孩.app */,
 				B0B048E31AB16AEB000154B2 /* ThingsAboutAnimals Tests.xctest */,
+				B00353EB1AFC8AC700B5B9E6 /* LookingForInterest Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -904,6 +941,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		B00353EA1AFC8AC700B5B9E6 /* LookingForInterest Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B00353F31AFC8AC700B5B9E6 /* Build configuration list for PBXNativeTarget "LookingForInterest Tests" */;
+			buildPhases = (
+				B00353E71AFC8AC700B5B9E6 /* Sources */,
+				B00353E81AFC8AC700B5B9E6 /* Frameworks */,
+				B00353E91AFC8AC700B5B9E6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B00353F21AFC8AC700B5B9E6 /* PBXTargetDependency */,
+			);
+			name = "LookingForInterest Tests";
+			productName = "LookingForInterest Tests";
+			productReference = B00353EB1AFC8AC700B5B9E6 /* LookingForInterest Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		B034D95A1A8903A900360A6C /* ThingsAboutAnimals */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B034D97E1A8903AA00360A6C /* Build configuration list for PBXNativeTarget "ThingsAboutAnimals" */;
@@ -950,6 +1005,10 @@
 				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = Wayne;
 				TargetAttributes = {
+					B00353EA1AFC8AC700B5B9E6 = {
+						CreatedOnToolsVersion = 6.3.1;
+						TestTargetID = B034D95A1A8903A900360A6C;
+					};
 					B034D95A1A8903A900360A6C = {
 						CreatedOnToolsVersion = 6.1.1;
 						DevelopmentTeam = 94MBHXKUB6;
@@ -975,11 +1034,19 @@
 			targets = (
 				B034D95A1A8903A900360A6C /* ThingsAboutAnimals */,
 				B0B048E21AB16AEB000154B2 /* ThingsAboutAnimals Tests */,
+				B00353EA1AFC8AC700B5B9E6 /* LookingForInterest Tests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		B00353E91AFC8AC700B5B9E6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B034D9591A8903A900360A6C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1098,6 +1165,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		B00353E71AFC8AC700B5B9E6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B00353F01AFC8AC700B5B9E6 /* LookingForInterest_Tests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B034D9571A8903A900360A6C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1186,6 +1261,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		B00353F21AFC8AC700B5B9E6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B034D95A1A8903A900360A6C /* ThingsAboutAnimals */;
+			targetProxy = B00353F11AFC8AC700B5B9E6 /* PBXContainerItemProxy */;
+		};
 		B0B048EA1AB16AEB000154B2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = B034D95A1A8903A900360A6C /* ThingsAboutAnimals */;
@@ -1221,6 +1301,47 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		B00353F41AFC8AC700B5B9E6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "LookingForInterest Tests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/關心毛小孩.app/關心毛小孩";
+			};
+			name = Debug;
+		};
+		B00353F51AFC8AC700B5B9E6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "LookingForInterest Tests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/關心毛小孩.app/關心毛小孩";
+			};
+			name = Release;
+		};
 		B034D97C1A8903AA00360A6C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1367,6 +1488,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		B00353F31AFC8AC700B5B9E6 /* Build configuration list for PBXNativeTarget "LookingForInterest Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B00353F41AFC8AC700B5B9E6 /* Debug */,
+				B00353F51AFC8AC700B5B9E6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		B034D9561A8903A900360A6C /* Build configuration list for PBXProject "ThingsAboutAnimals" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

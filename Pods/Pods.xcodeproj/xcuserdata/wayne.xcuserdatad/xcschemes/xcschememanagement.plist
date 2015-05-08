@@ -8,73 +8,61 @@
 		<dict>
 			<key>isShown</key>
 			<false/>
-			<key>orderHint</key>
-			<integer>1</integer>
 		</dict>
 		<key>Pods-ThingsAboutAnimals-Facebook-iOS-SDK.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
-			<key>orderHint</key>
-			<integer>2</integer>
 		</dict>
 		<key>Pods-ThingsAboutAnimals-Google-Maps-iOS-SDK.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
-			<key>orderHint</key>
-			<integer>3</integer>
 		</dict>
 		<key>Pods-ThingsAboutAnimals-MGSwipeTableCell.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
-			<key>orderHint</key>
-			<integer>5</integer>
 		</dict>
 		<key>Pods-ThingsAboutAnimals-MarqueeLabel.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
-			<key>orderHint</key>
-			<integer>4</integer>
 		</dict>
 		<key>Pods-ThingsAboutAnimals.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
-			<key>orderHint</key>
-			<integer>0</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>23291209A6F0A34D0A5113B3</key>
+		<key>09837A6DC357DA050ED5A998</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>3FA989A6A971FBB8A53F2256</key>
+		<key>2ADCC417E039353044EA03D5</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>5D62ABE57E7D280678C3FD15</key>
+		<key>2C87FCA39F9EE18C5CDA0DEB</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>EFA28D8A3AA995FAF5256CD8</key>
+		<key>92A08A70D387E469B13358B3</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>F3AE78D0C15D953C9471DEB1</key>
+		<key>A2FB855B4A04C7DF1EC76554</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>FCCEEAD7A2D4A173A34FDAE2</key>
+		<key>B49B7B19F2582582E1A2CD01</key>
 		<dict>
 			<key>primary</key>
 			<true/>

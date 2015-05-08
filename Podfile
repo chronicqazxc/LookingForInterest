@@ -2,9 +2,9 @@
 # platform :ios, '6.0'
 
 target 'ThingsAboutAnimals' do
-pod 'Google-Maps-iOS-SDK', '~> 1.9'
-pod 'MGSwipeTableCell', '~> 1.3'
-pod 'Facebook-iOS-SDK', '~> 3.23'
+pod 'Google-Maps-iOS-SDK'
+pod 'MGSwipeTableCell'
+pod 'Facebook-iOS-SDK'
 pod 'MarqueeLabel'
 end
 

@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "FCCEEAD7A2D4A173A34FDAE2"
+               BlueprintIdentifier = "2C87FCA39F9EE18C5CDA0DEB"
                BuildableName = "libPods-ThingsAboutAnimals-MarqueeLabel.a"
                BlueprintName = "Pods-ThingsAboutAnimals-MarqueeLabel"
                ReferencedContainer = "container:Pods.xcodeproj">
