@@ -873,18 +873,13 @@
 
 - (NSArray*)swipeTableCell:(MGSwipeTableCell*)cell swipeButtonsForDirection:(MGSwipeDirection)direction swipeSettings:(MGSwipeSettings*)swipeSettings expansionSettings:(MGSwipeExpansionSettings*)expansionSettings {
     
-    NSArray *buttons;
-    if (direction == MGSwipeDirectionRightToLeft) {
-        buttons = @[];
-    } else {
-        swipeSettings.transition = MGSwipeTransitionBorder;
-        expansionSettings.buttonIndex = 0;
-        expansionSettings.fillOnTrigger = YES;
-        expansionSettings.threshold = 3.0;
-        
-        NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-        buttons = [self createButtonsWithIndexPath:indexPath direction:direction];
-    }
+    swipeSettings.transition = MGSwipeTransitionBorder;
+    expansionSettings.buttonIndex = 0;
+    expansionSettings.fillOnTrigger = YES;
+    expansionSettings.threshold = 3.0;
+    
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    NSArray *buttons = [self createButtonsWithIndexPath:indexPath direction:direction];
 
     return buttons;
 }
