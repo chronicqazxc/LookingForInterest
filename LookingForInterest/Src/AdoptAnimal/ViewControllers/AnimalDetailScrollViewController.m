@@ -19,7 +19,6 @@
 @property (nonatomic) BOOL isInit;
 @property (nonatomic) NSInteger currentRow;
 @property (nonatomic) NSInteger previousRow;
-@property (strong, nonatomic) AnimalDetailCollectionViewCell *animalDetailCollectionViewCell;
 @property (strong, nonatomic) NSMutableArray *tempPets;
 @property (strong, nonatomic) ManulAdoptDetailViewController *manulAdoptDetailViewController;
 @property (nonatomic) BOOL hadShowManul;
@@ -116,14 +115,14 @@
     
     [self settingPgaeIndicator];
     
-    self.animalDetailCollectionViewCell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AnimalDetailCell" forIndexPath:indexPath];
-    if (!self.animalDetailCollectionViewCell) {
-        self.animalDetailCollectionViewCell = (AnimalDetailCollectionViewCell *)[Utilities getNibWithName:@"AnimalDetailCollectionViewCell"];
+    AnimalDetailCollectionViewCell *animalDetailCollectionViewCell = [collectionView dequeueReusableCellWithReuseIdentifier:@"AnimalDetailCell" forIndexPath:indexPath];
+    if (!animalDetailCollectionViewCell) {
+        animalDetailCollectionViewCell = (AnimalDetailCollectionViewCell *)[Utilities getNibWithName:@"AnimalDetailCollectionViewCell"];
     }
-    self.animalDetailCollectionViewCell.pet = [self.petResult.pets objectAtIndex:indexPath.row];
-    self.animalDetailCollectionViewCell.petResult = self.petResult;
-    [self.animalDetailCollectionViewCell awakeFromNib];
-    return self.animalDetailCollectionViewCell;
+    animalDetailCollectionViewCell.pet = [self.petResult.pets objectAtIndex:indexPath.row];
+    animalDetailCollectionViewCell.petResult = self.petResult;
+    [animalDetailCollectionViewCell awakeFromNib];
+    return animalDetailCollectionViewCell;
 }
 
 #pragma mark - UICollectionViewDelegate

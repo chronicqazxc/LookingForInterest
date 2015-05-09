@@ -1004,9 +1004,9 @@
         
         CGFloat velocityX = [recognizer velocityInView:recognizer.view.superview].x;
         
-        BOOL cancel;
+        BOOL cancel = NO;
         CGFloat points;
-        NSTimeInterval duration;
+        NSTimeInterval duration = 0.0;
         if (self.menuTransition.direction == DirectionRight) {
             cancel = (percentageX < kThreshold);
             points = cancel ? recognizer.view.frame.origin.x : self.view.superview.bounds.size.width - recognizer.view.frame.origin.x;
@@ -1015,11 +1015,11 @@
         
         if (duration < .2) {
             duration = .2;
-        }else if(duration > .6){
+        } else if (duration > .6){
             duration = .6;
         }
         
-        cancel?[self.menuTransition cancelInteractiveTransitionWithDuration:duration]:[self.menuTransition finishInteractiveTransitionWithDuration:duration];
+        cancel ? [self.menuTransition cancelInteractiveTransitionWithDuration:duration] : [self.menuTransition finishInteractiveTransitionWithDuration:duration];
         
     } else if (recognizer.state == UIGestureRecognizerStateFailed){
         [self.menuTransition cancelInteractiveTransitionWithDuration:.35];

@@ -636,9 +636,9 @@
         ) {
         
         CGFloat velocityY = [recognizer velocityInView:recognizer.view.superview].y;
-        BOOL cancel = YES;
+        BOOL cancel = NO;
         CGFloat points;
-        NSTimeInterval duration;
+        NSTimeInterval duration = 0.0;
 
         if (self.menuTransition.direction == DirectionUp) {
             cancel = (percentageY > -kThreshold) || (velocityY > 0);

@@ -162,25 +162,19 @@
                         </variation>
                     </view>
                     <constraints>
-                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="62" id="FTQ-tr-nIH"/>
                         <constraint firstAttribute="height" constant="55" id="PSd-bG-s8Y">
                             <variation key="heightClass=regular-widthClass=compact" constant="62"/>
                         </constraint>
-                        <constraint firstAttribute="height" relation="lessThanOrEqual" constant="62" id="nED-j8-Zm1"/>
                     </constraints>
                     <blurEffect style="dark"/>
                     <variation key="default">
                         <mask key="constraints">
-                            <exclude reference="FTQ-tr-nIH"/>
                             <exclude reference="PSd-bG-s8Y"/>
-                            <exclude reference="nED-j8-Zm1"/>
                         </mask>
                     </variation>
                     <variation key="heightClass=regular-widthClass=compact">
                         <mask key="constraints">
-                            <include reference="FTQ-tr-nIH"/>
                             <include reference="PSd-bG-s8Y"/>
-                            <include reference="nED-j8-Zm1"/>
                         </mask>
                     </variation>
                 </visualEffectView>

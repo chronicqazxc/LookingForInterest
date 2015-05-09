@@ -49,11 +49,18 @@
         self.imageView.contentMode = UIViewContentModeScaleAspectFit;
         [self.view addSubview:self.imageView];
     }
-    self.imageView.image = [UIImage imageNamed:@"background_img.png"];
+
     
-    if (self.pet && ![self.pet.imageName isEqualToString:@""]) {
-        [self loadImage];
+    if (!self.pet.petBigPic) {
+        self.imageView.image = [UIImage imageNamed:@"background_img.png"];
+        
+        if (self.pet && ![self.pet.imageName isEqualToString:@""]) {
+            [self loadImage];
+        }
+    } else {
+        self.imageView.image = self.pet.petBigPic;
     }
+    
 
 }
 
@@ -62,6 +69,7 @@
     dispatch_async(myQueue, ^{
         NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:self.pet.imageName]];
         self.image = [UIImage imageWithData:imageData];
+        self.pet.petBigPic = [UIImage imageWithData:imageData];
         dispatch_async(dispatch_get_main_queue(), ^{
             self.imageView.alpha = 0.0;
             self.imageView.image = self.image;

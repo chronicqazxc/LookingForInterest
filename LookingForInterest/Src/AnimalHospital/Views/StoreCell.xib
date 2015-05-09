@@ -24,8 +24,7 @@
                                 <exclude reference="mIh-xS-qqZ"/>
                             </mask>
                         </variation>
-                        <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                            <rect key="frame" x="0.0" y="0.0" width="1" height="43"/>
+                        <variation key="heightClass=regular-widthClass=compact">
                             <mask key="constraints">
                                 <include reference="mIh-xS-qqZ"/>
                             </mask>
@@ -42,8 +41,7 @@
                                 <exclude reference="gtG-pc-bCH"/>
                             </mask>
                         </variation>
-                        <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                            <rect key="frame" x="319" y="0.0" width="1" height="43"/>
+                        <variation key="heightClass=regular-widthClass=compact">
                             <mask key="constraints">
                                 <include reference="gtG-pc-bCH"/>
                             </mask>
@@ -60,8 +58,7 @@
                                 <exclude reference="z11-sl-e82"/>
                             </mask>
                         </variation>
-                        <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                            <rect key="frame" x="0.0" y="108" width="320" height="1"/>
+                        <variation key="heightClass=regular-widthClass=compact">
                             <mask key="constraints">
                                 <include reference="z11-sl-e82"/>
                             </mask>
@@ -80,8 +77,7 @@
                                 <exclude reference="Hpj-SI-3Xr"/>
                             </mask>
                         </variation>
-                        <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                            <rect key="frame" x="9" y="38" width="302" height="21"/>
+                        <variation key="heightClass=regular-widthClass=compact">
                             <mask key="constraints">
                                 <include reference="Hpj-SI-3Xr"/>
                             </mask>
@@ -92,18 +88,12 @@
                         <fontDescription key="fontDescription" type="system" pointSize="24"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
-                        <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                            <rect key="frame" x="8" y="5" width="303" height="29"/>
-                        </variation>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="address label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d75-tz-Hob" customClass="MarqueeLabel">
                         <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
-                        <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                            <rect key="frame" x="9" y="63" width="302" height="42"/>
-                        </variation>
                     </label>
                 </subviews>
                 <constraints>
@@ -114,9 +104,6 @@
                     </constraint>
                     <constraint firstItem="ek4-DI-dHs" firstAttribute="top" secondItem="91W-ca-Z5a" secondAttribute="bottom" constant="11" id="7oN-N9-d3I">
                         <variation key="heightClass=regular-widthClass=compact" constant="49"/>
-                    </constraint>
-                    <constraint firstItem="d75-tz-Hob" firstAttribute="top" secondItem="91W-ca-Z5a" secondAttribute="bottom" constant="5" id="CTv-sI-Ebt">
-                        <variation key="heightClass=regular-widthClass=compact" constant="4"/>
                     </constraint>
                     <constraint firstItem="ek4-DI-dHs" firstAttribute="top" secondItem="d75-tz-Hob" secondAttribute="bottom" constant="12" id="GcH-1X-Tdc">
                         <variation key="heightClass=regular-widthClass=compact" constant="3"/>
@@ -161,7 +148,6 @@
                         <exclude reference="SPq-jv-0pq"/>
                         <exclude reference="ta4-4f-9tS"/>
                         <exclude reference="31E-Bz-umX"/>
-                        <exclude reference="CTv-sI-Ebt"/>
                         <exclude reference="1vx-f7-H2t"/>
                         <exclude reference="bMx-w2-nfE"/>
                         <exclude reference="beW-iF-szj"/>
@@ -193,7 +179,6 @@
                         <include reference="SPq-jv-0pq"/>
                         <include reference="ta4-4f-9tS"/>
                         <include reference="31E-Bz-umX"/>
-                        <include reference="CTv-sI-Ebt"/>
                         <include reference="1vx-f7-H2t"/>
                         <include reference="bMx-w2-nfE"/>
                         <include reference="beW-iF-szj"/>

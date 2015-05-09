@@ -31,6 +31,7 @@
 @property (strong, nonatomic) NSString *bodyweight;
 @property (strong, nonatomic) UIImage *thumbNail;
 @property (strong, nonatomic) NSString *animalAnlong;
+@property (strong, nonatomic) UIImage *petBigPic;
 - (id)initWithRecord:(NSDictionary *)record;
 
 + (NSString *)adoptFilterAll;
