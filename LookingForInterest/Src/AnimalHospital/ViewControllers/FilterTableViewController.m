@@ -148,10 +148,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    if (!self.filterTableView) {
+    
+    if (!self.appdelegate) {
         self.appdelegate = [Utilities appdelegate];
+    }
+    if (!self.filterTableView) {
         self.appdelegate.viewController = self;
     }
+    
     AnimalHospitalRequest *requestSender = [[AnimalHospitalRequest alloc] init];
     switch (self.filterType) {
         case RequestTypeMajorType:
@@ -257,6 +261,9 @@
     requestSender.accessToken = self.accessToken;
     [requestSender sendAnimalHospitalInformationRequest];
     [self.requestArr addObject:requestSender];
+    if (!self.appdelegate) {
+        self.appdelegate = [Utilities getAppDelegate];
+    }
     self.appdelegate.viewController = self.delegate;
     [Utilities startLoading];
 }
