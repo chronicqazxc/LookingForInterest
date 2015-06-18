@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0510"
+   LastUpgradeVersion = "0640"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2ADCC417E039353044EA03D5"
+               BlueprintIdentifier = "E5528378B59DA8DEF633BEC4"
                BuildableName = "libPods-ThingsAboutAnimals-MGSwipeTableCell.a"
                BlueprintName = "Pods-ThingsAboutAnimals-MGSwipeTableCell"
                ReferencedContainer = "container:Pods.xcodeproj">

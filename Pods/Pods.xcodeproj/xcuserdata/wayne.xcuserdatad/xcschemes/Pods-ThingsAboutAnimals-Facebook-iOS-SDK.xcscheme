@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0510"
+   LastUpgradeVersion = "0640"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "09837A6DC357DA050ED5A998"
+               BlueprintIdentifier = "5B69C87D0BE897599305DFC3"
                BuildableName = "libPods-ThingsAboutAnimals-Facebook-iOS-SDK.a"
                BlueprintName = "Pods-ThingsAboutAnimals-Facebook-iOS-SDK"
                ReferencedContainer = "container:Pods.xcodeproj">
