@@ -17,11 +17,11 @@
 #import <iAd/iAd.h>
 #import "MenuTransition.h"
 
-#define kAnimationKeyAdoptAnimal @"AdoptAnimal"
-#define kAnimationKeyAnimalHospital @"AnimalHospital"
-#define kAnimationKeyLostPet @"LostPet"
-#define kToLostPetSegueIdentifier @"ToMenuSegueIdentifier"
-#define kThreshold 0.30
+static NSString * const kAnimationKeyAdoptAnimal = @"AdoptAnimal";
+static NSString * const kAnimationKeyAnimalHospital = @"AnimalHospital";
+static NSString * const kAnimationKeyLostPet = @"LostPet";
+static NSString * const kToLostPetSegueIdentifier = @"ToMenuSegueIdentifier";
+static const NSInteger kThreshold = 0.30;
 
 @interface MenuViewController () <ADBannerViewDelegate, FBLoginViewDelegate, ManulViewControllerDelegate>
 @property (nonatomic) BOOL isInitial;
@@ -73,10 +73,8 @@
     self.nameLabel.text = @"";
     self.adBannerView.delegate = self;
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-        //Background Thread
         UIImage *image = [UIImage imageNamed:@"blur_background.JPG"];
         dispatch_async(dispatch_get_main_queue(), ^(void){
-            //Run UI Updates
             self.backgroundImageView.image = image;
             self.backgroundImageView.contentMode = UIViewContentModeScaleAspectFit;
         });
@@ -135,20 +133,24 @@
 }
 
 - (void)initADBanner {
-    self.adBannerView.frame = CGRectMake(0,
-                                         CGRectGetHeight(self.view.frame),
-                                         CGRectGetWidth(self.adBannerView.frame),
-                                         CGRectGetHeight(self.adBannerView.frame));
+    self.adBannerView.frame = (CGRect) {
+        0,
+        CGRectGetHeight(self.view.frame),
+        CGRectGetWidth(self.adBannerView.frame),
+        CGRectGetHeight(self.adBannerView.frame)
+    };
     self.adBannerView.hidden = NO;
 }
 
 - (void)showADBanner {
     [UIView animateWithDuration:1.0 animations:^{
         [self.adBannerView layoutIfNeeded];
-        self.adBannerView.frame = CGRectMake(0,
-                                             CGRectGetHeight(self.view.frame)-CGRectGetHeight(self.adBannerView.frame),
-                                             CGRectGetWidth(self.adBannerView.frame),
-                                             CGRectGetHeight(self.adBannerView.frame));
+        self.adBannerView.frame = (CGRect) {
+            0,
+            CGRectGetHeight(self.view.frame)-CGRectGetHeight(self.adBannerView.frame),
+            CGRectGetWidth(self.adBannerView.frame),
+            CGRectGetHeight(self.adBannerView.frame)
+        };
     }];
 }
 
@@ -220,7 +222,11 @@
     UIBezierPath *trackPath = [UIBezierPath bezierPath];
     [trackPath moveToPoint:startPoint];
     for (int i=0; i<end; i++) {
-        [trackPath addArcWithCenter:self.view.center radius:i/radius startAngle:degreesToRadians(i) endAngle:degreesToRadians(i) clockwise:NO];
+        [trackPath addArcWithCenter:self.view.center
+                             radius:i/radius
+                         startAngle:degreesToRadians(i)
+                           endAngle:degreesToRadians(i)
+                          clockwise:NO];
     }
     return trackPath;
 }
@@ -260,29 +266,37 @@
         [self.lostPetButton.layer animationKeys] == nil &&
         [self.loginView.layer animationKeys] == nil) {
         
-        self.loginView.frame = CGRectMake(CGRectGetMinX(self.loginView.frame),
-                                          self.view.center.y,
-                                          CGRectGetWidth(self.loginView.frame),
-                                          CGRectGetHeight(self.loginView.frame));
+        self.loginView.frame = (CGRect) {
+            CGRectGetMinX(self.loginView.frame),
+            self.view.center.y,
+            CGRectGetWidth(self.loginView.frame),
+            CGRectGetHeight(self.loginView.frame)
+        };
         
         [UIView animateWithDuration:1.0 animations:^{
             self.titleLabel.alpha = 1.0;
             self.loginView.alpha = 1.0;
             self.nameLabel.alpha = 1.0;
-            self.nameLabel.frame = CGRectMake(CGRectGetMinX(self.nameLabel.frame),
-                                              CGRectGetMaxY(self.profilePictureView.frame)+5,
-                                              CGRectGetWidth(self.nameLabel.frame),
-                                              CGRectGetHeight(self.nameLabel.frame));
+            self.nameLabel.frame = (CGRect) {
+                CGRectGetMinX(self.nameLabel.frame),
+                CGRectGetMaxY(self.profilePictureView.frame)+5,
+                CGRectGetWidth(self.nameLabel.frame),
+                CGRectGetHeight(self.nameLabel.frame)
+            };
             
-            self.titleLabel.frame = CGRectMake(CGRectGetMinX(self.titleLabel.frame),
-                                               CGRectGetMinY(self.lostPetButton.frame)-50,
-                                               CGRectGetWidth(self.titleLabel.frame),
-                                               CGRectGetHeight(self.titleLabel.frame));
+            self.titleLabel.frame = (CGRect) {
+                CGRectGetMinX(self.titleLabel.frame),
+                CGRectGetMinY(self.lostPetButton.frame)-50,
+                CGRectGetWidth(self.titleLabel.frame),
+                CGRectGetHeight(self.titleLabel.frame)
+            };
             
-            self.loginView.frame = CGRectMake(CGRectGetMinX(self.loginView.frame),
-                                              CGRectGetMaxY(self.adoptButton.frame)+50,
-                                              CGRectGetWidth(self.loginView.frame),
-                                              CGRectGetHeight(self.loginView.frame));
+            self.loginView.frame = (CGRect) {
+                CGRectGetMinX(self.loginView.frame),
+                CGRectGetMaxY(self.adoptButton.frame)+50,
+                CGRectGetWidth(self.loginView.frame),
+                CGRectGetHeight(self.loginView.frame)
+            };
             
             [self.adoptButton setTitle:@"我要領養" forState:UIControlStateNormal];
             [self.animalHospitalButton setTitle:@"找醫院" forState:UIControlStateNormal];
