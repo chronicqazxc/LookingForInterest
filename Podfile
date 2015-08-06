@@ -6,6 +6,7 @@ pod 'Google-Maps-iOS-SDK'
 pod 'MGSwipeTableCell'
 pod 'Facebook-iOS-SDK'
 pod 'MarqueeLabel'
+pod 'AFNetworking'
 end
 
 target 'LookingForInterest Tests' do
